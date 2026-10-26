@@ -1,0 +1,22 @@
+query PageByUri($uri: String!) {
+  nodeByUri(uri: $uri) {
+    __typename
+    ... on Page {
+      databaseId
+      title
+      slug
+      uri
+      content
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
+    }
+  }
+}

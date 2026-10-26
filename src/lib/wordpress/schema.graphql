@@ -1,0 +1,82 @@
+schema {
+  query: RootQuery
+}
+
+type RootQuery {
+  generalSettings: GeneralSettings
+  nodeByUri(uri: String!): UniformResourceIdentifiable
+  page(id: ID!, idType: PageIdType, asPreview: Boolean): Page
+  pages(first: Int, after: String): RootQueryToPageConnection
+  menuItems(first: Int, where: RootQueryToMenuItemConnectionWhereArgs): RootQueryToMenuItemConnection
+}
+
+interface UniformResourceIdentifiable {
+  uri: String
+}
+
+enum PageIdType {
+  URI
+  DATABASE_ID
+}
+
+type Page implements UniformResourceIdentifiable {
+  databaseId: Int
+  title: String
+  slug: String
+  uri: String
+  content: String
+  featuredImage: NodeWithFeaturedImageToMediaItemConnection
+}
+
+type GeneralSettings {
+  title: String
+  description: String
+  url: String
+}
+
+type MediaItem {
+  sourceUrl: String
+  altText: String
+  mediaDetails: MediaDetails
+}
+
+type MediaDetails {
+  width: Int
+  height: Int
+}
+
+type NodeWithFeaturedImageToMediaItemConnection {
+  node: MediaItem
+}
+
+type RootQueryToPageConnection {
+  pageInfo: WpPageInfo
+  nodes: [Page]
+}
+
+type WpPageInfo {
+  hasNextPage: Boolean
+  endCursor: String
+}
+
+input RootQueryToMenuItemConnectionWhereArgs {
+  location: MenuLocationEnum
+}
+
+enum MenuLocationEnum {
+  PRIMARY
+  FOOTER
+}
+
+type RootQueryToMenuItemConnection {
+  nodes: [MenuItem]
+}
+
+type MenuItem {
+  id: ID
+  label: String
+  url: String
+  path: String
+  parentId: ID
+  target: String
+}

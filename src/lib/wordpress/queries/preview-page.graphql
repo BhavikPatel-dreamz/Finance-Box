@@ -1,0 +1,19 @@
+query PreviewPage($id: ID!) {
+  page(id: $id, idType: URI, asPreview: true) {
+    databaseId
+    title
+    slug
+    uri
+    content
+    featuredImage {
+      node {
+        sourceUrl
+        altText
+        mediaDetails {
+          width
+          height
+        }
+      }
+    }
+  }
+}

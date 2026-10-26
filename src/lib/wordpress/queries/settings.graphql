@@ -1,0 +1,7 @@
+query SiteSettings {
+  generalSettings {
+    title
+    description
+    url
+  }
+}

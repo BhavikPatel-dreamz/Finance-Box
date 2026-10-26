@@ -1,0 +1,12 @@
+query MenuByLocation($location: MenuLocationEnum!) {
+  menuItems(first: 50, where: { location: $location }) {
+    nodes {
+      id
+      label
+      url
+      path
+      parentId
+      target
+    }
+  }
+}

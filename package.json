@@ -1,0 +1,36 @@
+{
+  "name": "financebox-web",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "codegen": "graphql-codegen --config codegen.ts"
+  },
+  "dependencies": {
+    "graphql": "^17.0.2",
+    "next": "16.4.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^7.4.6",
+    "@graphql-codegen/typed-document-node": "^7.2.0",
+    "@graphql-codegen/typescript": "^6.1.2",
+    "@graphql-codegen/typescript-operations": "^6.1.10",
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
