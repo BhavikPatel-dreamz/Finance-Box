@@ -7,8 +7,19 @@ import { clientsContent, type ClientCaseStudy } from "@/content/clients";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
 
+// Reusable Footer Hero import kiya
+import { FooterHero } from "@/components/ui/footer-hero";
+
 export function ClientsPage({ sections }: { sections: RawSection[] }) {
   const content = mergeClients(clientsContent, sections);
+
+  const tags = [
+    "Technology & SaaS",
+    "Professional Services",
+    "Healthcare",
+    "E-commerce",
+    "Startups & Scale-ups",
+  ];
 
   return (
     <div id="top" className="min-h-screen bg-[#07110d] text-white">
@@ -92,7 +103,6 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
       {/* Trusted Clients Logos Grid */}
       <section className="bg-white px-6 pb-24 text-[#16181d]">
         <div className="mx-auto w-full max-w-[1280px]">
-          
           <div className="text-center mb-16">
             <h2 className="text-[50px] font-medium leading-[1.2] tracking-[-0.8px]">
               {content.logosSection.title1}{" "}
@@ -120,21 +130,17 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* Reviews Section (Dark Background + Case Study Layout) */}
+      {/* Reviews Section */}
       <section className="bg-[#121826] py-20 px-6">
         <div className="mx-auto w-full max-w-6xl min-h-[985px] flex flex-col justify-center">
-          
           <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16 text-white">
             {content.reviewsSection.title}
           </h2>
 
           <div className="flex flex-col lg:flex-row gap-6">
-            
-            {/* Left Side: Main Image Review */}
             <div className="relative w-full lg:w-[calc(50%-12px)] rounded-[10px] overflow-hidden min-h-[500px] lg:min-h-[740px]">
               <Image
                 src={content.reviewsSection.mainReview.image}
@@ -142,7 +148,6 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                 fill
                 className="object-cover"
               />
-              {/* Halka Gradient (Sirf text readable rakhne ke liye) */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#121826] via-[#121826]/40 to-transparent" />
               
               <div className="absolute bottom-0 left-0 w-full p-8 md:p-12">
@@ -156,7 +161,6 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
               </div>
             </div>
 
-            {/* Right Side: 4 Small Review Cards */}
             <div className="w-full lg:w-[calc(50%-12px)] flex flex-col justify-between gap-4">
               {content.reviewsSection.reviews.map((review) => (
                 <div 
@@ -179,7 +183,6 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                       </div>
                       <p className="text-[14px] text-white/70">{review.author}</p>
                     </div>
-                    {/* Quote icon */}
                     <svg className="w-8 h-8 text-white/10" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                     </svg>
@@ -187,10 +190,76 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </section>
+
+      {/* Where FIAB Works Section */}
+      <section className="bg-[#EDE9E6] px-6 py-24 text-[#16181d]">
+        <div className="mx-auto w-full max-w-[1280px] flex flex-col gap-24">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="pr-0 lg:pr-12">
+              <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] text-[#16181d]">
+                Where FIAB Works
+              </h2>
+              <p className="mt-6 text-[16px] font-light leading-[160%] text-[#16181d]/70">
+                Technology and SaaS, e-commerce and retail, professional services, manufacturing and supply chain, robotics, healthcare technology, and logistics, across the US and internationally.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {tags.map((tag) => (
+                  <span 
+                    key={tag} 
+                    className="inline-flex items-center rounded-full bg-white px-5 py-2.5 text-[13px] font-medium text-[#16181d] shadow-sm"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden">
+              <Image
+                src="/clients/FIABworks.png"
+                alt="FIAB Works"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden order-2 lg:order-1">
+              <Image
+                src="/clients/IntroducingFIAB.png"
+                alt="Introducing FIAB"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="pr-0 lg:pl-12 order-1 lg:order-2">
+              <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] text-[#16181d]">
+                Introducing FIAB to a Portfolio Company?
+              </h2>
+              <p className="mt-6 text-[16px] font-light leading-[160%] text-[#16181d]/70">
+                There is a dedicated page covering how an engagement starts, what your founders will experience, and the results other portfolio companies have seen.
+              </p>
+              <div className="mt-8">
+                <GreenButton label="For VCs & Advisors" href="/vc-advisors" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* NEW: Reusable Footer Hero */}
+      <FooterHero
+        title="Your company could be"
+        highlight="the next case study"
+        text="Tell us where the pressure is. A 30-minute discovery call maps what to fix first."
+        buttonLabel="Join the Talent Network"
+        buttonUrl="/#contact"
+      />
 
       <HomeFooter footer={homeContent.footer} />
     </div>
