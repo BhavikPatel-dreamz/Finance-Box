@@ -12,7 +12,7 @@ import { ClientsPage } from "@/components/clients/clients-page";
 
 // Naye Pages ke Imports
 import { CareersPage } from "@/components/careers/careers-page";
-import { ContactUsPage } from "@/components/contact/contact-us-page"; // <-- Yahan change kiya
+import { ContactUsPage } from "@/components/contact/contact-us-page";
 import { AgenticAiPage } from "@/components/agentic-ai/agentic-ai-page";
 import { KnowledgeHubPage } from "@/components/knowledge-hub/knowledge-hub-page";
 import { PeopleOperationsPage } from "@/components/people-operations/people-operations-page";
@@ -141,7 +141,13 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
     const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
     return <CareersPage sections={sections} />;
   }
-  if (loaded.uri === "/contact-us/") return <ContactUsPage />; // <-- Yahan change kiya
+  
+  // FIX: sections pass kiya
+  if (loaded.uri === "/contact-us/") {
+    const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
+    return <ContactUsPage sections={sections} />;
+  }
+
   if (loaded.uri === "/agentic-ai/") return <AgenticAiPage />;
   if (loaded.uri === "/knowledge-hub/") return <KnowledgeHubPage />;
   if (loaded.uri === "/people-operations/") return <PeopleOperationsPage />;
