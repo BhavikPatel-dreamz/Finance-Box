@@ -6,8 +6,6 @@ import { homeContent } from "@/content/home";
 import { clientsContent, type ClientCaseStudy } from "@/content/clients";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
-
-// Reusable Footer Hero import kiya
 import { FooterHero } from "@/components/ui/footer-hero";
 
 export function ClientsPage({ sections }: { sections: RawSection[] }) {
@@ -244,7 +242,20 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                 There is a dedicated page covering how an engagement starts, what your founders will experience, and the results other portfolio companies have seen.
               </p>
               <div className="mt-8">
-                <GreenButton label="For VCs & Advisors" href="/vc-advisors" />
+                {/* Yahan custom color aur size apply kiya hai */}
+                <GreenButton 
+                  label="For VCs & Advisors" 
+                  href="/vc-advisors" 
+                  bgColor="#121826"
+                  textColor="#ffffff"
+                  size={{
+                    width: "257px",
+                    height: "62px",
+                    paddingX: "30px",
+                    paddingY: "10px",
+                    fontSize: "16px"
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -303,7 +314,18 @@ function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: bo
         </div>
 
         <div>
-          <GreenButton label="Read a Full Case Study" href={study.ctaUrl} />
+          {/* Yahan custom green size apply kiya hai */}
+          <GreenButton 
+            label="Read a Full Case Study" 
+            href={study.ctaUrl}
+            size={{
+              width: "243px",
+              height: "50px",
+              paddingX: "20px",
+              paddingY: "10px",
+              fontSize: "14px"
+            }}
+          />
         </div>
       </div>
     </div>
