@@ -6,6 +6,9 @@ import { homeContent, type HomeContent } from "@/content/home";
 import { whyContent, type WhyContent, type WhyLink, type WhyTeamMember } from "@/content/why-fiab";
 import type { RawSection } from "@/lib/wordpress/content";
 
+// Reusable Component import kiya
+import { FooterHero } from "@/components/ui/footer-hero";
+
 export function WhyPage({ sections }: { sections: RawSection[] }) {
   const content = mergeWhy(whyContent, sections);
   return (
@@ -13,9 +16,17 @@ export function WhyPage({ sections }: { sections: RawSection[] }) {
       <WhyHero hero={content.hero} header={homeContent.header} />
       <WhyCompare compare={content.compare} />
       <WhyHowWeWork howWeWork={content.howWeWork} />
-      <WhyCtaBanner ctaSection={content.ctaSection} />
       <WhyAbout aboutSection={content.aboutSection} />
       <WhyTeam team={content.team} />
+      
+      <FooterHero
+        title="See What an Embedded"
+        highlight="Finance Team Changes"
+        text="A 30-minute discovery call maps where your finance function is leaking time or cash, and what to fix first."
+        buttonLabel="Join the Talent Network"
+        buttonUrl="/#contact"
+      />
+
       <HomeFooter footer={siteFooter(homeContent.footer)} />
     </div>
   );
@@ -209,46 +220,13 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
   );
 }
 
-export function WhyCtaBanner({ ctaSection }: { ctaSection: WhyContent["ctaSection"] }) {
-  return (
-    <section className="bg-white px-6 py-12">
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="relative overflow-hidden rounded-[10px] bg-[#f4f4f2] text-[#16181d] min-h-[428px] flex items-center">
-          
-          <div className="absolute inset-0 z-0">
-            <Image 
-              src={ctaSection.image} 
-              alt="CTA Graphic" 
-              fill 
-              className="object-cover object-right" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#f4f4f2] via-[#f4f4f2]/90 to-transparent w-full md:w-3/4" />
-          </div>
-
-          <div className="relative z-10 p-10 md:p-16 max-w-xl">
-            <h2 className="text-[54px] font-medium leading-[105%] tracking-[-0.8px]">
-              {ctaSection.title}
-              <span className="block font-black italic text-[#23C55E]">{ctaSection.highlight}</span>
-            </h2>
-            <p className="mt-6 text-[16px] font-light leading-[160%] opacity-80">
-              {ctaSection.text}
-            </p>
-            <div className="mt-8">
-              <Pill link={ctaSection.button} dark />
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
-
+// --- FIXED: WhyAbout Section ---
 export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSection"] }) {
   return (
-    <section className="bg-white px-6 pb-24">
+    <section className="bg-white px-6 py-20">
       <div className="mx-auto w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6">
         
+        {/* Left Card: Why FIAB Exists */}
         <div className="relative overflow-hidden rounded-[24px] min-h-[630px] flex items-end">
           <Image 
             src={aboutSection.image} 
@@ -256,7 +234,7 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
             fill 
             className="object-cover" 
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07110d] via-[#07110d]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07110d] via-[#07110d]/60 to-transparent" />
           
           <div className="relative z-10 p-10 w-full">
             <h3 className="text-[50px] font-medium leading-[110%] tracking-[-0.8px] text-white">
@@ -268,6 +246,7 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
           </div>
         </div>
 
+        {/* Right Card: Mission */}
         <div className="relative overflow-hidden rounded-[24px] min-h-[630px] flex items-center p-10 lg:p-16">
           <Image 
             src={aboutSection.bgImage} 
@@ -292,7 +271,6 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
   );
 }
 
-// --- Naya Section: Team (The People Behind the Work) ---
 export function WhyTeam({ team }: { team: WhyContent["team"] }) {
   return (
     <section className="bg-[#0b1120] px-6 py-24">

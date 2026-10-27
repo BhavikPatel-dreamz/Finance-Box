@@ -16,7 +16,6 @@ export type WhyWorkCard = {
   text: string;
 };
 
-// Naya: Team Member ke liye type (expertise removed)
 export type WhyTeamMember = {
   name: string;
   role: string;
@@ -53,13 +52,6 @@ export type WhyContent = {
     title: string;
     cards: WhyWorkCard[];
   };
-  ctaSection: {
-    title: string;
-    highlight: string;
-    text: string;
-    button: WhyLink;
-    image: string;
-  };
   aboutSection: {
     image: string;
     title: string;
@@ -68,7 +60,6 @@ export type WhyContent = {
     missionText: string;
     bgImage: string;
   };
-  // Naya: Team Section
   team: {
     title: string;
     members: WhyTeamMember[];
@@ -136,13 +127,6 @@ export const whyContent: WhyContent = {
       },
     ],
   },
-  ctaSection: {
-    title: "Let’s Talk",
-    highlight: "About Your Business",
-    text: "Connect with our team to explore how FIAB can support your goals, challenges, and next stage of growth.",
-    button: { label: "Talk to Our Team", url: "/#contact" },
-    image: "/why/coins.png",
-  },
   aboutSection: {
     image: "/why/two-person.png",
     title: "Why FIAB Exists",
@@ -151,7 +135,6 @@ export const whyContent: WhyContent = {
     missionText: "Give growing companies the finance function they need at every stage: expert people, automated systems, and clear reporting they can run the business on.",
     bgImage: "/why/bg-color.png",
   },
-  // Naya Data: Team Section
   team: {
     title: "The People Behind the Work",
     cta: { label: "Meet the Full Team", url: "/team" },

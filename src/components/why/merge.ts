@@ -96,9 +96,7 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]) {
     }
   }
   
-  // Ensure karta hai ki naye fields undefined na rahein
   next.howWeWork = next.howWeWork ?? base.howWeWork;
-  next.ctaSection = next.ctaSection ?? base.ctaSection;
   next.aboutSection = next.aboutSection ?? base.aboutSection;
   next.team = next.team ?? base.team;
 
