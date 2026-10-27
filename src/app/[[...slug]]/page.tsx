@@ -8,6 +8,15 @@ import { PageShell, StatusMessage } from "@/components/layout/page-shell";
 import { HomePage } from "@/components/home/home-page";
 import { ServicesPage } from "@/components/services/services-page";
 import { WhyPage } from "@/components/why/why-page";
+import { ClientsPage } from "@/components/clients/clients-page";
+
+// Naye Pages ke Imports
+import { CareersPage } from "@/components/careers/careers-page";
+import { ContactPage } from "@/components/contact/contact-page";
+import { AgenticAiPage } from "@/components/agentic-ai/agentic-ai-page";
+import { KnowledgeHubPage } from "@/components/knowledge-hub/knowledge-hub-page";
+import { PeopleOperationsPage } from "@/components/people-operations/people-operations-page";
+
 import { homeContent } from "@/content/home";
 import { servicesContent } from "@/content/services";
 import { whyContent } from "@/content/why-fiab";
@@ -48,6 +57,23 @@ export async function generateMetadata({
     return {
       title: `${whyContent.hero.title} ${whyContent.hero.highlight.replace(/\n/g, " ")}`,
       description: whyContent.hero.text,
+    };
+  }
+
+  // Static Metadata for New Pages
+  const staticPages: Record<string, string> = {
+    "/clients/": "Clients - Financebox",
+    "/careers/": "Careers - Financebox",
+    "/contact/": "Contact Us - Financebox",
+    "/agentic-ai/": "Agentic AI - Financebox",
+    "/knowledge-hub/": "Knowledge Hub - Financebox",
+    "/people-operations/": "People Operations - Financebox",
+  };
+
+  if (loaded.uri && staticPages[loaded.uri]) {
+    return {
+      title: staticPages[loaded.uri],
+      description: "Financebox - Finance in a Box.",
     };
   }
 
@@ -92,6 +118,7 @@ async function CmsChrome({ children }: { children: ReactNode }) {
 export default async function WordPressPage({ params }: PageProps<"/[[...slug]]">) {
   const { slug } = await params;
   const loaded = await loadPage(slug);
+  
   if (loaded.uri === "/") {
     const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
     return <HomePage sections={sections} />;
@@ -104,6 +131,18 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
     const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
     return <WhyPage sections={sections} />;
   }
+  if (loaded.uri === "/clients/") {
+    const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
+    return <ClientsPage sections={sections} />;
+  }
+
+  // New Pages Routes
+  if (loaded.uri === "/careers/") return <CareersPage />;
+  if (loaded.uri === "/contact/") return <ContactPage />;
+  if (loaded.uri === "/agentic-ai/") return <AgenticAiPage />;
+  if (loaded.uri === "/knowledge-hub/") return <KnowledgeHubPage />;
+  if (loaded.uri === "/people-operations/") return <PeopleOperationsPage />;
+
   if (!loaded.uri || loaded.result.status === "not-found") notFound();
 
   if (loaded.result.status === "unconfigured") {

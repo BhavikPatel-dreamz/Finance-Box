@@ -136,29 +136,30 @@ export const homeContent: HomeContent = {
           { label: "Momentum", url: "/services/#momentum" },
           { label: "Foresight", url: "/services/#foresight" },
           { label: "Partner With Us", url: "#contact" },
-          { label: "People Operations", url: "#product" },
+          { label: "People Operations", url: "/people-operations/" }, // Updated Link
         ],
       },
       {
         label: "Clients",
-        url: "#insights",
+        url: "/clients/", // Updated Link
         children: [
-          { label: "Client stories", url: "#insights" },
-          { label: "Technology partners", url: "#partners" },
+          { label: "Client stories", url: "/clients/" }, // Updated Link
+          { label: "Technology partners", url: "/clients/#partners" }, // Updated Link
         ],
       },
       {
         label: "About Us",
-        url: "#about",
+        url: "/#about",
         children: [
           { label: "Why FIAB", url: "/why-fiab/" },
-          { label: "Team", url: "#team" },
-          { label: "Careers", url: "#contact" },
+          { label: "Team", url: "/#team" },
+          { label: "Careers", url: "/careers/" }, // Updated Link
+          { label: "Knowledge Hub", url: "/knowledge-hub/" }, // New Link
         ],
       },
-      { label: "Agentic AI", url: "#product", children: [] },
+      { label: "Agentic AI", url: "/agentic-ai/", children: [] }, // Updated Link
     ],
-    cta: { label: "Contact Us", url: "#contact" },
+    cta: { label: "Contact Us", url: "/contact/" }, // Updated Link
   },
   hero: {
     eyebrow: "Embedded finance for founder-led companies",
@@ -347,27 +348,27 @@ export const homeContent: HomeContent = {
         title: "Company",
         links: [
           { label: "Why FIAB", url: "/why-fiab/" },
-          { label: "Team", url: "#about" },
-          { label: "Careers", url: "#contact" },
-          { label: "Contact", url: "#contact" },
+          { label: "Team", url: "/#about" },
+          { label: "Careers", url: "/careers/" }, // Updated Link
+          { label: "Contact", url: "/contact/" }, // Updated Link
         ],
       },
       {
         title: "Services",
         links: [
-          { label: "Foundation", url: "#product" },
-          { label: "Momentum", url: "#product" },
-          { label: "Foresight", url: "#product" },
+          { label: "Foundation", url: "/services/#foundation" },
+          { label: "Momentum", url: "/services/#momentum" },
+          { label: "Foresight", url: "/services/#foresight" },
           { label: "Partner With Us", url: "#contact" },
-          { label: "People Operations", url: "#product" },
+          { label: "People Operations", url: "/people-operations/" }, // Updated Link
         ],
       },
       {
         title: "Explore",
         links: [
-          { label: "Clients", url: "#insights" },
-          { label: "Agentic AI", url: "#product" },
-          { label: "Knowledge Hub", url: "#insights" },
+          { label: "Clients", url: "/clients/" }, // Updated Link
+          { label: "Agentic AI", url: "/agentic-ai/" }, // Updated Link
+          { label: "Knowledge Hub", url: "/knowledge-hub/" }, // Updated Link
           { label: "For VCs & Advisors", url: "#contact" },
         ],
       },
