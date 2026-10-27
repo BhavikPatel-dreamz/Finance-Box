@@ -135,16 +135,16 @@ export const homeContent: HomeContent = {
           { label: "Foundation", url: "/services/#foundation" },
           { label: "Momentum", url: "/services/#momentum" },
           { label: "Foresight", url: "/services/#foresight" },
-          { label: "Partner With Us", url: "#contact" },
-          { label: "People Operations", url: "/people-operations/" }, // Updated Link
+          { label: "Partner With Us", url: "/contact-us/" }, // Updated
+          { label: "People Operations", url: "/people-operations/" },
         ],
       },
       {
         label: "Clients",
-        url: "/clients/", // Updated Link
+        url: "/clients/",
         children: [
-          { label: "Client stories", url: "/clients/" }, // Updated Link
-          { label: "Technology partners", url: "/clients/#partners" }, // Updated Link
+          { label: "Client stories", url: "/clients/" },
+          { label: "Technology partners", url: "/clients/#partners" },
         ],
       },
       {
@@ -153,20 +153,20 @@ export const homeContent: HomeContent = {
         children: [
           { label: "Why FIAB", url: "/why-fiab/" },
           { label: "Team", url: "/#team" },
-          { label: "Careers", url: "/careers/" }, // Updated Link
-          { label: "Knowledge Hub", url: "/knowledge-hub/" }, // New Link
+          { label: "Careers", url: "/careers/" },
+          { label: "Knowledge Hub", url: "/knowledge-hub/" },
         ],
       },
-      { label: "Agentic AI", url: "/agentic-ai/", children: [] }, // Updated Link
+      { label: "Agentic AI", url: "/agentic-ai/", children: [] },
     ],
-    cta: { label: "Contact Us", url: "/contact/" }, // Updated Link
+    cta: { label: "Contact Us", url: "/contact-us/" }, // Updated
   },
   hero: {
     eyebrow: "Embedded finance for founder-led companies",
     title: "Your Finance Function,",
     highlight: "Built and Run For You",
     text: "Finance in a Box works as your embedded finance team. One engagement covers CFO strategy, accounting, payroll, compliance, and the systems that connect them, with coverage that grows as you do.",
-    primary: { label: "Book a Discovery Call", url: "#contact" },
+    primary: { label: "Book a Discovery Call", url: "/contact-us/" }, // Updated
     closeLabel: "Month-end close",
     closeValue: "6",
     closeUnit: "days",
@@ -177,7 +177,7 @@ export const homeContent: HomeContent = {
     runwayTrend: "+3.2 this quarter",
     chartTitle: "Cash visibility",
     chartRange: "12 month view",
-    call: { label: "Book a Call", url: "#contact" },
+    call: { label: "Book a Call", url: "/contact-us/" }, // Updated
   },
   trust: {
     lead: "Trusted by",
@@ -327,7 +327,7 @@ export const homeContent: HomeContent = {
     eyebrow: "Experience meets action",
     title: "Finance Leadership Without the Overhead.",
     text: "Finance in a Box was founded by Amit Mulchandani to give growing businesses direct access to senior finance operators, practical systems expertise and decision-ready insight.\n\nOur teams combine hands-on execution with the judgment to know what matters next.",
-    cta: { label: "Book a call", url: "#contact" },
+    cta: { label: "Book a call", url: "/contact-us/" }, // Updated
     people: [
       { image: null, name: "Amit Mulchandani", role: "Founder & CEO, Finance in a Box" },
       { image: null, name: "Berena Reynoso", role: "Head of Operations" },
@@ -337,7 +337,7 @@ export const homeContent: HomeContent = {
     title: "Tell Us Where The Pressure Is",
     emphasis: "The Pressure Is",
     text: "A 30-minute discovery call is enough to map where your finance function is leaking time or cash, and what to fix first.",
-    cta: { label: "Join the Talent Network", url: "#contact" },
+    cta: { label: "Join the Talent Network", url: "/contact-us/" }, // Updated
   },
   footer: {
     logo,
@@ -349,8 +349,8 @@ export const homeContent: HomeContent = {
         links: [
           { label: "Why FIAB", url: "/why-fiab/" },
           { label: "Team", url: "/#about" },
-          { label: "Careers", url: "/careers/" }, // Updated Link
-          { label: "Contact", url: "/contact/" }, // Updated Link
+          { label: "Careers", url: "/careers/" },
+          { label: "Contact", url: "/contact-us/" }, // Updated
         ],
       },
       {
@@ -359,17 +359,17 @@ export const homeContent: HomeContent = {
           { label: "Foundation", url: "/services/#foundation" },
           { label: "Momentum", url: "/services/#momentum" },
           { label: "Foresight", url: "/services/#foresight" },
-          { label: "Partner With Us", url: "#contact" },
-          { label: "People Operations", url: "/people-operations/" }, // Updated Link
+          { label: "Partner With Us", url: "/contact-us/" }, // Updated
+          { label: "People Operations", url: "/people-operations/" },
         ],
       },
       {
         title: "Explore",
         links: [
-          { label: "Clients", url: "/clients/" }, // Updated Link
-          { label: "Agentic AI", url: "/agentic-ai/" }, // Updated Link
-          { label: "Knowledge Hub", url: "/knowledge-hub/" }, // Updated Link
-          { label: "For VCs & Advisors", url: "#contact" },
+          { label: "Clients", url: "/clients/" },
+          { label: "Agentic AI", url: "/agentic-ai/" },
+          { label: "Knowledge Hub", url: "/knowledge-hub/" },
+          { label: "For VCs & Advisors", url: "/contact-us/" }, // Updated
         ],
       },
       {

@@ -2,7 +2,7 @@ import { HomeHeader } from "@/components/home/home-header";
 import { HomeFooter } from "@/components/home/home-page";
 import { homeContent } from "@/content/home";
 
-export function ContactPage() {
+export function ContactUsPage() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
       <div className="bg-[#07140f]">

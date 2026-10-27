@@ -12,7 +12,7 @@ import { ClientsPage } from "@/components/clients/clients-page";
 
 // Naye Pages ke Imports
 import { CareersPage } from "@/components/careers/careers-page";
-import { ContactPage } from "@/components/contact/contact-page";
+import { ContactUsPage } from "@/components/contact/contact-us-page"; // <-- Yahan change kiya
 import { AgenticAiPage } from "@/components/agentic-ai/agentic-ai-page";
 import { KnowledgeHubPage } from "@/components/knowledge-hub/knowledge-hub-page";
 import { PeopleOperationsPage } from "@/components/people-operations/people-operations-page";
@@ -64,7 +64,7 @@ export async function generateMetadata({
   const staticPages: Record<string, string> = {
     "/clients/": "Clients - Financebox",
     "/careers/": "Careers - Financebox",
-    "/contact/": "Contact Us - Financebox",
+    "/contact-us/": "Contact Us - Financebox",
     "/agentic-ai/": "Agentic AI - Financebox",
     "/knowledge-hub/": "Knowledge Hub - Financebox",
     "/people-operations/": "People Operations - Financebox",
@@ -137,8 +137,11 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
   }
 
   // New Pages Routes
-  if (loaded.uri === "/careers/") return <CareersPage />;
-  if (loaded.uri === "/contact/") return <ContactPage />;
+  if (loaded.uri === "/careers/") {
+    const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
+    return <CareersPage sections={sections} />;
+  }
+  if (loaded.uri === "/contact-us/") return <ContactUsPage />; // <-- Yahan change kiya
   if (loaded.uri === "/agentic-ai/") return <AgenticAiPage />;
   if (loaded.uri === "/knowledge-hub/") return <KnowledgeHubPage />;
   if (loaded.uri === "/people-operations/") return <PeopleOperationsPage />;
