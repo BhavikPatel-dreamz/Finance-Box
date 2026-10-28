@@ -51,7 +51,6 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
                     label={content.hero.cta.label}
                     href={content.hero.cta.url}
                     bgColor="#ffffff"
-                    textColor="#0B0D0C"
                     size={{ width: "275px", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
                   />
                 </div>
@@ -186,7 +185,6 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
               label={content.newsletter.cta.label}
               href={content.newsletter.cta.url}
               bgColor="#23C55E"
-              textColor="#0B0D0C"
               size={{
                 width: "250px",
                 height: "50px",
@@ -225,7 +223,6 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
                   label="Submit"
                   href="#"
                   bgColor="#ffffff"
-                  textColor="#0B0D0C"
                   size={{
                     width: "140px",
                     height: "50px",

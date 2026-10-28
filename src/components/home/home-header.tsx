@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { HomeContent } from "@/content/home";
+import { GreenButton } from "@/components/ui/green-button";
 
 type NavLink = HomeContent["header"]["links"][number];
 
@@ -69,15 +70,23 @@ export function HomeHeader({
             <DesktopItem key={link.label} link={link} open={openLabel === link.label} onOpen={setOpenLabel} />
           ))}
         </nav>
-        <a
-          href={header.cta.url}
-          className="hidden items-center gap-3 rounded-full bg-[#3DDC84] py-2.5 pr-2.5 pl-5 text-sm font-semibold text-[#06210f] md:inline-flex"
-        >
-          {header.cta.label}
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[#06210f]/30">
-            <Arrow />
-          </span>
-        </a>
+        
+        {/* Updated Button Size */}
+        <div className="hidden md:block">
+          <GreenButton
+            label={header.cta.label}
+            href={header.cta.url}
+            size={{
+              width: "154px",
+              height: "44px",
+              paddingX: "20px",
+              paddingY: "10px",
+              fontSize: "14px"
+            }}
+            className="min-h-[44px]"
+          />
+        </div>
+
         <button
           type="button"
           className="relative rounded-full border border-white/15 px-3 py-2 text-sm text-white md:hidden"
@@ -190,14 +199,6 @@ function Chevron({ open }: { open: boolean }) {
   return (
     <svg viewBox="0 0 16 16" className={`h-3 w-3 transition ${open ? "rotate-180" : ""}`} aria-hidden="true">
       <path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function Arrow() {
-  return (
-    <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden="true">
-      <path d="M4 8h8M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

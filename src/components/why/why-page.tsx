@@ -5,9 +5,8 @@ import { mergeWhy } from "@/components/why/merge";
 import { homeContent, type HomeContent } from "@/content/home";
 import { whyContent, type WhyContent, type WhyLink, type WhyTeamMember } from "@/content/why-fiab";
 import type { RawSection } from "@/lib/wordpress/content";
-
-// Reusable Component import kiya
 import { FooterHero } from "@/components/ui/footer-hero";
+import { GreenButton } from "@/components/ui/green-button"; // Import GreenButton
 
 export function WhyPage({ sections }: { sections: RawSection[] }) {
   const content = mergeWhy(whyContent, sections);
@@ -58,9 +57,9 @@ function siteFooter(footer: HomeContent["footer"]): HomeContent["footer"] {
   };
 }
 
-function Pill({ link, dark }: { link: WhyLink; dark?: boolean }) {
+function Pill({ link }: { link: WhyLink }) {
   return (
-    <a href={link.url} className={`inline-flex items-center gap-3 rounded-full px-6 py-4 text-[16px] font-semibold ${dark ? "bg-[#121826] text-white" : "bg-white text-[#102018]"}`}>
+    <a href={link.url} className="inline-flex items-center gap-3 rounded-full bg-white px-6 py-4 text-[16px] font-semibold text-[#102018]">
       {link.label}
       <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current">
         <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden="true">
@@ -95,7 +94,20 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
           <div className="max-w-md lg:justify-self-end">
             <p className="text-sm leading-6 text-white/75">{hero.text}</p>
             <div className="mt-6">
-              <Pill link={hero.cta} />
+              {/* Replaced Pill with GreenButton */}
+              <GreenButton 
+                label={hero.cta.label} 
+                href={hero.cta.url} 
+                bgColor="#ffffff"
+                textColor="#07110d"
+                size={{ 
+                  width: "auto", 
+                  height: "62px", 
+                  paddingX: "30px", 
+                  paddingY: "10px", 
+                  fontSize: "16px" 
+                }}
+              />
             </div>
           </div>
         </div>
@@ -220,20 +232,13 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
   );
 }
 
-// --- FIXED: WhyAbout Section ---
 export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSection"] }) {
   return (
     <section className="bg-white px-6 py-20">
       <div className="mx-auto w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        {/* Left Card: Why FIAB Exists */}
         <div className="relative overflow-hidden rounded-[24px] min-h-[630px] flex items-end">
-          <Image 
-            src={aboutSection.image} 
-            alt="Team" 
-            fill 
-            className="object-cover" 
-          />
+          <Image src={aboutSection.image} alt="Team" fill className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#07110d] via-[#07110d]/60 to-transparent" />
           
           <div className="relative z-10 p-10 w-full">
@@ -246,14 +251,8 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
           </div>
         </div>
 
-        {/* Right Card: Mission */}
         <div className="relative overflow-hidden rounded-[24px] min-h-[630px] flex items-center p-10 lg:p-16">
-          <Image 
-            src={aboutSection.bgImage} 
-            alt="Background" 
-            fill 
-            className="object-cover" 
-          />
+          <Image src={aboutSection.bgImage} alt="Background" fill className="object-cover" />
           
           <div className="relative z-10 max-w-md">
             <p className="text-[15px] font-medium tracking-[1.5px] uppercase text-[#23C55E] flex items-center gap-3">
@@ -286,7 +285,19 @@ export function WhyTeam({ team }: { team: WhyContent["team"] }) {
         </div>
 
         <div className="mt-16 flex justify-center">
-          <Pill link={team.cta} />
+          {/* Replaced Pill with GreenButton */}
+          <GreenButton 
+            label={team.cta.label} 
+            href={team.cta.url} 
+            bgColor="#23C55E"
+            size={{ 
+              width: "auto", 
+              height: "62px", 
+              paddingX: "30px", 
+              paddingY: "10px", 
+              fontSize: "16px" 
+            }}
+          />
         </div>
       </div>
     </section>
@@ -299,12 +310,7 @@ function WhyTeamCard({ member }: { member: WhyTeamMember }) {
     <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col lg:flex-row min-h-[715px]">
       
       <div className={`relative w-full lg:w-1/2 min-h-[400px] lg:min-h-full ${isImageRight ? "lg:order-last" : ""}`}>
-        <Image
-          src={member.image}
-          alt={member.name}
-          fill
-          className="object-cover object-center"
-        />
+        <Image src={member.image} alt={member.name} fill className="object-cover object-center" />
       </div>
 
       <div className={`relative z-10 flex flex-col justify-center p-10 md:p-16 w-full lg:w-1/2 text-white ${isImageRight ? "lg:order-first" : ""}`}>

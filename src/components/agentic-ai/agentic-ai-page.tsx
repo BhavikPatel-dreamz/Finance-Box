@@ -14,14 +14,14 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
-      
+
       {/* 1. Hero Section */}
       <section className="relative w-full h-[525px] flex flex-col overflow-hidden bg-[#07110d]">
         <div className="absolute inset-0 z-0">
-          <div 
+          <div
             className="absolute inset-0 opacity-40"
             style={{
-              backgroundImage: 
+              backgroundImage:
                 "linear-gradient(rgba(40,92,62,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(40,92,62,0.35) 1px, transparent 1px)",
               backgroundSize: "56px 56px",
             }}
@@ -34,7 +34,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
 
           <div className="flex-1 flex items-center w-full max-w-6xl mx-auto px-6 pb-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-              
+
               <div>
                 <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#23C55E] font-mono mb-6">
                   {content.hero.eyebrow}
@@ -57,12 +57,19 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                     </li>
                   ))}
                 </ul>
-                <GreenButton 
-                  label={content.hero.cta.label} 
-                  href={content.hero.cta.url} 
+
+                {/* Updated Button Size */}
+                <GreenButton
+                  label={content.hero.cta.label}
+                  href={content.hero.cta.url}
                   bgColor="#ffffff"
-                  textColor="#0B0D0C"
-                  size={{ width: "232px", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
+                  size={{
+                    width: "232px",
+                    height: "62px",
+                    paddingX: "30px",
+                    paddingY: "10px",
+                    fontSize: "16px"
+                  }}
                 />
               </div>
 
@@ -74,7 +81,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       {/* 2. What is Agentic AI Section */}
       <section className="bg-white px-6 py-24">
         <div className="mx-auto w-full max-w-[1280px]">
-          
+
           <div className="flex flex-col lg:flex-row justify-between gap-10 mb-16">
             <div className="max-w-xl">
               <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#121826] font-mono mb-6">
@@ -113,7 +120,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       {/* 3. Build your own Agentic AI Section */}
       <section className="bg-white px-6 pb-24">
         <div className="mx-auto w-full max-w-[1280px] bg-[#EDE9E6] rounded-[10px] p-12 lg:p-20 text-center">
-          
+
           <h2 className="text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-4">
             {content.buildYourOwn.title}
             <span className="text-[#23C55E] font-black italic">{content.buildYourOwn.highlight}</span>
@@ -124,8 +131,8 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
             {content.buildYourOwn.agents.map((agent, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="bg-white rounded-[10px] p-8 flex flex-col min-h-[255px]"
               >
                 <div className="flex h-[60px] w-[60px] items-center justify-center rounded-lg border border-gray-200 bg-white mb-6">
@@ -145,15 +152,15 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       {/* 4. People Ops, Payroll & IT Section */}
       <section className="bg-[#121826] px-6 py-24 text-white">
         <div className="mx-auto w-full max-w-[1280px]">
-          
+
           <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
             {content.peopleOps.title}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 bg-[#191f2c] rounded-[10px] border border-white/5 overflow-hidden">
             {content.peopleOps.agents.map((agent, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="p-10 flex flex-col min-h-[286px] border-r border-b md:border-b-0 border-white/5 last:border-r-0"
               >
                 <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 bg-white/5 mb-6">
@@ -173,7 +180,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       {/* 5. Ops & Compliance Section */}
       <section className="bg-white px-6 py-24 text-[#16181d]">
         <div className="mx-auto w-full max-w-[1280px]">
-          
+
           <h2 className="text-center text-[44px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
             {content.opsCompliance.title}
           </h2>
@@ -188,7 +195,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/90 via-[#121826]/20 to-transparent" />
-                
+
                 <div className="relative z-10 p-8 w-full text-white">
                   <h3 className="text-[24px] font-semibold leading-[1.2] mb-3">
                     {card.title}
@@ -212,11 +219,11 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
           </h2>
         </div>
 
-        <div 
+        <div
           className="w-full overflow-x-auto overflow-y-hidden flex gap-4 px-6 pb-4"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          <style dangerouslySetInnerHTML={{__html: `.overflow-x-auto::-webkit-scrollbar { display: none; }`}} />
+          <style dangerouslySetInnerHTML={{ __html: `.overflow-x-auto::-webkit-scrollbar { display: none; }` }} />
           <div className="flex gap-4 mx-auto min-w-max">
             {content.partners.logos.map((partner, idx) => (
               <div key={idx} className="shrink-0 flex h-[200px] w-[200px] items-center justify-center rounded-[10px] border border-gray-200 bg-white p-6">
@@ -232,7 +239,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       {/* 7. Proven Architecture */}
       <section className="bg-white px-6 pb-24 text-[#16181d]">
         <div className="mx-auto w-full max-w-[1280px]">
-          
+
           <div className="text-center mb-16">
             <h2 className="text-[50px] font-medium leading-[1.05] tracking-[-0.8px]">
               {content.provenArchitecture.title}
@@ -248,12 +255,12 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                 <div className="relative w-full h-[320px] rounded-[10px] overflow-hidden mb-6">
                   <Image src={card.image} alt={card.title} fill className="object-cover" />
                 </div>
-                
+
                 <div className="mb-6">
                   <h3 className="text-[24px] font-semibold leading-[1.0] mb-2">{card.title}</h3>
                   {card.text && <p className="text-[16px] font-normal leading-[150%] text-[#121826]">{card.text}</p>}
                 </div>
-                
+
                 <ul className="space-y-3 mt-auto">
                   {card.bullets.map((bullet, bIdx) => (
                     <li key={bIdx} className="flex items-start gap-3">
@@ -272,11 +279,10 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
         </div>
       </section>
 
-            {/* 8. Waitlist Section */}
+      {/* 8. Waitlist Section */}
       <section className="bg-[#121826] px-6 py-24 text-white">
         <div className="mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          
-          {/* Left Side: Text (Top Aligned) */}
+
           <div className="max-w-md lg:pt-4">
             <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6">
               {content.waitlist.title}
@@ -287,25 +293,24 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
             </p>
           </div>
 
-          {/* Right Side: Form */}
           <div className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
             <form className="flex flex-col gap-4">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Name"
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
               />
-              <input 
-                type="email" 
+              <input
+                type="email"
                 placeholder="Work E-mail"
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
               />
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Company"
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
               />
-              <textarea 
+              <textarea
                 placeholder="Write your message..."
                 rows={5}
                 className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] resize-none"
@@ -337,7 +342,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
           <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-12">
             {content.faq.title}
           </h2>
-          
+
           <Accordion items={content.faq.items} />
         </div>
       </section>
