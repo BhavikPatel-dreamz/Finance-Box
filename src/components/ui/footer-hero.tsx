@@ -30,7 +30,7 @@ export function FooterHero({
                 src={bgImage}
                 alt="Background"
                 fill
-                className="object-cover opacity-100"
+                className="object-fill opacity-100" // object-cover se object-fill kiya
                 priority
               />
             </div>
