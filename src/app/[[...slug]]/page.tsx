@@ -152,13 +152,16 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
     return <AgenticAiPage sections={sections} />;
   }
 
-  // FIX: sections pass kiya
   if (loaded.uri === "/knowledge-hub/") {
     const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
     return <KnowledgeHubPage sections={sections} />;
   }
   
-  if (loaded.uri === "/people-operations/") return <PeopleOperationsPage />;
+  // FIX: sections pass kiya
+  if (loaded.uri === "/people-operations/") {
+    const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
+    return <PeopleOperationsPage sections={sections} />;
+  }
 
   if (!loaded.uri || loaded.result.status === "not-found") notFound();
 

@@ -1,26 +1,86 @@
+import Image from "next/image";
 import { HomeHeader } from "@/components/home/home-header";
 import { HomeFooter } from "@/components/home/home-page";
 import { homeContent } from "@/content/home";
+import { mergePeopleOperations } from "./merge";
+import { peopleOperationsContent } from "@/content/people-operations";
+import type { RawSection } from "@/lib/wordpress/content";
 
-export function PeopleOperationsPage() {
+export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
+  const content = mergePeopleOperations(peopleOperationsContent, sections);
+
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
-      <div className="bg-[#07140f]">
-        <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
-      </div>
-      <main className="flex-1 flex flex-col items-center justify-center px-6 py-32 text-center">
-        <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#3DDC84]/10 mb-8">
-          <svg className="w-10 h-10 text-[#3DDC84]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-          </svg>
+      
+      {/* 1. Hero Section (Header + Hero = 525px) */}
+      <section className="relative w-full h-[525px] flex flex-col overflow-hidden bg-[#07110d]">
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="absolute inset-0 opacity-40"
+            style={{
+              backgroundImage: 
+                "linear-gradient(rgba(40,92,62,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(40,92,62,0.35) 1px, transparent 1px)",
+              backgroundSize: "56px 56px",
+            }}
+          />
+          <div className="absolute inset-x-0 bottom-0 h-64 bg-[radial-gradient(ellipse_at_bottom,rgba(35,197,94,0.15),transparent_70%)]" />
         </div>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          People Operations Page Under Development
-        </h1>
-        <p className="mt-6 max-w-xl text-lg text-gray-500">
-          We are currently crafting a brand new experience for this page. Please check back soon!
-        </p>
-      </main>
+
+        <div className="relative z-10 flex flex-col h-full">
+          <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
+
+          <div className="flex-1 flex items-center w-full max-w-6xl mx-auto px-6 pb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+              
+              <div>
+                <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#23C55E] font-mono mb-6">
+                  {content.hero.eyebrow}
+                </p>
+                <h1 className="text-[54px] font-medium leading-[1.1] tracking-[-0.8px] text-white mb-6">
+                  {content.hero.title}
+                  <span className="text-[#23C55E]">{content.hero.highlight}</span>
+                </h1>
+              </div>
+
+              <div className="max-w-md lg:justify-self-end">
+                <p className="text-[16px] font-light leading-[160%] text-white/80 mb-8">
+                  {content.hero.text}
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Naya Section: Intro (Image Left, Text Right) */}
+      <section className="bg-white px-6 py-24 text-[#16181d]">
+        <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          
+          {/* Left Side: Image */}
+          <div className="w-full lg:w-[554px] shrink-0 relative aspect-[554/643] rounded-[16px] overflow-hidden">
+            <Image
+              src={content.intro.image}
+              alt="FIAB People Operations"
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          {/* Right Side: Text */}
+          <div className="w-full lg:flex-1">
+            <h2 className="text-[36px] font-medium leading-[1.3] tracking-[-0.8px] mb-6">
+              {content.intro.title}
+              <span className="font-bold italic text-[#23C55E]">{content.intro.highlight}</span>
+            </h2>
+            <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70">
+              {content.intro.text}
+            </p>
+          </div>
+
+        </div>
+      </section>
+
       <HomeFooter footer={homeContent.footer} />
     </div>
   );
