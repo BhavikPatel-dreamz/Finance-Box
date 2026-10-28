@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { HomeContent } from "@/content/home";
+import { GreenButton } from "../ui/green-button";
 
 function headingParts(title: string, highlight: string) {
   const trimmed = title.trim();
@@ -26,17 +27,19 @@ export function FounderMoments({ founders }: { founders: HomeContent["founders"]
             <span className="mt-1 block text-[#3DDC84]">{heading.highlight}</span>
           </h2>
           <p className="mt-5 max-w-[28rem] text-[15px] leading-6 text-[#66707c]">{founders.text}</p>
-          <a
+          <GreenButton
+            label={founders.cta.label}
             href={founders.cta.url}
-            className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#1b2028] py-2.5 pr-2.5 pl-5 text-sm font-semibold text-white"
-          >
-            {founders.cta.label}
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/30">
-              <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden="true">
-                <path d="M4 8h8M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </a>
+            bgColor="#1b2028"
+            textColor="#ffffff"
+            size={{
+              width: "184px",
+              height: "62px",
+              paddingX: "30px",
+              paddingY: "10px",
+              fontSize: "16px"
+            }}
+          />
         </div>
         <div className="grid gap-3">
           {founders.cards.map((card, index) => {

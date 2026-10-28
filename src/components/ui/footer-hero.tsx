@@ -21,8 +21,9 @@ export function FooterHero({
   return (
     <section className="bg-white px-6 py-12">
       <div className="mx-auto w-full max-w-6xl">
-        {/* Container with exact height/width constraints */}
-        <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-6 py-16 md:py-24 min-h-[342px] w-full max-w-[1279px] mx-auto">
+        
+        {/* Container exactly 1279x342 */}
+        <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-6 h-[342px] w-full max-w-[1279px] mx-auto">
           
           {bgImage && (
             <div className="absolute inset-0 z-0">
@@ -30,7 +31,7 @@ export function FooterHero({
                 src={bgImage}
                 alt="Background"
                 fill
-                className="object-fill opacity-100" // object-cover se object-fill kiya
+                className="object-cover opacity-100" // object-cover se image container ke andar crop hogi, stretch nahi
                 priority
               />
             </div>

@@ -1,12 +1,14 @@
 import { FounderMoments } from "@/components/home/founder-moments";
 import { Leadership } from "@/components/home/leadership-team";
-
-export { Leadership };
 import { HomeHeader } from "@/components/home/home-header";
 import { mergeHome } from "@/components/home/merge";
 import type { HomeContent, HomeLogo } from "@/content/home";
 import { homeContent } from "@/content/home";
 import type { RawSection } from "@/lib/wordpress/content";
+import { GreenButton } from "@/components/ui/green-button";
+import { FooterHero } from "@/components/ui/footer-hero";
+
+export { Leadership };
 
 export function HomePage({ sections }: { sections: RawSection[] }) {
   const content = mergeHome(homeContent, sections);
@@ -27,39 +29,6 @@ export function HomePage({ sections }: { sections: RawSection[] }) {
       </main>
       <HomeFooter footer={content.footer} />
     </div>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current">
-      <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden="true">
-        <path d="M4 8h8M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </span>
-  );
-}
-
-function Button({
-  link,
-  tone = "green",
-  icon = false,
-}: {
-  link: { label: string; url: string };
-  tone?: "green" | "dark" | "line";
-  icon?: boolean;
-}) {
-  const className =
-    tone === "green"
-      ? "bg-[#3DDC84] text-[#06210f]"
-      : tone === "line"
-        ? "border border-white/20 text-white"
-        : "bg-white text-[#07110d]";
-  return (
-    <a href={link.url} className={`inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold ${className}`}>
-      {link.label}
-      {icon ? <ArrowIcon /> : null}
-    </a>
   );
 }
 
@@ -87,7 +56,13 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
             {hero.text}
           </p>
           <div className="mt-6">
-            <Button link={hero.primary} tone="dark" icon />
+            <GreenButton
+              label={hero.primary.label}
+              href={hero.primary.url}
+              bgColor="#ffffff"
+              textColor="#07110d"
+              size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+            />
           </div>
         </div>
         <div className="relative pb-8">
@@ -109,7 +84,13 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
           </div>
           <CashChart title={hero.chartTitle} range={hero.chartRange} />
           <div className="mt-4 flex justify-end sm:absolute sm:right-0 sm:-bottom-2">
-            <Button link={hero.call} icon />
+            <GreenButton
+              label={hero.call.label}
+              href={hero.call.url}
+              bgColor="#23C55E"
+              textColor="#07110d"
+              size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+            />
           </div>
         </div>
       </div>
@@ -280,7 +261,17 @@ export function Growth({ growth }: { growth: HomeContent["growth"] }) {
           ))}
         </ul>
         <div className="mt-10 flex justify-center">
-          <Button link={growth.cta} icon />
+          <GreenButton
+            label={growth.cta.label}
+            href={growth.cta.url}
+            size={{
+              width: "236px",
+              height: "62px",
+              paddingX: "30px",
+              paddingY: "10px",
+              fontSize: "16px"
+            }}
+          />
         </div>
       </div>
     </section>
@@ -342,14 +333,13 @@ export function Decisions({ decisions }: { decisions: HomeContent["decisions"] }
             ))}
           </ul>
           <div className="mt-6">
-            <a href={decisions.cta.url} className="inline-flex items-center gap-3 rounded-full bg-[#1c2128] py-3 pr-3 pl-5 text-sm font-semibold text-white">
-              {decisions.cta.label}
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/30">
-                <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden="true">
-                  <path d="M4 8h8M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </a>
+            <GreenButton
+              label={decisions.cta.label}
+              href={decisions.cta.url}
+              bgColor="#1c2128"
+              textColor="#ffffff"
+              size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+            />
           </div>
         </div>
       </div>
@@ -360,32 +350,19 @@ export function Decisions({ decisions }: { decisions: HomeContent["decisions"] }
 export function Pressure({ pressure }: { pressure: HomeContent["pressure"] }) {
   const emphasis = pressure.emphasis.trim();
   const parts = emphasis && pressure.title.includes(emphasis) ? pressure.title.split(emphasis) : null;
+  
+  const title = parts ? parts[0].trim() : pressure.title;
+  const highlight = emphasis;
 
   return (
     <section id="contact" className="bg-white px-6 py-16">
-      <div className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[28px] bg-[#0d1520] px-6 py-16 text-center text-white">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-56 bg-[radial-gradient(circle_at_left,rgba(34,160,90,0.45),transparent_68%)]" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-64 bg-[radial-gradient(circle_at_right,rgba(18,90,55,0.55),transparent_70%)]" />
-        <div className="pointer-events-none absolute inset-y-6 left-4 w-16 bg-[repeating-linear-gradient(90deg,transparent,transparent_7px,rgba(255,255,255,0.14)_8px)]" />
-        <div className="pointer-events-none absolute inset-y-6 right-4 w-16 bg-[repeating-linear-gradient(90deg,transparent,transparent_7px,rgba(255,255,255,0.14)_8px)]" />
-        <div className="relative">
-          <h2 className="text-3xl font-semibold tracking-tight sm:text-5xl">
-            {parts ? (
-              <>
-                {parts[0]}
-                <em className="font-medium italic">{emphasis}</em>
-                {parts.slice(1).join(emphasis)}
-              </>
-            ) : (
-              pressure.title
-            )}
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-white/70">{pressure.text}</p>
-          <div className="mt-8">
-            <Button link={pressure.cta} icon />
-          </div>
-        </div>
-      </div>
+      <FooterHero
+        title={title}
+        highlight={highlight}
+        text={pressure.text}
+        buttonLabel={pressure.cta.label}
+        buttonUrl={pressure.cta.url}
+      />
     </section>
   );
 }
