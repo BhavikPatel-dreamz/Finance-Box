@@ -33,7 +33,7 @@ export function FounderMoments({ founders }: { founders: HomeContent["founders"]
             bgColor="#1b2028"
             textColor="#ffffff"
             size={{
-              width: "184px",
+              width: "auto",
               height: "62px",
               paddingX: "30px",
               paddingY: "10px",

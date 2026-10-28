@@ -46,7 +46,6 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
       <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-6 py-14 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
         <div>
           <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] text-[#3DDC84] uppercase">
-            <span className="h-1.5 w-1.5 bg-[#3DDC84]" />
             {hero.eyebrow}
           </p>
           <h1 className="mt-5 max-w-xl text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl">
@@ -61,7 +60,13 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
               href={hero.primary.url}
               bgColor="#ffffff"
               textColor="#07110d"
-              size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+              size={{
+                width: "auto",
+                height: "62px",
+                paddingX: "30px",
+                paddingY: "10px",
+                fontSize: "16px"
+              }}
             />
           </div>
         </div>
@@ -89,7 +94,13 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
               href={hero.call.url}
               bgColor="#23C55E"
               textColor="#07110d"
-              size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+              size={{
+                width: "auto",
+                height: "62px",
+                paddingX: "30px",
+                paddingY: "10px",
+                fontSize: "16px"
+              }}
             />
           </div>
         </div>
@@ -265,7 +276,7 @@ export function Growth({ growth }: { growth: HomeContent["growth"] }) {
             label={growth.cta.label}
             href={growth.cta.url}
             size={{
-              width: "236px",
+              width: "auto",
               height: "62px",
               paddingX: "30px",
               paddingY: "10px",
@@ -338,7 +349,13 @@ export function Decisions({ decisions }: { decisions: HomeContent["decisions"] }
               href={decisions.cta.url}
               bgColor="#1c2128"
               textColor="#ffffff"
-              size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+              size={{
+                width: "auto",
+                height: "62px",
+                paddingX: "30px",
+                paddingY: "10px",
+                fontSize: "16px"
+              }}
             />
           </div>
         </div>
@@ -350,7 +367,7 @@ export function Decisions({ decisions }: { decisions: HomeContent["decisions"] }
 export function Pressure({ pressure }: { pressure: HomeContent["pressure"] }) {
   const emphasis = pressure.emphasis.trim();
   const parts = emphasis && pressure.title.includes(emphasis) ? pressure.title.split(emphasis) : null;
-  
+
   const title = parts ? parts[0].trim() : pressure.title;
   const highlight = emphasis;
 
