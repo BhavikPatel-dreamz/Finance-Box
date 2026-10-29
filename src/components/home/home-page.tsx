@@ -1,40 +1,31 @@
-import { FounderMoments } from "@/components/home/founder-moments";
-import { Leadership } from "@/components/home/leadership-team";
+import Image from "next/image";
 import { HomeHeader } from "@/components/home/home-header";
 import { mergeHome } from "@/components/home/merge";
-import type { HomeContent, HomeLogo } from "@/content/home";
+import type { HomeContent } from "@/content/home";
 import { homeContent } from "@/content/home";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
-import { FooterHero } from "@/components/ui/footer-hero";
-
-export { Leadership };
+import { Founders } from "@/components/home/founders";
 
 export function HomePage({ sections }: { sections: RawSection[] }) {
   const content = mergeHome(homeContent, sections);
 
   return (
     <div id="top" className="min-h-screen bg-[#07090f] text-white">
-      <HomeHeader header={content.header} />
-      <main>
-        <Hero hero={content.hero} />
-        <LogoRow trust={content.trust} logos={content.logos} />
-        <FounderMoments founders={content.founders} />
-        <Difference difference={content.difference} />
-        <Growth growth={content.growth} />
-        <Partners partners={content.partners} />
-        <Decisions decisions={content.decisions} />
-        <Leadership leadership={content.leadership} />
-        <Pressure pressure={content.pressure} />
-      </main>
+      <Hero hero={content.hero} header={content.header} />
+      <LogoRow trust={content.trust} />
+      <Founders founders={content.founders} />
+      <Difference difference={content.difference} />
+      <Growth growth={content.growth} />
       <HomeFooter footer={content.footer} />
     </div>
   );
 }
 
-export function Hero({ hero }: { hero: HomeContent["hero"] }) {
+export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: HomeContent["header"] }) {
   return (
     <section id="product" className="relative overflow-hidden bg-[#07110d]">
+      
       <div
         className="pointer-events-none absolute inset-0 opacity-50"
         style={{
@@ -43,65 +34,95 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
           backgroundSize: "56px 56px",
         }}
       />
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-6 py-14 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
-        <div>
-          <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.16em] text-[#3DDC84] uppercase">
-            {hero.eyebrow}
-          </p>
-          <h1 className="mt-5 max-w-xl text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl">
-            {hero.title} <span className="text-[#3DDC84]">{hero.highlight}</span>
-          </h1>
-          <p className="mt-6 max-w-xl rounded-2xl border border-white/10 bg-[#0c1612]/80 p-4 text-sm leading-6 text-white/75">
-            {hero.text}
-          </p>
-          <div className="mt-6">
-            <GreenButton
-              label={hero.primary.label}
-              href={hero.primary.url}
-              bgColor="#ffffff"
-              textColor="#07110d"
-              size={{
-                width: "auto",
-                height: "62px",
-                paddingX: "30px",
-                paddingY: "10px",
-                fontSize: "16px"
-              }}
-            />
+      
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-[radial-gradient(ellipse_at_bottom,rgba(35,197,94,0.15),transparent_70%)]" />
+
+      <div className="relative mx-auto w-full max-w-[1442px] h-[771px] px-6 flex flex-col">
+        
+        <HomeHeader header={header} surface="plain" logoHref="/" />
+
+        <div className="relative flex-1 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pb-6 pt-10">
+          
+          <div>
+            <p className="inline-flex items-center gap-2 text-[14px] font-medium tracking-[1.5px] text-[#23C55E] uppercase font-mono">
+              {hero.eyebrow}
+            </p>
+            <h1 className="mt-6 text-[54px] lg:text-[84px] leading-[1.1] tracking-[-0.8px]">
+              <span className="font-light">{hero.title}</span>{" "}
+              <span className="font-bold text-[#23C55E]">{hero.highlight}</span>
+            </h1>
+            <p className="mt-8 max-w-xl text-[18px] font-light leading-[160%] text-white/80">
+              {hero.text}
+            </p>
+            <div className="mt-10">
+              <GreenButton
+                label={hero.primary.label}
+                href={hero.primary.url}
+                bgColor="#ffffff"
+                textColor="#07110d"
+                size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
+              />
+            </div>
           </div>
-        </div>
-        <div className="relative pb-8">
-          <div className="grid gap-3 sm:grid-cols-[0.78fr_1.22fr]">
-            <article className="rounded-2xl border border-white/10 bg-[#0c1c16] p-4">
-              <p className="text-[10px] font-semibold tracking-[0.14em] text-white/55 uppercase">{hero.closeLabel}</p>
-              <p className="mt-3 text-4xl font-semibold text-[#3DDC84]">
-                {hero.closeValue} <span className="text-base font-medium text-white/80">{hero.closeUnit}</span>
-              </p>
-              <p className="mt-2 text-xs text-[#3DDC84]">↓ {hero.closeTrend}</p>
-            </article>
-            <article className="rounded-2xl border border-white/10 bg-[#0c1c16] p-4">
-              <p className="text-[10px] font-semibold tracking-[0.14em] text-white/55 uppercase">{hero.runwayLabel}</p>
-              <p className="mt-3 text-4xl font-semibold text-[#3DDC84]">
-                {hero.runwayValue} <span className="text-base font-medium text-white/80">{hero.runwayUnit}</span>
-              </p>
-              <p className="mt-2 text-xs text-[#3DDC84]">{hero.runwayTrend}</p>
-            </article>
-          </div>
-          <CashChart title={hero.chartTitle} range={hero.chartRange} />
-          <div className="mt-4 flex justify-end sm:absolute sm:right-0 sm:-bottom-2">
-            <GreenButton
-              label={hero.call.label}
-              href={hero.call.url}
-              bgColor="#23C55E"
-              textColor="#07110d"
-              size={{
-                width: "auto",
-                height: "62px",
-                paddingX: "30px",
-                paddingY: "10px",
-                fontSize: "16px"
-              }}
-            />
+
+          <div className="relative w-full flex flex-col items-end pt-32">
+            
+            <div className="relative w-full max-w-[519px]">
+              
+              <div className="absolute -top-[120px] -left-[80px] w-[176px] h-[137px] bg-[#121826] border border-white/10 p-5 z-20">
+                <p className="text-[12px] font-mono text-white/70 uppercase tracking-[0.86px] leading-none mb-3">
+                  {hero.closeLabel}
+                </p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-[40px] font-medium text-[#23C55E] leading-[16px]">
+                    {hero.closeValue}
+                  </span>
+                  <span className="text-[12px] font-medium text-white/80 font-sans leading-[16px]">
+                    {hero.closeUnit}
+                  </span>
+                </div>
+                <p className="mt-2 text-[12px] font-normal text-white/60 leading-[13px]">
+                  ↓ {hero.closeTrend}
+                </p>
+              </div>
+
+              <div className="absolute -top-[160px] right-0 w-[196px] h-[152px] bg-[#121826] border border-white/10 p-5 z-20">
+                <p className="text-[12px] font-mono text-white/70 uppercase tracking-[0.86px] leading-none mb-3">
+                  {hero.runwayLabel}
+                </p>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-[40px] font-medium text-[#23C55E] leading-[16px]">
+                    {hero.runwayValue}
+                  </span>
+                  <span className="text-[12px] font-medium text-white/80 font-sans leading-[16px]">
+                    {hero.runwayUnit}
+                  </span>
+                </div>
+                <p className="mt-2 text-[12px] font-normal text-white/60 leading-[13px]">
+                  {hero.runwayTrend}
+                </p>
+              </div>
+
+              <div className="relative w-full h-[293px] overflow-hidden z-10">
+                <Image
+                  src="/home/chart.png"
+                  alt={hero.chartTitle}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+            </div>
+
+            <div className="mt-12 flex justify-end w-full max-w-[519px]">
+              <GreenButton
+                label={hero.call.label}
+                href={hero.call.url}
+                bgColor="#23C55E"
+                textColor="#07110d"
+                size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
+              />
+            </div>
+            
           </div>
         </div>
       </div>
@@ -109,54 +130,26 @@ export function Hero({ hero }: { hero: HomeContent["hero"] }) {
   );
 }
 
-function CashChart({ title, range }: { title: string; range: string }) {
-  const months = ["AUG", "NOV", "FEB", "MAY", "JUL"];
-  return (
-    <div className="mt-3 rounded-2xl border border-white/10 bg-[#071018] p-4">
-      <div className="flex items-center justify-between text-[10px] font-semibold tracking-[0.14em] text-white/55 uppercase">
-        <span>{title}</span>
-        <span>{range}</span>
-      </div>
-      <svg viewBox="0 0 520 170" className="mt-2 h-36 w-full" role="img" aria-label={title}>
-        {[36, 72, 108, 144].map((y) => (
-          <line key={y} x1="16" x2="504" y1={y} y2={y} stroke="rgba(255,255,255,0.08)" />
-        ))}
-        {months.map((_, index) => (
-          <line key={index} x1={40 + index * 112} x2={40 + index * 112} y1="16" y2="150" stroke="rgba(255,255,255,0.06)" />
-        ))}
-        <path d="M24 132 C 70 128, 90 118, 130 104 S 190 78, 230 76 S 290 84, 330 70 S 400 40, 496 28" fill="none" stroke="#f4f7fb" strokeWidth="2.4" />
-      </svg>
-      <div className="flex justify-between px-2 text-[10px] tracking-wide text-white/40">
-        {months.map((month) => (
-          <span key={month}>{month}</span>
-        ))}
-      </div>
-    </div>
-  );
-}
+function LogoRow({ trust }: { trust: HomeContent["trust"] }) {
+  const logos = [
+    "/home/logos/standard-bots.png",
+    "/home/logos/american-robotics.png",
+    "/home/logos/ondas.png",
+    "/home/logos/neumera.png",
+    "/home/logos/vetcelerater.png",
+    "/home/logos/embolx.png",
+  ];
 
-function logoRow(logos: HomeLogo[]) {
-  if (logos.length === 0 || logos.length >= 6) return logos;
-  const filled = [...logos];
-  while (filled.length < 6) {
-    const source = logos[filled.length % logos.length];
-    filled.push({ ...source, name: `${source.name} ${filled.length + 1}` });
-  }
-  return filled;
-}
-
-export function LogoRow({ trust, logos }: { trust: HomeContent["trust"]; logos: HomeLogo[] }) {
-  const row = logoRow(logos);
   return (
-    <section aria-label="Customers" className="bg-white text-[#1c2430]">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-start gap-6 px-6 py-7 md:flex-row md:items-center md:gap-8">
-        <p className="w-[9.75rem] shrink-0 text-[13px] leading-[1.35] font-semibold">
-          {trust.lead} <span className="text-[#21C65E]">{trust.stat}</span> {trust.detail}
+    <section className="bg-white text-[#1c2430] border-b border-[#13362A]/10">
+      <div className="mx-auto flex w-full max-w-[1442px] h-[80px] items-center justify-between gap-8 px-6">
+        <p className="w-[200px] shrink-0 text-[18px] leading-[1.2] font-medium tracking-[-0.6px]">
+          {trust.lead} <span className="font-bold">{trust.stat}</span> {trust.detail}
         </p>
-        <ul className="flex w-full flex-1 flex-wrap items-center justify-between gap-x-5 gap-y-4">
-          {row.map((item) => (
-            <li key={item.name} className="flex h-10 items-center">
-              <img src={item.image.url} alt={item.image.alt || item.name} className="h-8 w-auto max-w-[7.5rem] object-contain" />
+        <ul className="flex flex-1 items-center justify-between gap-4">
+          {logos.map((src, idx) => (
+            <li key={idx} className="flex items-center justify-center w-[170px] h-[60px]">
+              <img src={src} alt="Partner Logo" className="w-full h-full object-contain" />
             </li>
           ))}
         </ul>
@@ -165,221 +158,145 @@ export function LogoRow({ trust, logos }: { trust: HomeContent["trust"]; logos: 
   );
 }
 
-const differenceIcons = [
-  <svg key="coins" viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-    <ellipse cx="12" cy="8" rx="6" ry="2.2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M6 8v3.2c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2V8" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M6 11.2v3.2c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2v-3.2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M12 13.2v2.2" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>,
-  <svg key="chart" viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-    <path d="M5 19V11M12 19V6M19 19v-6" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-  </svg>,
-  <svg key="crown" viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-    <path d="M4.5 16.5h15M6 16.5 7.2 9.5 12 13l4.8-3.5L18 16.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    <path d="M12 6.5v2.2" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="12" cy="5.4" r="0.9" fill="currentColor" />
-  </svg>,
-  <svg key="layers" viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-    <path d="M12 4.5 19.5 8 12 11.5 4.5 8 12 4.5Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    <path d="M4.5 12 12 15.5 19.5 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    <path d="M4.5 16 12 19.5 19.5 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-  </svg>,
-  <svg key="bot" viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-    <path d="M12 4.5v2" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="12" cy="4.2" r="0.8" fill="currentColor" />
-    <rect x="6.5" y="7" width="11" height="9.5" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="10" cy="11.5" r="0.9" fill="currentColor" />
-    <circle cx="14" cy="11.5" r="0.9" fill="currentColor" />
-    <path d="M9.2 14.4h5.6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>,
-];
+// Updated Difference Section with bg-[#121826]
+function Difference({ difference }: { difference: HomeContent["difference"] }) {
+  const icons = [
+    "/icons/one-finace-team.png",
+    "/icons/build-for-growing.png",
+    "/icons/scale-with-company.png",
+    "/icons/cost-intelligence.png",
+    "/icons/automation.png",
+  ];
 
-export function Difference({ difference }: { difference: HomeContent["difference"] }) {
   return (
-    <section className="px-6 py-20">
-      <div className="mx-auto w-full max-w-6xl">
-        <h2 className="text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">{difference.title}</h2>
-        <div className="mt-12 overflow-hidden rounded-[28px] border border-white/12 bg-white/12">
-          <div className="grid gap-px lg:grid-cols-3">
-            {difference.cards.map((card, index) => {
-              const light = card.tone === "light";
-              return (
-                <article key={`${card.title}-${index}`} className={`flex min-h-[280px] flex-col p-8 ${light ? "bg-white text-[#16181d]" : "bg-[#10141c] text-white"}`}>
-                  <span className={`inline-flex h-11 w-11 items-center justify-center rounded-full ${light ? "bg-[#e8f8ee] text-[#1ea85a]" : "border border-white/15 text-white"}`}>
-                    {differenceIcons[index % differenceIcons.length]}
-                  </span>
-                  <h3 className="mt-8 text-lg font-semibold tracking-tight">{card.title}</h3>
-                  <p className={`mt-3 text-sm leading-6 ${light ? "text-[#5c6570]" : "text-white/65"}`}>{card.text}</p>
-                </article>
-              );
-            })}
-            <article className="flex min-h-[280px] flex-col justify-between bg-[#3DDC84] p-8 text-white">
-              <p className="text-xs font-semibold tracking-[0.2em] uppercase">{difference.statEyebrow}</p>
-              <div>
-                <p className="text-6xl leading-none font-semibold tracking-tight sm:text-7xl">{difference.statValue}</p>
-                <p className="mt-3 text-base">{difference.statLabel}</p>
-              </div>
-            </article>
+    <section className="bg-[#121826] px-6 py-24 text-white">
+      <div className="mx-auto w-full max-w-[1280px]">
+        
+        <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16">
+          {difference.title.split("FIAB")[0]}
+          <span className="font-black italic">FIAB</span>
+          {difference.title.split("FIAB")[1]}
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[9px] overflow-hidden">
+          
+          <div className="bg-white text-[#121826] p-10 flex flex-col min-h-[383px] border-r border-white/10">
+            <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-6">
+              <img src={icons[0]} alt="Icon" className="h-6 w-6 object-contain" />
+            </div>
+            <h3 className="text-[24px] font-semibold leading-[1.2] mb-4">{difference.cards[0].title}</h3>
+            <p className="text-[16px] leading-[140%] text-[#121826]/70">{difference.cards[0].text}</p>
           </div>
+
+          {difference.cards.slice(1, 3).map((card, idx) => (
+            <div key={idx} className="bg-[#0c1220] p-10 flex flex-col min-h-[383px] border-r border-white/10">
+              <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/20 mb-6">
+                <img src={icons[idx + 1]} alt="Icon" className="h-6 w-6 object-contain" />
+              </div>
+              <h3 className="text-[24px] font-semibold leading-[1.2] mb-4">{card.title}</h3>
+              <p className="text-[16px] leading-[140%] text-white/70">{card.text}</p>
+            </div>
+          ))}
+
+          {difference.cards.slice(3, 5).map((card, idx) => (
+            <div key={idx} className="bg-[#0c1220] p-10 flex flex-col min-h-[383px] border-t border-r border-white/10">
+              <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/20 mb-6">
+                <img src={icons[idx + 3]} alt="Icon" className="h-6 w-6 object-contain" />
+              </div>
+              <h3 className="text-[24px] font-semibold leading-[1.2] mb-4">{card.title}</h3>
+              <p className="text-[16px] leading-[140%] text-white/70">{card.text}</p>
+            </div>
+          ))}
+
+          <div className="bg-[#23C55E] p-10 flex flex-col justify-between min-h-[383px] border-t border-white/10 text-white">
+            <p className="text-[20px] font-mono font-medium tracking-wide uppercase">
+              {difference.statEyebrow}
+            </p>
+            <div>
+              <p className="text-[120px] font-normal leading-[40px] tracking-[-2px]">{difference.statValue}</p>
+              <p className="text-[20px] font-medium leading-[1.1] mt-2">{difference.statLabel}</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
   );
 }
 
-export function Growth({ growth }: { growth: HomeContent["growth"] }) {
+function Growth({ growth }: { growth: HomeContent["growth"] }) {
   return (
-    <section id="pricing" className="px-6 py-20">
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="grid items-end gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+    <section className="bg-[#121826] px-6 py-24 text-white">
+      <div className="mx-auto w-full max-w-[1280px]">
+        
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12">
           <div>
-            <p className="text-xs font-semibold tracking-[0.2em] text-[#3DDC84] uppercase">— {growth.eyebrow}</p>
-            <h2 className="mt-4 max-w-xl text-4xl leading-[1.05] font-semibold tracking-tight text-white sm:text-5xl">{growth.title}</h2>
+            <p className="text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-4">
+              — {growth.eyebrow}
+            </p>
+            <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px]">
+              {growth.title}
+            </h2>
           </div>
-          <p className="max-w-sm text-sm leading-6 text-white/70 lg:justify-self-end lg:pb-2">{growth.text}</p>
+          <p className="max-w-md text-[16px] font-light leading-[160%] text-white/70 lg:pb-2">
+            {growth.text}
+          </p>
         </div>
-        <figure className="relative mt-10 overflow-hidden rounded-[28px]">
-          <img src={growth.image.url} alt={growth.image.alt} className="h-[280px] w-full object-cover sm:h-[460px]" />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 bg-gradient-to-t from-black/75 via-black/30 to-transparent p-6 sm:flex-row sm:items-end sm:justify-between sm:p-8">
-            {growth.overlay ? <p className="max-w-md text-2xl font-semibold text-white sm:text-3xl">{growth.overlay}</p> : <span />}
-            <ol className="flex flex-wrap gap-x-4 gap-y-2 text-[11px] font-semibold tracking-[0.14em] text-white uppercase">
+
+        <div className="relative w-full h-[551px] rounded-[10px] overflow-hidden mb-8">
+          <Image
+            src="/home/build-together.png"
+            alt="Clarity is Built Together"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#121826] via-[#121826]/40 to-transparent" />
+          
+          <div className="absolute bottom-0 left-0 w-full p-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <h3 className="text-[40px] font-medium leading-[1.1] text-white max-w-lg">
+              {growth.overlay}
+            </h3>
+            
+            <ol className="flex flex-wrap gap-x-6 gap-y-2 text-[12px] font-mono tracking-[1.08px] text-white uppercase">
               {growth.stages.map((stage, index) => (
                 <li key={stage} className="inline-flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#3DDC84]" />
+                  <span className="h-[6px] w-[6px] rounded-full bg-[#23C55E]" />
                   {String(index + 1).padStart(2, "0")} — {stage}
                 </li>
               ))}
             </ol>
           </div>
-        </figure>
-        <ul className="mt-6 grid gap-4 lg:grid-cols-3">
-          {growth.cards.map((card) => (
-            <li key={card.title} className="rounded-2xl border border-white/12 bg-[#12161f] p-6">
-              <h3 className="text-xl font-semibold tracking-tight">{card.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-white/65">{card.text}</p>
-              {card.items.length > 0 ? (
-                <ul className="mt-6 rounded-xl bg-[#0b0f16] px-4 py-3">
-                  {card.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 py-1.5 text-sm text-white/85">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-[#3DDC84]" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </li>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {growth.cards.map((card, idx) => (
+            <div key={idx} className="bg-[#191f2c] rounded-[10px] p-8 border border-white/5 flex flex-col min-h-[344px]">
+              <h3 className="text-[30px] font-semibold leading-[1.1] mb-3">{card.title}</h3>
+              <p className="text-[16px] font-normal leading-[150%] text-white/60 mb-6">{card.text}</p>
+              
+              <ul className="mt-auto bg-[#091024] rounded-[8px] p-5 space-y-3">
+                {card.items.map((item, bIdx) => (
+                  <li key={bIdx} className="flex items-start gap-3">
+                    <span className="mt-1.5 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
+                    <span className="text-[16px] font-medium leading-[1.2] text-white/90">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
-        <div className="mt-10 flex justify-center">
+        </div>
+
+        <div className="mt-12 flex justify-center">
           <GreenButton
             label={growth.cta.label}
             href={growth.cta.url}
-            size={{
-              width: "auto",
-              height: "62px",
-              paddingX: "30px",
-              paddingY: "10px",
-              fontSize: "16px"
-            }}
+            bgColor="#23C55E"
+            textColor="#07110d"
+            size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
           />
         </div>
+
       </div>
-    </section>
-  );
-}
-
-export function Partners({ partners }: { partners: HomeContent["partners"] }) {
-  return (
-    <section id="partners" className="bg-white px-6 py-16 text-[#16181d]">
-      <div className="mx-auto w-full max-w-6xl">
-        <h2 className="text-center text-4xl font-semibold tracking-tight sm:text-5xl">{partners.title}</h2>
-        <ul className="mt-12 flex flex-wrap items-start justify-between gap-x-6 gap-y-8">
-          {partners.logos.map((item) => (
-            <li key={item.name} className="flex w-[7.5rem] flex-col items-center text-center">
-              {item.image ? (
-                <img src={item.image.url} alt={item.image.alt || item.name} className="h-10 w-auto max-w-full object-contain" />
-              ) : (
-                <span className="flex h-10 items-center text-lg leading-none font-bold tracking-tight">{item.name}</span>
-              )}
-              {item.caption ? <span className="mt-2 text-[10px] leading-tight text-[#8b919a]">{item.caption}</span> : null}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-export function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
-  return (
-    <section id="insights" className="bg-white px-6 py-8 pb-20">
-      <div className="mx-auto grid w-full max-w-6xl gap-3 rounded-[28px] bg-[#f3f4f1] p-3 lg:grid-cols-[0.92fr_1.08fr]">
-        <article className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[22px] bg-[#1d2a22] p-8 text-white">
-          {decisions.portrait ? (
-            <img src={decisions.portrait.url} alt={decisions.portrait.alt || decisions.name} className="absolute inset-0 h-full w-full object-cover" />
-          ) : null}
-          <p className="relative w-fit rounded-full bg-white px-3 py-1 text-[11px] font-semibold tracking-[0.12em] text-[#16181d] uppercase">{decisions.badge}</p>
-          <div className="relative">
-            <p className="max-w-md text-2xl leading-snug font-semibold text-balance sm:text-3xl">“{decisions.quote}”</p>
-            <p className="mt-6 text-sm font-semibold">{decisions.name}</p>
-            <p className="text-sm text-white/75">{decisions.role}</p>
-          </div>
-        </article>
-        <div className="flex flex-col justify-center px-4 py-8 sm:px-8">
-          <p className="text-xs font-semibold tracking-[0.18em] text-[#8b919a] uppercase">— {decisions.eyebrow}</p>
-          <h2 className="mt-4 max-w-md text-4xl leading-[1.05] font-semibold tracking-tight text-[#16181d] sm:text-5xl">{decisions.title}</h2>
-          <p className="mt-4 max-w-md text-sm leading-6 text-[#5c6570]">{decisions.text}</p>
-          <ul className="mt-8 grid gap-3">
-            {decisions.cards.map((card) => (
-              <li key={card.title} className="flex items-center gap-4 rounded-2xl bg-white px-5 py-4">
-                <p className="w-[4.6rem] shrink-0 text-lg leading-tight font-semibold text-[#21C65E]">{card.title}</p>
-                <p className="flex-1 text-sm leading-5 text-[#5c6570]">{card.text}</p>
-                <a href={decisions.cta.url} aria-label={card.title} className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f3f4f6] text-[#9aa1ab]">
-                  <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden="true">
-                    <path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-6">
-            <GreenButton
-              label={decisions.cta.label}
-              href={decisions.cta.url}
-              bgColor="#1c2128"
-              textColor="#ffffff"
-              size={{
-                width: "auto",
-                height: "62px",
-                paddingX: "30px",
-                paddingY: "10px",
-                fontSize: "16px"
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function Pressure({ pressure }: { pressure: HomeContent["pressure"] }) {
-  const emphasis = pressure.emphasis.trim();
-  const parts = emphasis && pressure.title.includes(emphasis) ? pressure.title.split(emphasis) : null;
-
-  const title = parts ? parts[0].trim() : pressure.title;
-  const highlight = emphasis;
-
-  return (
-    <section id="contact" className="bg-white px-6 py-16">
-      <FooterHero
-        title={title}
-        highlight={highlight}
-        text={pressure.text}
-        buttonLabel={pressure.cta.label}
-        buttonUrl={pressure.cta.url}
-      />
     </section>
   );
 }
