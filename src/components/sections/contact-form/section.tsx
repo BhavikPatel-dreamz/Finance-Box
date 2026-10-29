@@ -1,58 +1,81 @@
-import { useId } from "react";
+import type { ReactNode } from "react";
 import { z } from "zod";
-import { ContactForm } from "@/components/forms/contact-form";
+import { ContactUsPage } from "@/components/contact/contact-us-page";
+import { mergeContactUs } from "@/components/contact/merge";
+import { contactUsContent } from "@/content/contact-us";
 import type { SectionRegistration } from "@/components/sections/registry";
+import type { RawSection } from "@/lib/wordpress/content";
 
-const contactSectionSchema = z
-  .object({
-    __typename: z.string().optional(),
-    heading: z.string().nullable().optional(),
-    intro: z.string().nullable().optional(),
-  })
-  .strip();
+const sectionSchema = z.object({ __typename: z.string().optional() }).passthrough();
 
-export type ContactFormSectionData = {
-  heading: string;
-  intro: string;
-};
-
-function ContactFormSection({ data }: { data: ContactFormSectionData }) {
-  const headingId = useId();
-
-  return (
-    <section aria-labelledby={data.heading ? headingId : undefined} className="max-w-xl">
-      {data.heading ? (
-        <h2 id={headingId} className="text-2xl font-semibold tracking-tight">
-          {data.heading}
-        </h2>
-      ) : null}
-      {data.intro ? <p className="mt-3 text-muted">{data.intro}</p> : null}
-      <div className={data.heading || data.intro ? "mt-6" : undefined}>
-        <ContactForm />
-      </div>
-    </section>
-  );
+function contactSection(
+  key: string,
+  typePattern: RegExp,
+  fields: readonly string[],
+  selection: string,
+  render: (section: RawSection) => ReactNode,
+): SectionRegistration {
+  return {
+    key,
+    matchesType(typeName) {
+      return typePattern.test(typeName);
+    },
+    fields,
+    selection,
+    render(value) {
+      const parsed = sectionSchema.safeParse(value);
+      if (!parsed.success) return { ok: false };
+      return { ok: true, node: render(parsed.data as RawSection) };
+    },
+  };
 }
 
-export const contactFormSection: SectionRegistration = {
-  key: "contact_form",
-  matchesType(typeName) {
-    return /(?:^|_)ContactForm$/.test(typeName);
-  },
-  fields: ["heading", "intro"],
-  render(value) {
-    const parsed = contactSectionSchema.safeParse(value);
-    if (!parsed.success) return { ok: false };
-    return {
-      ok: true,
-      node: (
-        <ContactFormSection
-          data={{
-            heading: parsed.data.heading?.trim() ?? "",
-            intro: parsed.data.intro?.trim() ?? "",
-          }}
-        />
-      ),
-    };
-  },
-};
+export const contactSections: readonly SectionRegistration[] = [
+  // 1. Contact Banner (Hero)
+  contactSection(
+    "contact_banner",
+    /ContactBannerSectionLayout$/,
+    ["subtitle", "title", "description"],
+    `subtitle title description`,
+    (section) => <ContactUsPage sections={[section]} />,
+  ),
+  
+  // 2. Contact Form
+  contactSection(
+    "contact_form",
+    /ContactFormSectionLayout$/,
+    ["contactImage", "contactInformation", "contactEmail", "formTitle", "formDescription", "formShortcode"],
+    `
+      contactImage { node { sourceUrl altText } }
+      contactInformation
+      contactEmail
+      formTitle
+      formDescription
+      formShortcode
+    `,
+    (section) => <ContactUsPage sections={[section]} />,
+  ),
+
+  // 3. Contact Connected (Social)
+  contactSection(
+    "contact_connected",
+    /ContactConnectedSectionLayout$/,
+    ["connectedTitle", "connectedDescription", "linkedinBox", "newsletterBox"],
+    `
+      connectedTitle
+      connectedDescription
+      linkedinBox {
+        title
+        image { node { sourceUrl altText } }
+        description
+        ctaButton { title url }
+      }
+      newsletterBox {
+        title
+        newsletterFormShortcode
+        description
+      }
+    `,
+    (section) => <ContactUsPage sections={[section]} />,
+  ),
+];

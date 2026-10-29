@@ -1,4 +1,4 @@
-import { contactFormSection } from "@/components/sections/contact-form/section";
+import { contactSections } from "@/components/sections/contact-form/section";
 import { homeSections } from "@/components/sections/home/section";
 import { servicesSections } from "@/components/sections/services/section";
 import { whySections } from "@/components/sections/why/section";
@@ -12,8 +12,8 @@ export type SectionRegistration = {
 };
 
 export const sectionRegistry: readonly SectionRegistration[] = [
-  contactFormSection,
   ...homeSections,
   ...servicesSections,
   ...whySections,
+  ...contactSections,
 ];

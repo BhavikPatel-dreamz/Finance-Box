@@ -1,11 +1,37 @@
 import Image from "next/image";
 import { HomeHeader } from "@/components/home/home-header";
 import { HomeFooter } from "@/components/home/home-page";
-import { homeContent } from "@/content/home";
+import { homeContent, type HomeContent } from "@/content/home";
 import { mergeContactUs } from "./merge";
 import { contactUsContent } from "@/content/contact-us";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
+
+function withSiteLinks<T extends { url: string }>(value: T): T {
+  return { ...value, url: value.url.startsWith("#") ? `/${value.url}` : value.url };
+}
+
+function siteHeader(header: HomeContent["header"]): HomeContent["header"] {
+  return {
+    ...header,
+    links: header.links.map((link) => ({
+      ...link,
+      ...withSiteLinks(link),
+      children: link.children.map(withSiteLinks),
+    })),
+    cta: withSiteLinks(header.cta),
+  };
+}
+
+function siteFooter(footer: HomeContent["footer"]): HomeContent["footer"] {
+  return {
+    ...footer,
+    columns: footer.columns.map((column) => ({
+      ...column,
+      links: column.links.map(withSiteLinks),
+    })),
+  };
+}
 
 export function ContactUsPage({ sections }: { sections: RawSection[] }) {
   const content = mergeContactUs(contactUsContent, sections);
@@ -27,17 +53,17 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
         </div>
 
         <div className="relative z-10 flex flex-col h-full">
-          <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
+          <HomeHeader header={siteHeader(homeContent.header)} surface="plain" logoHref="/" />
 
           <div className="flex-1 flex flex-col items-center justify-center text-center px-6 pb-12">
             <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#23C55E] font-mono mb-6">
-              GET IN TOUCH
+              {content.hero.eyebrow}
             </p>
             <h1 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px] text-white mb-6">
-              Let's start <span className="text-[#23C55E]">a conversation</span>
+              {content.hero.title} <span className="text-[#23C55E]">{content.hero.highlight}</span>
             </h1>
             <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-2xl">
-              Ready to transform your financial operations? Reach out and we'll get back to you within 24 hours.
+              {content.hero.text}
             </p>
           </div>
         </div>
@@ -230,7 +256,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
         </div>
       </section>
 
-      <HomeFooter footer={homeContent.footer} />
+      <HomeFooter footer={siteFooter(homeContent.footer)} />
     </div>
   );
 }

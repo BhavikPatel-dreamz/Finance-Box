@@ -1,4 +1,10 @@
 export type ContactUsContent = {
+  hero: {
+    eyebrow: string;
+    title: string;
+    highlight: string;
+    text: string;
+  };
   formSection: {
     title: string;
     subtitle: string;
@@ -33,6 +39,12 @@ export type ContactUsContent = {
 };
 
 export const contactUsContent: ContactUsContent = {
+  hero: {
+    eyebrow: "GET IN TOUCH",
+    title: "Let's start",
+    highlight: "a conversation",
+    text: "Ready to transform your financial operations? Reach out and we'll get back to you within 24 hours.",
+  },
   formSection: {
     title: "Let's Talk About Your Business",
     subtitle: "Give us a little context about your business so we can better understand how to help.",

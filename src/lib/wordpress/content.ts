@@ -18,7 +18,7 @@ import {
 import { canonicalUrl, plainText, siteOrigin } from "@/lib/wordpress/text";
 
 const PAGE_BUILDER_FIELD = "pageBuilder";
-const PAGE_SECTIONS_FIELD = "pageSections";
+const PAGE_SECTIONS_FIELD = "pageBuilder";
 const IDENTIFIER = /^[_A-Za-z][_0-9A-Za-z]*$/;
 type TypeRef = {
   kind?: string | null;
@@ -381,12 +381,14 @@ async function loadSections(uri: string, preview: boolean) {
 
     const data = await graphqlRequest<{
       nodeByUri?: {
-        pageBuilder?: { pageSections?: RawSection[] | null } | null;
+        pageBuilder?: Record<string, any> | null;
       } | null;
     }>(query, { uri }, { preview });
 
+    const sections = data.nodeByUri?.pageBuilder?.[PAGE_SECTIONS_FIELD] ?? [];
+
     return {
-      sections: data.nodeByUri?.pageBuilder?.pageSections ?? [],
+      sections: sections as RawSection[],
       sectionError: null,
     };
   } catch (error) {
