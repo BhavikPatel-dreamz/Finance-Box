@@ -3,10 +3,10 @@ import { HomeFooter } from "@/components/home/home-page";
 import { HomeHeader } from "@/components/home/home-header";
 import { mergeWhy } from "@/components/why/merge";
 import { homeContent, type HomeContent } from "@/content/home";
-import { whyContent, type WhyContent, type WhyLink, type WhyTeamMember } from "@/content/why-fiab";
+import { whyContent, type WhyContent, type WhyTeamMember } from "@/content/why-fiab";
 import type { RawSection } from "@/lib/wordpress/content";
 import { FooterHero } from "@/components/ui/footer-hero";
-import { GreenButton } from "@/components/ui/green-button"; // Import GreenButton
+import { Button } from "@/components/ui/button";
 
 export function WhyPage({ sections }: { sections: RawSection[] }) {
   const content = mergeWhy(whyContent, sections);
@@ -57,70 +57,56 @@ function siteFooter(footer: HomeContent["footer"]): HomeContent["footer"] {
   };
 }
 
-function Pill({ link }: { link: WhyLink }) {
-  return (
-    <a href={link.url} className="inline-flex items-center gap-3 rounded-full bg-white px-6 py-4 text-[16px] font-semibold text-[#102018]">
-      {link.label}
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current">
-        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden="true">
-          <path d="M4 8h8M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </span>
-    </a>
-  );
-}
-
 export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: HomeContent["header"] }) {
   return (
-    <section className="relative overflow-hidden bg-[#07140f] text-white">
+    <section className="relative overflow-hidden bg-[#121826] text-white">
       <div
-        className="pointer-events-none absolute inset-0 opacity-70"
-        style={{ backgroundImage: "url(/why/diamond.svg)", backgroundSize: "84px 84px" }}
+        className="pointer-events-none absolute inset-0 bg-cover bg-top bg-no-repeat"
+        style={{ backgroundImage: "url(/why/why-bg-img.svg)" }}
       />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-[radial-gradient(ellipse_at_bottom,rgba(28,140,72,0.55),transparent_70%)]" />
       <div className="relative">
         <HomeHeader header={siteHeader(header)} surface="plain" logoHref="/" />
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 pt-10 pb-8 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="mx-auto grid w-full max-w-[1095px] items-start gap-8 px-6 lg:px-0 pt-16 pb-10 sm:pt-20 sm:pb-10 lg:pt-[84px] lg:pb-[42px] lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <p className="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.18em] text-white/70 uppercase">
-              <span className="h-px w-6 bg-white/40" />
+            <p className="inline-flex items-center gap-3 text-[13px] font-mono tracking-[0.2em] text-white/70 uppercase">
+              <span className="h-[1.5px] w-4 bg-white/40" />
               {hero.eyebrow}
             </p>
-            <h1 className="mt-5 max-w-xl text-5xl leading-[0.95] font-semibold tracking-tight sm:text-6xl">
+            <h1 className="mt-4.5 text-4xl leading-[1.12] font-medium tracking-tight text-white sm:text-5xl lg:text-[54px]">
               {hero.title}
-              <span className="block whitespace-pre-line text-[#3DDC84]">{hero.highlight}</span>
+              <span className="block whitespace-pre-line text-[#23C55E]">{hero.highlight}</span>
             </h1>
           </div>
-          <div className="max-w-md lg:justify-self-end">
-            <p className="text-sm leading-6 text-white/75">{hero.text}</p>
-            <div className="mt-6">
-              {/* Replaced Pill with GreenButton */}
-              <GreenButton 
-                label={hero.cta.label} 
-                href={hero.cta.url} 
-                bgColor="#ffffff"
-                textColor="#07110d"
-                size={{ 
-                  width: "auto", 
-                  height: "62px", 
-                  paddingX: "30px", 
-                  paddingY: "10px", 
-                  fontSize: "16px" 
-                }}
-              />
+          <div className="max-w-[460px] lg:justify-self-end lg:pt-2.5">
+            <p className="text-[15px] sm:text-[16px] font-normal leading-[1.62] text-white/80">
+              {hero.text}
+            </p>
+            <div className="mt-8">
+              <Button color="white" text={hero.cta.label} href={hero.cta.url} />
             </div>
           </div>
         </div>
-        <ol className="relative mx-auto grid w-full max-w-6xl gap-6 border-t border-white/15 px-6 py-8 sm:grid-cols-3">
-          {hero.points.map((point) => (
-            <li key={point.number} className="border-white/15 sm:border-l sm:pl-6 sm:first:border-l-0 sm:first:pl-0">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#3DDC84] text-[11px] font-semibold text-[#3DDC84]">
-                {point.number}
-              </span>
-              <p className="mt-4 text-sm font-semibold">{point.title}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="relative mx-auto w-full max-w-[1095px] border-t border-white/10 px-6 lg:px-0">
+          <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
+            {hero.points.map((point, index) => (
+              <div
+                key={point.number}
+                className={`py-7 sm:py-8 lg:pt-5 lg:pb-24 flex flex-col items-start justify-start ${
+                  index === 0
+                    ? "px-6 sm:px-6 md:pl-6 md:pr-8"
+                    : "px-6 sm:px-6 md:pl-[50px] md:pr-6"
+                }`}
+              >
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#18202c] border border-white/10 text-[13px] font-semibold text-[#23C55E]">
+                  {point.number}
+                </span>
+                <p className="mt-3 text-[20px] font-semibold text-white tracking-tight leading-snug">
+                  {point.title}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -285,18 +271,10 @@ export function WhyTeam({ team }: { team: WhyContent["team"] }) {
         </div>
 
         <div className="mt-16 flex justify-center">
-          {/* Replaced Pill with GreenButton */}
-          <GreenButton 
-            label={team.cta.label} 
+          <Button 
+            color="green"
+            text={team.cta.label} 
             href={team.cta.url} 
-            bgColor="#23C55E"
-            size={{ 
-              width: "auto", 
-              height: "62px", 
-              paddingX: "30px", 
-              paddingY: "10px", 
-              fontSize: "16px" 
-            }}
           />
         </div>
       </div>

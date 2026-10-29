@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { HomeContent } from "@/content/home";
-import { GreenButton } from "@/components/ui/green-button";
+import { Button } from "@/components/ui/button";
 
 type NavLink = HomeContent["header"]["links"][number];
 
@@ -61,9 +61,9 @@ export function HomeHeader({
           }}
         />
       ) : null}
-      <div className="relative mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-4">
+      <div className="relative mx-auto flex w-full max-w-[1326px] items-center justify-between gap-6 px-3.75 py-7">
         <a href={logoHref} className="shrink-0">
-          <img src={header.logo.url} alt={header.logo.alt} className="h-10 w-auto" />
+          <img src={header.logo.url} alt={header.logo.alt} className="h-13.75 w-auto object-contain" />
         </a>
         <nav ref={navRef} aria-label="Primary" className="hidden items-center gap-7 text-sm text-white/85 md:flex">
           {header.links.map((link) => (
@@ -73,17 +73,12 @@ export function HomeHeader({
         
         {/* Updated Button Size */}
         <div className="hidden md:block">
-          <GreenButton
-            label={header.cta.label}
+          <Button
+            color="green"
+            size="header"
+            text={header.cta.label}
             href={header.cta.url}
-            size={{
-              width: "154px",
-              height: "44px",
-              paddingX: "20px",
-              paddingY: "10px",
-              fontSize: "14px"
-            }}
-            className="min-h-[44px]"
+            className="w-[154px]"
           />
         </div>
 
