@@ -9,19 +9,19 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#121826]">
+    <section className="founders-section bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#121826]">
       <div className="mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-2 gap-16">
         
         {/* Left Side: Text */}
         <div>
-          <Eyebrow variant="light" className="mb-6">
+          <Eyebrow variant="light" className="mb-8">
             {founders.eyebrow}
           </Eyebrow>
-          <h2 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px] mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             {founders.title}{" "}
             <span className="text-[#23C55E]">{founders.highlight}</span>
           </h2>
-          <p className="text-[16px] font-light leading-[160%] text-[#121826]/70 mb-10 max-w-md">
+          <p className="text-sm sm:text-base leading-[1.6] text-[#66707c] mt-5 mb-10 max-w-md">
             {founders.text}
           </p>
           <GreenButton
@@ -29,7 +29,6 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
             href={founders.cta.url}
             bgColor="#121826"
             textColor="#ffffff"
-            size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
           />
         </div>
 
@@ -40,18 +39,18 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
             return (
               <div 
                 key={index} 
-                className="bg-[#121826] rounded-[16px] overflow-hidden transition-all duration-300"
+                className="bg-[#121826] rounded-[14px] overflow-hidden transition-all duration-300"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                  className="w-full flex items-center justify-between p-5.5 text-left focus:outline-none"
                 >
-                  <span className="text-[20px] font-medium text-white pr-4">
+                  <span className="md:text-[25px] text-lg font-medium text-white pr-4">
                     {card.title}
                   </span>
                   
                   <span 
-                    className={`flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full transition-colors ${
+                    className={`flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full transition-colors ${
                       isOpen ? "bg-[#23C55E] text-[#121826]" : "bg-white/10 text-white"
                     }`}
                   >
@@ -70,7 +69,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
                 </button>
 
                 {isOpen && card.text && (
-                  <div className="px-6 pb-6 text-[16px] font-light leading-[160%] text-white/70">
+                  <div className="px-6 pb-6 text-base md:text-lg font-normal leading-[160%] text-white/70">
                     {card.text}
                   </div>
                 )}
