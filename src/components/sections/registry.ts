@@ -1,6 +1,6 @@
 import { contactSections } from "@/components/sections/contact-form/section";
 import { homeSections } from "@/components/sections/home/section";
-import { servicesSections } from "@/components/sections/services/section";
+// import { servicesSections } from "@/components/sections/services/section";
 import { whySections } from "@/components/sections/why/section";
 
 export type SectionRegistration = {
@@ -13,7 +13,7 @@ export type SectionRegistration = {
 
 export const sectionRegistry: readonly SectionRegistration[] = [
   ...homeSections,
-  ...servicesSections,
+  // ...servicesSections,
   ...whySections,
   ...contactSections,
 ];
