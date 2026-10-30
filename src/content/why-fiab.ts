@@ -150,7 +150,7 @@ export const whyContent: WhyContent = {
         work: "Established automation-first close playbooks; modernized ERP/AP stack patterns; guided multi-entity scale-ups.",
         tools: "NetSuite · Tipalti · Airbase · Rippling · Power BI / Tableau / Looker / Qlik",
         industries: "Logistics tech · Healthcare tech · Telecom · Real estate tech · Robotics · Insurance tech",
-        image: "/why/amit.png",
+        image: "/why/why-team-member-1.png",
         imagePosition: "right",
       },
       {
@@ -163,7 +163,7 @@ export const whyContent: WhyContent = {
         work: "Co-created success scorecards; streamlined co-selling and implementation.",
         tools: "NetSuite · Tipalti · Airbase · Rippling · CRM and project hubs",
         industries: "SaaS · Healthtech · Logistics tech · Telecom",
-        image: "/why/Berena.png",
+        image: "/why/why-team-member-2.png",
         imagePosition: "left",
       },
     ],

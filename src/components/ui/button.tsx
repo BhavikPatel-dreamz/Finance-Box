@@ -157,15 +157,15 @@ export function Button({
   let customStyle: React.CSSProperties | undefined = undefined;
 
   if (isHeader) {
-    sizeClasses = "h-[50px] min-h-[50px] px-5 text-[14px]";
+    sizeClasses = "sm:h-[50px] h-[40px] min-h-[40px] sm:min-h-[50px] px-3.75 text-[14px] sm:text-[16px]";
   } else if (is50px) {
     // 50px in desktop view, 30px horizontal padding, 18px font size on desktop
     // Responsive: 44px mobile -> 48px tablet -> 50px desktop
-    sizeClasses = "h-[44px] min-h-[44px] px-5 text-[15px] md:h-[48px] md:min-h-[48px] md:px-[30px] md:text-[16px] lg:h-[50px] lg:min-h-[50px] lg:px-[30px] lg:text-[18px]";
+    sizeClasses = "sm:h-[44px] h-[40px] min-h-[40px] sm:min-h-[44px] px-3.75 text-[14px] md:h-[48px] md:min-h-[48px] md:px-[30px] md:text-[16px] lg:h-[50px] lg:min-h-[50px] lg:px-[30px] lg:text-[18px]";
   } else {
     // 62px in desktop view, 30px horizontal padding, 18px font size on desktop
     // Responsive: 50px mobile -> 56px tablet -> 62px desktop
-    sizeClasses = "h-[50px] min-h-[50px] px-6 text-[15px] md:h-[56px] md:min-h-[56px] md:px-[30px] md:text-[16px] lg:h-[62px] lg:min-h-[62px] lg:px-[30px] lg:text-[18px]";
+    sizeClasses = "sm:h-[50px] h-[40px] min-h-[40px] sm:min-h-[50px] px-3.75 text-[14px] md:h-[56px] md:min-h-[56px] md:px-[30px] md:text-[16px] lg:h-[62px] lg:min-h-[62px] lg:px-[30px] lg:text-[18px]";
   }
 
   // Handle custom width or dimensions from object if passed

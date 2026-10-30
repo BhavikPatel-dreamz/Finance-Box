@@ -106,6 +106,37 @@ button, input, select, textarea {
   transition-timing-function: linear !important;
 }
 
+/* iOS smooth touch scrolling */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Why Compare Table Responsive Grid Columns */
+.why-compare-table {
+  --col-first: minmax(170px, 1.3fr);
+  --col-featured: minmax(135px, 1.1fr);
+  --col-other: minmax(115px, 1fr);
+  --header-row-height: 88px;
+}
+
+@media (min-width: 640px) {
+  .why-compare-table {
+    --col-first: minmax(200px, 1.3fr);
+    --col-featured: minmax(160px, 1.15fr);
+    --col-other: minmax(130px, 1fr);
+    --header-row-height: 92px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .why-compare-table {
+    --col-first: minmax(240px, 1.4fr);
+    --col-featured: minmax(200px, 1.15fr);
+    --col-other: minmax(160px, 1fr);
+    --header-row-height: 96px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee {
     animation: none;
