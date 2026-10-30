@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { HomeContent } from "@/content/home";
 import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 
 type NavLink = HomeContent["header"]["links"][number];
 
@@ -61,8 +62,8 @@ export function HomeHeader({
           }}
         />
       ) : null}
-      <div className="relative mx-auto flex w-full max-w-[1326px] items-center justify-between gap-6 px-3.75 py-7">
-        <a href={logoHref} className="shrink-0">
+      <Container size="header" className="relative flex items-center justify-between gap-6 py-7">
+        <a href={logoHref} className="shrink-0 outline-0">
           <img src={header.logo.url} alt={header.logo.alt} className="h-13.75 w-auto object-contain" />
         </a>
         <nav ref={navRef} aria-label="Primary" className="hidden items-center gap-7 text-sm text-white/85 md:flex">
@@ -72,25 +73,53 @@ export function HomeHeader({
         </nav>
         
         {/* Updated Button Size */}
-        <div className="hidden md:block">
+        <div className="btn-cta hidden md:block">
           <Button
             color="green"
             size="header"
             text={header.cta.label}
             href={header.cta.url}
-            className="w-[154px]"
+            className="w-[154px] hover:!bg-white hover:!text-[#121826]"
           />
         </div>
 
         <button
           type="button"
-          className="relative rounded-full border border-white/15 px-3 py-2 text-sm text-white md:hidden"
+          className={`relative inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition-all duration-200 shadow-sm backdrop-blur-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#23C55E]/50 md:hidden ${
+            menuOpen
+              ? "border-[#23C55E]/40 bg-[#23C55E]/10 text-[#23C55E] hover:border-[#23C55E]/60 hover:bg-[#23C55E]/15"
+              : "border-white/15 bg-white/[0.06] text-white hover:border-white/30 hover:bg-white/[0.12]"
+          }`}
           aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           onClick={() => setMenuOpen((value) => !value)}
         >
-          Menu
+          <div className="relative flex h-3.5 w-4 flex-col justify-between" aria-hidden="true">
+            <span
+              className={`h-[1.5px] w-full rounded-full transition-all duration-300 ease-in-out ${
+                menuOpen
+                  ? "translate-y-[6px] rotate-45 bg-[#23C55E]"
+                  : "bg-white"
+              }`}
+            />
+            <span
+              className={`h-[1.5px] w-full rounded-full bg-white transition-all duration-200 ease-in-out ${
+                menuOpen ? "scale-x-0 opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`h-[1.5px] w-full rounded-full transition-all duration-300 ease-in-out ${
+                menuOpen
+                  ? "-translate-y-[6px] -rotate-45 bg-[#23C55E]"
+                  : "bg-white"
+              }`}
+            />
+          </div>
+          <span className="text-[13px] font-medium tracking-wide">
+            {menuOpen ? "Close" : "Menu"}
+          </span>
         </button>
-      </div>
+      </Container>
       {menuOpen ? (
         <nav aria-label="Mobile" className="relative flex flex-col gap-2 border-t border-white/10 px-6 py-4 text-sm md:hidden">
           {header.links.map((link) => (

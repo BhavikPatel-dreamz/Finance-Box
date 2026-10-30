@@ -15,11 +15,99 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-mono: var(--font-dm-mono), "DM Mono", monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Eyebrow common styles */
+.eyebrow {
+  font-family: var(--font-dm-mono), "DM Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  line-height: 18px;
+}
+
+/* Eyebrow for dark section background */
+.eyebrow-dark,
+.eyebrow-on-dark {
+  color: #FFFFFF;
+  opacity: 0.7;
+}
+
+/* Eyebrow for white section background */
+.eyebrow-light,
+.eyebrow-white,
+.eyebrow-on-light {
+  color: #121826;
+  opacity: 0.7;
+}
+
+/* Standard Project Container (1280px) */
+.container-1280 {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Header Container (1326px) */
+.container-header {
+  width: 100%;
+  max-width: 1326px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Container that aligns to max-w-[1280px] on the left and bleeds to edge on the right */
+.container-bleed-right {
+  padding-left: 1rem;
+  padding-right: 0;
+}
+@media (min-width: 640px) {
+  .container-bleed-right {
+    padding-left: max(1.5rem, calc((100% - 1280px) / 2));
+    padding-right: 0;
+  }
+}
+
+/* Continuous smooth marquee */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+.group:hover .animate-marquee,
+:has(> .animate-marquee):hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+.trusted-by-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
 }

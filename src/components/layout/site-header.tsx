@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { NavigationItem, SiteSettings } from "@/lib/wordpress/content";
+import { Container } from "@/components/ui/container";
 
 function itemHref(item: NavigationItem) {
   if (item.path.startsWith("/")) return item.path;
@@ -17,7 +18,7 @@ export function SiteHeader({
 
   return (
     <header className="border-b border-border">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-4">
+      <Container size="header" className="flex items-center justify-between gap-6 py-4">
         <Link href="/" className="text-base font-semibold tracking-tight">
           {settings.name}
         </Link>
@@ -46,7 +47,7 @@ export function SiteHeader({
             </ul>
           </nav>
         ) : null}
-      </div>
+      </Container>
     </header>
   );
 }

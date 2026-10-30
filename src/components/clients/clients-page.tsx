@@ -7,6 +7,7 @@ import { clientsContent, type ClientCaseStudy } from "@/content/clients";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
 import { FooterHero } from "@/components/ui/footer-hero";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 export function ClientsPage({ sections }: { sections: RawSection[] }) {
   const content = mergeClients(clientsContent, sections);
@@ -38,10 +39,10 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
         <div className="relative z-10">
           <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
 
-          <div className="mx-auto w-full max-w-6xl px-6 pt-24 pb-20 flex flex-col items-center text-center">
-            <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#23C55E] font-mono">
+          <div className="mx-auto w-full max-w-[1280px] px-6 pt-24 pb-20 flex flex-col items-center text-center">
+            <Eyebrow variant="dark">
               {content.hero.eyebrow}
-            </p>
+            </Eyebrow>
             <h1 className="mt-6 text-[54px] leading-[1] font-medium tracking-[-0.8px]">
               {content.hero.title}
               <span className="font-extrabold italic"> {content.hero.highlight}</span>
@@ -51,12 +52,12 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
             </p>
           </div>
 
-          <div className="mx-auto w-full max-w-[1140px] px-6 pb-20">
+          <div className="mx-auto w-full max-w-[1280px] px-6 pb-20">
             <div className="w-full border border-white/10 bg-[#07110d]/60 backdrop-blur-md flex flex-col lg:flex-row">
               <div className="flex-1 p-8 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center">
-                <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#23C55E] font-mono mb-4">
+                <Eyebrow variant="dark" className="mb-4">
                   {content.hero.clientProofTitle}
-                </p>
+                </Eyebrow>
                 <ul className="space-y-2">
                   {content.hero.clientProofItems.map((item, idx) => (
                     <li key={idx} className="text-[18px] font-medium leading-[140%]">
@@ -85,7 +86,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 
       {/* Case Studies Section */}
       <section className="bg-white px-6 py-20 text-[#16181d]">
-        <div className="mx-auto w-full max-w-6xl">
+        <div className="mx-auto w-full max-w-[1280px]">
           <h2 className="text-center text-[40px] font-medium tracking-tight mb-12">
             {content.caseStudies.title}
           </h2>
@@ -133,7 +134,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 
       {/* Reviews Section */}
       <section className="bg-[#121826] py-20 px-6">
-        <div className="mx-auto w-full max-w-6xl min-h-[985px] flex flex-col justify-center">
+        <div className="mx-auto w-full max-w-[1280px] min-h-[985px] flex flex-col justify-center">
           <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16 text-white">
             {content.reviewsSection.title}
           </h2>
@@ -291,9 +292,9 @@ function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: bo
       </div>
 
       <div className="flex flex-col justify-center p-8 md:p-12 lg:w-1/2 text-white">
-        <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#23C55E] font-mono mb-4">
+        <Eyebrow variant="dark" className="mb-4">
           {study.label}
-        </p>
+        </Eyebrow>
         <h3 className="text-[30px] font-semibold leading-[1.1] tracking-tight mb-8">
           {study.title}
         </h3>

@@ -1,5 +1,6 @@
 import { SectionRenderer } from "@/components/sections/section-renderer";
 import type { PublicPage, SiteSettings } from "@/lib/wordpress/content";
+import { Container } from "@/components/ui/container";
 
 export function PageShell({
   page,
@@ -19,7 +20,7 @@ export function PageShell({
       : null;
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 py-16">
+    <Container as="main" className="flex flex-1 flex-col px-6 py-16">
       <h1 className="text-4xl font-semibold tracking-tight">{page.title}</h1>
       {page.sections.length > 0 || page.sectionError ? (
         <div className="mt-10">
@@ -32,15 +33,15 @@ export function PageShell({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       ) : null}
-    </main>
+    </Container>
   );
 }
 
 export function StatusMessage({ title, body }: { title: string; body: string }) {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 py-16">
+    <Container as="main" className="flex flex-1 flex-col px-6 py-16">
       <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
       <p className="mt-4 max-w-2xl text-muted">{body}</p>
-    </main>
+    </Container>
   );
 }

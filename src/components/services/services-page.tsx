@@ -6,6 +6,7 @@ import { mergeServices } from "@/components/services/merge";
 import { servicesContent, type ServicesContent, type ServicesDetail, type ServicesLink, type ServicesStage } from "@/content/services";
 import { homeContent, type HomeContent } from "@/content/home";
 import type { RawSection } from "@/lib/wordpress/content";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 export function ServicesPage({ sections }: { sections: RawSection[] }) {
   const content = mergeServices(servicesContent, sections);
@@ -73,12 +74,11 @@ function Pill({ link, tone }: { link: ServicesLink; tone: "light" | "dark" | "in
 export function ServicesHero({ hero }: { hero: ServicesContent["hero"] }) {
   return (
     <section id="tiers" className="relative px-6 pt-8 pb-20">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="mx-auto grid w-full max-w-[1280px] items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <p className="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.18em] text-white/70 uppercase">
-            <span className="h-px w-6 bg-white/40" />
+          <Eyebrow variant="dark">
             {hero.eyebrow}
-          </p>
+          </Eyebrow>
           <h1 className="mt-5 max-w-xl text-5xl leading-[0.98] font-semibold tracking-tight text-balance sm:text-6xl">
             {hero.title} <span className="text-[#3DDC84]">{hero.highlight}</span>
           </h1>
@@ -149,13 +149,12 @@ const stageIcons: Record<ServicesStage["icon"], ReactNode> = {
 export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
   return (
     <section id="stages" className="bg-white px-6 py-20 text-[#16181d]">
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-[1280px]">
         <div className="grid items-end gap-6 lg:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <p className="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.18em] text-[#6d7580] uppercase">
-              <span className="h-px w-6 bg-[#6d7580]" />
+            <Eyebrow variant="light">
               {stages.eyebrow}
-            </p>
+            </Eyebrow>
             <h2 className="mt-4 max-w-xl text-5xl leading-[0.98] font-semibold tracking-tight">{stages.title}</h2>
           </div>
           <p className="max-w-sm text-sm leading-6 text-[#5d6570] lg:justify-self-end">{stages.text}</p>
@@ -182,7 +181,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
 export function ServicesDetail({ detail }: { detail: ServicesDetail }) {
   return (
     <section id={detail.anchor} className="border-t border-white/10 bg-[#0c1218] px-6 py-16">
-      <div className="mx-auto grid w-full max-w-6xl items-start gap-10 lg:grid-cols-[0.78fr_1.22fr]">
+      <div className="mx-auto grid w-full max-w-[1280px] items-start gap-10 lg:grid-cols-[0.78fr_1.22fr]">
         <div>
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#3DDC84] text-xs font-semibold text-[#3DDC84]">
             {detail.number}
@@ -220,7 +219,7 @@ export function ServicesDetail({ detail }: { detail: ServicesDetail }) {
 export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   return (
     <section id="cfo" className="bg-[#f4f3ef] px-6 py-16 text-[#14181f] sm:py-20">
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-[1280px]">
         <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
           <h2 className="max-w-[12ch] text-5xl leading-[0.96] font-semibold tracking-tight whitespace-pre-line sm:text-6xl">
             {cfo.title}
@@ -255,7 +254,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
 export function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
   return (
     <section id="cadence" className="bg-[#0c1218] px-6 py-20 text-center">
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-[1280px]">
         <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">{process.title}</h2>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-white/65">{process.text}</p>
         <ol className="mt-12 grid overflow-hidden rounded-xl border border-white/10 text-left md:grid-cols-5">
@@ -290,13 +289,12 @@ function italicTitle(title: string, highlight: string) {
 export function ServicesInvestors({ investors }: { investors: ServicesContent["investors"] }) {
   return (
     <section id="investors" className="overflow-hidden bg-[#070b12] py-20">
-      <div className="mx-auto w-full max-w-6xl px-6">
+      <div className="mx-auto w-full max-w-[1280px] px-6">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <p className="inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.18em] text-[#3DDC84] uppercase">
-              <span className="h-px w-6 bg-[#3DDC84]" />
+            <Eyebrow variant="dark">
               {investors.eyebrow}
-            </p>
+            </Eyebrow>
             <h2 className="mt-4 max-w-xl text-5xl leading-[0.96] font-semibold tracking-tight whitespace-pre-line sm:text-6xl">
               {italicTitle(investors.title, investors.highlight)}
             </h2>
@@ -324,7 +322,7 @@ export function ServicesDepth({ depth }: { depth: ServicesContent["depth"] }) {
   return (
     <section className="bg-[#0c1218] px-6 py-24 text-center">
       <div className="mx-auto w-full max-w-3xl">
-        <p className="text-[11px] font-semibold tracking-[0.18em] text-[#3DDC84] uppercase">{depth.eyebrow}</p>
+        <Eyebrow variant="dark">{depth.eyebrow}</Eyebrow>
         <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">{depth.title}</h2>
         <div className="mt-8">
           <Pill link={depth.cta} tone="light" />

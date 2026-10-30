@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { NavigationItem, SiteSettings } from "@/lib/wordpress/content";
+import { Container } from "@/components/ui/container";
 
 function itemHref(item: NavigationItem) {
   if (item.path.startsWith("/")) return item.path;
@@ -17,7 +18,7 @@ export function SiteFooter({
 
   return (
     <footer className="border-t border-border">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+      <Container className="flex flex-col gap-4 py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>© {settings.name}</p>
         {items.length > 0 ? (
           <nav aria-label="Footer">
@@ -40,7 +41,7 @@ export function SiteFooter({
             </ul>
           </nav>
         ) : null}
-      </div>
+      </Container>
     </footer>
   );
 }

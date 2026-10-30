@@ -99,7 +99,7 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 export function ArrowIcon({ isHeader = false, className = "" }: { isHeader?: boolean; className?: string }) {
-  const sizeClass = isHeader ? "h-[18px] w-[18px]" : "h-5 w-5 lg:h-[22px] lg:w-[22px]";
+  const sizeClass = isHeader ? "h-[18px] w-[18px] fill-[#1118281A]" : "h-5 w-5 lg:h-[22px] lg:w-[22px] fill-[#1118281A]";
   return (
     <span className={`inline-flex shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 ${className}`}>
       <svg

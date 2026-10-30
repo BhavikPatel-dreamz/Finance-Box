@@ -6,6 +6,7 @@ import { mergeContactUs } from "./merge";
 import { contactUsContent } from "@/content/contact-us";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 function withSiteLinks<T extends { url: string }>(value: T): T {
   return { ...value, url: value.url.startsWith("#") ? `/${value.url}` : value.url };
@@ -56,9 +57,9 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
           <HomeHeader header={siteHeader(homeContent.header)} surface="plain" logoHref="/" />
 
           <div className="flex-1 flex flex-col items-center justify-center text-center px-6 pb-12">
-            <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#23C55E] font-mono mb-6">
+            <Eyebrow variant="dark" className="mb-6">
               {content.hero.eyebrow}
-            </p>
+            </Eyebrow>
             <h1 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px] text-white mb-6">
               {content.hero.title} <span className="text-[#23C55E]">{content.hero.highlight}</span>
             </h1>

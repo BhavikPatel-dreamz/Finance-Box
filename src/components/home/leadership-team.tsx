@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { HomeContent } from "@/content/home";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 export function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
   const people = leadership.people;
@@ -16,9 +17,9 @@ export function Leadership({ leadership }: { leadership: HomeContent["leadership
 
   return (
     <section id="team" className="px-6 py-20">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="mx-auto grid w-full max-w-[1280px] items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
-          <p className="text-xs font-semibold tracking-[0.18em] text-[#3DDC84] uppercase">— {leadership.eyebrow}</p>
+          <Eyebrow variant="dark">{leadership.eyebrow}</Eyebrow>
           <h2 className="mt-4 max-w-md text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl">{leadership.title}</h2>
           <div className="mt-5 max-w-md space-y-4 text-sm leading-6 text-white/70">
             {leadership.text.split(/\n\n+/).map((paragraph) => (

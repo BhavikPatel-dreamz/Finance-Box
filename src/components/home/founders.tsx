@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { HomeContent } from "@/content/home";
 import { GreenButton } from "@/components/ui/green-button";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 export function Founders({ founders }: { founders: HomeContent["founders"] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -13,9 +14,9 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
         
         {/* Left Side: Text */}
         <div>
-          <p className="text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#121826]/60 mb-6">
-            — {founders.eyebrow}
-          </p>
+          <Eyebrow variant="light" className="mb-6">
+            {founders.eyebrow}
+          </Eyebrow>
           <h2 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px] mb-6">
             {founders.title}{" "}
             <span className="text-[#23C55E]">{founders.highlight}</span>

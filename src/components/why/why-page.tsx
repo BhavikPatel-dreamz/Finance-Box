@@ -1,23 +1,28 @@
+import { Fragment } from "react";
 import Image from "next/image";
 import { HomeFooter } from "@/components/home/home-page";
 import { HomeHeader } from "@/components/home/home-header";
+import { TrustedBy } from "@/components/home/trusted-by";
 import { mergeWhy } from "@/components/why/merge";
 import { homeContent, type HomeContent } from "@/content/home";
 import { whyContent, type WhyContent, type WhyTeamMember } from "@/content/why-fiab";
 import type { RawSection } from "@/lib/wordpress/content";
 import { FooterHero } from "@/components/ui/footer-hero";
 import { Button } from "@/components/ui/button";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import Container from "../ui/container";
 
 export function WhyPage({ sections }: { sections: RawSection[] }) {
   const content = mergeWhy(whyContent, sections);
   return (
     <div id="top" className="min-h-screen bg-white text-[#16181d]">
       <WhyHero hero={content.hero} header={homeContent.header} />
+      <TrustedBy trust={homeContent.trust} />
       <WhyCompare compare={content.compare} />
       <WhyHowWeWork howWeWork={content.howWeWork} />
       <WhyAbout aboutSection={content.aboutSection} />
       <WhyTeam team={content.team} />
-      
+
       <FooterHero
         title="See What an Embedded"
         highlight="Finance Team Changes"
@@ -61,50 +66,56 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
   return (
     <section className="relative overflow-hidden bg-[#121826] text-white">
       <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-top bg-no-repeat"
+        className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/why/why-bg-img.svg)" }}
       />
       <div className="relative">
         <HomeHeader header={siteHeader(header)} surface="plain" logoHref="/" />
-        <div className="mx-auto grid w-full max-w-[1095px] items-start gap-8 px-6 lg:px-0 pt-16 pb-10 sm:pt-20 sm:pb-10 lg:pt-[84px] lg:pb-[42px] lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <p className="inline-flex items-center gap-3 text-[13px] font-mono tracking-[0.2em] text-white/70 uppercase">
-              <span className="h-[1.5px] w-4 bg-white/40" />
-              {hero.eyebrow}
-            </p>
-            <h1 className="mt-4.5 text-4xl leading-[1.12] font-medium tracking-tight text-white sm:text-5xl lg:text-[54px]">
-              {hero.title}
-              <span className="block whitespace-pre-line text-[#23C55E]">{hero.highlight}</span>
-            </h1>
-          </div>
-          <div className="max-w-[460px] lg:justify-self-end lg:pt-2.5">
-            <p className="text-[15px] sm:text-[16px] font-normal leading-[1.62] text-white/80">
-              {hero.text}
-            </p>
-            <div className="mt-8">
-              <Button color="white" text={hero.cta.label} href={hero.cta.url} />
+        <div className="container w-full max-w-[1096px] mx-auto px-4 sm:px-6">
+          <div className="grid items-start gap-8 pt-16 pb-10 sm:pt-20 sm:pb-10 lg:pt-[84px] lg:pb-[60px] lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <Eyebrow variant="dark">
+                {hero.eyebrow}
+              </Eyebrow>
+              <h1 className="mt-4.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
+                {hero.title}
+                <span className="block whitespace-pre-line text-[#23C55E]">{hero.highlight}</span>
+              </h1>
+            </div>
+            <div className="max-w-[460px] lg:justify-self-end lg:pt-2.5">
+              <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white">
+                {hero.text}
+              </p>
+              <div className="mt-8">
+                <Button color="white" text={hero.cta.label} href={hero.cta.url} />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="relative mx-auto w-full max-w-[1095px] border-t border-white/10 px-6 lg:px-0">
-          <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
-            {hero.points.map((point, index) => (
-              <div
-                key={point.number}
-                className={`py-7 sm:py-8 lg:pt-5 lg:pb-24 flex flex-col items-start justify-start ${
-                  index === 0
-                    ? "px-6 sm:px-6 md:pl-6 md:pr-8"
-                    : "px-6 sm:px-6 md:pl-[50px] md:pr-6"
-                }`}
-              >
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#18202c] border border-white/10 text-[13px] font-semibold text-[#23C55E]">
-                  {point.number}
-                </span>
-                <p className="mt-3 text-[20px] font-semibold text-white tracking-tight leading-snug">
-                  {point.title}
-                </p>
+          <div className="relative pb-16 sm:pb-24">
+            <div
+              className="w-full border-y border-white/10 bg-[rgba(0,0,0,0.03)] backdrop-blur-[3px]"
+              style={{
+                backgroundColor: "rgba(0, 0, 0, 0.03)",
+                backdropFilter: "blur(3px)",
+                WebkitBackdropFilter: "blur(3px)",
+              }}
+            >
+              <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
+                {hero.points.map((point) => (
+                  <div
+                    key={point.number}
+                    className="flex min-h-[50px] md:h-[110px] md:flex-col lg:justify-between lg:items-start items-center p-4 sm:px-5 sm:py-4 lg:gap-0 gap-x-4"
+                  >
+                    <span className="point-number inline-flex h-8.5 w-8.5 items-center justify-center rounded-full bg-[#121826] border border-white/7 text-[14px] font-semibold text-[#23C55E]">
+                      {point.number}
+                    </span>
+                    <p className="text-[18px] sm:text-[20px] font-semibold text-white tracking-tight leading-snug">
+                      {point.title}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
@@ -113,98 +124,209 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
 }
 
 function Mark({ on }: { on: boolean }) {
-  return (
-    <span className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${on ? "bg-[#3DDC84] text-[#06210f]" : "bg-[#f3c3c3] text-[#c43b3b]"}`}>
-      {on ? (
-        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" role="img" aria-label="Included">
-          <path d="M3.5 8.2 6.4 11 12.5 4.8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      ) : (
-        <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" role="img" aria-label="Not included">
-          <path d="M4.5 4.5 11.5 11.5M11.5 4.5 4.5 11.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-        </svg>
-      )}
-    </span>
+  return on ? (
+    <img
+      src="/icons/right-icon.svg"
+      alt="Included"
+      width={23}
+      height={23}
+      className="h-[23px] w-[23px] inline-block object-contain"
+    />
+  ) : (
+    <img
+      src="/icons/close-icon.svg"
+      alt="Not included"
+      width={22}
+      height={22}
+      className="h-[22px] w-[22px] inline-block object-contain"
+    />
   );
 }
 
 export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
+  const featuredColIdx = compare.columns.findIndex((col) => col.featured);
+  const featuredGridCol = featuredColIdx >= 0 ? featuredColIdx + 2 : 2;
+  const totalCols = compare.columns.length + 1;
+  const totalRows = compare.rows.length + 1;
+
   return (
-    <section className="bg-white px-6 py-20 text-[#16181d]">
-      <div className="mx-auto w-full max-w-6xl">
+    <section className="why-compare bg-white py-16 sm:py-24 text-[#121826]">
+      <Container>
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">
+          <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             {compare.title}
-            <span className="mt-1 block font-serif text-[#3DDC84] italic">{compare.highlight}</span>
+            <span className="mt-1 block font-black text-[#23C55E] italic">{compare.highlight}</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[#66707c]">{compare.text}</p>
+          <p className="mx-auto mt-6 max-w-[680px] text-sm sm:text-base leading-[1.6] text-[#66707c]">
+            {compare.text}
+          </p>
         </div>
-        <div className="mt-12 overflow-x-auto">
-          <table className="w-full min-w-[880px] border-separate border-spacing-y-2 text-sm">
-            <thead>
-              <tr className="text-left">
-                <th className="px-5 pb-4 font-semibold">{compare.featureLabel}</th>
-                {compare.columns.map((column) => (
-                  <th
-                    key={column.label}
-                    className={
-                      column.featured
-                        ? "rounded-t-[28px] bg-[#101820] px-4 pt-8 pb-6 text-center text-white"
-                        : "px-4 pb-4 text-center font-semibold text-[#2a3038]"
-                    }
-                  >
-                    {column.featured && column.logo ? (
-                      <img src={column.logo.url} alt={column.logo.alt || column.label} className="mx-auto h-12 w-auto" />
-                    ) : (
-                      column.label
-                    )}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {compare.rows.map((item, rowIndex) => (
-                <tr key={item.label}>
-                  <th className="rounded-l-full bg-[#f6f6f4] px-5 py-4 text-left font-medium text-[#3a414b]">{item.label}</th>
-                  {compare.columns.map((column, index) => {
-                    const last = rowIndex === compare.rows.length - 1;
+
+        <div className="table-wrapper overflow-hidden">
+          <div className="mt-5 sm:mt-16 overflow-x-auto pt-11 pb-9 -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div className="min-w-[1280px]">
+              <div
+                role="table"
+                aria-label="Features Comparison"
+                className="relative rounded-[10px] bg-[#EDE9E6] grid items-stretch"
+                style={{
+                  gridTemplateColumns: `minmax(240px, 1.4fr) minmax(200px, 1.15fr) repeat(${Math.max(1, compare.columns.length - 1)}, minmax(160px, 1fr))`,
+                  gridTemplateRows: `96px repeat(${compare.rows.length}, 68px)`,
+                }}
+              >
+                {/* Layer 1: Alternating white rows with rounded-[10px] */}
+                {compare.rows.map((_, rowIndex) => {
+                  if (rowIndex % 2 === 0) {
                     return (
-                      <td
-                        key={column.label}
-                        className={
-                          column.featured
-                            ? `bg-[#101820] px-4 py-4 text-center ${last ? "rounded-b-[28px] pb-8" : ""}`
-                            : `bg-[#f6f6f4] px-4 py-4 text-center ${index === compare.columns.length - 1 ? "rounded-r-full" : ""}`
-                        }
-                      >
-                        <Mark on={item.values[index] === true} />
-                      </td>
+                      <div
+                        key={`white-row-${rowIndex}`}
+                        className="bg-[#FFFFFF] rounded-[10px] pointer-events-none z-0"
+                        style={{
+                          gridColumn: `1 / ${totalCols + 1}`,
+                          gridRow: rowIndex + 2,
+                        }}
+                      />
                     );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  }
+                  return null;
+                })}
+
+                {/* Layer 2: Vertical divider lines between non-featured columns */}
+                {compare.columns.map((_, idx) => {
+                  const gridCol = idx + 2;
+                  if (gridCol > featuredGridCol + 1) {
+                    return (
+                      <div
+                        key={`divider-${gridCol}`}
+                        className="border-l border-[#121826]/10 pointer-events-none z-[5]"
+                        style={{
+                          gridColumn: gridCol,
+                          gridRow: `1 / ${totalRows + 1}`,
+                        }}
+                      />
+                    );
+                  }
+                  return null;
+                })}
+
+                {/* Layer 3: Featured Column Dark Pillar (#121826) */}
+                <div
+                  className="bg-[#121826] rounded-[14px] pointer-events-none z-[10] -mt-8 sm:-mt-9 -mb-6 sm:-mb-7"
+                  style={{
+                    gridColumn: featuredGridCol,
+                    gridRow: `1 / ${totalRows + 1}`,
+                  }}
+                />
+
+                {/* Layer 4: Content Cells */}
+                {/* Column 1 Header: Features */}
+                <div
+                  role="columnheader"
+                  className="relative z-[20] flex items-center justify-start pl-6 sm:pl-8 pr-4 font-semibold text-[20px] sm:text-[22px] text-[#121826] tracking-tight"
+                  style={{ gridColumn: 1, gridRow: 1 }}
+                >
+                  {compare.featureLabel}
+                </div>
+
+                {/* Header Columns */}
+                {compare.columns.map((column, colIdx) => {
+                  const gridCol = colIdx + 2;
+                  const isFeatured = column.featured;
+
+                  if (isFeatured) {
+                    return (
+                      <div
+                        key={column.label}
+                        role="columnheader"
+                        className="relative z-[20] flex flex-col items-center justify-center px-4 -mt-8 sm:-mt-9 border-b border-white/[0.14]"
+                        style={{ gridColumn: gridCol, gridRow: 1 }}
+                      >
+                        {column.logo ? (
+                          <img
+                            src={column.logo.url}
+                            alt={column.logo.alt || column.label}
+                            className="h-11 sm:h-12 w-auto max-w-[145px] object-contain drop-shadow-sm"
+                          />
+                        ) : (
+                          <span className="text-[20px] font-bold text-white tracking-tight">{column.label}</span>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={column.label}
+                      role="columnheader"
+                      className="relative z-[20] flex items-center justify-center px-4 text-center font-semibold text-[16px] sm:text-[22px] text-[#121826] leading-snug"
+                      style={{ gridColumn: gridCol, gridRow: 1 }}
+                    >
+                      {column.label}
+                    </div>
+                  );
+                })}
+
+                {/* Data Rows Content */}
+                {compare.rows.map((rowItem, rowIndex) => {
+                  const gridRow = rowIndex + 2;
+
+                  return (
+                    <Fragment key={rowItem.label}>
+                      {/* Feature Label Cell */}
+                      <div
+                        role="rowheader"
+                        className="relative z-[20] flex items-center justify-start pl-6 sm:pl-8 pr-4 text-[15px] sm:text-[16px] font-medium text-[#121826] leading-snug"
+                        style={{ gridColumn: 1, gridRow }}
+                      >
+                        {rowItem.label}
+                      </div>
+
+                      {/* Data Cells */}
+                      {compare.columns.map((column, colIdx) => {
+                        const gridCol = colIdx + 2;
+                        const isFeatured = column.featured;
+                        const isIncluded = rowItem.values[colIdx] === true;
+
+                        return (
+                          <div
+                            key={column.label}
+                            role="cell"
+                            className={`relative z-[20] flex items-center justify-center px-4 ${isFeatured && rowIndex < compare.rows.length - 1
+                              ? "border-b border-white/[0.14]"
+                              : ""
+                              }`}
+                            style={{ gridColumn: gridCol, gridRow }}
+                          >
+                            <Mark on={isIncluded} />
+                          </div>
+                        );
+                      })}
+                    </Fragment>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
 
 export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"] }) {
   return (
-    <section className="bg-[#121826] px-6 py-24">
-      <div className="mx-auto w-full max-w-6xl">
-        <h2 className="text-center text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%] mb-12 sm:text-4xl">
+    <section className="how-we-work bg-[#121826] py-20">
+      <Container>
+        <h2 className="text-center sm:text-[50px] text-4xl font-medium tracking-[-0.8px] text-white leading-[110%] mb-12 ">
           {howWeWork.title}
         </h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {howWeWork.cards.map((card) => (
-            <div key={card.number} className="flex flex-col rounded-[20px] bg-[#1c2333] p-8 border border-white/5">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#23C55E] text-[14px] font-semibold text-[#23C55E]">
+            <div key={card.number} className="flex flex-col rounded-[20px] bg-[rgba(255,255,255,0.06)] sm:px-7.5 sm:py-10 p-5 border border-[rgba(255,255,255,0.07)]">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-[#23C55E] bg-[#121826]">
                 {card.number}
               </span>
-              <h3 className="mt-6 text-[22px] font-semibold text-white leading-[140%]">
+              <h3 className="mt-6 text-[22px] font-semibold text-white leading-[148%]">
                 {card.title}
               </h3>
               <p className="mt-4 text-[16px] font-normal leading-[140%] text-white/70">
@@ -213,71 +335,73 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
 
 export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSection"] }) {
   return (
-    <section className="bg-white px-6 py-20">
-      <div className="mx-auto w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <div className="relative overflow-hidden rounded-[24px] min-h-[630px] flex items-end">
-          <Image src={aboutSection.image} alt="Team" fill className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07110d] via-[#07110d]/60 to-transparent" />
-          
-          <div className="relative z-10 p-10 w-full">
-            <h3 className="text-[50px] font-medium leading-[110%] tracking-[-0.8px] text-white">
-              {aboutSection.title}
-            </h3>
-            <p className="mt-6 text-[16px] font-light leading-[160%] text-white/90">
-              {aboutSection.text}
-            </p>
+    <section className="why-about bg-white py-20">
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div className="relative overflow-hidden rounded-[24px] h-[630px] min-h-[630px] flex items-end">
+            <Image src={aboutSection.image} alt="Team" fill className="object-cover" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,24,38,0)_13.73%,rgba(18,24,38,0.662784)_52.12%,rgba(18,24,38,0.866393)_77.6%,#121826_100%)]" />
+
+            <div className="relative z-10 p-10 w-full">
+              <h3 className="text-[50px] font-medium leading-[110%] tracking-[-0.8px] text-white">
+                {aboutSection.title}
+              </h3>
+              <p className="mt-7 text-[16px] font-light leading-[160%] text-white/90">
+                {aboutSection.text}
+              </p>
+            </div>
+          </div>
+
+          <div className="relative overflow-hidden rounded-[24px] h-[630px] min-h-[630px] flex flex-col justify-between p-6 lg:p-12.5 lg:pr-17.5 ">
+            <Image src={aboutSection.bgImage} alt="Background" fill className="object-cover" />
+
+            <div className="relative z-10">
+              <Eyebrow variant="green">
+                {aboutSection.missionLabel}
+              </Eyebrow>
+            </div>
+
+            <div className="relative z-10">
+              <p className="text-[30px] sm:text-[36px] lg:text-[40px] font-medium leading-[125%] tracking-[-0.8px] text-white">
+                {aboutSection.missionText}
+              </p>
+            </div>
           </div>
         </div>
-
-        <div className="relative overflow-hidden rounded-[24px] min-h-[630px] flex items-center p-10 lg:p-16">
-          <Image src={aboutSection.bgImage} alt="Background" fill className="object-cover" />
-          
-          <div className="relative z-10 max-w-md">
-            <p className="text-[15px] font-medium tracking-[1.5px] uppercase text-[#23C55E] flex items-center gap-3">
-              <span className="h-px w-6 bg-[#23C55E]" />
-              {aboutSection.missionLabel}
-            </p>
-            <p className="mt-8 text-[40px] font-medium leading-[125%] text-white">
-              {aboutSection.missionText}
-            </p>
-          </div>
-        </div>
-
-      </div>
+      </Container>
     </section>
   );
 }
 
 export function WhyTeam({ team }: { team: WhyContent["team"] }) {
   return (
-    <section className="bg-[#0b1120] px-6 py-24">
-      <div className="mx-auto w-full max-w-6xl">
-        <h2 className="text-center text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%] mb-16">
+    <section className="why-team bg-[#121826] py-20">
+      <Container>
+        <h2 className="text-center text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%]">
           {team.title}
         </h2>
-        
-        <div className="flex flex-col gap-12">
+
+        <div className="flex flex-col gap-10 mt-15">
           {team.members.map((member) => (
             <WhyTeamCard key={member.name} member={member} />
           ))}
         </div>
 
-        <div className="mt-16 flex justify-center">
-          <Button 
+        <div className="mt-10 flex justify-center">
+          <Button
             color="green"
-            text={team.cta.label} 
-            href={team.cta.url} 
+            text={team.cta.label}
+            href={team.cta.url}
           />
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
@@ -286,17 +410,17 @@ function WhyTeamCard({ member }: { member: WhyTeamMember }) {
   const isImageRight = member.imagePosition === "right";
   return (
     <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col lg:flex-row min-h-[715px]">
-      
+
       <div className={`relative w-full lg:w-1/2 min-h-[400px] lg:min-h-full ${isImageRight ? "lg:order-last" : ""}`}>
         <Image src={member.image} alt={member.name} fill className="object-cover object-center" />
       </div>
 
-      <div className={`relative z-10 flex flex-col justify-center p-10 md:p-16 w-full lg:w-1/2 text-white ${isImageRight ? "lg:order-first" : ""}`}>
+      <div className={`relative z-10 flex flex-col justify-center p-8 md:p-11 w-full lg:w-1/2 text-white bg-[rgba(255,255,255,0.04)] ${isImageRight ? "lg:order-first" : ""}`}>
         <div>
           <h3 className="text-[28px] font-bold leading-[110%] tracking-[-0.8px]">
             {member.name}
           </h3>
-          <p className="mt-2 text-[14px] font-normal uppercase tracking-wide text-[#23C55E] font-mono">
+          <p className="mt-2 text-[14px] font-normal uppercase tracking-wide text-white/60 font-mono">
             {member.role}
           </p>
         </div>
@@ -313,32 +437,32 @@ function WhyTeamCard({ member }: { member: WhyTeamMember }) {
         <div className="mt-8 space-y-6">
           {member.focusTitle && member.focusText && (
             <div>
-              <h4 className="text-[14px] font-bold uppercase tracking-wider text-white">{member.focusTitle}</h4>
-              <p className="mt-1 text-[14px] text-white/70">{member.focusText}</p>
+              <h4 className="text-[14px] font-medium uppercase tracking-wider text-white font-mono">{member.focusTitle}</h4>
+              <p className="mt-1 text-[14px] text-white/70 font-light">{member.focusText}</p>
             </div>
           )}
           {member.partnerships && (
             <div>
-              <h4 className="text-[14px] font-bold uppercase tracking-wider text-white whitespace-pre-line">{member.partnerships.split('\n')[0]}</h4>
-              <p className="mt-1 text-[14px] text-white/70">{member.partnerships.split('\n')[1]}</p>
+              <h4 className="text-[14px] font-medium uppercase tracking-wider text-white font-mono whitespace-pre-line">{member.partnerships.split('\n')[0]}</h4>
+              <p className="mt-1 text-[14px] text-white/70 font-light">{member.partnerships.split('\n')[1]}</p>
             </div>
           )}
           {member.work && (
             <div>
-              <h4 className="text-[14px] font-bold uppercase tracking-wider text-white">NOTABLE WORK:</h4>
-              <p className="mt-1 text-[14px] text-white/70">{member.work}</p>
+              <h4 className="text-[14px] font-medium uppercase tracking-wider text-white font-mono">NOTABLE WORK:</h4>
+              <p className="mt-1 text-[14px] text-white/70 font-light">{member.work}</p>
             </div>
           )}
           {member.tools && (
             <div>
-              <h4 className="text-[14px] font-bold uppercase tracking-wider text-white">TOOLS & PLATFORMS:</h4>
-              <p className="mt-1 text-[14px] text-white/70">{member.tools}</p>
+              <h4 className="text-[14px] font-medium uppercase tracking-wider text-white font-mono">TOOLS & PLATFORMS:</h4>
+              <p className="mt-1 text-[14px] text-white/70 font-light">{member.tools}</p>
             </div>
           )}
           {member.industries && (
             <div>
-              <h4 className="text-[14px] font-bold uppercase tracking-wider text-white">INDUSTRIES:</h4>
-              <p className="mt-1 text-[14px] text-white/70">{member.industries}</p>
+              <h4 className="text-[14px] font-medium uppercase tracking-wider text-white font-mono">INDUSTRIES:</h4>
+              <p className="mt-1 text-[14px] text-white/70 font-light">{member.industries}</p>
             </div>
           )}
         </div>

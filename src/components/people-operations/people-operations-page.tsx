@@ -6,6 +6,7 @@ import { mergePeopleOperations } from "./merge";
 import { peopleOperationsContent } from "@/content/people-operations";
 import type { RawSection } from "@/lib/wordpress/content";
 import { FooterHero } from "../ui/footer-hero";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
   const content = mergePeopleOperations(peopleOperationsContent, sections);
@@ -30,12 +31,12 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
         <div className="relative z-10 flex flex-col h-full">
           <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
 
-          <div className="flex-1 flex items-center w-full max-w-6xl mx-auto px-6 pb-12">
+          <div className="flex-1 flex items-center w-full max-w-[1280px] mx-auto px-6 pb-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
               <div>
-                <p className="text-[14px] font-medium tracking-[1.5px] uppercase text-[#23C55E] font-mono mb-6">
+                <Eyebrow variant="dark" className="mb-6">
                   {content.hero.eyebrow}
-                </p>
+                </Eyebrow>
                 <h1 className="text-[54px] font-medium leading-[1.1] tracking-[-0.8px] text-white mb-6">
                   {content.hero.title}
                   <span className="text-[#23C55E]">{content.hero.highlight}</span>
