@@ -20,6 +20,7 @@ export function WhyPage({ sections }: { sections: RawSection[] }) {
       <TrustedBy trust={homeContent.trust} />
       <WhyCompare compare={content.compare} />
       <WhyHowWeWork howWeWork={content.howWeWork} />
+      <WhyTalk />
       <WhyAbout aboutSection={content.aboutSection} />
       <WhyTeam team={content.team} />
 
@@ -344,6 +345,44 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
               </p>
             </div>
           ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+export function WhyTalk() {
+  return (
+    <section className="pt-20">
+      <Container>
+        <div className="rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] pl-8 md:pl-12 lg:pl-16 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 overflow-hidden">
+          <div className="max-w-[600px] relative z-10">
+            <h2 className="text-[36px] sm:text-[44px] lg:text-[54px] font-medium leading-[105%] tracking-[-0.8px] text-[#121826]">
+              Let&apos;s Talk<br />
+              <span className="block font-black italic text-[#23C55E]">
+                About Your Business
+              </span>
+            </h2>
+            <p className="mt-6 text-[14px] sm:text-[16px] font-light leading-[160%] text-[#66707c]">
+              Connect with our team to explore how FIAB can support your goals, challenges, and next stage of growth.
+            </p>
+            <div className="mt-8">
+              <Button color="dark" text="Talk to Our Team" href="/#contact" />
+            </div>
+          </div>
+
+          <div className="relative w-full max-w-[599px] shrink-0 aspect-[599/455]">
+            {/* Gradient overlay for seamless blend on the left edge */}
+            <div className="absolute inset-y-0 left-0 w-32 lg:w-48 bg-gradient-to-r from-[#F5F3F2] to-transparent z-10 pointer-events-none" />
+
+            <Image
+              src="/why/coins.png"
+              alt="Coins representing business growth"
+              fill
+              className="object-contain"
+              sizes="(max-width: 1024px) 100vw, 599px"
+            />
+          </div>
         </div>
       </Container>
     </section>
