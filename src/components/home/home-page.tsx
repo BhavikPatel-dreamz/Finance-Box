@@ -6,6 +6,7 @@ import { homeContent } from "@/content/home";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
 import { Founders } from "@/components/home/founders";
+import { FooterHero } from "@/components/ui/footer-hero";
 
 export function HomePage({ sections }: { sections: RawSection[] }) {
   const content = mergeHome(homeContent, sections);
@@ -17,6 +18,13 @@ export function HomePage({ sections }: { sections: RawSection[] }) {
       <Founders founders={content.founders} />
       <Difference difference={content.difference} />
       <Growth growth={content.growth} />
+      
+      {/* Naye Sections */}
+      <Partners partners={content.partners} />
+      <Decisions decisions={content.decisions} />
+      <Leadership leadership={content.leadership} />
+      <Pressure pressure={content.pressure} />
+      
       <HomeFooter footer={content.footer} />
     </div>
   );
@@ -158,7 +166,6 @@ function LogoRow({ trust }: { trust: HomeContent["trust"] }) {
   );
 }
 
-// Updated Difference Section with bg-[#121826]
 function Difference({ difference }: { difference: HomeContent["difference"] }) {
   const icons = [
     "/icons/one-finace-team.png",
@@ -297,6 +304,201 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
         </div>
 
       </div>
+    </section>
+  );
+}
+
+function Partners({ partners }: { partners: HomeContent["partners"] }) {
+  return (
+    <section className="bg-white px-6 py-16 text-[#16181d]">
+      <div className="mx-auto w-full max-w-[1280px]">
+        <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-12">
+          {partners.title.split("Partners")[0]}
+          <span className="font-extrabold italic">Partners</span>
+        </h2>
+        
+        <ul className="flex flex-wrap md:flex-nowrap items-start justify-between gap-6">
+          {partners.logos.map((item, idx) => (
+            <li key={idx} className="flex flex-col items-center text-center w-[calc(50%-12px)] md:w-auto shrink-0">
+              <div className="w-[170px] h-[60px] flex items-center justify-center relative mb-3">
+                {item.image ? (
+                  <img src={item.image.url} alt={item.image.alt || item.name} className="w-full h-full object-contain" />
+                ) : (
+                  <span className="text-xl font-bold">{item.name}</span>
+                )}
+              </div>
+              {item.caption && (
+                <span className="text-[10px] font-medium leading-tight text-[#8b919a] max-w-[140px]">
+                  {item.caption}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
+  return (
+    <section id="insights" className="bg-white px-6 py-20">
+      <div className="mx-auto w-full max-w-[1280px]">
+        <div className="flex flex-col lg:flex-row rounded-[10px] overflow-hidden border border-gray-200">
+          
+          <div className="relative w-full lg:w-[640px] min-h-[500px] lg:min-h-[740px] shrink-0 overflow-hidden">
+            <Image
+              src="/home/founder-ceo.png"
+              alt={decisions.name}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0C] via-[#0B0D0C]/50 to-transparent" />
+            
+            <div className="absolute top-8 right-8 bg-white rounded-full px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase text-[#16181d]">
+              {decisions.badge}
+            </div>
+
+            <div className="absolute bottom-0 left-0 w-full p-10 md:p-14">
+              <p className="text-[30px] font-medium leading-[1.3] text-white mb-8">
+                “{decisions.quote}”
+              </p>
+              <div>
+                <p className="text-[16px] font-bold text-white">{decisions.name}</p>
+                <p className="text-[14px] text-white/70 mt-1">{decisions.role}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full lg:w-[640px] bg-[#EDE9E6] p-10 md:p-16 flex flex-col justify-center">
+            <p className="text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#121826]/60 mb-6">
+              — {decisions.eyebrow}
+            </p>
+            <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] text-[#121826] mb-6">
+              Built for Better<br />
+              <span className="font-extrabold italic">Business Decisions.</span>
+            </h2>
+            <p className="text-[16px] font-light leading-[160%] text-[#121826]/70 mb-10 max-w-md">
+              {decisions.text}
+            </p>
+
+            <div className="flex flex-col gap-4 mb-10">
+              {decisions.cards.map((card, idx) => (
+                <div key={idx} className="bg-white rounded-[10px] p-6 flex items-center justify-between gap-4">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 flex-1">
+                    <p className="text-[30px] font-medium leading-[1.1] tracking-[-0.8px] text-[#23C55E] md:w-[100px] shrink-0">
+                      {card.title}
+                    </p>
+                    <p className="text-[14px] font-light leading-[1.3] text-[#121826]/70">
+                      {card.text}
+                    </p>
+                  </div>
+                  <div className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full bg-[#121826]/5 text-[#121826]">
+                    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden="true">
+                      <path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div>
+              <GreenButton
+                label={decisions.cta.label}
+                href={decisions.cta.url}
+                bgColor="#121826"
+                textColor="#ffffff"
+                size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
+              />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
+  return (
+    <section className="bg-[#121826] px-6 py-24 text-white">
+      <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row items-center lg:items-start gap-16 lg:gap-24">
+        
+        <div className="w-full lg:w-[480px] shrink-0 pt-6">
+          <p className="text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-6">
+            — {leadership.eyebrow}
+          </p>
+          <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6">
+            {leadership.title}
+          </h2>
+          <div className="text-[16px] font-light leading-[160%] text-white/70 whitespace-pre-line mb-10">
+            {leadership.text}
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <button className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white transition-colors">
+              <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
+                <path d="M10 3.5 5.5 8 10 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <button className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white transition-colors">
+              <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
+                <path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div className="flex-1 w-full flex flex-col sm:flex-row justify-center lg:justify-end gap-6">
+          {leadership.people.map((person, idx) => (
+            <div 
+              key={idx} 
+              className="relative w-full max-w-[320px] aspect-[320/390] rounded-[10px] overflow-hidden border border-white/10 shrink-0"
+            >
+              {person.image && (
+                <Image
+                  src={person.image.url}
+                  alt={person.image.alt || person.name}
+                  fill
+                  className="object-cover object-top"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0C] via-[#0B0D0C]/40 to-transparent" />
+              
+              <div className="absolute bottom-0 left-0 w-full p-6 text-center">
+                <h3 className="text-[20px] font-semibold leading-tight text-white mb-1">
+                  {person.name}
+                </h3>
+                <p className="text-[11px] font-mono tracking-[1px] text-white/60 uppercase">
+                  {person.role}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// --- NAYA SECTION: Pressure (Reusable Footer Hero) ---
+function Pressure({ pressure }: { pressure: HomeContent["pressure"] }) {
+  const emphasis = pressure.emphasis.trim();
+  const parts = emphasis && pressure.title.includes(emphasis) ? pressure.title.split(emphasis) : null;
+  
+  const title = parts ? parts[0].trim() : pressure.title;
+  const highlight = emphasis;
+
+  return (
+    <section id="contact" className="bg-white px-6 py-16">
+      <FooterHero
+        title={title}
+        highlight={highlight}
+        text={pressure.text}
+        buttonLabel={pressure.cta.label}
+        buttonUrl={pressure.cta.url}
+      />
     </section>
   );
 }
