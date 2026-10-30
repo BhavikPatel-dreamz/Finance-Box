@@ -33,7 +33,7 @@ export function Container({
 
   return (
     <Component
-      className={`mx-auto box-border w-full ${maxWidth} ${defaultPadding} ${className}`.trim()}
+      className={`container mx-auto box-border w-full ${maxWidth} ${defaultPadding} ${className}`.trim()}
       {...props}
     />
   );

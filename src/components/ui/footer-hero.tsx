@@ -48,7 +48,12 @@ export function FooterHero({
             </p>
 
             <div className="mt-6 sm:mt-8 lg:mt-10 flex justify-center">
-              <GreenButton label={buttonLabel} href={buttonUrl} className="!hover:bg-white !hover:text-[#121826]" />
+              <GreenButton
+                label={buttonLabel}
+                href={buttonUrl}
+                onDark={true}
+                className="hover:!bg-white hover:!text-[#121826]"
+              />
             </div>
           </div>
 

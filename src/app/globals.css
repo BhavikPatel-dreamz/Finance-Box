@@ -142,3 +142,46 @@ button, input, select, textarea {
     animation: none;
   }
 }
+
+/* Green button hover effect inside dark sections: bg color white, text color #121826 */
+:is(
+  .services-details,
+  .footer-cta-section,
+  .team-section,
+  .how-we-work,
+  [class*="bg-[#121826]"],
+  [class*="bg-[#07110d]"],
+  [class*="bg-[#191F2D]"],
+  [class*="bg-[#191f2c]"],
+  [class*="bg-[#091024]"],
+  [class*="bg-[#182030]"],
+  .dark,
+  [data-theme="dark"]
+) :is(
+  a[class*="bg-[#23C55E]"]:hover,
+  button[class*="bg-[#23C55E]"]:hover
+) {
+  background-color: #ffffff !important;
+  color: #121826 !important;
+  border-color: transparent !important;
+}
+
+:is(
+  .services-details,
+  .footer-cta-section,
+  .team-section,
+  .how-we-work,
+  [class*="bg-[#121826]"],
+  [class*="bg-[#07110d]"],
+  [class*="bg-[#191F2D]"],
+  [class*="bg-[#191f2c]"],
+  [class*="bg-[#091024]"],
+  [class*="bg-[#182030]"],
+  .dark,
+  [data-theme="dark"]
+) :is(
+  a[class*="bg-[#23C55E]"]:hover,
+  button[class*="bg-[#23C55E]"]:hover
+) svg {
+  color: #121826 !important;
+}

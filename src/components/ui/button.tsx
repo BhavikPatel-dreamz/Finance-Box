@@ -1,7 +1,8 @@
 import Link from "next/link";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
-export type ButtonVariant = "green" | "dark" | "white";
+export type ButtonVariant = "green" | "dark" | "white" | "green-on-dark";
 
 export type ButtonSizeObject = {
   width?: string;
@@ -15,18 +16,22 @@ export type ButtonProps = {
   /**
    * The button color/type.
    * - "green" (#23C55E): Normal -> bg #23C55E, text #121826 | Hover -> bg #121826, text white
+   * - "green-on-dark":   Normal -> bg #23C55E, text #121826 | Hover -> bg white,   text #121826
    * - "dark"  (#121826): Normal -> bg #121826, text white   | Hover -> bg #23C55E, text #121826
    * - "white" (#ffffff): Normal -> bg white,   text #121826 | Hover -> bg #23C55E, text #121826
    */
-  color?: "green" | "dark" | "white" | string;
+  color?: "green" | "dark" | "white" | "green-on-dark" | string;
   /** Alias for color */
-  variant?: "green" | "dark" | "white";
+  variant?: "green" | "dark" | "white" | "green-on-dark";
   /** Legacy alias for color */
   bgColor?: string;
   /** Legacy prop for text color */
   textColor?: string;
   /** Legacy hover color */
   hoverColor?: string;
+
+  /** Set true when the button is inside a dark section/container. For green button, hover state is bg white and text #121826. */
+  onDark?: boolean;
 
   /** Button text */
   text?: string;
@@ -76,7 +81,13 @@ export type ButtonProps = {
   className?: string;
 };
 
-function resolveVariant(variant?: string, color?: string, bgColor?: string): ButtonVariant {
+function resolveVariant(
+  variant?: string,
+  color?: string,
+  bgColor?: string,
+  onDark?: boolean,
+  hoverColor?: string
+): ButtonVariant {
   const v = (variant || color || bgColor || "green").toLowerCase().trim();
   if (v === "dark" || v === "black" || v.includes("121826") || v.includes("07110d") || v.includes("0b1120")) {
     return "dark";
@@ -84,12 +95,21 @@ function resolveVariant(variant?: string, color?: string, bgColor?: string): But
   if (v === "white" || v.includes("fff")) {
     return "white";
   }
+  const isDarkSection = Boolean(
+    onDark || (hoverColor && (hoverColor === "white" || hoverColor.includes("fff")))
+  );
+  if (v === "green-on-dark" || isDarkSection) {
+    return "green-on-dark";
+  }
   return "green";
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  // Green button: bg #23C55E, text #121826 -> Hover: bg #121826, text white
+  // Green button (light section): bg #23C55E, text #121826 -> Hover: bg #121826, text white
   green: "bg-[#23C55E] text-[#121826] hover:bg-[#121826] hover:text-white border border-transparent hover:border-white/10",
+
+  // Green button (dark section): bg #23C55E, text #121826 -> Hover: bg white, text #121826
+  "green-on-dark": "bg-[#23C55E] text-[#121826] hover:bg-white hover:text-[#121826] border border-transparent hover:border-transparent",
 
   // Dark button: bg #121826, text white -> Hover: bg #23C55E, text #121826
   dark: "bg-[#121826] text-white hover:bg-[#23C55E] hover:text-[#121826] border border-white/10 hover:border-transparent",
@@ -139,8 +159,10 @@ export function Button({
   icon,
   size,
   className = "",
+  hoverColor,
+  onDark,
 }: ButtonProps) {
-  const activeVariant = resolveVariant(variant, color, bgColor);
+  const activeVariant = resolveVariant(variant, color, bgColor, onDark, hoverColor);
   const content = text ?? label ?? children;
 
   // Determine size mode:
@@ -175,7 +197,12 @@ export function Button({
     }
   }
 
-  const baseClasses = `group inline-flex max-w-full items-center justify-center gap-3.5 rounded-full font-semibold transition-all duration-300 ease-in-out cursor-pointer select-none disabled:opacity-50 disabled:pointer-events-none ${variantStyles[activeVariant]} ${sizeClasses} ${className}`;
+  const baseClasses = twMerge(
+    "group inline-flex max-w-full items-center justify-center gap-3.5 rounded-full font-semibold transition-all duration-300 ease-in-out cursor-pointer select-none disabled:opacity-50 disabled:pointer-events-none",
+    variantStyles[activeVariant],
+    sizeClasses,
+    className
+  );
 
   const innerContent = (
     <>

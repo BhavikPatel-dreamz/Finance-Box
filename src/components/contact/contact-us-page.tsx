@@ -71,7 +71,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* Form Section */}
-      <section className="bg-white px-6 py-24">
+      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826]">
         <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row gap-8">
           
           {/* Left Side: Image & Contact Info */}

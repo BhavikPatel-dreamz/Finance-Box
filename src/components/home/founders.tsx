@@ -9,7 +9,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="bg-white px-6 py-24 text-[#121826]">
+    <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#121826]">
       <div className="mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-2 gap-16">
         
         {/* Left Side: Text */}

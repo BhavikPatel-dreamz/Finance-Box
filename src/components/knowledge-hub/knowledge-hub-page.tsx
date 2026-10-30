@@ -62,7 +62,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 2. Our Blogs Section */}
-      <section className="bg-white px-6 py-24 text-[#16181d]">
+      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
         <div className="mx-auto w-full max-w-[1280px]">
 
           <h2 className="text-center text-[44px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
@@ -135,7 +135,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 4. Case Study Section */}
-      <section className="bg-white px-6 py-24 text-[#16181d]">
+      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
         <div className="mx-auto w-full max-w-[1280px]">
 
           <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
@@ -168,7 +168,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 5. Naya Section: Newsletter */}
-      <section className="bg-[#121826] px-6 py-24 text-white">
+      <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
         <div className="mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
           {/* Left Side: Text & CTA */}
@@ -186,6 +186,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
               label={content.newsletter.cta.label}
               href={content.newsletter.cta.url}
               bgColor="#23C55E"
+              onDark={true}
               size={{
                 width: "250px",
                 height: "50px",

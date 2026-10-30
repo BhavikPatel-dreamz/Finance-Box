@@ -105,7 +105,7 @@ export function CareersPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 3. What Makes FIAB Stand Out Section */}
-      <section className="bg-white px-6 py-24 text-[#16181d]">
+      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
         <div className="mx-auto w-full max-w-[1280px]">
           <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16 text-[#16181d]">
             {content.standOut.title}
@@ -137,7 +137,7 @@ export function CareersPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 4. Benefits & Perks Section */}
-      <section className="bg-[#121826] px-6 py-24 text-white">
+      <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
         <div className="mx-auto w-full max-w-[1280px]">
           <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16">
             {content.benefits.title}

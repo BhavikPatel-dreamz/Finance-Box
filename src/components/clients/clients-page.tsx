@@ -319,6 +319,7 @@ function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: bo
           <GreenButton 
             label="Read a Full Case Study" 
             href={study.ctaUrl}
+            onDark={true}
             size={{
               width: "243px",
               height: "50px",

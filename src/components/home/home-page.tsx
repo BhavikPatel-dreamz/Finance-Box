@@ -129,6 +129,7 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
                 href={hero.call.url}
                 bgColor="#23C55E"
                 textColor="#07110d"
+                onDark={true}
                 size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
               />
             </div>
@@ -150,7 +151,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
   ];
 
   return (
-    <section className="bg-[#121826] px-6 py-24 text-white">
+    <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
       <div className="mx-auto w-full max-w-[1280px]">
         
         <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16">
@@ -207,7 +208,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
 
 function Growth({ growth }: { growth: HomeContent["growth"] }) {
   return (
-    <section className="bg-[#121826] px-6 py-24 text-white">
+    <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
       <div className="mx-auto w-full max-w-[1280px]">
         
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12">
@@ -273,6 +274,7 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
             href={growth.cta.url}
             bgColor="#23C55E"
             textColor="#07110d"
+            onDark={true}
             size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
           />
         </div>
@@ -395,7 +397,7 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
 
 function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
   return (
-    <section className="bg-[#121826] px-6 py-24 text-white">
+    <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
       <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row items-center lg:items-start gap-16 lg:gap-24">
         
         <div className="w-full lg:w-[480px] shrink-0 pt-6">

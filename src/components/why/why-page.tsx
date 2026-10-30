@@ -73,7 +73,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
       <div className="relative">
         <HomeHeader header={siteHeader(header)} surface="plain" logoHref="/" />
         <Container>
-          <div className="w-full max-w-[1096px] mx-auto">
+          <div className="w-full">
             <div className="grid items-start gap-6 sm:gap-8 pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pt-[84px] lg:pb-[60px] lg:grid-cols-[1.1fr_0.9fr]">
               <div>
                 <Eyebrow variant="dark">
@@ -323,7 +323,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
 
 export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"] }) {
   return (
-    <section className="how-we-work bg-[#121826] py-14 sm:py-16 lg:py-20">
+    <section className="how-we-work bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
       <Container>
         <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%] mb-8 sm:mb-12">
           {howWeWork.title}
@@ -462,6 +462,7 @@ export function WhyTeam({ team }: { team: WhyContent["team"] }) {
             color="green"
             text={team.cta.label}
             href={team.cta.url}
+            onDark={true}
           />
         </div>
       </Container>

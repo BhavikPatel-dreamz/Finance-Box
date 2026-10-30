@@ -53,7 +53,7 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 2. Intro Section */}
-      <section className="bg-white px-6 py-24 text-[#16181d]">
+      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
         <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <div className="w-full lg:w-[554px] shrink-0 relative aspect-[554/643] rounded-[16px] overflow-hidden">
             <Image src={content.intro.image} alt="FIAB People Operations" fill className="object-cover" />
@@ -71,7 +71,7 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 3. Naya Section: What We Do */}
-      <section className="bg-[#121826] px-6 py-24 text-white">
+      <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
         <div className="mx-auto w-full max-w-[1280px]">
 
           <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
@@ -132,7 +132,7 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 4. Naya Section: Where we help */}
-      <section className="bg-white px-6 py-24 text-[#16181d]">
+      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
         <div className="mx-auto w-full max-w-[1280px]">
 
           <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
