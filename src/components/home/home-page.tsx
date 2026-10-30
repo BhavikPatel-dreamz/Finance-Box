@@ -9,6 +9,7 @@ import { GreenButton } from "@/components/ui/green-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Founders } from "@/components/home/founders";
 import { FooterHero } from "@/components/ui/footer-hero";
+import Container from "../ui/container";
 
 export function HomePage({ sections }: { sections: RawSection[] }) {
   const content = mergeHome(homeContent, sections);
@@ -20,13 +21,13 @@ export function HomePage({ sections }: { sections: RawSection[] }) {
       <Founders founders={content.founders} />
       <Difference difference={content.difference} />
       <Growth growth={content.growth} />
-      
+
       {/* Naye Sections */}
       <Partners partners={content.partners} />
       <Decisions decisions={content.decisions} />
       <Leadership leadership={content.leadership} />
       <Pressure pressure={content.pressure} />
-      
+
       <HomeFooter footer={content.footer} />
     </div>
   );
@@ -35,7 +36,7 @@ export function HomePage({ sections }: { sections: RawSection[] }) {
 export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: HomeContent["header"] }) {
   return (
     <section id="product" className="relative overflow-hidden bg-[#07110d] pb-12 sm:pb-16 lg:pb-0">
-      
+
       <div
         className="pointer-events-none absolute inset-0 opacity-50"
         style={{
@@ -44,15 +45,15 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
           backgroundSize: "56px 56px",
         }}
       />
-      
+
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-[radial-gradient(ellipse_at_bottom,rgba(35,197,94,0.15),transparent_70%)]" />
 
       <div className="relative w-full min-h-[auto] lg:min-h-[771px] lg:h-[771px] flex flex-col">
-        
+
         <HomeHeader header={header} surface="plain" logoHref="/" />
 
         <div className="relative flex-1 w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center pb-8 lg:pb-6 pt-6 sm:pt-8 lg:pt-10">
-          
+
           <div>
             <Eyebrow variant="dark">
               {hero.eyebrow}
@@ -76,9 +77,9 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
           </div>
 
           <div className="relative w-full flex flex-col items-center lg:items-end pt-24 sm:pt-28 lg:pt-32">
-            
+
             <div className="relative w-full max-w-[519px]">
-              
+
               <div className="absolute -top-[95px] sm:-top-[110px] lg:-top-[120px] left-0 sm:-left-[20px] lg:-left-[80px] w-[140px] sm:w-[165px] lg:w-[176px] h-auto min-h-[115px] sm:h-[130px] lg:h-[137px] bg-[#121826] border border-white/10 p-3.5 sm:p-4 lg:p-5 z-20">
                 <p className="text-[10px] sm:text-[12px] font-mono text-white/70 uppercase tracking-[0.86px] leading-none mb-2 sm:mb-3">
                   {hero.closeLabel}
@@ -133,7 +134,7 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
                 size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
               />
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -153,7 +154,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
   return (
     <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
       <div className="mx-auto w-full max-w-[1280px]">
-        
+
         <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16">
           {difference.title.split("FIAB")[0]}
           <span className="font-black italic">FIAB</span>
@@ -161,7 +162,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[9px] overflow-hidden">
-          
+
           <div className="bg-white text-[#121826] p-10 flex flex-col min-h-[383px] border-r border-white/10">
             <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-6">
               <img src={icons[0]} alt="Icon" className="h-6 w-6 object-contain" />
@@ -210,7 +211,7 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
   return (
     <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
       <div className="mx-auto w-full max-w-[1280px]">
-        
+
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12">
           <div>
             <Eyebrow variant="dark" className="mb-4">
@@ -233,12 +234,12 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#121826] via-[#121826]/40 to-transparent" />
-          
+
           <div className="absolute bottom-0 left-0 w-full p-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <h3 className="text-[40px] font-medium leading-[1.1] text-white max-w-lg">
               {growth.overlay}
             </h3>
-            
+
             <ol className="flex flex-wrap gap-x-6 gap-y-2 text-[12px] font-mono tracking-[1.08px] text-white uppercase">
               {growth.stages.map((stage, index) => (
                 <li key={stage} className="inline-flex items-center gap-2">
@@ -255,7 +256,7 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
             <div key={idx} className="bg-[#191f2c] rounded-[10px] p-8 border border-white/5 flex flex-col min-h-[344px]">
               <h3 className="text-[30px] font-semibold leading-[1.1] mb-3">{card.title}</h3>
               <p className="text-[16px] font-normal leading-[150%] text-white/60 mb-6">{card.text}</p>
-              
+
               <ul className="mt-auto bg-[#091024] rounded-[8px] p-5 space-y-3">
                 {card.items.map((item, bIdx) => (
                   <li key={bIdx} className="flex items-start gap-3">
@@ -292,7 +293,7 @@ function Partners({ partners }: { partners: HomeContent["partners"] }) {
           {partners.title.split("Partners")[0]}
           <span className="font-extrabold italic">Partners</span>
         </h2>
-        
+
         <ul className="flex flex-wrap md:flex-nowrap items-start justify-between gap-6">
           {partners.logos.map((item, idx) => (
             <li key={idx} className="flex flex-col items-center text-center w-[calc(50%-12px)] md:w-auto shrink-0">
@@ -321,7 +322,7 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
     <section id="insights" className="bg-white px-6 py-20">
       <div className="mx-auto w-full max-w-[1280px]">
         <div className="flex flex-col lg:flex-row rounded-[10px] overflow-hidden border border-gray-200">
-          
+
           <div className="relative w-full lg:w-[640px] min-h-[500px] lg:min-h-[740px] shrink-0 overflow-hidden">
             <Image
               src="/home/founder-ceo.png"
@@ -330,7 +331,7 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0C] via-[#0B0D0C]/50 to-transparent" />
-            
+
             <div className="absolute top-8 right-8 bg-white rounded-full px-4 py-1.5 text-[11px] font-semibold tracking-wider uppercase text-[#16181d]">
               {decisions.badge}
             </div>
@@ -399,7 +400,7 @@ function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
   return (
     <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
       <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row items-center lg:items-start gap-16 lg:gap-24">
-        
+
         <div className="w-full lg:w-[480px] shrink-0 pt-6">
           <p className="text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-6">
             — {leadership.eyebrow}
@@ -410,7 +411,7 @@ function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
           <div className="text-[16px] font-light leading-[160%] text-white/70 whitespace-pre-line mb-10">
             {leadership.text}
           </div>
-          
+
           <div className="flex items-center gap-3">
             <button className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white transition-colors">
               <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
@@ -427,8 +428,8 @@ function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
 
         <div className="flex-1 w-full flex flex-col sm:flex-row justify-center lg:justify-end gap-6">
           {leadership.people.map((person, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className="relative w-full max-w-[320px] aspect-[320/390] rounded-[10px] overflow-hidden border border-white/10 shrink-0"
             >
               {person.image && (
@@ -440,7 +441,7 @@ function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
                 />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0C] via-[#0B0D0C]/40 to-transparent" />
-              
+
               <div className="absolute bottom-0 left-0 w-full p-6 text-center">
                 <h3 className="text-[20px] font-semibold leading-tight text-white mb-1">
                   {person.name}
@@ -462,7 +463,7 @@ function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
 function Pressure({ pressure }: { pressure: HomeContent["pressure"] }) {
   const emphasis = pressure.emphasis.trim();
   const parts = emphasis && pressure.title.includes(emphasis) ? pressure.title.split(emphasis) : null;
-  
+
   const title = parts ? parts[0].trim() : pressure.title;
   const highlight = emphasis;
 
@@ -484,12 +485,11 @@ export function HomeFooter({ footer }: { footer: HomeContent["footer"] }) {
     <footer className="bg-[#07090f] text-white">
       <div className="mx-auto grid w-full max-w-[1280px] gap-12 px-6 py-14 lg:grid-cols-[0.9fr_2.1fr]">
         <div>
-          <img src={footer.logo.url} alt={footer.logo.alt} className="h-12 w-auto" />
-          <p className="mt-6 max-w-[16rem] text-sm leading-6 text-white/70">{footer.text}</p>
-          <a href={`mailto:${footer.email}`} className="mt-6 inline-flex items-center gap-2 text-sm text-white/80">
-            <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
-              <rect x="1.5" y="3.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
-              <path d="M2 4.5 8 9l6-4.5" fill="none" stroke="currentColor" strokeWidth="1.3" />
+          <img src={footer.logo.url} alt={footer.logo.alt} className="h-16 w-auto" />
+          <p className="mt-6 max-w-[16rem] text-base font-light leading-[140%] text-white/80">{footer.text}</p>
+          <a href={`mailto:${footer.email}`} className="mt-9 inline-flex items-center gap-3 text-base font-semibold text-white hover:text-[#23C55E] transition duration-300 group">
+            <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 12C1.0875 12 0.7345 11.8533 0.441 11.5597C0.1475 11.2662 0.0005 10.913 0 10.5V1.5C0 1.0875 0.147 0.7345 0.441 0.441C0.735 0.1475 1.088 0.0005 1.5 0H13.5C13.9125 0 14.2657 0.147 14.5597 0.441C14.8538 0.735 15.0005 1.088 15 1.5V10.5C15 10.9125 14.8533 11.2657 14.5597 11.5597C14.2662 11.8538 13.913 12.0005 13.5 12H1.5ZM7.69725 6.591C7.76575 6.572 7.83125 6.54375 7.89375 6.50625L13.2 3.1875C13.3 3.125 13.375 3.047 13.425 2.9535C13.475 2.86 13.5 2.75675 13.5 2.64375C13.5 2.39375 13.3938 2.20625 13.1813 2.08125C12.9688 1.95625 12.75 1.9625 12.525 2.1L7.5 5.25L2.475 2.1C2.25 1.9625 2.03125 1.9595 1.81875 2.091C1.60625 2.2225 1.5 2.40675 1.5 2.64375C1.5 2.76875 1.525 2.87825 1.575 2.97225C1.625 3.06625 1.7 3.138 1.8 3.1875L7.10625 6.50625C7.16875 6.54375 7.2345 6.572 7.3035 6.591C7.3725 6.61 7.438 6.61925 7.5 6.61875C7.562 6.61825 7.62775 6.609 7.69725 6.591Z" fill="white" className="group-hover:fill-[#23C55E] transition duration-300" />
             </svg>
             {footer.email}
           </a>
@@ -497,11 +497,11 @@ export function HomeFooter({ footer }: { footer: HomeContent["footer"] }) {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
           {footer.columns.map((column) => (
             <div key={column.title}>
-              <h2 className="text-[11px] font-semibold tracking-[0.16em] text-white/80 uppercase">{column.title}</h2>
-              <ul className="mt-4 space-y-3 text-sm text-white/70">
+              <h2 className="text-sm font-medium tracking-[1.5px] text-white/70 uppercase">{column.title}</h2>
+              <ul className="mt-7.5 space-y-5 text-sm font-normal text-white">
                 {column.links.map((item) => (
                   <li key={item.label}>
-                    <a href={item.url} className="inline-flex items-center gap-2 hover:text-white">
+                    <a href={item.url} className="inline-flex items-center gap-2 hover:text-[#23C55E] transition duration-300 group">
                       {item.label.toLowerCase() === "linkedin" ? <LinkedInMark /> : null}
                       {item.label}
                     </a>
@@ -512,8 +512,10 @@ export function HomeFooter({ footer }: { footer: HomeContent["footer"] }) {
           ))}
         </div>
       </div>
-      <div className="mx-auto max-w-[1280px] border-t border-white/10 px-6 py-6">
-        <p className="text-center text-xs text-white/45">{footer.legal}</p>
+      <div className="border-t border-white/20 py-6">
+        <Container>
+          <p className="text-center text-sm font-light text-white/70">{footer.legal}</p>
+        </Container>
       </div>
     </footer>
   );
@@ -521,8 +523,10 @@ export function HomeFooter({ footer }: { footer: HomeContent["footer"] }) {
 
 function LinkedInMark() {
   return (
-    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-[11px] font-bold text-white">
-      in
+    <span className="inline-flex h-8.5 w-8.5 items-center justify-center rounded-full bg-white/10 group-hover:bg-[#23C55E] transition duration-300">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.68268 0C0.752805 0 0.000150441 0.755307 0 1.68467C0 2.61494 0.752654 3.3701 1.68283 3.3701C2.61044 3.3701 3.36415 2.61494 3.36415 1.68467C3.36415 0.755156 2.61029 0 1.68268 0ZM0.231378 4.64848H3.13293V14H0.231378V4.64848ZM10.5196 4.41595C9.10812 4.41595 8.1617 5.19115 7.77432 5.92626H7.7355V4.64848H4.9525V13.9998H7.85149V9.37367C7.85149 8.15406 8.08332 6.97272 9.59284 6.97272C11.0807 6.97272 11.1006 8.3676 11.1006 9.45188V13.9997H14V8.87048C14 6.35274 13.4577 4.41595 10.5196 4.41595Z" fill="white" className="group-hover:fill-[#121826]" />
+      </svg>
     </span>
   );
 }

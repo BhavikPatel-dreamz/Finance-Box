@@ -236,17 +236,32 @@ export const servicesContent: ServicesContent = {
       {
         title: "Fast deployment",
         text: "Discovery in days and go-live in about two weeks, with onboarding kept light.",
-        image: { url: "/services/investor-deployment.jpg", alt: "A founder thinking beside a whiteboard of notes" },
+        image: { url: "/services/scroll/portfolio-1.png", alt: "Fast deployment" },
       },
       {
         title: "Modular by stage",
         text: "Add or swap coverage as the portfolio company scales, with no renegotiation of the engagement.",
-        image: { url: "/services/investor-modular.jpg", alt: "A laptop, charts, and notes on a round table" },
+        image: { url: "/services/scroll/portfolio-2.png", alt: "Modular by stage" },
       },
       {
         title: "Shared dashboards",
         text: "KPIs and SLAs tracked in dashboards that you and your founders both access.",
-        image: { url: "/services/investor-dashboards.jpg", alt: "Two people reviewing papers and a laptop" },
+        image: { url: "/services/scroll/portfolio-3.png", alt: "Shared dashboards" },
+      },
+      {
+        title: "Predictable cost",
+        text: "A flat monthly fee with no surprise billings or scope creep as your companies grow.",
+        image: { url: "/services/scroll/portfolio-4.png", alt: "Predictable cost" },
+      },
+      {
+        title: "Zero compliance debt",
+        text: "Audit-ready books, clean tax records, and proactive reporting from day one.",
+        image: { url: "/services/scroll/portfolio-5.png", alt: "Zero compliance debt" },
+      },
+      {
+        title: "Strategic leadership",
+        text: "Fractional CFO guidance for runway planning, fundraising, and board governance.",
+        image: { url: "/services/scroll/portfolio-6.png", alt: "Strategic leadership" },
       },
     ],
   },

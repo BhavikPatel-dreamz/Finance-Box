@@ -1,69 +1,89 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, type MouseEvent } from "react";
+import Image from "next/image";
 import type { ServicesPhotoCard } from "@/content/services";
 
 export function InvestorSlider({ cards }: { cards: ServicesPhotoCard[] }) {
-  const scroller = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
-  function move(direction: number) {
-    const el = scroller.current;
-    if (!el) return;
-    const card = el.querySelector("article");
-    const distance = card ? card.getBoundingClientRect().width + 16 : el.clientWidth * 0.8;
-    el.scrollBy({ left: direction * distance, behavior: "smooth" });
-  }
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    if (!sliderRef.current) return;
+    setIsDown(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isDown || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
 
   return (
-    <div className="relative mt-12">
+    <div className="w-full">
       <div
-        ref={scroller}
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        ref={sliderRef}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+        className={`w-full overflow-x-auto overflow-y-hidden pb-4 touch-pan-x [-webkit-overflow-scrolling:touch] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+          isDown ? "cursor-grabbing select-none" : "cursor-grab"
+        }`}
+        style={{
+          paddingLeft: "max(1rem, calc((100% - 1310px) / 2 + 15px))",
+        }}
       >
-        {cards.map((card) => (
-          <article
-            key={card.title}
-            className="relative h-[28rem] w-[min(24rem,78vw)] shrink-0 snap-start overflow-hidden rounded-[22px] border border-white/15"
-          >
-            {card.image ? (
-              <img src={card.image.url} alt={card.image.alt || card.title} className="h-full w-full object-cover" />
-            ) : (
-              <div className="h-full w-full bg-[#121820]" />
-            )}
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#070b12] via-[#070b12]/75 to-transparent px-5 pt-16 pb-5">
-              <h3 className="text-lg font-semibold">{card.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-white/75">{card.text}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-      <div className="mt-5 flex justify-end gap-3 pr-[max(1.5rem,calc((100%-72rem)/2))]">
-        <SliderButton label="Previous cards" direction="left" onClick={() => move(-1)} />
-        <SliderButton label="Next cards" direction="right" onClick={() => move(1)} />
+        <div className="flex gap-4 sm:gap-5 min-w-max pr-6 sm:pr-12 lg:pr-20">
+          {cards.map((card, idx) => {
+            const imgSrc = card.image?.url || `/services/scroll/portfolio-${(idx % 6) + 1}.png`;
+
+            return (
+              <div
+                key={idx}
+                className="relative w-[285px] sm:w-[350px] lg:w-[400px] h-[430px] sm:h-[460px] lg:h-[490px] rounded-[14px] overflow-hidden shrink-0 group border border-white/5 select-none"
+              >
+                <Image
+                  src={imgSrc}
+                  alt={card.title || `Portfolio Card ${idx + 1}`}
+                  fill
+                  draggable={false}
+                  className="object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+                  sizes="(max-width: 640px) 285px, (max-width: 1024px) 350px, 400px"
+                />
+
+                {/* Canonical Tailwind linear gradient overlay from Figma */}
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,24,38,0)_6.84%,rgba(18,24,38,0.729525)_45.64%,rgba(18,24,38,0.817256)_56.69%,#121826_92.91%)] pointer-events-none" />
+
+                {(card.title || card.text) && (
+                  <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 text-white z-10 pointer-events-none">
+                    <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-semibold leading-[1.2] mb-2 sm:mb-3 text-white">
+                      {card.title}
+                    </h3>
+                    <p className="text-[13px] sm:text-[14px] lg:text-[15px] font-normal leading-[150%] text-white/70 line-clamp-2">
+                      {card.text}
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
-  );
-}
-
-function SliderButton({
-  label,
-  direction,
-  onClick,
-}: {
-  label: string;
-  direction: "left" | "right";
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white hover:border-white/50"
-    >
-      <svg viewBox="0 0 16 16" className={`h-4 w-4 ${direction === "left" ? "rotate-180" : ""}`} aria-hidden="true">
-        <path d="M4 8h8M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </button>
   );
 }

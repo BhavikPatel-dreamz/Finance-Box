@@ -20,7 +20,7 @@ export function FooterHero({
   bgImage = "/media/Footer-bg.png",
 }: FooterHeroProps) {
   return (
-    <section className="footer-cta-section  bg-white px-4 sm:px-6 py-14 sm:py-16 lg:py-20">
+    <section className="footer-cta-section  bg-white py-14 sm:py-16 lg:py-20">
       <Container>
         {/* Container exactly 1280x342 on desktop, flexible height on mobile */}
         <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-13 min-h-[320px] lg:h-[342px] w-full max-w-[1280px] mx-auto">
@@ -37,13 +37,13 @@ export function FooterHero({
             </div>
           )}
 
-          <div className="relative z-10 flex flex-col items-center max-w-4xl">
+          <div className="relative z-10 flex flex-col items-center">
             <h2 className="text-[26px] sm:text-[36px] md:text-[50px] leading-[1.15] font-medium tracking-[-0.8px] text-white">
               {title}{" "}
-              <span className="block font-extrabold italic">{highlight}</span>
+              <span className="font-extrabold italic">{highlight}</span>
             </h2>
 
-            <p className="mx-auto mt-4 sm:mt-6 text-[14px] sm:text-[16px] font-normal leading-[160%] text-white/70 max-w-2xl">
+            <p className="mx-auto mt-4 sm:mt-6 text-[14px] sm:text-[16px] font-normal leading-[160%] text-white/70">
               {text}
             </p>
 

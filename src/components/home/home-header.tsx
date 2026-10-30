@@ -246,7 +246,7 @@ export function HomeHeader({
       {menuOpen ? (
         <div className="relative border-t border-white/10 bg-[#07110d]/98 backdrop-blur-xl shadow-2xl lg:hidden">
           <Container size="header" className="px-6 md:py-5 max-h-[calc(100vh-80px)] overflow-y-auto">
-            <nav aria-label="Mobile" className="flex flex-col divide-y divide-white/[0.08]">
+            <nav aria-label="Mobile" className="flex flex-col divide-y divide-white/[0.08] pb-6">
               {header.links.map((link) => (
                 <MobileItem
                   key={link.label}
