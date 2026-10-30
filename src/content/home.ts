@@ -135,7 +135,7 @@ export const homeContent: HomeContent = {
           { label: "Foundation", url: "/services/#foundation" },
           { label: "Momentum", url: "/services/#momentum" },
           { label: "Foresight", url: "/services/#foresight" },
-          { label: "Partner With Us", url: "/contact-us/" }, // Updated
+          { label: "Partner With Us", url: "/contact-us/" },
           { label: "People Operations", url: "/people-operations/" },
         ],
       },
@@ -159,14 +159,14 @@ export const homeContent: HomeContent = {
       },
       { label: "Agentic AI", url: "/agentic-ai/", children: [] },
     ],
-    cta: { label: "Contact Us", url: "/contact-us/" }, // Updated
+    cta: { label: "Contact Us", url: "/contact-us/" },
   },
   hero: {
     eyebrow: "Embedded finance for founder-led companies",
     title: "Your Finance Function,",
     highlight: "Built and Run For You",
     text: "Finance in a Box works as your embedded finance team. One engagement covers CFO strategy, accounting, payroll, compliance, and the systems that connect them, with coverage that grows as you do.",
-    primary: { label: "Book a Discovery Call", url: "/contact-us/" }, // Updated
+    primary: { label: "Book a Discovery Call", url: "/contact-us/" },
     closeLabel: "Month-end close",
     closeValue: "6",
     closeUnit: "days",
@@ -177,7 +177,7 @@ export const homeContent: HomeContent = {
     runwayTrend: "+3.2 this quarter",
     chartTitle: "Cash visibility",
     chartRange: "12 month view",
-    call: { label: "Book a Call", url: "/contact-us/" }, // Updated
+    call: { label: "Book a Call", url: "/contact-us/" },
   },
   trust: {
     lead: "Trusted by",
@@ -291,13 +291,13 @@ export const homeContent: HomeContent = {
   partners: {
     title: "Our Technology Partners",
     logos: [
-      { image: null, name: "keka", caption: "Human Resources Management Systems" },
-      { image: null, name: "Quonto", caption: "Software Development" },
-      { image: null, name: "Power BI", caption: "Executive analytics" },
-      { image: null, name: "Suite", caption: "Integrated SMB suite" },
-      { image: null, name: "Oracle NetSuite", caption: "Enterprise Resource Planning Software" },
-      { image: null, name: "Recruity", caption: "Software Development" },
-      { image: null, name: "Salesforce", caption: "AI Customer Relationship" },
+      { image: { url: "/home/logos/keka.png", alt: "Keka" }, name: "keka", caption: "Human Resources Management Systems" },
+      { image: { url: "/home/logos/gusto.png", alt: "Gusto" }, name: "Gusto", caption: "Software Development" },
+      { image: { url: "/home/logos/power-bi.png", alt: "Power BI" }, name: "Power BI", caption: "Executive analytics" },
+      { image: { url: "/home/logos/zoho.png", alt: "Zoho" }, name: "Zoho", caption: "Integrated SMB suite" },
+      { image: { url: "/home/logos/oracle.png", alt: "Oracle NetSuite" }, name: "Oracle NetSuite", caption: "Enterprise Resource Planning Software" },
+      { image: { url: "/home/logos/recurly.png", alt: "Recurly" }, name: "Recurly", caption: "Software Development" },
+      { image: { url: "/home/logos/salesforce.png", alt: "Salesforce" }, name: "Salesforce", caption: "AI Customer Relationship" },
     ],
   },
   decisions: {
@@ -305,7 +305,7 @@ export const homeContent: HomeContent = {
     quote: "They offer more customized services than the bigger firms, which is great when you're in the early stage and figuring things out.",
     name: "Curran Hughes",
     role: "Founder & CEO, Renegade Plastics",
-    portrait: null,
+    portrait: { url: "/home/founder-ceo.png", alt: "Curran Hughes" },
     eyebrow: "What clients say",
     title: "Built for Better Business Decisions.",
     text: "FIAB steps in at the moments when finance becomes too complex or too important to manage casually.",
@@ -327,17 +327,17 @@ export const homeContent: HomeContent = {
     eyebrow: "Experience meets action",
     title: "Finance Leadership Without the Overhead.",
     text: "Finance in a Box was founded by Amit Mulchandani to give growing businesses direct access to senior finance operators, practical systems expertise and decision-ready insight.\n\nOur teams combine hands-on execution with the judgment to know what matters next.",
-    cta: { label: "Book a call", url: "/contact-us/" }, // Updated
+    cta: { label: "Book a call", url: "/contact-us/" },
     people: [
-      { image: null, name: "Amit Mulchandani", role: "Founder & CEO, Finance in a Box" },
-      { image: null, name: "Berena Reynoso", role: "Head of Operations" },
+      { image: { url: "/home/amit-mulchandani.png", alt: "Amit Mulchandani" }, name: "Amit Mulchandani", role: "FOUNDER & CEO, FINANCE IN A BOX" },
+      { image: { url: "/home/Berena-Reynoso.png", alt: "Berena Reynoso" }, name: "Berena Reynoso", role: "HEAD OF OPERATIONS" },
     ],
   },
   pressure: {
     title: "Tell Us Where The Pressure Is",
     emphasis: "The Pressure Is",
     text: "A 30-minute discovery call is enough to map where your finance function is leaking time or cash, and what to fix first.",
-    cta: { label: "Join the Talent Network", url: "/contact-us/" }, // Updated
+    cta: { label: "Join the Talent Network", url: "/contact-us/" },
   },
   footer: {
     logo,
@@ -350,7 +350,7 @@ export const homeContent: HomeContent = {
           { label: "Why FIAB", url: "/why-fiab/" },
           { label: "Team", url: "/#about" },
           { label: "Careers", url: "/careers/" },
-          { label: "Contact", url: "/contact-us/" }, // Updated
+          { label: "Contact", url: "/contact-us/" },
         ],
       },
       {
@@ -359,7 +359,7 @@ export const homeContent: HomeContent = {
           { label: "Foundation", url: "/services/#foundation" },
           { label: "Momentum", url: "/services/#momentum" },
           { label: "Foresight", url: "/services/#foresight" },
-          { label: "Partner With Us", url: "/contact-us/" }, // Updated
+          { label: "Partner With Us", url: "/contact-us/" },
           { label: "People Operations", url: "/people-operations/" },
         ],
       },
@@ -369,7 +369,7 @@ export const homeContent: HomeContent = {
           { label: "Clients", url: "/clients/" },
           { label: "Agentic AI", url: "/agentic-ai/" },
           { label: "Knowledge Hub", url: "/knowledge-hub/" },
-          { label: "For VCs & Advisors", url: "/contact-us/" }, // Updated
+          { label: "For VCs & Advisors", url: "/contact-us/" },
         ],
       },
       {
