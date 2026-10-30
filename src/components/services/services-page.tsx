@@ -1,331 +1,476 @@
-import type { ReactNode } from "react";
-import { HomeFooter } from "@/components/home/home-page";
 import { HomeHeader } from "@/components/home/home-header";
-import { InvestorSlider } from "@/components/services/investor-slider";
-import { mergeServices } from "@/components/services/merge";
-import { servicesContent, type ServicesContent, type ServicesDetail, type ServicesLink, type ServicesStage } from "@/content/services";
-import { homeContent, type HomeContent } from "@/content/home";
-import type { RawSection } from "@/lib/wordpress/content";
-import { Eyebrow } from "@/components/ui/eyebrow";
+import { HomeFooter } from "@/components/home/home-page";
+import { GreenButton } from "@/components/ui/green-button";
+import { FooterHero } from "@/components/ui/footer-hero"; // Import FooterHero
+import { servicesContent, type ServicesContent } from "@/content/services";
+import { homeContent } from "@/content/home";
+import Image from "next/image";
 
-export function ServicesPage({ sections }: { sections: RawSection[] }) {
-  const content = mergeServices(servicesContent, sections);
+export function ServicesPage() {
+  const content = servicesContent;
 
   return (
-    <div id="top" className="min-h-screen bg-[#07110d] text-white">
-      <div className="relative overflow-hidden bg-[#07110d]">
+    <div id="top" className="min-h-screen flex flex-col bg-white text-[#16181d]">
+      
+      {/* Hero Section */}
+      <section className="relative w-full h-[660px] flex flex-col overflow-hidden bg-[#07110d]">
         <div
-          className="pointer-events-none absolute inset-0 opacity-80"
-          style={{ backgroundImage: "url(/services/hex.svg)", backgroundSize: "84px 96px" }}
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(40,92,62,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(40,92,62,0.35) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+          }}
         />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[radial-gradient(ellipse_at_bottom,rgba(24,110,62,0.45),transparent_70%)]" />
-        <div className="relative">
-          <HomeHeader header={servicesHeader(homeContent.header)} surface="plain" logoHref="/" />
-          <ServicesHero hero={content.hero} />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-[radial-gradient(ellipse_at_bottom,rgba(35,197,94,0.15),transparent_70%)]" />
+
+        <div className="relative z-10 flex flex-col h-full mx-auto w-full max-w-[1442px] px-6">
+          <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
+
+          <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pb-12 pt-6">
+            <div className="max-w-2xl">
+              <p className="inline-flex items-center gap-3 text-[14px] font-medium tracking-[1.5px] text-[#23C55E] uppercase font-mono mb-6">
+                <span className="h-px w-6 bg-white/40" />
+                {content.hero.eyebrow}
+              </p>
+              <h1 className="text-[54px] leading-[1.0] tracking-[-0.8px] text-white mb-6">
+                <span className="font-medium">{content.hero.title}</span>
+                <span className="block text-[#23C55E] mt-1">{content.hero.highlight}</span>
+              </h1>
+              <p className="text-[16px] font-light leading-[160%] text-white/70 mb-10 max-w-xl">
+                {content.hero.text}
+              </p>
+              <div className="flex flex-wrap items-center gap-4">
+                <GreenButton
+                  label={content.hero.primary.label}
+                  href={content.hero.primary.url}
+                  bgColor="#ffffff"
+                  textColor="#07110d"
+                  size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
+                />
+              </div>
+            </div>
+
+            <div className="relative w-full flex flex-col gap-4 max-w-[506px] lg:justify-self-end">
+              {content.hero.tiers.map((tier, idx) => (
+                <div 
+                  key={idx} 
+                  className="w-full h-[125px] bg-[#050D1F] border border-[#232835] rounded-[15px] p-5 flex items-center gap-5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                >
+                  <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E]">
+                    {tier.number}
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-[12px] font-mono font-medium tracking-[1.5px] text-white/50 uppercase mb-1">
+                      {tier.label}
+                    </p>
+                    <h3 className="text-[20px] font-semibold leading-[30px] text-white">
+                      {tier.title} <span className="font-semibold text-[#23C55E]">{tier.highlight}</span>
+                    </h3>
+                    <p className="text-[14px] font-normal leading-[16px] text-white/60 mt-1">
+                      {tier.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
       <ServicesStages stages={content.stages} />
-      <ServicesDepth depth={content.depth} />
-      {content.details.map((detail) => (
-        <ServicesDetail key={detail.anchor} detail={detail} />
-      ))}
+      <ServicesDepthIntro depth={content.depth} />
+      <ServicesDetails details={content.details} />
       <ServicesCfo cfo={content.cfo} />
       <ServicesProcess process={content.process} />
+      
+      {/* Naya Section: Investors */}
       <ServicesInvestors investors={content.investors} />
+
+      {/* NAYA SECTION: Reusable Footer Hero */}
+      <FooterHero
+        title="Tell Us Where"
+        highlight="The Pressure Is"
+        text="A 30-minute discovery call is enough to map where your finance function is leaking time or cash, and what to fix first."
+        buttonLabel="Join the Talent Network"
+        buttonUrl="/contact-us"
+      />
+
       <HomeFooter footer={homeContent.footer} />
     </div>
   );
 }
 
-function servicesHeader(header: HomeContent["header"]): HomeContent["header"] {
-  const fix = (url: string) => (url.startsWith("#") ? `/${url}` : url);
-  return {
-    ...header,
-    links: header.links.map((link) => ({
-      ...link,
-      url: link.label === "Services" ? "/services/" : fix(link.url),
-      children: link.children.map((child) => ({ ...child, url: fix(child.url) })),
-    })),
-    cta: { ...header.cta, url: fix(header.cta.url) },
+// ... (Baaki saare components: Stages, DepthIntro, Details, Cfo, Process, Investors waise hi rahenge)
+
+// --- Component: Stages ---
+function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
+  const iconMap = {
+    gear: "/icons/set-the-foundation.png",
+    people: "/icons/build-momentum.png",
+    person: "/icons/lead-with-foresight.png",
+    target: "/icons/optimize-and-expand.png",
   };
-}
 
-function Arrow() {
   return (
-    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-current">
-      <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden="true">
-        <path d="M4 8h8M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </span>
-  );
-}
-
-function Pill({ link, tone }: { link: ServicesLink; tone: "light" | "dark" | "ink" }) {
-  const className =
-    tone === "light" ? "bg-white text-[#102018]" : tone === "ink" ? "bg-[#121820] text-white" : "bg-[#3DDC84] text-[#06210f]";
-  return (
-    <a href={link.url} className={`inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-semibold ${className}`}>
-      {link.label}
-      <Arrow />
-    </a>
-  );
-}
-
-export function ServicesHero({ hero }: { hero: ServicesContent["hero"] }) {
-  return (
-    <section id="tiers" className="relative px-6 pt-8 pb-20">
-      <div className="mx-auto grid w-full max-w-[1280px] items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <Eyebrow variant="dark">
-            {hero.eyebrow}
-          </Eyebrow>
-          <h1 className="mt-5 max-w-xl text-5xl leading-[0.98] font-semibold tracking-tight text-balance sm:text-6xl">
-            {hero.title} <span className="text-[#3DDC84]">{hero.highlight}</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-sm leading-6 text-white/75">{hero.text}</p>
-          <div className="mt-8 flex flex-wrap items-center gap-6">
-            <Pill link={hero.primary} tone="light" />
-            <a href={hero.secondary.url} className="inline-flex items-center gap-3 text-sm font-semibold text-white">
-              {hero.secondary.label}
-              <Arrow />
-            </a>
-          </div>
-        </div>
-        <div className="relative">
-          <div className="absolute top-4 bottom-4 left-0 w-px bg-[#3DDC84]" />
-          <ol className="space-y-4 pl-5">
-            {hero.tiers.map((tier) => (
-              <li key={tier.number} className="rounded-2xl border border-white/10 bg-[#101820]/90 p-5">
-                <div className="flex items-start gap-4">
-                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-xs text-white/80">
-                    {tier.number}
-                  </span>
-                  <div>
-                    <p className="text-[11px] font-semibold tracking-[0.16em] text-white/45 uppercase">{tier.label}</p>
-                    <h2 className="mt-1 text-lg font-semibold">
-                      {tier.title} <span className="text-[#3DDC84]">{tier.highlight}</span>
-                    </h2>
-                    <p className="mt-2 text-sm leading-6 text-white/65">{tier.text}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const stageIcons: Record<ServicesStage["icon"], ReactNode> = {
-  gear: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M12 3.5v2.2M12 18.3v2.2M3.5 12h2.2M18.3 12h2.2M6 6l1.6 1.6M16.4 16.4 18 18M18 6l-1.6 1.6M7.6 16.4 6 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  ),
-  people: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <circle cx="8" cy="9" r="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="15" cy="9" r="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M4.5 17c.6-2 2.2-3 3.5-3s2.9 1 3.5 3M12.5 17c.6-2 2.2-3 3.5-3s2.9 1 3.5 3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  ),
-  person: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <circle cx="12" cy="8" r="2.2" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M7.5 17.5c.7-2.3 2.4-3.4 4.5-3.4s3.8 1.1 4.5 3.4M17 7.5h3M18.5 6v3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  ),
-  target: (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M12 3.5V6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  ),
-};
-
-export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
-  return (
-    <section id="stages" className="bg-white px-6 py-20 text-[#16181d]">
+    <section className="bg-white px-6 py-24 text-[#121826]">
       <div className="mx-auto w-full max-w-[1280px]">
-        <div className="grid items-end gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12">
           <div>
-            <Eyebrow variant="light">
-              {stages.eyebrow}
-            </Eyebrow>
-            <h2 className="mt-4 max-w-xl text-5xl leading-[0.98] font-semibold tracking-tight">{stages.title}</h2>
-          </div>
-          <p className="max-w-sm text-sm leading-6 text-[#5d6570] lg:justify-self-end">{stages.text}</p>
-        </div>
-        <ul className="mt-12 grid gap-5 md:grid-cols-2">
-          {stages.cards.map((card) => (
-            <li key={card.title} className="rounded-3xl bg-[#121820] p-7 text-white">
-              <div className="flex items-start justify-between gap-4">
-                <h3 className="text-2xl font-semibold tracking-tight">{card.title}</h3>
-                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/80">
-                  {stageIcons[card.icon]}
-                </span>
-              </div>
-              <p className="mt-3 max-w-sm text-[11px] font-semibold tracking-[0.12em] text-white/45 uppercase">{card.label}</p>
-              <p className="mt-5 max-w-md text-sm leading-6 text-white/70">{card.text}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-export function ServicesDetail({ detail }: { detail: ServicesDetail }) {
-  return (
-    <section id={detail.anchor} className="border-t border-white/10 bg-[#0c1218] px-6 py-16">
-      <div className="mx-auto grid w-full max-w-[1280px] items-start gap-10 lg:grid-cols-[0.78fr_1.22fr]">
-        <div>
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#3DDC84] text-xs font-semibold text-[#3DDC84]">
-            {detail.number}
-          </span>
-          <h2 className="mt-5 max-w-sm text-4xl leading-[1.05] font-semibold tracking-tight">{detail.title}</h2>
-          <p className="mt-4 max-w-sm text-sm leading-6 text-white/65">{detail.text}</p>
-          <div className="mt-8">
-            <Pill link={detail.cta} tone="dark" />
-          </div>
-        </div>
-        <ul className="grid overflow-hidden rounded-2xl border border-white/10 sm:grid-cols-2">
-          {detail.items.map((item, index) => {
-            const span = index === detail.items.length - 1 && detail.items.length % 2 === 1;
-            const lastRowStart = span ? detail.items.length - 1 : Math.max(detail.items.length - 2, 0);
-            const border = [
-              index < lastRowStart ? "border-b" : "",
-              !span && index % 2 === 0 ? "sm:border-r" : "",
-              "border-white/10",
-            ]
-              .filter(Boolean)
-              .join(" ");
-            return (
-              <li key={item.title} className={`p-6 ${span ? "sm:col-span-2" : ""} ${border}`}>
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p className="mt-2 text-sm text-white/55">{item.text}</p>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
-  return (
-    <section id="cfo" className="bg-[#f4f3ef] px-6 py-16 text-[#14181f] sm:py-20">
-      <div className="mx-auto w-full max-w-[1280px]">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-          <h2 className="max-w-[12ch] text-5xl leading-[0.96] font-semibold tracking-tight whitespace-pre-line sm:text-6xl">
-            {cfo.title}
-          </h2>
-          <div className="max-w-sm lg:justify-self-end lg:pt-2">
-            <p className="text-sm leading-6 text-[#6a717c]">{cfo.text}</p>
-            <div className="mt-6">
-              <Pill link={cfo.cta} tone="ink" />
-            </div>
-          </div>
-        </div>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {cfo.cards.map((card) => (
-            <article key={card.title}>
-              {card.image ? (
-                <img src={card.image.url} alt={card.image.alt || card.title} className="h-64 w-full rounded-[22px] object-cover" />
-              ) : (
-                <div className="h-64 rounded-[22px] bg-[#d7dbd6]" />
-              )}
-              <div className="relative z-10 -mt-16 mx-3 rounded-[18px] bg-[#141b24] px-5 py-5 text-white">
-                <h3 className="text-[13px] font-semibold tracking-[0.16em] uppercase">{card.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-white/75">{card.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
-  return (
-    <section id="cadence" className="bg-[#0c1218] px-6 py-20 text-center">
-      <div className="mx-auto w-full max-w-[1280px]">
-        <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">{process.title}</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-white/65">{process.text}</p>
-        <ol className="mt-12 grid overflow-hidden rounded-xl border border-white/10 text-left md:grid-cols-5">
-          {process.steps.map((step) => (
-            <li key={step.number} className="border-b border-white/10 p-6 last:border-b-0 md:border-r md:border-b-0 md:last:border-r-0">
-              <div className="flex items-center gap-3">
-                <span className="h-7 w-0.5 bg-[#3DDC84]" />
-                <span className="text-3xl font-semibold">{step.number}</span>
-              </div>
-              <h3 className="mt-8 text-xl font-semibold">{step.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-white/60">{step.text}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
-function italicTitle(title: string, highlight: string) {
-  const index = highlight ? title.toLowerCase().indexOf(highlight.toLowerCase()) : -1;
-  if (index < 0) return title;
-  return (
-    <>
-      {title.slice(0, index)}
-      <em className="font-serif italic">{title.slice(index, index + highlight.length)}</em>
-      {title.slice(index + highlight.length)}
-    </>
-  );
-}
-
-export function ServicesInvestors({ investors }: { investors: ServicesContent["investors"] }) {
-  return (
-    <section id="investors" className="overflow-hidden bg-[#070b12] py-20">
-      <div className="mx-auto w-full max-w-[1280px] px-6">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <Eyebrow variant="dark">
-              {investors.eyebrow}
-            </Eyebrow>
-            <h2 className="mt-4 max-w-xl text-5xl leading-[0.96] font-semibold tracking-tight whitespace-pre-line sm:text-6xl">
-              {italicTitle(investors.title, investors.highlight)}
+            <p className="text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#121826]/50 mb-4">
+              — {stages.eyebrow}
+            </p>
+            <h2 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px]">
+              {stages.title.split("Company")[0]}
+              <br />
+              <span className="font-black italic">Company Today?</span>
             </h2>
           </div>
-          <div className="max-w-md lg:justify-self-end">
-            <p className="text-sm leading-6 text-white/70">{investors.text}</p>
-            <div className="mt-6 flex flex-wrap items-center gap-6">
-              <Pill link={investors.primary} tone="light" />
-              <a href={investors.secondary.url} className="inline-flex items-center gap-3 text-sm font-semibold">
-                {investors.secondary.label}
-                <Arrow />
-              </a>
-            </div>
-          </div>
+          <p className="max-w-md text-[16px] font-light leading-[160%] text-[#121826]/70">
+            {stages.text}
+          </p>
         </div>
-      </div>
-      <div className="mt-12 pr-0 pl-[max(1.5rem,calc((100%-72rem)/2))]">
-        <InvestorSlider cards={investors.cards} />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {stages.cards.map((card, idx) => {
+            const iconSrc = iconMap[card.icon] || "/icons/set-the-foundation.png"; 
+            
+            return (
+              <div 
+                key={idx} 
+                className="bg-[#121826] rounded-[16px] p-8 flex flex-col justify-between min-h-[226px] relative group border border-white/5"
+              >
+                <div className="flex justify-between items-start gap-4 mb-6">
+                  <h3 className="text-[30px] font-semibold leading-[1.2] text-white">
+                    {card.title}
+                  </h3>
+                  <div className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 group-hover:bg-white/10 transition-colors">
+                    <Image 
+                      src={iconSrc} 
+                      alt={card.title} 
+                      width={22} 
+                      height={22} 
+                      className="object-contain" 
+                    />
+                  </div>
+                </div>
+
+                <p className="text-[14px] font-medium tracking-[0.06em] uppercase text-white/70 mb-4 max-w-[80%] leading-[16px]">
+                  {card.label}
+                </p>
+
+                <p className="text-[18px] font-normal leading-[150%] text-white/70">
+                  {card.text}
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
 
-export function ServicesDepth({ depth }: { depth: ServicesContent["depth"] }) {
+// --- Component: Depth Intro ---
+function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] }) {
   return (
-    <section className="bg-[#0c1218] px-6 py-24 text-center">
-      <div className="mx-auto w-full max-w-3xl">
-        <Eyebrow variant="dark">{depth.eyebrow}</Eyebrow>
-        <h2 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">{depth.title}</h2>
-        <div className="mt-8">
-          <Pill link={depth.cta} tone="light" />
+    <section className="bg-[#121826] px-6 py-24 text-white">
+      <div className="mx-auto w-full max-w-[1280px] flex flex-col items-center text-center">
+        
+        <p className="text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-6">
+          {depth.eyebrow}
+        </p>
+        
+        <h2 className="text-[50px] leading-[1.1] tracking-[-0.8px] mb-10">
+          <span className="font-medium">What's</span>
+          <span className="font-extrabold italic"> Inside Each Tier</span>
+        </h2>
+
+        <GreenButton
+          label={depth.cta.label}
+          href={depth.cta.url}
+          bgColor="#ffffff"
+          textColor="#121826"
+          size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "18px" }}
+        />
+
+      </div>
+    </section>
+  );
+}
+
+// --- Component: Details ---
+function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
+  return (
+    <section className="bg-[#191F2D] px-6 py-24 text-white">
+      <div className="mx-auto w-full max-w-[1442px] flex flex-col gap-24">
+        {details.map((detail, idx) => (
+          <div 
+            key={detail.anchor} 
+            id={detail.anchor} 
+            className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20 items-start"
+          >
+            <div className="max-w-md">
+              <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-white/10 bg-white/5 text-[14px] font-semibold text-[#23C55E] mb-6">
+                {detail.number}
+              </div>
+              <h2 className="text-[36px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 text-white">
+                {detail.title}
+              </h2>
+              <p className="text-[16px] font-light leading-[160%] text-white/70 mb-10">
+                {detail.text}
+              </p>
+              <GreenButton
+                label={detail.cta.label}
+                href={detail.cta.url}
+                bgColor="#23C55E"
+                textColor="#121826"
+                size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border border-white/5 rounded-[9px] overflow-hidden">
+              {detail.items.map((item, itemIdx) => {
+                const isLastItem = itemIdx === detail.items.length - 1;
+                const isOddTotal = detail.items.length % 2 !== 0;
+                const isFullWidth = isLastItem && isOddTotal;
+
+                return (
+                  <div 
+                    key={itemIdx} 
+                    className={`bg-[#121826] p-8 flex flex-col justify-start min-h-[191px] border-b border-white/5 
+                      ${isFullWidth ? 'sm:col-span-2 border-r-0' : 'border-r'} 
+                      ${itemIdx >= detail.items.length - (isFullWidth ? 1 : 2) ? 'border-b-0' : ''}
+                    `}
+                  >
+                    <h3 className="text-[22px] font-semibold leading-[1.2] mb-3 text-white">
+                      {item.title}
+                    </h3>
+                    <p className="text-[16px] font-normal leading-[140%] text-white/70">
+                      {item.text}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// --- Component: Fractional CFO ---
+function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
+  const images = [
+    "/services/cfo-dilivers-1.png",
+    "/services/cfo-dilivers-2.png",
+    "/services/cfo-dilivers-3.png"
+  ];
+
+  return (
+    <section className="bg-white px-6 py-24">
+      <div className="mx-auto w-full max-w-[1280px] bg-[#EDE9E6] rounded-[24px] p-10 md:p-16 text-[#121826]">
+        
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-16">
+          <div>
+            <h2 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px]">
+              {cfo.title.split("\n")[0]}
+              <br />
+              <span className="font-black italic">{cfo.title.split("\n")[1]}</span>
+            </h2>
+          </div>
+          <div className="max-w-md">
+            <p className="text-[16px] font-light leading-[160%] text-[#121826]/70 mb-6">
+              {cfo.text}
+            </p>
+            <GreenButton
+              label={cfo.cta.label}
+              href={cfo.cta.url}
+              bgColor="#121826"
+              textColor="#ffffff"
+              size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {cfo.cards.map((card, idx) => (
+            <div 
+              key={idx} 
+              className="relative w-full h-[490px] rounded-[10px] overflow-hidden"
+            >
+              <Image
+                src={images[idx] || card.image?.url || ""}
+                alt={card.title}
+                fill
+                className="object-cover"
+              />
+              <div className="absolute bottom-0 left-0 w-full p-4">
+                <div className="bg-[#121826] rounded-[8px] p-6 w-[286px] h-[154px] flex flex-col justify-center text-white">
+                  <h3 className="text-[18px] font-extrabold uppercase tracking-[1px] leading-[20px] mb-3">
+                    {card.title}
+                  </h3>
+                  <p className="text-[14px] font-normal leading-[140%] text-white/70 line-clamp-4">
+                    {card.text}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// --- Component: Process ---
+function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
+  return (
+    <section className="bg-[#121826] px-6 py-24 text-white">
+      <div className="mx-auto w-full max-w-[1280px]">
+        
+        {/* Header */}
+        <div className="flex flex-col items-center text-center mb-16">
+          <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-4">
+            {process.title}
+          </h2>
+          <p className="text-[16px] font-light leading-[160%] text-white/70 max-w-2xl">
+            {process.text}
+          </p>
+        </div>
+
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-5 border-t border-l border-white/10">
+          {process.steps.map((step, idx) => (
+            <div 
+              key={idx} 
+              className="relative p-8 border-r border-b border-white/10 flex flex-col bg-[#191F2D] min-h-[311px]"
+            >
+              {/* TOP PART: Number with short green line on the left */}
+              <div className="h-[80px] shrink-0 flex items-start gap-4">
+                {/* Short Green Line (equal to number height) */}
+                <div className="w-[3px] h-[40px] bg-[#23C55E] mt-0.5" />
+                
+                <span className="text-[40px] font-extrabold leading-none">
+                  {step.number}
+                </span>
+              </div>
+              
+              {/* BOTTOM PART: Title & Text (Aligned to bottom) */}
+              <div className="flex flex-col flex-grow justify-end">
+                <h3 className="text-[30px] font-semibold mb-2 leading-none">
+                  {step.title}
+                </h3>
+                <p className="text-[16px] font-normal leading-[150%] text-white/70">
+                  {step.text}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// --- Component: Investors (Updated Images & Contained Scroll) ---
+function ServicesInvestors({ investors }: { investors: ServicesContent["investors"] }) {
+  const cardImages = [
+    "/services/scroll/portfolio-1.png",
+    "/services/scroll/portfolio-2.png",
+    "/services/scroll/portfolio-3.png",
+    "/services/scroll/portfolio-4.png",
+    "/services/scroll/portfolio-5.png",
+    "/services/scroll/portfolio-6.png"
+  ];
+
+  return (
+    <section className="bg-[#121826] py-24 text-white overflow-hidden">
+      
+      {/* Header Area - Contained */}
+      <div className="mx-auto w-full max-w-[1442px] px-6 mb-16">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12">
+          <div className="max-w-2xl">
+            <p className="text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-6">
+              — {investors.eyebrow}
+            </p>
+            <h2 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px]">
+              {investors.title.split("\n")[0]}<br />
+              {investors.title.split("\n")[1]}{" "}
+              <span className="font-black italic">{investors.highlight}</span><br />
+              {investors.title.split("\n")[2]}
+            </h2>
+          </div>
+          
+          <div className="max-w-xl lg:pb-2">
+            <p className="text-[16px] font-light leading-[160%] text-white/70 mb-8">
+              {investors.text}
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <GreenButton
+                label={investors.primary.label}
+                href={investors.primary.url}
+                bgColor="#ffffff"
+                textColor="#121826"
+                size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+              />
+              <GreenButton
+                label={investors.secondary.label}
+                href={investors.secondary.url}
+                bgColor="transparent"
+                textColor="#ffffff"
+                className="border border-white/30 hover:bg-white/10"
+                size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Horizontally Scrollable Cards - Contained within max-w */}
+      <div className="mx-auto w-full max-w-[1442px] px-6">
+        <div 
+          className="w-full overflow-x-auto overflow-y-hidden flex gap-6 pb-4"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          <style dangerouslySetInnerHTML={{__html: `.overflow-x-auto::-webkit-scrollbar { display: none; }`}} />
+          
+          <div className="flex gap-6 min-w-max pr-6">
+            {cardImages.map((imgSrc, idx) => {
+              const card = investors.cards[idx] || { title: "", text: "" };
+              
+              return (
+                <div 
+                  key={idx} 
+                  className="relative w-[400px] h-[490px] rounded-[14px] overflow-hidden shrink-0 group"
+                >
+                  <Image
+                    src={imgSrc}
+                    alt={card.title || `Portfolio Card ${idx + 1}`}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0C] via-[#0B0D0C]/60 to-transparent opacity-90" />
+                  
+                  {(card.title || card.text) && (
+                    <div className="absolute bottom-0 left-0 w-full p-8 text-white z-10">
+                      <h3 className="text-[22px] font-semibold leading-[24px] mb-3">
+                        {card.title}
+                      </h3>
+                      <p className="text-[14px] font-normal leading-[140%] text-white/80">
+                        {card.text}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
