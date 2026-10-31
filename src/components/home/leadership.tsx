@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { HomeContent } from "@/content/home";
 import Container from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import Section from "@/components/ui/section";
 
 interface LeadershipProps {
   leadership: HomeContent["leadership"];
@@ -95,7 +96,7 @@ export function Leadership({ leadership }: LeadershipProps) {
   };
 
   return (
-    <section id="leadership" className="leadership-section bg-[#121826] py-14 sm:py-16 lg:py-20 text-white overflow-hidden">
+    <Section id="leadership" theme="dark" spacing="both" className="leadership-section overflow-hidden">
       <Container>
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8 sm:gap-10 lg:gap-10 xl:gap-16">
 
@@ -247,6 +248,6 @@ export function Leadership({ leadership }: LeadershipProps) {
 
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

@@ -7,6 +7,7 @@ import { contactUsContent } from "@/content/contact-us";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import Section from "@/components/ui/section";
 
 function withSiteLinks<T extends { url: string }>(value: T): T {
   return { ...value, url: value.url.startsWith("#") ? `/${value.url}` : value.url };
@@ -71,7 +72,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* Form Section */}
-      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826]">
+      <Section theme="light" spacing="both">
         <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row gap-8">
           
           {/* Left Side: Image & Contact Info */}
@@ -166,7 +167,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
           </div>
 
         </div>
-      </section>
+      </Section>
 
       {/* Stay Connected Section */}
       <section className="bg-white px-6 pb-24">

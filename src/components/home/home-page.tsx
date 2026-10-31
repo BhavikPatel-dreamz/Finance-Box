@@ -11,6 +11,7 @@ import { Founders } from "@/components/home/founders";
 import { Leadership } from "@/components/home/leadership";
 import { FooterHero } from "@/components/ui/footer-hero";
 import Container from "../ui/container";
+import Section from "../ui/section";
 
 export function HomePage({ sections }: { sections: RawSection[] }) {
   const content = mergeHome(homeContent, sections);
@@ -179,7 +180,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
   ];
 
   return (
-    <section className="differance-section bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
+    <Section theme="dark" spacing="both" className="differance-section">
       <Container>
 
         <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16">
@@ -230,13 +231,13 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
 
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
 
 function Growth({ growth }: { growth: HomeContent["growth"] }) {
   return (
-    <section className="growth-section bg-[#121826] pb-14 sm:pb-16 lg:pb-20 text-white">
+    <Section theme="dark" spacing="bottom" className="growth-section">
       <Container>
 
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-12">
@@ -308,7 +309,7 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
         </div>
 
       </Container>
-    </section>
+    </Section>
   );
 }
 
@@ -391,7 +392,7 @@ function Partners({ partners }: { partners: HomeContent["partners"] }) {
 
 function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
   return (
-    <section id="insights" className="decisions-section bg-white px-4 sm:px-6 lg:px-8 pb-14 sm:pb-16 lg:pb-20">
+    <Section id="insights" theme="light" spacing="bottom" className="decisions-section px-4 sm:px-6 lg:px-8">
       <Container>
         <div className="flex flex-col lg:flex-row rounded-[10px] overflow-hidden border border-gray-200">
 
@@ -464,7 +465,7 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
 
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
 

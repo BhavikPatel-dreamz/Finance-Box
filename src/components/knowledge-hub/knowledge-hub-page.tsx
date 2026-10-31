@@ -8,6 +8,7 @@ import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
 import { FooterHero } from "../ui/footer-hero";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import Section from "@/components/ui/section";
 
 export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
   const content = mergeKnowledgeHub(knowledgeHubContent, sections);
@@ -62,7 +63,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 2. Our Blogs Section */}
-      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
+      <Section theme="light" spacing="both">
         <div className="mx-auto w-full max-w-[1280px]">
 
           <h2 className="text-center text-[44px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
@@ -108,7 +109,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
           </div>
 
         </div>
-      </section>
+      </Section>
 
       {/* 3. Resources Banner */}
       <section className="bg-[#EDE9E6] px-6 py-16 text-[#16181d]">
@@ -135,7 +136,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 4. Case Study Section */}
-      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
+      <Section theme="light" spacing="both">
         <div className="mx-auto w-full max-w-[1280px]">
 
           <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
@@ -165,10 +166,10 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
           </div>
 
         </div>
-      </section>
+      </Section>
 
       {/* 5. Naya Section: Newsletter */}
-      <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
+      <Section theme="dark" spacing="both">
         <div className="mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
           {/* Left Side: Text & CTA */}
@@ -238,7 +239,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
           </div>
 
         </div>
-      </section>
+      </Section>
 
       {/* 6. NAYA: Reusable Footer Hero */}
       <FooterHero

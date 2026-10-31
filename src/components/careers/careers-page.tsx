@@ -9,6 +9,7 @@ import type { RawSection } from "@/lib/wordpress/content";
 import { Accordion } from "../ui/accordion";
 import { FooterHero } from "../ui/footer-hero";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import Section from "@/components/ui/section";
 
 
 export function CareersPage({ sections }: { sections: RawSection[] }) {
@@ -105,7 +106,7 @@ export function CareersPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 3. What Makes FIAB Stand Out Section */}
-      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
+      <Section theme="light" spacing="both">
         <div className="mx-auto w-full max-w-[1280px]">
           <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16 text-[#16181d]">
             {content.standOut.title}
@@ -134,10 +135,10 @@ export function CareersPage({ sections }: { sections: RawSection[] }) {
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* 4. Benefits & Perks Section */}
-      <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
+      <Section theme="dark" spacing="both">
         <div className="mx-auto w-full max-w-[1280px]">
           <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16">
             {content.benefits.title}
@@ -161,7 +162,7 @@ export function CareersPage({ sections }: { sections: RawSection[] }) {
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* 5. How We Hire Section */}
       <section className="bg-[#121826] px-6 pb-24 text-white">

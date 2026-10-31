@@ -7,6 +7,7 @@ import { peopleOperationsContent } from "@/content/people-operations";
 import type { RawSection } from "@/lib/wordpress/content";
 import { FooterHero } from "../ui/footer-hero";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import Section from "@/components/ui/section";
 
 export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
   const content = mergePeopleOperations(peopleOperationsContent, sections);
@@ -53,7 +54,7 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 2. Intro Section */}
-      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
+      <Section theme="light" spacing="both">
         <div className="mx-auto w-full max-w-[1280px] flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <div className="w-full lg:w-[554px] shrink-0 relative aspect-[554/643] rounded-[16px] overflow-hidden">
             <Image src={content.intro.image} alt="FIAB People Operations" fill className="object-cover" />
@@ -68,10 +69,10 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
             </p>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* 3. Naya Section: What We Do */}
-      <section className="bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
+      <Section theme="dark" spacing="both">
         <div className="mx-auto w-full max-w-[1280px]">
 
           <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
@@ -129,10 +130,10 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
           </div>
 
         </div>
-      </section>
+      </Section>
 
       {/* 4. Naya Section: Where we help */}
-      <section className="bg-white py-14 sm:py-16 lg:py-20 text-[#121826] text-[#16181d]">
+      <Section theme="light" spacing="both">
         <div className="mx-auto w-full max-w-[1280px]">
 
           <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
@@ -153,7 +154,7 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
           </div>
 
         </div>
-      </section>
+      </Section>
 
       {/* 5. NAYA: Reusable Footer Hero */}
       <FooterHero

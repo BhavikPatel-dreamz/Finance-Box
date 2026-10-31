@@ -11,6 +11,7 @@ import { FooterHero } from "@/components/ui/footer-hero";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Container } from "@/components/ui/container";
+import Section from "@/components/ui/section";
 
 export function WhyPage({ sections }: { sections: RawSection[] }) {
   const content = mergeWhy(whyContent, sections);
@@ -323,7 +324,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
 
 export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"] }) {
   return (
-    <section className="how-we-work bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
+    <Section theme="dark" spacing="both" className="how-we-work">
       <Container>
         <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%] mb-8 sm:mb-12">
           {howWeWork.title}
@@ -347,13 +348,13 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
           ))}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
 
 export function WhyTalk() {
   return (
-    <section className="pt-20">
+    <Section spacing="top" className="bg-white">
       <Container>
         <div className="rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] pl-8 md:pl-12 lg:pl-16 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 overflow-hidden">
           <div className="max-w-[600px] relative z-10">
@@ -385,13 +386,13 @@ export function WhyTalk() {
           </div>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
 
 export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSection"] }) {
   return (
-    <section className="about-grid-section bg-white py-14 sm:py-16 lg:py-20">
+    <Section theme="light" spacing="both" className="about-grid-section">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           {/* Card 1: Team Photo + Why FIAB Exists */}
@@ -439,13 +440,13 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
           </div>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
 
 export function WhyTeam({ team }: { team: WhyContent["team"] }) {
   return (
-    <section className="team-section bg-[#121826] py-14 sm:py-16 lg:py-20">
+    <Section theme="dark" spacing="both" className="team-section">
       <Container>
         <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%]">
           {team.title}
@@ -466,7 +467,7 @@ export function WhyTeam({ team }: { team: WhyContent["team"] }) {
           />
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
 

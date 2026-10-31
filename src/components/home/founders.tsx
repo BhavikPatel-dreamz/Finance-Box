@@ -5,12 +5,13 @@ import type { HomeContent } from "@/content/home";
 import { GreenButton } from "@/components/ui/green-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Container from "../ui/container";
+import Section from "../ui/section";
 
 export function Founders({ founders }: { founders: HomeContent["founders"] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="founders-section bg-white py-14 sm:py-16 lg:py-20 text-[#121826]">
+    <Section theme="light" spacing="both" className="founders-section">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-10 xl:gap-16">
 
@@ -80,6 +81,6 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
           </div>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
