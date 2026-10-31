@@ -37,10 +37,10 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 
           <Container>
             <div className="pt-14 sm:pt-18 md:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 flex flex-col items-center text-center">
-              <Eyebrow variant="green-no-dash">
+              <Eyebrow variant="dark-no-dash" className="mb-6">
                 {content.hero.eyebrow}
               </Eyebrow>
-              <h1 className="mt-4 sm:mt-6 lg:mt-8 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-medium leading-[1.12] tracking-tight text-white">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-medium leading-[1.12] tracking-tight text-white">
                 {content.hero.title}
                 <span className="font-extrabold italic"> {content.hero.highlight}</span>
               </h1>

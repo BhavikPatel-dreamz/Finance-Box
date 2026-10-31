@@ -76,7 +76,7 @@ export const contactUsContent: ContactUsContent = {
       text: "Follow us for expert tips and updates designed to help your business scale.",
       buttonLabel: "LinkedIn",
       buttonUrl: "https://linkedin.com",
-      image: "/contact-us/gift.png",
+      image: "/contact-us/gift.svg",
     },
     newsletter: {
       title: "Join our Newsletter",

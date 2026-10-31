@@ -17,6 +17,12 @@ export type EyebrowVariant =
   | "dark-no-dash"
   | "light-dash"
   | "light-no-dash"
+  | "white-dash"
+  | "white-no-dash"
+  | "white-70-dash"
+  | "white-70-no-dash"
+  | "white/70-dash"
+  | "white/70-no-dash"
   | "green-dash"
   | "green-no-dash"
   | "accent-dash"
@@ -115,8 +121,9 @@ export function Eyebrow({
     bg === "white" ||
     bg === "light" ||
     variantStr.includes("light") ||
-    variantStr.includes("white") ||
-    variantStr.includes("on-light");
+    variantStr.includes("on-light") ||
+    variantStr === "on-white" ||
+    variantStr === "dark-text";
 
   const isGreen =
     variantStr.includes("green") ||
@@ -150,6 +157,19 @@ export function Eyebrow({
 
   const hasCustomFontSize = className.includes("text-") || className.includes("text-[");
   const hasCustomLineHeight = className.includes("leading-");
+  const hasCustomTextColor =
+    Boolean(color) ||
+    className.includes("text-white") ||
+    className.includes("text-black") ||
+    className.includes("text-[") ||
+    className.includes("text-green") ||
+    className.includes("text-gray");
+  const hasCustomOpacity =
+    opacity !== undefined ||
+    className.includes("opacity-") ||
+    className.includes("/70") ||
+    className.includes("/80") ||
+    className.includes("/90");
 
   return (
     <Component
@@ -161,8 +181,8 @@ export function Eyebrow({
         textTransform: "uppercase",
         letterSpacing: "1.5px",
         ...(hasCustomLineHeight ? {} : { lineHeight: "18px" }),
-        color: finalColor,
-        opacity: finalOpacity,
+        ...(hasCustomTextColor && !color ? {} : { color: finalColor }),
+        ...(hasCustomOpacity && opacity === undefined ? {} : { opacity: finalOpacity }),
         ...style,
       }}
       {...rest}

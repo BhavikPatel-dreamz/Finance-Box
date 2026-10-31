@@ -10,6 +10,7 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { Founders } from "@/components/home/founders";
 import { Leadership } from "@/components/home/leadership";
 import { FooterHero } from "@/components/ui/footer-hero";
+import { PartnersSection } from "@/components/ui/partners-section";
 import Container from "../ui/container";
 import Section from "../ui/section";
 
@@ -25,7 +26,11 @@ export function HomePage({ sections }: { sections: RawSection[] }) {
       <Growth growth={content.growth} />
 
       {/* Naye Sections */}
-      <Partners partners={content.partners} />
+      <PartnersSection
+        title={content.partners.title}
+        highlight="Partners"
+        logos={content.partners.logos}
+      />
       <Decisions decisions={content.decisions} />
       <Leadership leadership={content.leadership} />
       <Pressure pressure={content.pressure} />
@@ -313,82 +318,7 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
   );
 }
 
-function Partners({ partners }: { partners: HomeContent["partners"] }) {
-  const logos = partners?.logos || [];
-  // Repeat logos so each track easily fills wide screens for seamless infinite looping
-  const repeatCount = Math.max(2, Math.ceil(12 / (logos.length || 1)));
-  const trackLogos = Array.from({ length: repeatCount }, () => logos).flat();
-  const marqueeDuration = "65s"; // Slow, calm, and readable marquee pace
 
-  return (
-    <section className="partners-section bg-white py-12 sm:py-14 lg:py-16 text-[#16181d] overflow-hidden">
-      <Container>
-        <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12">
-          {partners.title.split("Partners")[0]}
-          <span className="font-extrabold italic">Partners</span>
-        </h2>
-      </Container>
-
-      {/* Infinite Logo Slider */}
-      <div className="group relative w-full overflow-hidden">
-
-        {/* Marquee Track Container */}
-        <div className="flex w-max select-none">
-          {/* Primary Track */}
-          <ul
-            className="flex shrink-0 items-center gap-10 sm:gap-14 md:gap-16 pr-10 sm:pr-14 md:pr-16 animate-marquee group-hover:[animation-play-state:paused]"
-            style={{ animationDuration: marqueeDuration }}
-          >
-            {trackLogos.map((item, idx) => (
-              <li
-                key={`partner-logo-a-${idx}`}
-                className="flex flex-col items-center justify-center shrink-0"
-              >
-                <div className="w-[150px] sm:w-[170px] h-[60px] flex items-center justify-center relative">
-                  {item.image ? (
-                    <img
-                      src={item.image.url}
-                      alt={item.image.alt || item.name}
-                      className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-300 hover:scale-105"
-                    />
-                  ) : (
-                    <span className="text-xl font-bold">{item.name}</span>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          {/* Duplicate Track (for continuous seamless loop) */}
-          <ul
-            className="flex shrink-0 items-center gap-10 sm:gap-14 md:gap-16 pr-10 sm:pr-14 md:pr-16 animate-marquee group-hover:[animation-play-state:paused]"
-            style={{ animationDuration: marqueeDuration }}
-            aria-hidden="true"
-          >
-            {trackLogos.map((item, idx) => (
-              <li
-                key={`partner-logo-b-${idx}`}
-                className="flex flex-col items-center justify-center shrink-0"
-              >
-                <div className="w-[150px] sm:w-[170px] h-[60px] flex items-center justify-center relative">
-                  {item.image ? (
-                    <img
-                      src={item.image.url}
-                      alt={item.image.alt || item.name}
-                      className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-300 hover:scale-105"
-                    />
-                  ) : (
-                    <span className="text-xl font-bold">{item.name}</span>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
   return (

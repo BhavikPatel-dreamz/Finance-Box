@@ -10,6 +10,7 @@ import { Accordion } from "../ui/accordion";
 import { FooterHero } from "../ui/footer-hero";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
+import Container from "../ui/container";
 
 export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
   const content = mergeAgenticAi(agenticAiContent, sections);
@@ -17,19 +18,12 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
 
-      {/* 1. Hero Section */}
-      <section className="relative w-full h-[525px] flex flex-col overflow-hidden bg-[#07110d]">
-        <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 opacity-40"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(40,92,62,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(40,92,62,0.35) 1px, transparent 1px)",
-              backgroundSize: "56px 56px",
-            }}
-          />
-          <div className="absolute inset-x-0 bottom-0 h-64 bg-[radial-gradient(ellipse_at_bottom,rgba(35,197,94,0.15),transparent_70%)]" />
-        </div>
+      {/* Hero Section (Header + Hero = 525px) */}
+      <section className="hero-section relative h-[525px] overflow-hidden bg-[#121826] text-white">
+        <div
+          className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
+          style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
+        />
 
         <div className="relative z-10 flex flex-col h-full">
           <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
@@ -41,7 +35,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                 <Eyebrow variant="dark" className="mb-6">
                   {content.hero.eyebrow}
                 </Eyebrow>
-                <h1 className="text-[54px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 text-white">
+                <h1 className="text-[54px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 text-white lg:max-w-[400px]">
                   {content.hero.title}
                   <span className="text-[#23C55E]">{content.hero.highlight}</span>
                 </h1>
@@ -65,13 +59,6 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                   label={content.hero.cta.label}
                   href={content.hero.cta.url}
                   bgColor="#ffffff"
-                  size={{
-                    width: "232px",
-                    height: "62px",
-                    paddingX: "30px",
-                    paddingY: "10px",
-                    fontSize: "16px"
-                  }}
                 />
               </div>
 
@@ -82,7 +69,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
 
       {/* 2. What is Agentic AI Section */}
       <Section theme="light" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px]">
+        <Container>
 
           <div className="flex flex-col lg:flex-row justify-between gap-10 mb-16">
             <div className="max-w-xl">
@@ -104,10 +91,10 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {content.whatIs.features.map((feature, idx) => (
               <div key={idx} className="flex flex-col">
-                <div className="relative w-full h-[420px] rounded-[10px] overflow-hidden mb-6">
+                <div className="relative w-full h-[420px] overflow-hidden mb-6">
                   <Image src={feature.image} alt={feature.title} fill className="object-cover" />
                 </div>
                 <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
@@ -116,46 +103,48 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
             ))}
           </div>
 
-        </div>
+        </Container>
       </Section>
 
       {/* 3. Build your own Agentic AI Section */}
-      <section className="bg-white px-6 pb-24">
-        <div className="mx-auto w-full max-w-[1280px] bg-[#EDE9E6] rounded-[10px] p-12 lg:p-20 text-center">
+      <section className="build-agentic-ai-section bg-white pb-24">
+        <Container>
+          <div className="bg-[#EDE9E6]/50 rounded-[10px] p-12 lg:p-20 text-center">
 
-          <h2 className="text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-4">
-            {content.buildYourOwn.title}
-            <span className="text-[#23C55E] font-black italic">{content.buildYourOwn.highlight}</span>
-          </h2>
-          <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70 max-w-2xl mx-auto mb-16">
-            {content.buildYourOwn.text}
-          </p>
+            <h2 className="text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-4">
+              {content.buildYourOwn.title}
+              <span className="text-[#23C55E] font-black italic">{content.buildYourOwn.highlight}</span>
+            </h2>
+            <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70 max-w-[706px] mx-auto mb-10">
+              {content.buildYourOwn.text}
+            </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-            {content.buildYourOwn.agents.map((agent, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-[10px] p-8 flex flex-col min-h-[255px]"
-              >
-                <div className="flex h-[60px] w-[60px] items-center justify-center rounded-lg border border-gray-200 bg-white mb-6">
-                  <div className="relative w-6 h-6">
-                    <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-left rounded-[10px] overflow-hidden divide-x md:divide-[#121826]/8">
+              {content.buildYourOwn.agents.map((agent, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white p-8 flex flex-col min-h-[255px]"
+                >
+                  <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-[#1219280D] bg-white mb-6">
+                    <div className="relative w-6 h-6">
+                      <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+                    </div>
                   </div>
+                  <h3 className="text-[18px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
+                  <p className="text-[14px] font-normal leading-[160%] text-[#121826]/70">{agent.text}</p>
                 </div>
-                <h3 className="text-[18px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
-                <p className="text-[14px] font-normal leading-[160%] text-[#121826]/80">{agent.text}</p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-        </div>
+          </div>
+        </Container>
       </section>
 
       {/* 4. People Ops, Payroll & IT Section */}
-      <Section theme="dark" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px]">
+      <Section theme="dark" spacing="both" className="people-ops-section">
+        <Container>
 
-          <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
+          <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-12.5">
             {content.peopleOps.title}
           </h2>
 
@@ -165,7 +154,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                 key={idx}
                 className="p-10 flex flex-col min-h-[286px] border-r border-b md:border-b-0 border-white/5 last:border-r-0"
               >
-                <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 bg-white/5 mb-6">
+                <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 mb-6">
                   <div className="relative w-6 h-6">
                     <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
                   </div>
@@ -176,18 +165,18 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
             ))}
           </div>
 
-        </div>
+        </Container>
       </Section>
 
       {/* 5. Ops & Compliance Section */}
       <Section theme="light" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px]">
+        <Container>
 
           <h2 className="text-center text-[44px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
             {content.opsCompliance.title}
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {content.opsCompliance.cards.map((card, idx) => (
               <div key={idx} className="relative rounded-[10px] overflow-hidden min-h-[633px] flex items-end">
                 <Image
@@ -210,16 +199,16 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
             ))}
           </div>
 
-        </div>
+        </Container>
       </Section>
 
       {/* 6. Official Partner Stack */}
-      <section className="bg-white pb-24 text-[#16181d]">
-        <div className="mx-auto w-full max-w-[1280px] px-6">
-          <h2 className="text-center text-[44px] font-medium leading-[1.05] tracking-[-0.8px] mb-12">
+      <section className="partners-section bg-white py-12 sm:py-14 lg:py-20 text-[#16181d] overflow-hidden">
+        <Container>
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12">
             {content.partners.title}
           </h2>
-        </div>
+        </Container>
 
         <div
           className="w-full overflow-x-auto overflow-y-hidden flex gap-4 px-6 pb-4"
@@ -239,8 +228,8 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       </section>
 
       {/* 7. Proven Architecture */}
-      <section className="bg-white px-6 pb-24 text-[#16181d]">
-        <div className="mx-auto w-full max-w-[1280px]">
+      <section className="proven-architecture bg-white px-6 pb-24 text-[#16181d]">
+        <Container>
 
           <div className="text-center mb-16">
             <h2 className="text-[50px] font-medium leading-[1.05] tracking-[-0.8px]">
@@ -251,7 +240,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3.5">
             {content.provenArchitecture.cards.map((card, idx) => (
               <div key={idx} className="bg-[#EDE9E680] rounded-[10px] p-6 flex flex-col">
                 <div className="relative w-full h-[320px] rounded-[10px] overflow-hidden mb-6">
@@ -263,7 +252,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                   {card.text && <p className="text-[16px] font-normal leading-[150%] text-[#121826]">{card.text}</p>}
                 </div>
 
-                <ul className="space-y-3 mt-auto">
+                <ul className="space-y-3">
                   {card.bullets.map((bullet, bIdx) => (
                     <li key={bIdx} className="flex items-start gap-3">
                       <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
@@ -278,7 +267,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
             ))}
           </div>
 
-        </div>
+        </Container>
       </section>
 
       {/* 8. Waitlist Section */}

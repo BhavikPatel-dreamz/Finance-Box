@@ -140,22 +140,22 @@ export const agenticAiContent: AgenticAiContent = {
     text: "Pick from ready agents, then tailor the policies, data sources, and approvals to your environment",
     agents: [
       {
-        icon: "/icons/collections-agent.png",
+        icon: "/icons/collections-agent.svg",
         title: "Collections Agent",
         text: "monitors aging, sends nudges, proposes payment plans, updates CRM, and creates tasks for exceptions.",
       },
       {
-        icon: "/icons/ap-agent.png",
+        icon: "/icons/ap-agent.svg",
         title: "AP Agent",
         text: "monitors aging, sends nudges, proposes payment plans, updates CRM, and creates tasks for exceptions.",
       },
       {
-        icon: "/icons/billing-agent.png",
+        icon: "/icons/billing-agent.svg",
         title: "Billing Agent",
         text: "validates entitlements, drafts invoices/credit memos, flags anomalies, and posts to ERP after approval.",
       },
       {
-        icon: "/icons/fp-a-copilot.png",
+        icon: "/icons/fp-a-copilot.svg",
         title: "FP&A Copilot",
         text: "builds rolling forecasts, variance notes, and \"what-if\" scenarios; populates board pack sections.",
       },
