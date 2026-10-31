@@ -14,23 +14,19 @@ import { Container } from "@/components/ui/container";
 
 export function WhyPage({ sections }: { sections: RawSection[] }) {
   const content = mergeWhy(whyContent, sections);
+
   return (
     <div id="top" className="min-h-screen bg-white text-[#16181d] overflow-x-clip">
       <WhyHero hero={content.hero} header={homeContent.header} />
       <TrustedBy trust={homeContent.trust} />
       <WhyCompare compare={content.compare} />
       <WhyHowWeWork howWeWork={content.howWeWork} />
-      <WhyTalk />
+      <WhyTalk talk={content.talk} />
       <WhyAbout aboutSection={content.aboutSection} />
       <WhyTeam team={content.team} />
 
-      <FooterHero
-        title="See What an Embedded"
-        highlight="Finance Team Changes"
-        text="A 30-minute discovery call maps where your finance function is leaking time or cash, and what to fix first."
-        buttonLabel="Join the Talent Network"
-        buttonUrl="/#contact"
-      />
+      {/* CTA Section dynamic */}
+      <WhyFooterCta cta={content.cta} />
 
       <HomeFooter footer={siteFooter(homeContent.footer)} />
     </div>
@@ -61,6 +57,18 @@ function siteFooter(footer: HomeContent["footer"]): HomeContent["footer"] {
       links: column.links.map(withSiteLinks),
     })),
   };
+}
+
+export function WhyFooterCta({ cta }: { cta: WhyContent["cta"] }) {
+  return (
+    <FooterHero
+      title={cta.title}
+      highlight={cta.highlight}
+      text={cta.text}
+      buttonLabel={cta.buttonLabel}
+      buttonUrl={cta.buttonUrl}
+    />
+  );
 }
 
 export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: HomeContent["header"] }) {
@@ -177,7 +185,6 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                   gridTemplateRows: `var(--header-row-height, 96px) repeat(${compare.rows.length}, 68px)`,
                 }}
               >
-                {/* Layer 1: Alternating white rows with rounded-[10px] */}
                 {compare.rows.map((_, rowIndex) => {
                   if (rowIndex % 2 === 0) {
                     return (
@@ -194,7 +201,6 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                   return null;
                 })}
 
-                {/* Layer 2: Vertical divider lines between non-featured columns */}
                 {compare.columns.map((_, idx) => {
                   const gridCol = idx + 2;
                   if (gridCol > featuredGridCol + 1) {
@@ -212,7 +218,6 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                   return null;
                 })}
 
-                {/* Layer 3: Featured Column Dark Pillar (#121826) */}
                 <div
                   className="bg-[#121826] rounded-[14px] pointer-events-none z-[10] -mt-7 sm:-mt-9 -mb-5 sm:-mb-7"
                   style={{
@@ -221,8 +226,6 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                   }}
                 />
 
-                {/* Layer 4: Content Cells */}
-                {/* Column 1 Header: Features */}
                 <div
                   role="columnheader"
                   className="relative z-[20] flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 font-semibold text-[17px] sm:text-[22px] text-[#121826] tracking-tight"
@@ -231,7 +234,6 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                   {compare.featureLabel}
                 </div>
 
-                {/* Header Columns */}
                 {compare.columns.map((column, colIdx) => {
                   const gridCol = colIdx + 2;
                   const isFeatured = column.featured;
@@ -269,13 +271,11 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                   );
                 })}
 
-                {/* Data Rows Content */}
                 {compare.rows.map((rowItem, rowIndex) => {
                   const gridRow = rowIndex + 2;
 
                   return (
                     <Fragment key={rowItem.label}>
-                      {/* Feature Label Cell */}
                       <div
                         role="rowheader"
                         className="relative z-[20] flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 text-[13.5px] sm:text-[15px] lg:text-[16px] font-medium text-[#121826] leading-snug"
@@ -284,7 +284,6 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                         {rowItem.label}
                       </div>
 
-                      {/* Data Cells */}
                       {compare.columns.map((column, colIdx) => {
                         const gridCol = colIdx + 2;
                         const isFeatured = column.featured;
@@ -351,32 +350,31 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
   );
 }
 
-export function WhyTalk() {
+export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
   return (
     <section className="pt-20">
       <Container>
         <div className="rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] pl-8 md:pl-12 lg:pl-16 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 overflow-hidden">
           <div className="max-w-[600px] relative z-10">
             <h2 className="text-[36px] sm:text-[44px] lg:text-[54px] font-medium leading-[105%] tracking-[-0.8px] text-[#121826]">
-              Let&apos;s Talk<br />
+              {talk.title}
+              <br />
               <span className="block font-black italic text-[#23C55E]">
-                About Your Business
+                {talk.highlight}
               </span>
             </h2>
             <p className="mt-6 text-[14px] sm:text-[16px] font-light leading-[160%] text-[#66707c]">
-              Connect with our team to explore how FIAB can support your goals, challenges, and next stage of growth.
+              {talk.text}
             </p>
             <div className="mt-8">
-              <Button color="dark" text="Talk to Our Team" href="/#contact" />
+              <Button color="dark" text={talk.cta.label} href={talk.cta.url} />
             </div>
           </div>
 
           <div className="relative w-full max-w-[599px] shrink-0 aspect-[599/455]">
-            {/* Gradient overlay for seamless blend on the left edge */}
             <div className="absolute inset-y-0 left-0 w-32 lg:w-48 bg-gradient-to-r from-[#F5F3F2] to-transparent z-10 pointer-events-none" />
-
             <Image
-              src="/why/coins.png"
+              src={talk.image}
               alt="Coins representing business growth"
               fill
               className="object-contain"
@@ -394,7 +392,6 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
     <section className="about-grid-section bg-white py-14 sm:py-16 lg:py-20">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {/* Card 1: Team Photo + Why FIAB Exists */}
           <div className="relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[440px] sm:min-h-[500px] lg:h-[630px] lg:min-h-[630px] flex items-end">
             <Image
               src={aboutSection.image}
@@ -415,7 +412,6 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
             </div>
           </div>
 
-          {/* Card 2: Mission */}
           <div className="relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[380px] sm:min-h-[480px] lg:h-[630px] lg:min-h-[630px] flex flex-col justify-between p-6 sm:p-8 lg:p-12.5 lg:pr-17.5">
             <Image
               src={aboutSection.bgImage}
@@ -475,13 +471,11 @@ function WhyTeamCard({ member }: { member: WhyTeamMember }) {
   return (
     <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col lg:flex-row lg:min-h-[715px]">
 
-      {/* Member Image Area: Separate Background + Member Cutout */}
       <div
         className={`relative w-full lg:w-1/2 min-h-[380px] sm:min-h-[480px] lg:min-h-full overflow-hidden flex items-end justify-center ${
           isImageRight ? "lg:order-last" : ""
         }`}
       >
-        {/* Reusable Team Card Background (flipped for left-sided image to match design) */}
         <div
           className={`absolute inset-0 bg-cover bg-no-repeat bg-center ${
             isImageRight ? "" : "-scale-x-100"
@@ -490,7 +484,6 @@ function WhyTeamCard({ member }: { member: WhyTeamMember }) {
           aria-hidden="true"
         />
 
-        {/* Member Cutout Image */}
         <div className="relative z-10 w-full h-full min-h-[380px] sm:min-h-[480px] lg:min-h-full flex items-end justify-center">
           <Image
             src={member.image}

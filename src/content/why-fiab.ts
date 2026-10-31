@@ -40,6 +40,10 @@ export type WhyContent = {
     cta: WhyLink;
     points: WhyPoint[];
   };
+  trust: {
+    title: string;
+    logos: { url: string; alt: string }[];
+  };
   compare: {
     title: string;
     highlight: string;
@@ -51,6 +55,13 @@ export type WhyContent = {
   howWeWork: {
     title: string;
     cards: WhyWorkCard[];
+  };
+  talk: {
+    title: string;
+    highlight: string;
+    text: string;
+    image: string;
+    cta: WhyLink;
   };
   aboutSection: {
     image: string;
@@ -64,6 +75,14 @@ export type WhyContent = {
     title: string;
     members: WhyTeamMember[];
     cta: WhyLink;
+  };
+  // 👇 Ye naya CTA section add kiya gaya hai
+  cta: {
+    title: string;
+    highlight: string;
+    text: string;
+    buttonLabel: string;
+    buttonUrl: string;
   };
 };
 
@@ -81,6 +100,10 @@ export const whyContent: WhyContent = {
       { number: "02", title: "Controller execution" },
       { number: "03", title: "Full operational support" },
     ],
+  },
+  trust: {
+    title: "Trusted By",
+    logos: [],
   },
   compare: {
     title: "How FIAB Compares",
@@ -127,12 +150,20 @@ export const whyContent: WhyContent = {
       },
     ],
   },
+  talk: {
+    title: "Let's Talk",
+    highlight: "About Your Business",
+    text: "Connect with our team to explore how FIAB can support your goals, challenges, and next stage of growth.",
+    image: "/why/coins.png",
+    cta: { label: "Talk to Our Team", url: "/#contact" },
+  },
   aboutSection: {
     image: "/why/two-person.png",
     title: "Why FIAB Exists",
     text: "Finance in a Box was founded by Amit Mulchandani to give growing companies direct access to senior finance operators, practical systems expertise, and decision-ready insight.",
     missionLabel: "MISSION",
-    missionText: "Give growing companies the finance function they need at every stage: expert people, automated systems, and clear reporting they can run the business on.",
+    missionText:
+      "Give growing companies the finance function they need at every stage: expert people, automated systems, and clear reporting they can run the business on.",
     bgImage: "/why/bg-color.png",
   },
   team: {
@@ -167,5 +198,13 @@ export const whyContent: WhyContent = {
         imagePosition: "left",
       },
     ],
+  },
+  // 👇 Ye naya static CTA fallback data hai
+  cta: {
+    title: "See What an Embedded",
+    highlight: "Finance Team Changes",
+    text: "A 30-minute discovery call maps where your finance function is leaking time or cash, and what to fix first.",
+    buttonLabel: "Join the Talent Network",
+    buttonUrl: "/#contact",
   },
 };

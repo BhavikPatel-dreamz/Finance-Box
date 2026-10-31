@@ -185,6 +185,11 @@ function assertIdentifier(value: string) {
 }
 
 function confirmedSelection(selection: string, confirmed: Set<string>) {
+  // 🚀 FIX: Agar selection mein inline fragment (... on Type) hai, toh usko bypass karo
+  if (selection.includes("... on")) {
+    return selection;
+  }
+
   const chunks: string[] = [];
   const source = selection.trim();
   let index = 0;
@@ -354,9 +359,12 @@ async function loadSections(uri: string, preview: boolean) {
           : registration.selection
             ? confirmedSelection(registration.selection, confirmed)
             : fields.map(assertIdentifier).join(" ");
-      if (!/^[\sA-Za-z0-9_{}]+$/.test(selection)) {
+      
+      // 🚀 FIX: Regex ko update kiya gaya hai taaki dots (...) allow ho sakein inline fragments ke liye
+      if (!/^[\sA-Za-z0-9_{}.]+$/.test(selection)) {
         throw new GraphQLRequestError("Refusing to query an unexpected GraphQL selection.");
       }
+      
       fragments.push(`... on ${assertIdentifier(typeName)} { __typename ${selection} }`);
     }
 
