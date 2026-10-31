@@ -101,6 +101,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
                 </div>
               </div>
             </div>
+            
             <div className="relative pb-12 sm:pb-16 lg:pb-24">
               <div
                 className="w-full rounded-[12px] sm:rounded-none overflow-hidden border border-white/10 sm:border-x-0 sm:border-y sm:border-white/10 bg-[rgba(0,0,0,0.03)] backdrop-blur-[3px]"
@@ -111,13 +112,14 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
                 }}
               >
                 <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
-                  {hero.points.map((point) => (
+                  {hero.points.map((point, index) => (
                     <div
-                      key={point.number}
+                      key={point.number || index}
                       className="flex min-h-[50px] md:h-[110px] md:flex-col lg:justify-between lg:items-start items-center p-3.5 sm:px-5 sm:py-4 lg:gap-0 gap-x-4"
                     >
-                      <span className="point-number inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-full bg-[#121826] border border-white/7 text-[13px] sm:text-[14px] font-semibold text-[#23C55E]">
-                        {point.number}
+                      {/* 🚀 Fallback wapas lagaya gaya hai */}
+                      <span className="point-number inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-full bg-[#121826] border border-[#23C55E]/40 text-[13px] sm:text-[14px] font-semibold text-[#23C55E] shadow-[0_0_10px_rgba(35,197,94,0.1)]">
+                        {point.number || String(index + 1).padStart(2, '0')}
                       </span>
                       <p className="text-[16px] sm:text-[18px] md:text-[20px] font-semibold text-white tracking-tight leading-snug">
                         {point.title}
@@ -127,6 +129,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
                 </div>
               </div>
             </div>
+
           </div>
         </Container>
       </div>
@@ -321,6 +324,9 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
 }
 
 export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"] }) {
+  // 🚀 DEBUG LOG: Ye check karega ki WordPress se kya aa raha hai
+  console.log("HOW WE WORK CARDS DATA:", howWeWork.cards);
+
   return (
     <section className="how-we-work bg-[#121826] py-14 sm:py-16 lg:py-20 text-white">
       <Container>
@@ -328,14 +334,16 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
           {howWeWork.title}
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {howWeWork.cards.map((card) => (
+          {howWeWork.cards.map((card, index) => (
             <div
-              key={card.number}
+              key={card.number || index}
               className="flex flex-col rounded-[20px] bg-[rgba(255,255,255,0.06)] p-6 sm:px-7 sm:py-9 lg:px-7.5 lg:py-10 border border-[rgba(255,255,255,0.07)]"
             >
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-[#23C55E] bg-[#121826]">
-                {card.number}
+              {/* 🚀 Fallback wapas lagaya gaya hai */}
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-[#23C55E] bg-[#121826] border border-[#23C55E]/20">
+                {card.number || String(index + 1).padStart(2, '0')}
               </span>
+              
               <h3 className="mt-5 sm:mt-6 text-[20px] sm:text-[22px] font-semibold text-white leading-[140%]">
                 {card.title}
               </h3>

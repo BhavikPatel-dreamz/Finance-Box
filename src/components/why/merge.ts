@@ -57,7 +57,6 @@ function link(value: unknown, fallback: { label: string; url: string }) {
 export function mapTeamMember(node: any, fallback: WhyTeamMember): WhyTeamMember {
   const contentHtml = node.content || "";
 
-  // HTML -> plain text lines (har <p>, <br>, <li>, <h*> ke baad newline)
   const textWithNewlines = contentHtml
     .replace(/<\/p>|<br\s*\/?>|<\/li>|<\/h[1-6]>/gi, "\n")
     .replace(/<[^>]*>?/gm, "")
@@ -78,11 +77,8 @@ export function mapTeamMember(node: any, fallback: WhyTeamMember): WhyTeamMember
     .filter(Boolean);
 
   const result: Partial<WhyTeamMember> = {};
-
-  // Pehli 2 lines (jab tak koi recognized prefix na aaye) = quote + bio
   const introLines: string[] = [];
 
-  // Recognized prefix check
   const isKnownPrefix = (line: string) => {
     const l = line.toLowerCase();
     return (
@@ -102,15 +98,13 @@ export function mapTeamMember(node: any, fallback: WhyTeamMember): WhyTeamMember
   };
 
   for (const line of lines) {
-    if (isKnownPrefix(line)) break; // recognized section aaya -> introLines ruk gaya
+    if (isKnownPrefix(line)) break;
     introLines.push(line);
   }
 
-  // introLines: [quote, bio(optional)] — but sometimes bio multi-line
   if (introLines.length > 0) result.quote = introLines[0];
   if (introLines.length > 1) result.bio = introLines.slice(1).join(" ");
 
-  // Ab recognized prefix wali lines process karo
   for (const line of lines) {
     const lowerLine = line.toLowerCase();
     if (lowerLine.startsWith("focus & expertise:") || lowerLine.startsWith("focus & expertise :") || lowerLine.startsWith("focus:") || lowerLine.startsWith("focus :")) {
@@ -160,7 +154,11 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
       next.hero.cta = link(section.ctaButton, next.hero.cta);
       const points = Array.isArray(section.highlights) ? section.highlights : [];
       if (points.length) {
-        next.hero.points = points.map((p: any) => ({ number: keep(p?.number, ""), title: keep(p?.title, "") }));
+        next.hero.points = points.map((p: any) => ({ 
+          // 🚀 FIX: WP se Integer aa raha hai, usko String mein badla aur 01 format diya
+          number: p?.number != null ? String(p.number).padStart(2, "0") : "", 
+          title: keep(p?.title, "") 
+        }));
       }
     }
 
@@ -190,7 +188,12 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
       next.howWeWork.title = cleanHtml(section.title, next.howWeWork.title);
       const cards = Array.isArray(section.workCards) ? section.workCards : [];
       if (cards.length) {
-        next.howWeWork.cards = cards.map((c: any) => ({ number: keep(c?.number, ""), title: keep(c?.title, ""), text: cleanHtml(c?.description, "") }));
+        next.howWeWork.cards = cards.map((c: any) => ({ 
+          // 🚀 FIX: Number ko String mein convert karo aur agar 1 digit ho toh 0 lagao (1 => 01)
+          number: c?.number != null ? String(c.number).padStart(2, "0") : "", 
+          title: keep(c?.title, ""), 
+          text: cleanHtml(c?.description, "") 
+        }));
       }
     }
 
@@ -218,7 +221,6 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
       next.team.title = cleanHtml(section.title, next.team.title);
       next.team.cta = link(section.ctaButton, next.team.cta);
 
-      // 🚀 Team members parse karo (GraphQL inline fragment se data aayega)
       const members = (section as any).teamMembers?.nodes;
       if (Array.isArray(members) && members.length > 0) {
         next.team.members = members.map((node: any, idx: number) => {
@@ -231,7 +233,6 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
     // 8. CTA Section (Footer ke upar)
     if (/CtaSectionLayout$/.test(typeName)) {
       const rawTitle = str(section.title) ?? "";
-      // Title mein <b> tag check karo (WordPress se aata hai)
       const match = rawTitle.match(/(.*)<b[^>]*>([\s\S]*?)<\/b>(.*)/i);
       
       if (match) {

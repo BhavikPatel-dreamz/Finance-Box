@@ -89,7 +89,7 @@ export const whySections: readonly SectionRegistration[] = [
     "why_how_we_work",
     /WhyFiabHowWeWorkSectionLayout$/,
     ["title", "workCards"],
-    `title workCards { number title description }`,
+    `title workCards { number title description }`, // 🚀 Yahan `number` already hai, par check karo
     (section) => <WhyHowWeWork howWeWork={contentFrom(section).howWeWork} />,
   ),
 
