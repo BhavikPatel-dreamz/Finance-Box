@@ -102,7 +102,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
                 </div>
               </div>
             </div>
-            
+
             <div className="relative pb-12 sm:pb-16 lg:pb-24">
               <div
                 className="w-full rounded-[12px] sm:rounded-none overflow-hidden border border-white/10 sm:border-x-0 sm:border-y sm:border-white/10 bg-[rgba(0,0,0,0.03)] backdrop-blur-[3px]"
@@ -344,7 +344,7 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-[#23C55E] bg-[#121826] border border-[#23C55E]/20">
                 {card.number || String(index + 1).padStart(2, '0')}
               </span>
-              
+
               <h3 className="mt-5 sm:mt-6 text-[20px] sm:text-[22px] font-semibold text-white leading-[140%]">
                 {card.title}
               </h3>
@@ -363,31 +363,36 @@ export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
   return (
     <Section spacing="top" className="bg-white">
       <Container>
-        <div className="rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] pl-8 md:pl-12 lg:pl-16 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 overflow-hidden">
-          <div className="max-w-[600px] relative z-10">
-            <h2 className="text-[36px] sm:text-[44px] lg:text-[54px] font-medium leading-[105%] tracking-[-0.8px] text-[#121826]">
+        <div className="isolate overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] flex flex-col md:flex-row items-center justify-between pt-7 px-5 pb-0 sm:pt-9 sm:px-8 sm:pb-0 md:p-8 md:py-6 lg:p-0 lg:pl-10 xl:pl-16 gap-6 sm:gap-8 md:gap-6 lg:gap-8 xl:gap-16">
+          {/* Text */}
+          <div className="relative z-10 w-full md:w-[50%] lg:w-[48%] xl:w-[52%] max-w-[560px] text-left lg:py-10 xl:py-14 shrink-0">
+            <h2 className="text-[28px] sm:text-[34px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[54px] font-medium leading-[1.12] lg:leading-[105%] tracking-[-0.8px] text-[#121826]">
               {talk.title}
               <br />
               <span className="block font-black italic text-[#23C55E]">
                 {talk.highlight}
               </span>
             </h2>
-            <p className="mt-6 text-[14px] sm:text-[16px] font-light leading-[160%] text-[#66707c]">
+
+            <p className="mt-3.5 sm:mt-4 lg:mt-5 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#66707c] max-w-[460px]">
               {talk.text}
             </p>
-            <div className="mt-8">
+
+            <div className="mt-5 sm:mt-6 lg:mt-8 flex justify-start">
               <Button color="dark" text={talk.cta.label} href={talk.cta.url} />
             </div>
           </div>
 
-          <div className="relative w-full max-w-[599px] shrink-0 aspect-[599/455]">
-            <div className="absolute inset-y-0 left-0 w-32 lg:w-48 bg-gradient-to-r from-[#F5F3F2] to-transparent z-10 pointer-events-none" />
+          {/* Image */}
+          <div className="relative w-full md:w-[50%] lg:w-[52%] xl:w-[48%] max-w-[340px] sm:max-w-[420px] md:max-w-none shrink-0 mx-auto md:mx-0 aspect-[599/455] self-end">
+            {/* Left fade only when image sits beside the text */}
+            <div className="hidden md:block absolute inset-y-0 left-0 w-20 lg:w-32 xl:w-48 bg-gradient-to-r from-[#F5F3F2] to-transparent z-10 pointer-events-none" />
             <Image
               src={talk.image}
               alt="Coins representing business growth"
               fill
-              className="object-contain"
-              sizes="(max-width: 1024px) 100vw, 599px"
+              className="object-contain object-bottom md:object-right-bottom lg:object-contain"
+              sizes="(max-width: 640px) 90vw, (max-width: 768px) 420px, (max-width: 1024px) 50vw, 599px"
             />
           </div>
         </div>
@@ -481,14 +486,12 @@ function WhyTeamCard({ member }: { member: WhyTeamMember }) {
     <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col lg:flex-row lg:min-h-[715px]">
 
       <div
-        className={`relative w-full lg:w-1/2 min-h-[380px] sm:min-h-[480px] lg:min-h-full overflow-hidden flex items-end justify-center ${
-          isImageRight ? "lg:order-last" : ""
-        }`}
+        className={`relative w-full lg:w-1/2 min-h-[380px] sm:min-h-[480px] lg:min-h-full overflow-hidden flex items-end justify-center ${isImageRight ? "lg:order-last" : ""
+          }`}
       >
         <div
-          className={`absolute inset-0 bg-cover bg-no-repeat bg-center ${
-            isImageRight ? "" : "-scale-x-100"
-          }`}
+          className={`absolute inset-0 bg-cover bg-no-repeat bg-center ${isImageRight ? "" : "-scale-x-100"
+            }`}
           style={{ backgroundImage: "url(/why/why-team-bg.svg)" }}
           aria-hidden="true"
         />
