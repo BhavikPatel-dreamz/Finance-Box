@@ -243,6 +243,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
 
       {/* 6. NAYA: Reusable Footer Hero */}
       <FooterHero
+        variant="knowledge-hub"
         title="Want a specific"
         highlight="playbook?"
         text="Tell us what you're building—close, RevOps, compliance, or hiring—and we'll share a right-sized plan."

@@ -1,8 +1,9 @@
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 import { HomeHeader } from "@/components/home/home-header";
 import { HomeFooter } from "@/components/home/home-page";
 import { homeContent } from "@/content/home";
-import { GreenButton } from "@/components/ui/green-button";
+import { Button } from "@/components/ui/button";
 import { mergeCareers } from "./merge";
 import { careersContent, type CareersContent } from "@/content/careers";
 import type { RawSection } from "@/lib/wordpress/content";
@@ -10,202 +11,216 @@ import { Accordion } from "../ui/accordion";
 import { FooterHero } from "../ui/footer-hero";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
-
+import Container from "../ui/container";
+import { ProcessGrid } from "@/components/ui/process-grid";
 
 export function CareersPage({ sections }: { sections: RawSection[] }) {
   const content = mergeCareers(careersContent, sections);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#07110d] text-white">
-      
-      {/* 1. Hero Section */}
-      <section className="relative w-full h-[660px] flex flex-col overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div 
-            className="absolute inset-0 opacity-40"
-            style={{
-              backgroundImage: `url(/services/hex.svg)`,
-              backgroundSize: "56px 64px"
-            }}
-          />
-          <div className="absolute inset-x-0 bottom-0 h-64 bg-[radial-gradient(ellipse_at_bottom,rgba(35,197,94,0.15),transparent_70%)]" />
-        </div>
 
-        <div className="relative z-10 flex flex-col h-full">
+      {/* 1. Hero Section */}
+      <section className="hero-section relative overflow-hidden bg-[#121826] text-white">
+        <div
+          className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
+          style={{ backgroundImage: "url(/careers/careers-page-hero-bg.svg)" }}
+          aria-hidden="true"
+        />
+
+        <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:h-[771px] z-10 flex items-center justify-center flex-col h-full">
           <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
 
-          <div className="flex-1 flex items-center w-full max-w-[1280px] mx-auto px-6 pb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-              <div>
-                <Eyebrow variant="dark" className="mb-6">
-                  {content.hero.eyebrow}
-                </Eyebrow>
-                <h1 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px]">
-                  {content.hero.title} <br className="hidden lg:block" />
-                  <span className="text-[#23C55E]">{content.hero.highlight}</span> <br className="hidden lg:block" />
-                  <span className="text-[#23C55E]">{content.hero.highlight2}</span>
-                </h1>
-              </div>
-
-              <div className="max-w-md lg:justify-self-end">
-                <p className="text-[16px] font-light leading-[160%] text-white/80 mb-8">
-                  {content.hero.text}
-                </p>
+          <Container>
+            <div className="flex-1 flex items-center pb-12 sm:pb-16 lg:pb-24 pt-8 sm:pt-12 lg:pt-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
                 <div>
-                  <GreenButton 
-                    label={content.hero.cta.label} 
-                    href={content.hero.cta.url} 
-                    bgColor="#ffffff"
-                    textColor="#07110d"
-                    size={{
-                      width: "227px",
-                      height: "62px",
-                      paddingX: "30px",
-                      paddingY: "10px",
-                      fontSize: "16px"
-                    }}
-                  />
+                  <Eyebrow variant="dark" className="mb-4 sm:mb-6">
+                    {content.hero.eyebrow}
+                  </Eyebrow>
+                  <h1 className="text-[32px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
+                    Build the operating<br />
+                    system <span className="text-[#23C55E]">for growth</span><br />
+                    <span className="text-[#23C55E]">companies</span>
+                  </h1>
+                </div>
+
+                <div className="max-w-md lg:justify-self-end">
+                  <p className="text-[15px] sm:text-[16px] font-light leading-[160%] text-white/80 mb-6 sm:mb-8">
+                    {content.hero.text}
+                  </p>
+                  <div>
+                    <Button
+                      color="white"
+                      text={content.hero.cta.label}
+                      href={content.hero.cta.url}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Container>
         </div>
       </section>
 
       {/* 2. Why work at FIAB Section */}
-      <section className="bg-[#EDE9E6] px-6 py-24 text-[#16181d]">
-        <div className="mx-auto w-full max-w-[1280px]">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-            <div className="w-full lg:w-1/2 relative aspect-[4/3] rounded-[10px] overflow-hidden">
-              <Image
-                src={content.whyWork.image}
-                alt="Why work at FIAB"
-                fill
-                className="object-cover"
-              />
-            </div>
+      <Section theme="light" spacing="both" className="why-work-section bg-white">
+        <Container>
+          <div className="rounded-[20px] sm:rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14">
+            <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12 xl:gap-16">
+              {/* Left Column (Image) */}
+              <div className="w-full lg:w-1/2 relative min-h-[300px] sm:min-h-[380px] lg:min-h-[460px] rounded-[16px] overflow-hidden shrink-0">
+                <Image
+                  src={content.whyWork.image}
+                  alt="Why work at FIAB"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 560px"
+                  priority
+                />
+              </div>
 
-            <div className="w-full lg:w-1/2">
-              <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-10 text-[#16181d]">
-                {content.whyWork.title}{" "}
-                <span className="text-[#23C55E] font-extrabold italic">{content.whyWork.highlight}</span>
-              </h2>
-              
-              <div className="flex flex-col gap-4">
-                {content.whyWork.points.map((point, idx) => (
-                  <div key={idx} className="bg-white rounded-[10px] p-6 shadow-sm">
-                    <p className="text-[16px] font-light leading-[160%] text-[#16181d]/80">
-                      {point}
-                    </p>
-                  </div>
-                ))}
+              {/* Right Column (Text & Points) */}
+              <div className="w-full lg:w-1/2 flex flex-col justify-center">
+                <h2 className="text-[30px] sm:text-[38px] lg:text-[46px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 sm:mb-8 text-[#121826]">
+                  {content.whyWork.title}{" "}
+                  <span className="text-[#23C55E] font-black italic">{content.whyWork.highlight}</span>
+                </h2>
+
+                <div className="flex flex-col gap-3.5 sm:gap-4">
+                  {content.whyWork.points.map((point, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-white rounded-[12px] sm:rounded-[14px] p-5 sm:p-6 border border-[#E8E6E3]/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
+                    >
+                      <p className="text-[14px] sm:text-[16px] font-normal leading-[160%] text-[#121826]/80">
+                        {point}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* 3. What Makes FIAB Stand Out Section */}
-      <Section theme="light" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px]">
-          <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16 text-[#16181d]">
+      <Section theme="light" spacing="both" className="why-fiab-section bg-white pt-0 sm:pt-0 lg:pt-0">
+        <Container>
+          <h2 className="text-center text-[30px] sm:text-[38px] lg:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16 text-[#121826]">
             {content.standOut.title}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {content.standOut.cards.map((card, idx) => (
-              <div key={idx} className="relative rounded-[10px] overflow-hidden min-h-[620px] flex items-end">
+              <div
+                key={idx}
+                className="relative rounded-[16px] overflow-hidden min-h-[460px] sm:min-h-[500px] lg:min-h-[580px] flex items-end shadow-sm"
+              >
                 <Image
                   src={card.image}
                   alt={card.title}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07110d] via-[#07110d]/80 to-transparent" />
-                
-                <div className="relative z-10 p-8 w-full text-white">
-                  <h3 className="text-[22px] font-semibold leading-[1.2] mb-4">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050D1F] via-[#050D1F]/70 to-transparent pointer-events-none" />
+
+                <div className="relative z-10 p-6 sm:p-7 lg:p-8 w-full text-white">
+                  <h3 className="text-[19px] sm:text-[21px] lg:text-[22px] font-semibold leading-[1.25] mb-3 text-white">
                     {card.title}
                   </h3>
-                  <p className="text-[16px] font-normal leading-[140%] text-white/80">
+                  <p className="text-[13px] sm:text-[14px] lg:text-[15px] font-light leading-[150%] text-white/85">
                     {card.text}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </Section>
 
       {/* 4. Benefits & Perks Section */}
-      <Section theme="dark" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px]">
-          <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-16">
+      <Section theme="dark" spacing="both" className="benefits-section bg-[#121826]">
+        <Container>
+          <h2 className="text-center text-[30px] sm:text-[38px] lg:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16 text-white">
             {content.benefits.title}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-t border-l border-white/10">
-            {content.benefits.items.map((benefit, idx) => (
-              <div key={idx} className="p-10 border-r border-b border-white/10 flex flex-col min-h-[234px]">
-                <div className="inline-flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 bg-white/5 mb-6">
-                  <Image
-                    src={benefit.icon}
-                    alt={benefit.title}
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  />
+          <div className="rounded-[16px] sm:rounded-[20px] border border-white/10 bg-[#121826] overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {content.benefits.items.map((benefit, idx) => (
+                <div
+                  key={idx}
+                  className={twMerge(
+                    "p-7 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[200px] sm:min-h-[220px] lg:min-h-[234px]",
+                    // Mobile (1 col)
+                    idx < 5 ? "border-b border-white/10" : "",
+                    // Tablet (2 cols)
+                    idx < 4 ? "sm:border-b sm:border-white/10" : "sm:border-b-0",
+                    idx % 2 === 0 ? "sm:border-r sm:border-white/10" : "sm:border-r-0",
+                    // Desktop (3 cols)
+                    idx < 3 ? "lg:border-b lg:border-white/10" : "lg:border-b-0",
+                    idx % 3 !== 2 ? "lg:border-r lg:border-white/10" : "lg:border-r-0"
+                  )}
+                >
+                  <div>
+                    <div className="inline-flex h-[52px] w-[52px] sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/10 bg-white/5 mb-5 sm:mb-6">
+                      <Image
+                        src={benefit.icon}
+                        alt={benefit.title}
+                        width={24}
+                        height={24}
+                        className="object-contain"
+                      />
+                    </div>
+                    <h3 className="text-[19px] sm:text-[21px] lg:text-[22px] font-semibold text-white mb-2">
+                      {benefit.title}
+                    </h3>
+                    <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[150%] text-white/70">
+                      {benefit.text}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-[22px] font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-[16px] font-light leading-[150%] text-white/70">{benefit.text}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </Container>
       </Section>
 
       {/* 5. How We Hire Section */}
-      <section className="bg-[#121826] px-6 pb-24 text-white">
-        <div className="mx-auto w-full max-w-[1280px]">
-          
-          <div className="flex flex-col lg:flex-row justify-between items-end gap-6 mb-16">
-            <h2 className="text-[54px] font-medium leading-[1.05] tracking-[-0.8px]">
+      <section className="how-hire-section bg-[#121826] pb-16 sm:pb-20 lg:pb-24 pt-0 sm:pt-6 text-white">
+        <Container>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 sm:gap-6 mb-10 sm:mb-12 lg:mb-16">
+            <h2 className="text-[32px] sm:text-[42px] lg:text-[54px] font-medium leading-[1.05] tracking-[-0.8px] text-white">
               {content.howWeHire.title}
             </h2>
-            <p className="text-[16px] font-light leading-[160%] text-white/70 max-w-xl text-right">
+            <p className="text-[14px] sm:text-[16px] font-light leading-[160%] text-white/70 max-w-md text-left lg:text-right">
               {content.howWeHire.text}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 border-t border-l border-white/10">
-            {content.howWeHire.steps.map((step, idx) => (
-              <div key={idx} className="p-8 border-r border-b border-white/10 flex flex-col min-h-[311px]">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="h-[65px] w-[3px] bg-[#23C55E]" />
-                  <span className="text-[40px] font-extrabold leading-none">{step.number}</span>
-                </div>
-                <h3 className="text-[30px] font-semibold mb-2">{step.title}</h3>
-                <p className="text-[16px] font-normal leading-[150%] text-white/70">{step.text}</p>
-              </div>
-            ))}
+          <ProcessGrid steps={content.howWeHire.steps} />
+        </Container>
+      </section>
+
+      {/* 6. Frequently Asked Questions */}
+      <section className="faq-section bg-[#F5F3F2] py-14 sm:py-16 lg:py-24 text-[#121826]">
+        <Container>
+          <div className="mx-auto w-full max-w-[880px]">
+            <h2 className="text-center text-[30px] sm:text-[38px] lg:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-10 sm:mb-12 text-[#121826]">
+              {content.faq.title}
+            </h2>
+
+            <Accordion items={content.faq.items} />
           </div>
-
-        </div>
+        </Container>
       </section>
 
-      {/* 6. Naya Section: Frequently Asked Questions */}
-      <section className="bg-[#EDE9E6] px-6 py-24 text-[#16181d]">
-        <div className="mx-auto w-full max-w-[880px]">
-          <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-12">
-            {content.faq.title}
-          </h2>
-          
-          <Accordion items={content.faq.items} />
-        </div>
-      </section>
-
-      {/* 7. NAYA: Reusable Footer Hero */}
+      {/* 7. Reusable Footer Hero (CTA Banner) */}
       <FooterHero
+        variant="careers"
         title="Build your"
         highlight="next chapter here"
         text="Whether you love closing the books, designing automations, or building dashboards, FIAB gives you room to own real outcomes."

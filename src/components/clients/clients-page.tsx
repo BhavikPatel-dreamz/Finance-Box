@@ -283,6 +283,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 
       {/* NEW: Reusable Footer Hero */}
       <FooterHero
+        variant="clients"
         title="Your company could be"
         highlight="the next case study"
         text="Tell us where the pressure is. A 30-minute discovery call maps what to fix first."
@@ -298,8 +299,14 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 // Case Study Card Component
 function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: boolean }) {
   return (
-    <div className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} overflow-hidden rounded-[16px] bg-[#121826] min-h-[500px] lg:p-12.5`}>
-      <div className="relative rounded-t-[16px] lg:rounded-[10px] overflow-hidden w-full lg:w-1/2 min-h-[260px] sm:min-h-[320px] lg:min-h-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto">
+    <div className={`relative isolate flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} overflow-hidden rounded-[16px] bg-[#121826] min-h-[500px] lg:p-12.5`}>
+      {/* Green corner glow */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute -bottom-[110px] ${reverse ? '-left-[110px]' : '-right-[110px]'} h-[220px] w-[220px] rounded-full bg-[#23C55E] blur-[90px] -z-10`}
+      />
+
+      <div className="relative z-10 rounded-t-[16px] lg:rounded-[10px] overflow-hidden w-full lg:w-1/2 min-h-[260px] sm:min-h-[320px] lg:min-h-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto">
         <Image
           src={study.image}
           alt={study.title}
@@ -308,7 +315,7 @@ function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: bo
         />
       </div>
 
-      <div className="flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:py-0 lg:px-8 xl:px-12 lg:w-1/2 text-white">
+      <div className="relative z-10 flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:py-0 lg:px-8 xl:px-12 lg:w-1/2 text-white">
         <Eyebrow variant="green-no-dash" className="mb-3 sm:mb-4">
           {study.label}
         </Eyebrow>

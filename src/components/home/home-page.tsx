@@ -481,6 +481,7 @@ function Pressure({ pressure }: { pressure: HomeContent["pressure"] }) {
   return (
     <section id="contact" className="bg-white">
       <FooterHero
+        variant="home"
         title={title}
         highlight={highlight}
         text={pressure.text}
@@ -506,7 +507,7 @@ export function HomeFooter({ footer }: { footer: HomeContent["footer"] }) {
               {footer.email}
             </a>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:grid-cols-5">
             {footer.columns.map((column) => (
               <div key={column.title}>
                 <h2 className="text-sm font-medium tracking-[1.5px] text-white/70 uppercase">{column.title}</h2>

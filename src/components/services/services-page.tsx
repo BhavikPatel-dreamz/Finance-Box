@@ -10,6 +10,7 @@ import Image from "next/image";
 import Container from "../ui/container";
 import { ArrowIcon } from "../ui/button";
 import { InvestorSlider } from "@/components/services/investor-slider";
+import { ProcessGrid } from "@/components/ui/process-grid";
 
 export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
   const content = servicesContent;
@@ -99,6 +100,7 @@ export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
 
       {/* NAYA SECTION: Reusable Footer Hero */}
       <FooterHero
+        variant="services"
         title="Tell Us Where"
         highlight="The Pressure Is"
         text="A 30-minute discovery call is enough to map where your finance function is leaking time or cash, and what to fix first."
@@ -398,40 +400,7 @@ function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 border-t border-l border-white/10">
-          {process.steps.map((step, idx) => {
-            const isLastOnSm = idx === process.steps.length - 1;
-
-            return (
-              <div
-                key={idx}
-                className={`relative py-8 sm:py-10 border-r border-b border-white/10 flex flex-col bg-[#191F2D] min-h-[260px] sm:min-h-[300px] lg:min-h-[311px] ${
-                  isLastOnSm ? "sm:col-span-2 lg:col-span-1" : ""
-                }`}
-              >
-                {/* TOP PART: Number with short green line on the left */}
-                <div className="h-[60px] sm:h-[80px] shrink-0 flex items-start gap-5 sm:gap-6.5">
-                  {/* Short Green Line (equal to number height) */}
-                  <div className="w-[3px] h-[40px] sm:h-[50px] bg-[#23C55E] -ml-[1px]" />
-
-                  <span className="text-[32px] sm:text-[40px] font-extrabold leading-none">
-                    {step.number}
-                  </span>
-                </div>
-
-                {/* BOTTOM PART: Title & Text (Aligned to bottom) */}
-                <div className="px-5 sm:px-6.5 flex flex-col flex-grow justify-end">
-                  <h3 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold mb-2 leading-tight">
-                    {step.title}
-                  </h3>
-                  <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-normal leading-[150%] text-white/70">
-                    {step.text}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <ProcessGrid steps={process.steps} />
 
       </Container>
     </section>

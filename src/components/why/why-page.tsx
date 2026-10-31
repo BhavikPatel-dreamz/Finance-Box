@@ -63,6 +63,7 @@ function siteFooter(footer: HomeContent["footer"]): HomeContent["footer"] {
 export function WhyFooterCta({ cta }: { cta: WhyContent["cta"] }) {
   return (
     <FooterHero
+      variant="why"
       title={cta.title}
       highlight={cta.highlight}
       text={cta.text}

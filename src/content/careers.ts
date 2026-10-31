@@ -107,7 +107,7 @@ export const careersContent: CareersContent = {
     title: "How We Hire?",
     text: "A simple, transparent process that guides you from your first conversation with us to joining the team.",
     steps: [
-      { number: "01", title: "Apply", text: "Tell us where you want to contribute and share links (LinkedIn, portfolio, Git/Sheets, dashboards)" },
+      { number: "01", title: "Apply", text: "Tell us where you want to contribute and share links (LinkedIn, portfolio, Git/Sheets, dashboards)." },
       { number: "02", title: "Intro", text: "Quick conversation about goals, role fit, and time-zone/location." },
       { number: "03", title: "Skills", text: "A practical exercise mirroring the role (e.g., reconciliation, model build, workflow map)." },
       { number: "04", title: "Panel", text: "Meet future teammates; discuss decisions you've made and how you work." },

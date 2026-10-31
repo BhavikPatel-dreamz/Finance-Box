@@ -158,6 +158,7 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
 
       {/* 5. NAYA: Reusable Footer Hero */}
       <FooterHero
+        variant="people-operations"
         title="Need to strengthen"
         highlight="your people function?"
         text="Whether you're building your HR function, scaling your team or looking to streamline existing processes, let's talk about where you need support."

@@ -351,6 +351,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
 
       {/* 10. NAYA: Reusable Footer Hero */}
       <FooterHero
+        variant="agentic-ai"
         title="Ready to co-pilot your back"
         highlight="office with Agentic AI?"
         text=""

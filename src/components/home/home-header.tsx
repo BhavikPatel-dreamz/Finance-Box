@@ -58,6 +58,7 @@ export function HomeHeader({
   const [currentHash, setCurrentHash] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLabel, setOpenLabel] = useState<string | null>(null);
+  const [mobileOpenLabel, setMobileOpenLabel] = useState<string | null>(null);
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [headerHeight, setHeaderHeight] = useState<number | undefined>(undefined);
@@ -147,6 +148,18 @@ export function HomeHeader({
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  // When mobile menu opens, auto-expand only the dropdown containing the active page (if any)
+  useEffect(() => {
+    if (menuOpen) {
+      const activeParent = header.links.find((link) =>
+        link.children.some((child) => isUrlActive(pathname, child.url, { currentHash }))
+      );
+      setMobileOpenLabel(activeParent ? activeParent.label : null);
+    } else {
+      setMobileOpenLabel(null);
+    }
+  }, [menuOpen, pathname, currentHash, header.links]);
 
   const isHeaderVisible = menuOpen || visible;
   const isHeaderSticky = scrolled || menuOpen;
@@ -251,6 +264,10 @@ export function HomeHeader({
                 <MobileItem
                   key={link.label}
                   link={link}
+                  open={mobileOpenLabel === link.label}
+                  onToggle={() =>
+                    setMobileOpenLabel((current) => (current === link.label ? null : link.label))
+                  }
                   pathname={pathname}
                   currentHash={currentHash}
                   onNavigate={() => setMenuOpen(false)}
@@ -364,11 +381,15 @@ function DesktopItem({
 
 function MobileItem({
   link,
+  open,
+  onToggle,
   pathname,
   currentHash,
   onNavigate,
 }: {
   link: NavLink;
+  open: boolean;
+  onToggle: () => void;
   pathname: string;
   currentHash: string;
   onNavigate: () => void;
@@ -376,9 +397,6 @@ function MobileItem({
   const hasActiveChild = link.children.some((child) => isUrlActive(pathname, child.url, { currentHash }));
   const isDirectActive = isUrlActive(pathname, link.url, { currentHash });
   const isParentActive = isDirectActive || hasActiveChild;
-
-  // Auto-expand if a child item is currently active
-  const [open, setOpen] = useState(hasActiveChild);
 
   if (link.children.length === 0) {
     return (
@@ -415,7 +433,7 @@ function MobileItem({
           type="button"
           aria-expanded={open}
           aria-label={`${link.label} menu`}
-          onClick={() => setOpen((v) => !v)}
+          onClick={onToggle}
           className={`flex h-9 w-9 items-center justify-center -mr-2 rounded-full transition-colors ${
             open ? "text-[#23C55E]" : "text-white/60 hover:text-white"
           } active:scale-95`}

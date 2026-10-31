@@ -34,7 +34,7 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
               {/* Circle Arrow Container */}
               <span 
                 className={`flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full transition-colors ${
-                  isOpen ? "bg-[#23C55E] text-white" : "bg-[#EDE9E6] text-[#16181d]"
+                  isOpen ? "bg-[#23C55E] text-[#121826]" : "bg-[#121826]/5 text-[#121826]"
                 }`}
               >
                 <svg 
