@@ -55,7 +55,7 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
           <div className="relative flex-1 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 xl:gap-0 items-start pt-4 sm:pt-6 lg:pt-10 xl:pt-16">
 
             {/* Left Column */}
-            <div className="lg:col-span-7 lg:pl-0 xl:pl-3 pt-2 sm:pt-4 lg:pt-8 xl:pt-[73px]">
+            <div className="lg:col-span-7 pt-2 sm:pt-4 lg:pt-8 xl:pt-[73px]">
               <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-5">
                 {hero.eyebrow}
               </Eyebrow>
