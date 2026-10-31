@@ -183,7 +183,7 @@ export function Button({
   } else if (is50px) {
     // 50px in desktop view, 30px horizontal padding, 18px font size on desktop
     // Responsive: 44px mobile -> 48px tablet -> 50px desktop
-    sizeClasses = "sm:h-[44px] h-[40px] min-h-[40px] sm:min-h-[44px] px-3.75 text-[14px] md:h-[48px] md:min-h-[48px] md:px-[30px] md:text-[16px] lg:h-[50px] lg:min-h-[50px] lg:px-[30px] lg:text-[18px]";
+    sizeClasses = "sm:h-[44px] h-[40px] min-h-[40px] sm:min-h-[44px] px-3.75 text-[14px] md:h-[48px] md:min-h-[48px] md:px-[20px] md:text-[16px] lg:h-[50px] lg:min-h-[50px] lg:px-[20px] lg:text-[18px]";
   } else {
     // 62px in desktop view, 30px horizontal padding, 18px font size on desktop
     // Responsive: 50px mobile -> 56px tablet -> 62px desktop

@@ -60,6 +60,18 @@ button, input, select, textarea {
   opacity: 0.7;
 }
 
+/* Eyebrow for green accent */
+.eyebrow-green,
+.eyebrow-accent {
+  color: #23C55E;
+  opacity: 1;
+}
+
+/* Eyebrow dash variants */
+.eyebrow-no-dash::before {
+  display: none !important;
+}
+
 /* Standard Project Container (1280px) */
 .container-1280 {
   width: 100%;
@@ -149,7 +161,7 @@ button, input, select, textarea {
   }
 }
 
-/* Green button hover effect inside dark sections: bg color white, text color #121826 */
+/* Green button hover effect inside dark sections: bg color white, text color #121826 (only for actual green buttons, not white buttons) */
 :is(
   .services-details,
   .footer-cta-section,
@@ -164,8 +176,8 @@ button, input, select, textarea {
   .dark,
   [data-theme="dark"]
 ) :is(
-  a[class*="bg-[#23C55E]"]:hover,
-  button[class*="bg-[#23C55E]"]:hover
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
 ) {
   background-color: #ffffff !important;
   color: #121826 !important;
@@ -186,8 +198,8 @@ button, input, select, textarea {
   .dark,
   [data-theme="dark"]
 ) :is(
-  a[class*="bg-[#23C55E]"]:hover,
-  button[class*="bg-[#23C55E]"]:hover
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
 ) svg {
   color: #121826 !important;
 }
