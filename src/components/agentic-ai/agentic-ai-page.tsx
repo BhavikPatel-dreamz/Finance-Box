@@ -8,6 +8,7 @@ import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
 import { Accordion } from "../ui/accordion";
 import { FooterHero } from "../ui/footer-hero";
+import { PartnersSection } from "@/components/ui/partners-section";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Container from "../ui/container";
@@ -203,29 +204,10 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       </Section>
 
       {/* 6. Official Partner Stack */}
-      <section className="partners-section bg-white py-12 sm:py-14 lg:py-20 text-[#16181d] overflow-hidden">
-        <Container>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12">
-            {content.partners.title}
-          </h2>
-        </Container>
-
-        <div
-          className="w-full overflow-x-auto overflow-y-hidden flex gap-4 px-6 pb-4"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          <style dangerouslySetInnerHTML={{ __html: `.overflow-x-auto::-webkit-scrollbar { display: none; }` }} />
-          <div className="flex gap-4 mx-auto min-w-max">
-            {content.partners.logos.map((partner, idx) => (
-              <div key={idx} className="shrink-0 flex h-[200px] w-[200px] items-center justify-center rounded-[10px] border border-gray-200 bg-white p-6">
-                <div className="relative w-full h-[99px]">
-                  <Image src={partner.logo} alt={partner.name} fill className="object-contain" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PartnersSection
+        title={content.partners.title}
+        logos={content.partners.logos}
+      />
 
       {/* 7. Proven Architecture */}
       <section className="proven-architecture bg-white px-6 pb-24 text-[#16181d]">
