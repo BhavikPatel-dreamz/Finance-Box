@@ -40,8 +40,8 @@ export function CareersPage({ sections }: { sections: RawSection[] }) {
                   </Eyebrow>
                   <h1 className="text-[32px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
                     Build the operating<br />
-                    system <span className="text-[#23C55E]">for growth</span><br />
-                    <span className="text-[#23C55E]">companies</span>
+                    system <span className="text-[#23C55E]">{content.hero.highlight}</span><br />
+                    <span className="text-[#23C55E]">{content.hero.highlight2}</span>
                   </h1>
                 </div>
 
@@ -218,14 +218,14 @@ export function CareersPage({ sections }: { sections: RawSection[] }) {
         </Container>
       </section>
 
-      {/* 7. Reusable Footer Hero (CTA Banner) */}
+      {/* 👇 7. Reusable Footer Hero (CTA Banner) — DYNAMIC from WordPress */}
       <FooterHero
         variant="careers"
-        title="Build your"
-        highlight="next chapter here"
-        text="Whether you love closing the books, designing automations, or building dashboards, FIAB gives you room to own real outcomes."
-        buttonLabel="Join the Talent Network"
-        buttonUrl="/careers/open-roles"
+        title={content.pressure.title}
+        highlight={content.pressure.emphasis}
+        text={content.pressure.text}
+        buttonLabel={content.pressure.cta.label}
+        buttonUrl={content.pressure.cta.url}
       />
 
       <HomeFooter footer={homeContent.footer} />
