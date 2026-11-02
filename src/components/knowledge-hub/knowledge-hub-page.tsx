@@ -209,7 +209,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
         </Container>
       </Section>
 
-      {/* 5. Naya Section: Newsletter */}
+      {/* 5. Newsletter Section */}
       <Section theme="dark" spacing="both">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-start">
@@ -224,7 +224,6 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
                 {content.newsletter.text}
               </p>
 
-              {/* Updated Button Size */}
               <GreenButton
                 label={content.newsletter.cta.label}
                 href={content.newsletter.cta.url}
@@ -271,14 +270,14 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
         </Container>
       </Section>
 
-      {/* 6. NAYA: Reusable Footer Hero */}
+      {/* 👇 6. Reusable Footer Hero — DYNAMIC from WordPress */}
       <FooterHero
         variant="knowledge-hub"
-        title="Want a specific"
-        highlight="playbook?"
-        text="Tell us what you're building—close, RevOps, compliance, or hiring—and we'll share a right-sized plan."
-        buttonLabel="Join the Talent Network"
-        buttonUrl="/careers"
+        title={content.pressure.title}
+        highlight={content.pressure.emphasis}
+        text={content.pressure.text}
+        buttonLabel={content.pressure.cta.label}
+        buttonUrl={content.pressure.cta.url}
       />
 
       <HomeFooter footer={siteFooter(homeContent.footer)} />

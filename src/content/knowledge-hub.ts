@@ -29,7 +29,6 @@ export type KnowledgeHubCaseStudy = {
   }[];
 };
 
-// Naya: Newsletter Section Type
 export type KnowledgeHubNewsletter = {
   title: string;
   highlight: string;
@@ -72,10 +71,16 @@ export type KnowledgeHubContent = {
     }[];
     cta: KnowledgeHubLink;
   };
-  // Naya Section
   newsletter: {
     title: string;
     highlight: string;
+    text: string;
+    cta: KnowledgeHubLink;
+  };
+  // 👇 NAYA: Pressure / CTA section
+  pressure: {
+    title: string;
+    emphasis: string;
     text: string;
     cta: KnowledgeHubLink;
   };
@@ -149,11 +154,17 @@ export const knowledgeHubContent: KnowledgeHubContent = {
       },
     ],
   },
-  // Naya Data
   newsletter: {
     title: "Want automation",
     highlight: "insights in your inbox?",
     text: "Monthly summaries of new guides, templates, and case studies. No spam.",
     cta: { label: "Join our Talent Network", url: "/careers" },
+  },
+  // 👇 NAYA: Pressure defaults
+  pressure: {
+    title: "Want a specific",
+    emphasis: "playbook?",
+    text: "Tell us what you're building—close, RevOps, compliance, or hiring—and we'll share a right-sized plan.",
+    cta: { label: "Join the Talent Network", url: "/careers" },
   },
 };
