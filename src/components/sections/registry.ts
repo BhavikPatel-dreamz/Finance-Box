@@ -5,7 +5,8 @@ import { whySections } from "@/components/sections/why/section";
 import { clientsSections } from "@/components/sections/clients/section";
 import { careersSections } from "@/components/sections/careers/section";
 import { agenticAiSections } from "@/components/sections/agentic-ai/section";
-import { knowledgeHubSections } from "@/components/sections/knowledge-hub/section"; // 👈 NAYA
+import { knowledgeHubSections } from "@/components/sections/knowledge-hub/section";
+import { peopleOperationsSections } from "@/components/sections/people-operations/section"; // 👈 NAYA
 
 export type SectionRegistration = {
   key: string;
@@ -21,7 +22,8 @@ export const sectionRegistry: readonly SectionRegistration[] = [
   ...clientsSections,
   ...careersSections,
   ...agenticAiSections,
-  ...knowledgeHubSections, // 👈 NAYA
+  ...knowledgeHubSections,
+  ...peopleOperationsSections, // 👈 NAYA
   ...whySections,
   ...contactSections,
 ];

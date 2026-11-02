@@ -22,11 +22,17 @@ export type PeopleOperationsContent = {
       reverse: boolean;
     }[];
   };
-  // Naya Section
   whereWeHelp: {
     title: string;
     highlight: string;
     cards: { title: string; text: string }[];
+  };
+  // 👇 NAYA: Pressure / CTA section
+  pressure: {
+    title: string;
+    emphasis: string;
+    text: string;
+    cta: { label: string; url: string };
   };
 };
 
@@ -144,7 +150,6 @@ export const peopleOperationsContent: PeopleOperationsContent = {
       },
     ],
   },
-  // Naya Data
   whereWeHelp: {
     title: "Where we ",
     highlight: "help",
@@ -153,5 +158,12 @@ export const peopleOperationsContent: PeopleOperationsContent = {
       { title: "Scale", text: "Scaling your people operations" },
       { title: "Optimize", text: "Improving an existing HR function" },
     ],
+  },
+  // 👇 NAYA: Pressure defaults
+  pressure: {
+    title: "Need to strengthen",
+    emphasis: "your people function?",
+    text: "Whether you're building your HR function, scaling your team or looking to streamline existing processes, let's talk about where you need support.",
+    cta: { label: "Book a Discovery Call", url: "/contact-us" },
   },
 };
