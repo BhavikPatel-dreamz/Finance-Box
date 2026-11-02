@@ -381,8 +381,8 @@ export const homeContent: HomeContent = {
       {
         title: "Support",
         links: [
-          { label: "Privacy Policy", url: "/privacy-policy" },
-          { label: "Terms & Conditions", url: "/privacy-policy" },
+          { label: "Privacy Policy", url: "/privacy-policy/" },
+          { label: "Terms & Conditions", url: "/terms-conditions/" },
         ],
       },
       {
