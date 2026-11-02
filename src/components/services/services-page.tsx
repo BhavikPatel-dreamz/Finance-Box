@@ -13,6 +13,7 @@ import { InvestorSlider } from "@/components/services/investor-slider";
 import { ProcessGrid } from "@/components/ui/process-grid";
 import Section from "../ui/section";
 import { mergeServices } from "@/components/services/merge";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
 export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
   const content = mergeServices(servicesContent, sections ?? []);
@@ -31,28 +32,39 @@ export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
           <Container>
             <div className="flex-1 grid grid-cols-1 min-[890px]:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center py-10 sm:py-14 md:py-12 lg:py-20">
               <div className="max-w-2xl">
-                <Eyebrow variant="dark">
-                  {content.hero.eyebrow}
-                </Eyebrow>
-                <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.15] lg:leading-[1.12] font-medium tracking-tight text-white">
-                  {content.hero.title}
-                  <span className="whitespace-pre-line text-[#23C55E]"> {content.hero.highlight}</span>
-                </h1>
-                <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/90 mt-4 sm:mt-5 lg:max-w-[508px]">
-                  {content.hero.text}
-                </p>
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-8 sm:mt-10">
-                  <GreenButton
-                    label={content.hero.primary.label}
-                    href={content.hero.primary.url}
-                    bgColor="#ffffff"
-                    textColor="#07110d"
-                  />
-                  <a href="#" className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1">See How an Engagement Works <ArrowIcon /></a>
-                </div>
+                <Reveal immediate preset="slide-up" delay={80} distance={18}>
+                  <Eyebrow variant="dark">
+                    {content.hero.eyebrow}
+                  </Eyebrow>
+                </Reveal>
+
+                <Reveal immediate preset="slide-up" delay={220} distance={32}>
+                  <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.15] lg:leading-[1.12] font-medium tracking-tight text-white">
+                    {content.hero.title}
+                    <span className="whitespace-pre-line text-[#23C55E]"> {content.hero.highlight}</span>
+                  </h1>
+                </Reveal>
+
+                <Reveal immediate preset="slide-up" delay={380} distance={24}>
+                  <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/90 mt-4 sm:mt-5 lg:max-w-[508px]">
+                    {content.hero.text}
+                  </p>
+                </Reveal>
+
+                <Reveal immediate preset="slide-up" delay={540} distance={20}>
+                  <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-8 sm:mt-10">
+                    <GreenButton
+                      label={content.hero.primary.label}
+                      href={content.hero.primary.url}
+                      bgColor="#ffffff"
+                      textColor="#07110d"
+                    />
+                    <a href="#" className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1">See How an Engagement Works <ArrowIcon /></a>
+                  </div>
+                </Reveal>
               </div>
 
-              <div className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-[506px] lg:justify-self-end">
+              <StaggerGroup immediate staggerDelay={140} className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-[506px] lg:justify-self-end">
                 {/* Vertical Gradient Divider Line matching Figma specs */}
                 <div
                   aria-hidden="true"
@@ -64,9 +76,10 @@ export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
                   }}
                 />
                 {content.hero.tiers.map((tier, idx) => (
-                  <div
+                  <StaggerItem
                     key={idx}
-                    className="w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                    index={idx}
+                    className="card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
                   >
                     <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E]">
                       {tier.number}
@@ -82,9 +95,9 @@ export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
                         {tier.text}
                       </p>
                     </div>
-                  </div>
+                  </StaggerItem>
                 ))}
-              </div>
+              </StaggerGroup>
             </div>
           </Container>
         </div>
@@ -126,30 +139,33 @@ function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
   return (
     <Section theme="light" spacing="both" className="find-stage-section">
       <Container>
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-12">
-          <div>
-            <Eyebrow variant="light">
-              {stages.eyebrow}
-            </Eyebrow>
-            <h2 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-[46px] lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
-              {stages.title.split("Company")[0]}
-              <br />
-              <span className="font-black italic">Company Today?</span>
-            </h2>
+        <Reveal preset="slide-up" distance={20}>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-12">
+            <div>
+              <Eyebrow variant="light">
+                {stages.eyebrow}
+              </Eyebrow>
+              <h2 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-[46px] lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+                {stages.title.split("Company")[0]}
+                <br />
+                <span className="font-black italic">Company Today?</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826]/80">
+              {stages.text}
+            </p>
           </div>
-          <p className="max-w-md text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826]/80">
-            {stages.text}
-          </p>
-        </div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {stages.cards.map((card, idx) => {
             const iconSrc = iconMap[card.icon] || "/icons/set-the-foundation.png";
 
             return (
-              <div
+              <StaggerItem
                 key={idx}
-                className="bg-[#121826] rounded-[16px] p-6 sm:p-8 flex flex-col justify-between min-h-[200px] sm:min-h-[226px] relative group border border-white/5"
+                index={idx}
+                className="card-hover bg-[#121826] rounded-[16px] p-6 sm:p-8 flex flex-col justify-between min-h-[200px] sm:min-h-[226px] relative group border border-white/5"
               >
                 <div className="flex justify-between items-start gap-4 mb-5 sm:mb-6">
                   <h3 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold leading-[1.2] text-white">
@@ -173,10 +189,10 @@ function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
                 <p className="text-[15px] sm:text-[16px] lg:text-[18px] font-normal leading-[150%] text-white/70">
                   {card.text}
                 </p>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGroup>
       </Container>
     </Section>
   );
@@ -187,13 +203,13 @@ function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] }) {
   return (
     <Section theme="dark" spacing="space60" className="services-depth-intro">
       <Container>
-        <div className="flex flex-col items-center text-center px-4">
+        <Reveal preset="slide-up" distance={20} className="flex flex-col items-center text-center px-4">
           <Eyebrow variant="green">
             {depth.eyebrow}
           </Eyebrow>
 
           <h2 className="mt-5.5 sm:mt-7.5 text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
-            <span className="font-medium">What's</span>
+            <span className="font-medium">What&apos;s</span>
             <span className="font-extrabold italic"> Inside Each Tier</span>
           </h2>
 
@@ -204,10 +220,9 @@ function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] }) {
             textColor="#121826"
             className="mt-8 sm:mt-10"
           />
-        </div>
+        </Reveal>
       </Container>
     </Section>
-
   );
 }
 
@@ -216,8 +231,11 @@ function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
   return (
     <Section theme="lightblue" spacing="none" className="services-details">
       {details.map((detail, idx) => (
-        <div
+        <Reveal
           key={detail.anchor}
+          preset="slide-up"
+          distance={20}
+          as="div"
           id={detail.anchor}
           className={`py-10 sm:py-12.5 lg:py-15 scroll-mt-20 lg:scroll-mt-24 ${idx > 0 ? "border-t border-white/12" : ""
             }`}
@@ -258,7 +276,7 @@ function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
                   return (
                     <div
                       key={itemIdx}
-                      className={`bg-[#121826] p-6 sm:p-8 flex flex-col justify-start min-h-0 sm:min-h-[191px] 
+                      className={`card-hover bg-[#121826] p-6 sm:p-8 flex flex-col justify-start min-h-0 sm:min-h-[191px] 
                         ${isFullWidth ? "sm:col-span-2 sm:border-r-0" : isLeftCol ? "sm:border-r sm:border-white/12" : "sm:border-r-0"} 
                         ${isLastRowMobile ? "border-b-0" : "border-b border-white/12"} 
                         ${isLastRowSm ? "sm:border-b-0" : "sm:border-b sm:border-white/12"}
@@ -276,7 +294,7 @@ function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
               </div>
             </div>
           </Container>
-        </div>
+        </Reveal>
       ))}
     </Section>
   );
@@ -295,38 +313,41 @@ function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
       <Container>
         <div className="bg-[#EDE9E6] rounded-[10px] p-6 sm:p-10 md:px-12.5 md:py-20 text-[#121826]">
 
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
-            <div>
-              <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
-                {cfo.title.split("\n")[0]}
-                <br />
-                <span className="font-extrabold italic">{cfo.title.split("\n")[1]}</span>
-              </h2>
+          <Reveal preset="slide-up" distance={20}>
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
+              <div>
+                <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+                  {cfo.title.split("\n")[0]}
+                  <br />
+                  <span className="font-extrabold italic">{cfo.title.split("\n")[1]}</span>
+                </h2>
+              </div>
+              <div className="max-w-md">
+                <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] text-[#121826]/70 mb-6 sm:mb-8">
+                  {cfo.text}
+                </p>
+                <GreenButton
+                  label={cfo.cta.label}
+                  href={cfo.cta.url}
+                  bgColor="#121826"
+                  textColor="#ffffff"
+                />
+              </div>
             </div>
-            <div className="max-w-md">
-              <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] text-[#121826]/70 mb-6 sm:mb-8">
-                {cfo.text}
-              </p>
-              <GreenButton
-                label={cfo.cta.label}
-                href={cfo.cta.url}
-                bgColor="#121826"
-                textColor="#ffffff"
-              />
-            </div>
-          </div>
+          </Reveal>
 
-          <div className="cfo-cards grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+          <StaggerGroup staggerDelay={140} className="cfo-cards grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
             {cfo.cards.map((card, idx) => (
-              <div
+              <StaggerItem
                 key={idx}
-                className="relative w-full h-[350px] sm:h-[480px] md:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
+                index={idx}
+                className="group card-hover relative w-full h-[350px] sm:h-[480px] md:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
               >
                 <Image
                   src={images[idx] || card.image?.url || ""}
                   alt={card.title}
                   fill
-                  className="object-cover"
+                  className="object-cover image-hover-zoom"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
@@ -366,9 +387,9 @@ function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                     </p>
                   </div>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
 
         </div>
       </Container>
@@ -379,18 +400,18 @@ function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
 // --- Component: Process ---
 function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
   return (
-    <Section theme="dark" spacing="both" className="services-process-section">
+    <Section theme="dark" spacing="top" className="services-process-section">
       <Container>
 
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-8 sm:mb-12.5">
+        <Reveal preset="slide-up" distance={20} className="flex flex-col items-center text-center mb-8 sm:mb-12.5">
           <h2 className="text-3xl sm:text-4xl md:text-[50px] font-medium leading-[1.15] sm:leading-[1.1] tracking-[-0.8px] mb-3 sm:mb-4">
             {process.title}
           </h2>
           <p className="text-[14px] sm:text-[16px] font-light leading-[160%] text-white/70 max-w-[680px] px-2">
             {process.text}
           </p>
-        </div>
+        </Reveal>
 
         {/* Cards Grid */}
         <ProcessGrid steps={process.steps} />
@@ -406,7 +427,7 @@ function ServicesInvestors({ investors }: { investors: ServicesContent["investor
     <Section theme="dark" spacing="both" className="services-process-section">
       <Container>
         {/* Header Area - Contained */}
-        <div className="mx-auto w-full mb-10 sm:mb-14 lg:mb-16">
+        <Reveal preset="slide-up" distance={20} className="mx-auto w-full mb-10 sm:mb-14 lg:mb-16">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 sm:gap-10 lg:gap-16">
             <div className="max-w-2xl">
               <p className="inline-flex items-center gap-3 text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-5 sm:mb-6">
@@ -444,7 +465,7 @@ function ServicesInvestors({ investors }: { investors: ServicesContent["investor
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Container>
 
       {/* Full-bleed slider wisely aligned with container on left */}

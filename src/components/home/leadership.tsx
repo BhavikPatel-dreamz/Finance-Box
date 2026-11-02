@@ -6,6 +6,7 @@ import type { HomeContent } from "@/content/home";
 import Container from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
+import { Reveal } from "@/components/motion/reveal";
 
 interface LeadershipProps {
   leadership: HomeContent["leadership"];
@@ -95,13 +96,17 @@ export function Leadership({ leadership }: LeadershipProps) {
     }
   };
 
+  const IMAGE_SCALE: Record<string, number> = {
+    "Neeti Chauhan": 1.3,
+  };
+  
   return (
     <Section id="leadership" theme="dark" spacing="both" className="leadership-section overflow-hidden">
       <Container>
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8 sm:gap-10 lg:gap-10 xl:gap-16">
 
           {/* Left Column: Heading, Copy, Slider Navigation */}
-          <div className="w-full lg:w-[420px] xl:w-[500px] 2xl:w-[530px] shrink-0">
+          <Reveal preset="slide-up" distance={20} className="w-full lg:w-[420px] xl:w-[500px] 2xl:w-[530px] shrink-0">
             <Eyebrow variant="green" className="mb-4 sm:mb-5">
               {leadership.eyebrow}
             </Eyebrow>
@@ -120,7 +125,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 type="button"
                 aria-label="Previous leader"
                 onClick={handlePrev}
-                className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white transition-colors cursor-pointer"
+                className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white active:scale-95 transition-all cursor-pointer"
               >
                 <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
                   <path
@@ -137,7 +142,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 type="button"
                 aria-label="Next leader"
                 onClick={handleNext}
-                className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white transition-colors cursor-pointer"
+                className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white active:scale-95 transition-all cursor-pointer"
               >
                 <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
                   <path
@@ -151,7 +156,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 </svg>
               </button>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right Column: Sliding Leader Cards Viewport */}
           <div
@@ -186,7 +191,12 @@ export function Leadership({ leadership }: LeadershipProps) {
                         alt={person.image.alt || person.name}
                         fill
                         priority
-                        className="object-contain object-bottom pointer-events-none"
+                        className="object-contain object-bottom origin-bottom pointer-events-none"
+                        style={
+                          IMAGE_SCALE[person.name]
+                            ? { transform: `scale(${IMAGE_SCALE[person.name]})` }
+                            : undefined
+                        }
                         sizes="390px"
                       />
                     </div>

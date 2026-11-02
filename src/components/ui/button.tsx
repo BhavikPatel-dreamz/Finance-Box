@@ -198,7 +198,7 @@ export function Button({
   }
 
   const baseClasses = twMerge(
-    "group inline-flex max-w-full items-center justify-center gap-3.5 rounded-full font-semibold transition-all duration-300 ease-in-out cursor-pointer select-none disabled:opacity-50 disabled:pointer-events-none",
+    "group inline-flex max-w-full items-center justify-center gap-3.5 rounded-full font-semibold transition-all duration-300 ease-in-out cursor-pointer select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#23C55E]/60 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
     variantStyles[activeVariant],
     sizeClasses,
     className

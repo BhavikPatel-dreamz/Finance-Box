@@ -9,6 +9,7 @@ import { FooterHero } from "../ui/footer-hero";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Container from "../ui/container";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
 function withSiteLinks<T extends { url: string }>(value: T): T {
   return { ...value, url: value.url.startsWith("#") ? `/${value.url}` : value.url };
@@ -54,7 +55,7 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
 
           <div className="flex-1 flex items-center w-full max-w-[1280px] mx-auto px-4 sm:px-6 pt-6 sm:pt-8 lg:pt-0 pb-10 sm:pb-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center w-full">
-              <div>
+              <Reveal immediate preset="slide-up" delay={80} distance={24}>
                 <Eyebrow variant="dark" className="mb-4 sm:mb-6">
                   {content.hero.eyebrow}
                 </Eyebrow>
@@ -62,12 +63,12 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
                   {content.hero.title}
                   <span className="text-[#23C55E]">{content.hero.highlight}</span>
                 </h1>
-              </div>
-              <div className="max-w-md lg:justify-self-end">
+              </Reveal>
+              <Reveal immediate preset="slide-up" delay={260} distance={24} className="max-w-md lg:justify-self-end">
                 <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] lg:leading-[160%] text-white/80 mb-6 sm:mb-8">
                   {content.hero.text}
                 </p>
-              </div>
+              </Reveal>
             </div>
           </div>
         </div>
@@ -77,16 +78,16 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
       <Section theme="light" spacing="both">
         <Container>
           <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 xl:gap-20">
-            <div className="w-full max-w-[460px] mx-auto lg:max-w-none lg:w-[554px] shrink-0 relative aspect-[554/643] rounded-[14px] sm:rounded-[16px] overflow-hidden">
+            <Reveal preset="slide-left" distance={20} className="group card-hover w-full max-w-[460px] mx-auto lg:max-w-none lg:w-[554px] shrink-0 relative aspect-[554/643] rounded-[14px] sm:rounded-[16px] overflow-hidden">
               <Image
                 src={content.intro.image}
                 alt="FIAB People Operations"
                 fill
-                className="object-cover"
+                className="object-cover image-hover-zoom"
                 sizes="(max-width: 1024px) 100vw, 554px"
               />
-            </div>
-            <div className="w-full lg:flex-1">
+            </Reveal>
+            <Reveal preset="slide-right" distance={20} className="w-full lg:flex-1">
               <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-medium leading-[1.25] lg:leading-[1.3] tracking-[-0.8px] mb-4 sm:mb-6">
                 {content.intro.title}
                 <span className="font-bold italic text-[#23C55E]">{content.intro.highlight}</span>
@@ -94,7 +95,7 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
               <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#16181d]/70">
                 {content.intro.text}
               </p>
-            </div>
+            </Reveal>
           </div>
         </Container>
       </Section>
@@ -103,15 +104,20 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
       <Section theme="dark" spacing="both">
         <Container>
 
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-12 lg:mb-16">
-            {content.whatWeDo.title}
-          </h2>
+          <Reveal preset="slide-up" distance={20}>
+            <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-12 lg:mb-16">
+              {content.whatWeDo.title}
+            </h2>
+          </Reveal>
 
           <div className="flex flex-col gap-6 sm:gap-8">
             {content.whatWeDo.items.map((card, idx) => (
-              <div
+              <Reveal
                 key={idx}
-                className={`relative bg-[#191F2D] rounded-[16px] overflow-hidden min-h-0 lg:min-h-[592px] flex flex-col flex-col-reverse ${card.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+                preset="slide-up"
+                distance={24}
+                delay={idx * 60}
+                className={`group card-hover relative bg-[#191F2D] rounded-[16px] overflow-hidden min-h-0 lg:min-h-[592px] flex flex-col flex-col-reverse ${card.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
               >
                 {/* Background Gradient Image */}
                 <div className="absolute inset-0">
@@ -150,11 +156,11 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
                     src={card.image}
                     alt={card.title}
                     fill
-                    className="object-cover"
+                    className="object-cover image-hover-zoom"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
 
@@ -165,16 +171,19 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
       <Section theme="light" spacing="top">
         <Container>
 
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-10 lg:mb-12.5">
-            {content.whereWeHelp.title}
-            <span className="font-extrabold italic">{content.whereWeHelp.highlight}</span>
-          </h2>
+          <Reveal preset="slide-up" distance={20}>
+            <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-10 lg:mb-12.5">
+              {content.whereWeHelp.title}
+              <span className="font-extrabold italic">{content.whereWeHelp.highlight}</span>
+            </h2>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {content.whereWeHelp.cards.map((card, idx) => (
-              <div
+              <StaggerItem
                 key={idx}
-                className="bg-[#EDE9E6] rounded-[10px] py-6 px-5 sm:py-8 sm:px-6 lg:py-10 lg:px-7 min-h-[120px] sm:min-h-[135px] lg:min-h-[145px] flex flex-col justify-center border border-[#FFFFFF24]"
+                index={idx}
+                className="card-hover bg-[#EDE9E6] rounded-[10px] py-6 px-5 sm:py-8 sm:px-6 lg:py-10 lg:px-7 min-h-[120px] sm:min-h-[135px] lg:min-h-[145px] flex flex-col justify-center border border-[#FFFFFF24]"
               >
                 <h3 className="text-[22px] sm:text-[26px] lg:text-[30px] font-semibold leading-[1.2] lg:leading-[1.1] mb-1.5 sm:mb-2">
                   {card.title}
@@ -182,9 +191,9 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
                 <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-normal leading-[150%] text-[#121826]/70">
                   {card.text}
                 </p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
 
         </Container>
       </Section>

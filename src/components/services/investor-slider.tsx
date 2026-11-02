@@ -70,7 +70,7 @@ export function InvestorSlider({ cards }: { cards: ServicesPhotoCard[] }) {
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,24,38,0)_6.84%,rgba(18,24,38,0.729525)_45.64%,rgba(18,24,38,0.817256)_56.69%,#121826_92.91%)] pointer-events-none" />
 
                 {(card.title || card.text) && (
-                  <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 text-white z-10 pointer-events-none">
+                  <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 text-white pointer-events-none">
                     <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-semibold leading-[1.2] mb-2 sm:mb-3 text-white">
                       {card.title}
                     </h3>

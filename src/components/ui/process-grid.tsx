@@ -1,5 +1,6 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import { StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
 export type ProcessStepItem = {
   number: string;
@@ -32,7 +33,9 @@ export function ProcessGrid({ steps, className = "" }: ProcessGridProps) {
         className
       )}
     >
-      <ol
+      <StaggerGroup
+        as="ol"
+        staggerDelay={120}
         className={twMerge(
           "grid grid-cols-1 sm:grid-cols-2",
           DESKTOP_COLS[total] ?? "lg:grid-cols-5"
@@ -45,10 +48,12 @@ export function ProcessGrid({ steps, className = "" }: ProcessGridProps) {
           const isLastRowOnSm = hasOddCount ? isLast : idx >= total - 2;
 
           return (
-            <li
+            <StaggerItem
               key={`${step.number}-${idx}`}
+              as="li"
+              index={idx}
               className={twMerge(
-                "relative flex min-h-[200px] flex-col bg-[#191F2D] pb-8 pt-8 sm:min-h-[290px] sm:pt-9 lg:min-h-[311px] lg:pt-10",
+                "card-hover relative flex min-h-[200px] flex-col bg-[#191F2D] pb-8 pt-8 sm:min-h-[290px] sm:pt-9 lg:min-h-[311px] lg:pt-10",
                 // Mobile (1 column)
                 !isLast && "border-b border-white/10",
                 // Tablet (2 columns)
@@ -81,10 +86,10 @@ export function ProcessGrid({ steps, className = "" }: ProcessGridProps) {
                   {step.text}
                 </p>
               </div>
-            </li>
+            </StaggerItem>
           );
         })}
-      </ol>
+      </StaggerGroup>
     </div>
   );
 }

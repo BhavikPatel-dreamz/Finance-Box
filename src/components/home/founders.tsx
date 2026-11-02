@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { HomeContent } from "@/content/home";
 import { GreenButton } from "@/components/ui/green-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import Container from "../ui/container";
 import Section from "../ui/section";
 
@@ -16,7 +17,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-10 xl:gap-16">
 
           {/* Left Side: Text */}
-          <div>
+          <Reveal preset="slide-up" distance={20}>
             <Eyebrow variant="light" className="mb-4 sm:mb-6 lg:mb-8">
               {founders.eyebrow}
             </Eyebrow>
@@ -33,25 +34,26 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
               bgColor="#121826"
               textColor="#ffffff"
             />
-          </div>
+          </Reveal>
 
           {/* Right Side: Accordion */}
-          <div className="flex flex-col gap-3 sm:gap-4">
+          <StaggerGroup staggerDelay={120} className="flex flex-col gap-3 sm:gap-4">
             {founders.cards.map((card, index) => {
               const isOpen = openIndex === index;
               const panelId = `founders-panel-${index}`;
 
               return (
-                <div
+                <StaggerItem
                   key={index}
-                  className="bg-[#121826] rounded-[14px] overflow-hidden"
+                  index={index}
+                  className="card-hover bg-[#121826] rounded-[14px] overflow-hidden"
                 >
                   <button
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     aria-expanded={isOpen}
                     aria-controls={panelId}
-                    className="w-full flex items-center justify-between p-4 sm:p-5.5 text-left focus:outline-none"
+                    className="w-full flex items-center justify-between p-4 sm:p-5.5 text-left focus:outline-none cursor-pointer"
                   >
                     <span className="text-[17px] sm:text-[20px] md:text-[25px] font-medium text-white pr-3 sm:pr-4">
                       {card.title}
@@ -88,10 +90,10 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
                       </div>
                     </div>
                   </div>
-                </div>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
         </div>
       </Container>
     </Section>

@@ -9,6 +9,7 @@ import { GreenButton } from "@/components/ui/green-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Container from "../ui/container";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
 function withSiteLinks<T extends { url: string }>(value: T): T {
   return { ...value, url: value.url.startsWith("#") ? `/${value.url}` : value.url };
@@ -54,15 +55,21 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
 
           <Container className="flex-1 flex items-center justify-center">
             <div className="w-full flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-6 pb-12 sm:pt-8 sm:pb-16 lg:py-0">
-              <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-6 lg:mb-8">
-                {content.hero.eyebrow}
-              </Eyebrow>
-              <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 lg:mb-8">
-                {content.hero.title} <span className="text-[#23C55E]">{content.hero.highlight}</span>
-              </h1>
-              <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-white/80 max-w-2xl px-2">
-                {content.hero.text}
-              </p>
+              <Reveal immediate preset="slide-up" delay={80} distance={18}>
+                <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-6 lg:mb-8">
+                  {content.hero.eyebrow}
+                </Eyebrow>
+              </Reveal>
+              <Reveal immediate preset="slide-up" delay={220} distance={32}>
+                <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 lg:mb-8">
+                  {content.hero.title} <span className="text-[#23C55E]">{content.hero.highlight}</span>
+                </h1>
+              </Reveal>
+              <Reveal immediate preset="slide-up" delay={380} distance={24}>
+                <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-white/80 max-w-2xl px-2">
+                  {content.hero.text}
+                </p>
+              </Reveal>
             </div>
           </Container>
         </div>
@@ -74,7 +81,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-3.75">
 
             {/* Left Side: Image & Contact Info */}
-            <div className="relative w-full lg:w-[476px] min-h-[420px] sm:min-h-[480px] lg:min-h-0 bg-white rounded-[10px] overflow-hidden flex flex-col justify-end">
+            <Reveal preset="slide-left" distance={20} className="card-hover relative w-full lg:w-[476px] min-h-[420px] sm:min-h-[480px] lg:min-h-0 bg-white rounded-[10px] overflow-hidden flex flex-col justify-end">
               <div className="absolute inset-0 z-0">
                 <Image
                   src={content.formSection.image}
@@ -107,10 +114,10 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Right Side: Form */}
-            <div className="w-full lg:w-[788px] bg-[#EDE9E6]/50 rounded-[10px] p-6 sm:p-8 md:p-10 lg:py-15 lg:px-12.5">
+            <Reveal preset="slide-right" distance={20} className="w-full lg:w-[788px] bg-[#EDE9E6]/50 rounded-[10px] p-6 sm:p-8 md:p-10 lg:py-15 lg:px-12.5">
               <h2 className="text-[26px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-medium leading-[1.15] sm:leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-2.5 sm:mb-4">
                 {content.formSection.title}
               </h2>
@@ -125,7 +132,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                       key={field.name}
                       type={field.type}
                       placeholder={field.placeholder}
-                      className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E]"
+                      className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
                     />
                   ))}
                 </div>
@@ -134,13 +141,13 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                     key={field.name}
                     type={field.type}
                     placeholder={field.placeholder}
-                    className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E]"
+                    className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
                   />
                 ))}
                 <textarea
                   placeholder={content.formSection.form.notesPlaceholder}
                   rows={5}
-                  className="w-full rounded-[10px] border border-[#747C761A] bg-white py-3.5 sm:py-4 px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] resize-none"
+                  className="w-full rounded-[10px] border border-[#747C761A] bg-white py-3.5 sm:py-4 px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
                 />
                 <div className="mt-2 sm:mt-4 flex justify-start">
                   <GreenButton
@@ -151,7 +158,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                   />
                 </div>
               </form>
-            </div>
+            </Reveal>
 
           </div>
         </Container>
@@ -160,7 +167,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
       {/* Stay Connected Section */}
       <section className="bg-white px-4 sm:px-6 pb-16 sm:pb-20 lg:pb-24 stay-connect-section">
         <Container>
-          <div className="text-center mb-10 sm:mb-12 lg:mb-16">
+          <Reveal preset="slide-up" distance={20} className="text-center mb-10 sm:mb-12 lg:mb-16">
             <h2 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
               {content.socialSection.title}{" "}
               <span className="text-[#23C55E] font-black italic">{content.socialSection.highlight}</span>
@@ -168,12 +175,12 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
             <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70 mt-3 sm:mt-4 max-w-[740px] mx-auto">
               {content.socialSection.subtitle}
             </p>
-          </div>
+          </Reveal>
 
-          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-4">
+          <StaggerGroup staggerDelay={150} className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-4">
 
             {/* LinkedIn Card */}
-            <div className="relative w-full lg:w-1/2 rounded-[10px] bg-[#EDE9E6] p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px] overflow-hidden">
+            <StaggerItem index={0} className="card-hover relative w-full lg:w-1/2 rounded-[10px] bg-[#EDE9E6] p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px] overflow-hidden">
               <div className="relative z-10 max-w-[70%] sm:max-w-[65%] lg:max-w-none">
                 <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4">
                   {content.socialSection.linkedin.title}
@@ -200,10 +207,10 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                   className="object-contain object-right-bottom"
                 />
               </div>
-            </div>
+            </StaggerItem>
 
             {/* Newsletter Card */}
-            <div className="w-full lg:w-1/2 rounded-[10px] bg-[#121826] p-6 sm:p-8 md:p-10 lg:p-12.5 text-white flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px]">
+            <StaggerItem index={1} className="card-hover w-full lg:w-1/2 rounded-[10px] bg-[#121826] p-6 sm:p-8 md:p-10 lg:p-12.5 text-white flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px]">
               <div>
                 <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4 lg:mb-6.5">
                   {content.socialSection.newsletter.title}
@@ -217,7 +224,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                 <input
                   type="email"
                   placeholder={content.socialSection.newsletter.placeholder}
-                  className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#FFFFFF0F] bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-6 sm:mb-8 lg:mb-10"
+                  className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#FFFFFF0F] bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-6 sm:mb-8 lg:mb-10 transition-colors duration-200"
                 />
                 <GreenButton
                   label={content.socialSection.newsletter.buttonLabel}
@@ -226,9 +233,9 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                   textColor="#121826"
                 />
               </div>
-            </div>
+            </StaggerItem>
 
-          </div>
+          </StaggerGroup>
         </Container>
       </section>
 

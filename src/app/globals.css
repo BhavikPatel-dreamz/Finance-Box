@@ -203,3 +203,67 @@ button, input, select, textarea {
 ) svg {
   color: #121826 !important;
 }
+
+/* Motion Design & Interactive Hover Utilities (Inspired by financeinabox.com) */
+@media (hover: hover) and (pointer: fine) {
+  .card-hover {
+    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1), border-color 350ms ease;
+    will-change: transform;
+  }
+  .card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.22);
+  }
+
+  .image-hover-zoom {
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .group:hover .image-hover-zoom,
+  .image-hover-zoom:hover {
+    transform: scale(1.03);
+  }
+}
+
+/* Header Dropdown & Mobile Menu Animations */
+@keyframes dropdown-fade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.dropdown-enter {
+  animation: dropdown-fade 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes menu-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu-enter {
+  animation: menu-slide-down 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Global Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+}
+

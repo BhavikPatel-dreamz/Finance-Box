@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Container } from "@/components/ui/container";
 import Section from "@/components/ui/section";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
 export function WhyPage({ sections }: { sections: RawSection[] }) {
   const content = mergeWhy(whyContent, sections);
@@ -85,7 +86,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
         <Container>
           <div className="w-full">
             <div className="grid items-start gap-6 sm:gap-8 pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pt-[84px] lg:pb-[60px] lg:grid-cols-[1.1fr_0.9fr]">
-              <div>
+              <Reveal immediate preset="slide-up" delay={100} distance={28}>
                 <Eyebrow variant="dark">
                   {hero.eyebrow}
                 </Eyebrow>
@@ -93,19 +94,21 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
                   {hero.title}
                   <span className="block whitespace-pre-line text-[#23C55E]">{hero.highlight}</span>
                 </h1>
-              </div>
-              <div className="lg:max-w-[460px] lg:justify-self-end lg:pt-2.5">
+              </Reveal>
+              <Reveal immediate preset="slide-up" delay={280} distance={28} className="lg:max-w-[460px] lg:justify-self-end lg:pt-2.5">
                 <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/90">
                   {hero.text}
                 </p>
                 <div className="mt-6 sm:mt-8">
                   <Button color="white" text={hero.cta.label} href={hero.cta.url} />
                 </div>
-              </div>
+              </Reveal>
             </div>
 
             <div className="relative pb-12 sm:pb-16 lg:pb-24">
-              <div
+              <StaggerGroup
+                immediate
+                staggerDelay={150}
                 className="w-full rounded-[12px] sm:rounded-none overflow-hidden border border-white/10 sm:border-x-0 sm:border-y sm:border-white/10 bg-[rgba(0,0,0,0.03)] backdrop-blur-[3px]"
                 style={{
                   backgroundColor: "rgba(0, 0, 0, 0.03)",
@@ -115,9 +118,10 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
               >
                 <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
                   {hero.points.map((point, index) => (
-                    <div
+                    <StaggerItem
                       key={point.number || index}
-                      className="flex min-h-[50px] md:h-[110px] md:flex-col lg:justify-between lg:items-start items-center p-3.5 sm:px-5 sm:py-4 lg:gap-0 gap-x-4"
+                      index={index}
+                      className="card-hover flex min-h-[50px] md:h-[110px] md:flex-col lg:justify-between lg:items-start items-center p-3.5 sm:px-5 sm:py-4 lg:gap-0 gap-x-4"
                     >
                       {/* 🚀 Fallback wapas lagaya gaya hai */}
                       <span className="point-number inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-full bg-[#121826] border border-[#23C55E]/40 text-[13px] sm:text-[14px] font-semibold text-[#23C55E] shadow-[0_0_10px_rgba(35,197,94,0.1)]">
@@ -126,10 +130,10 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Ho
                       <p className="text-[16px] sm:text-[18px] md:text-[20px] font-semibold text-white tracking-tight leading-snug">
                         {point.title}
                       </p>
-                    </div>
+                    </StaggerItem>
                   ))}
                 </div>
-              </div>
+              </StaggerGroup>
             </div>
 
           </div>
@@ -168,7 +172,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
   return (
     <section className="compare-section bg-white py-14 sm:py-20 lg:py-24 text-[#121826] overflow-hidden">
       <Container>
-        <div className="mx-auto max-w-3xl text-center">
+        <Reveal preset="slide-up" distance={20} className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             {compare.title}
             <span className="mt-1 block font-black text-[#23C55E] italic">{compare.highlight}</span>
@@ -176,9 +180,9 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
           <p className="mx-auto mt-4 sm:mt-6 max-w-[680px] text-sm sm:text-base leading-[1.6] text-[#66707c]">
             {compare.text}
           </p>
-        </div>
+        </Reveal>
 
-        <div className="table-wrapper mt-5 sm:mt-12 lg:mt-16">
+        <Reveal preset="slide-up" delay={150} distance={24} className="table-wrapper mt-5 sm:mt-12 lg:mt-16">
           <div className="overflow-x-auto pt-10 pb-8 sm:pt-11 sm:pb-9 -mx-4 px-4 sm:mx-0 sm:px-0 touch-scroll">
             <div className="min-w-[680px] sm:min-w-[820px] md:min-w-[960px] lg:min-w-[1096px] xl:min-w-[1280px]">
               <div
@@ -319,27 +323,27 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
             <span>Scroll horizontally to view all options</span>
             <span>→</span>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );
 }
 
 export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"] }) {
-  // 🚀 DEBUG LOG: Ye check karega ki WordPress se kya aa raha hai
-  console.log("HOW WE WORK CARDS DATA:", howWeWork.cards);
-
   return (
     <Section theme="dark" spacing="both" className="how-we-work">
       <Container>
-        <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%] mb-8 sm:mb-12">
-          {howWeWork.title}
-        </h2>
-        <div className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal preset="slide-up" distance={20}>
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%] mb-8 sm:mb-12">
+            {howWeWork.title}
+          </h2>
+        </Reveal>
+        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {howWeWork.cards.map((card, index) => (
-            <div
+            <StaggerItem
               key={card.number || index}
-              className="flex flex-col rounded-[20px] bg-[rgba(255,255,255,0.06)] p-6 sm:px-7 sm:py-9 lg:px-7.5 lg:py-10 border border-[rgba(255,255,255,0.07)]"
+              index={index}
+              className="card-hover flex flex-col rounded-[20px] bg-[rgba(255,255,255,0.06)] p-6 sm:px-7 sm:py-9 lg:px-7.5 lg:py-10 border border-[rgba(255,255,255,0.07)]"
             >
               {/* 🚀 Fallback wapas lagaya gaya hai */}
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-[#23C55E] bg-[#121826] border border-[#23C55E]/20">
@@ -352,9 +356,9 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
               <p className="mt-3 sm:mt-4 text-[14px] sm:text-[16px] font-normal leading-[150%] text-white/70">
                 {card.text}
               </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </Container>
     </Section>
   );
@@ -366,7 +370,7 @@ export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
       <Container>
         <div className="isolate overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] flex flex-col md:flex-row items-center justify-between pt-7 px-5 pb-0 sm:pt-9 sm:px-8 sm:pb-0 md:p-8 md:py-6 lg:p-0 lg:pl-10 xl:pl-16 gap-6 sm:gap-8 md:gap-6 lg:gap-8 xl:gap-16">
           {/* Text */}
-          <div className="relative z-10 w-full md:w-[50%] lg:w-[48%] xl:w-[52%] max-w-[560px] text-left lg:py-10 xl:py-14 shrink-0">
+          <Reveal preset="slide-left" distance={20} className="relative z-10 w-full md:w-[50%] lg:w-[48%] xl:w-[52%] max-w-[560px] text-left lg:py-10 xl:py-14 shrink-0">
             <h2 className="text-[28px] sm:text-[34px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[54px] font-medium leading-[1.12] lg:leading-[105%] tracking-[-0.8px] text-[#121826]">
               {talk.title}
               <br />
@@ -382,10 +386,10 @@ export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
             <div className="mt-5 sm:mt-6 lg:mt-8 flex justify-start">
               <Button color="dark" text={talk.cta.label} href={talk.cta.url} />
             </div>
-          </div>
+          </Reveal>
 
           {/* Image */}
-          <div className="relative w-full md:w-[50%] lg:w-[52%] xl:w-[48%] max-w-[340px] sm:max-w-[420px] md:max-w-none shrink-0 mx-auto md:mx-0 aspect-[599/455] self-end">
+          <Reveal preset="slide-right" distance={20} className="relative w-full md:w-[50%] lg:w-[52%] xl:w-[48%] max-w-[340px] sm:max-w-[420px] md:max-w-none shrink-0 mx-auto md:mx-0 aspect-[599/455] self-end">
             {/* Left fade only when image sits beside the text */}
             <div className="hidden md:block absolute inset-y-0 left-0 w-20 lg:w-32 xl:w-48 bg-gradient-to-r from-[#F5F3F2] to-transparent z-10 pointer-events-none" />
             <Image
@@ -395,7 +399,7 @@ export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
               className="object-contain object-bottom md:object-right-bottom lg:object-contain"
               sizes="(max-width: 640px) 90vw, (max-width: 768px) 420px, (max-width: 1024px) 50vw, 599px"
             />
-          </div>
+          </Reveal>
         </div>
       </Container>
     </Section>
@@ -406,8 +410,8 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
   return (
     <Section theme="light" spacing="both" className="about-grid-section">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <div className="relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[440px] sm:min-h-[500px] lg:h-[630px] lg:min-h-[630px] flex items-end">
+        <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <StaggerItem index={0} className="card-hover relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[440px] sm:min-h-[500px] lg:h-[630px] lg:min-h-[630px] flex items-end">
             <Image
               src={aboutSection.image}
               alt="Team"
@@ -425,9 +429,9 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
                 {aboutSection.text}
               </p>
             </div>
-          </div>
+          </StaggerItem>
 
-          <div className="relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[380px] sm:min-h-[480px] lg:h-[630px] lg:min-h-[630px] flex flex-col justify-between p-6 sm:p-8 lg:p-12.5 lg:pr-17.5">
+          <StaggerItem index={1} className="card-hover relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[380px] sm:min-h-[480px] lg:h-[630px] lg:min-h-[630px] flex flex-col justify-between p-6 sm:p-8 lg:p-12.5 lg:pr-17.5">
             <Image
               src={aboutSection.bgImage}
               alt="Background"
@@ -447,8 +451,8 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
                 {aboutSection.missionText}
               </p>
             </div>
-          </div>
-        </div>
+          </StaggerItem>
+        </StaggerGroup>
       </Container>
     </Section>
   );
@@ -458,24 +462,28 @@ export function WhyTeam({ team }: { team: WhyContent["team"] }) {
   return (
     <Section theme="dark" spacing="both" className="team-section">
       <Container>
-        <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%]">
-          {team.title}
-        </h2>
+        <Reveal preset="slide-up" distance={20}>
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%]">
+            {team.title}
+          </h2>
+        </Reveal>
 
         <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10 mt-8 sm:mt-12 lg:mt-15">
-          {team.members.map((member) => (
-            <WhyTeamCard key={member.name} member={member} />
+          {team.members.map((member, mIdx) => (
+            <Reveal key={member.name} preset="slide-up" delay={mIdx * 100} distance={24} className="card-hover">
+              <WhyTeamCard member={member} />
+            </Reveal>
           ))}
         </div>
 
-        <div className="mt-8 sm:mt-10 flex justify-center">
+        <Reveal preset="slide-up" delay={200} className="mt-8 sm:mt-10 flex justify-center">
           <Button
             color="green"
             text={team.cta.label}
             href={team.cta.url}
             onDark={true}
           />
-        </div>
+        </Reveal>
       </Container>
     </Section>
   );

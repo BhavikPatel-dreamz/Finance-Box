@@ -10,6 +10,7 @@ import { FooterHero } from "@/components/ui/footer-hero";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Container from "../ui/container";
 import Section from "@/components/ui/section";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
 export function ClientsPage({ sections }: { sections: RawSection[] }) {
   const content = mergeClients(clientsContent, sections);
@@ -37,19 +38,29 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 
           <Container>
             <div className="pt-14 sm:pt-18 md:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 flex flex-col items-center text-center">
-              <Eyebrow variant="dark-no-dash" className="mb-6">
-                {content.hero.eyebrow}
-              </Eyebrow>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-medium leading-[1.12] tracking-tight text-white">
-                {content.hero.title}
-                <span className="font-extrabold italic"> {content.hero.highlight}</span>
-              </h1>
-              <p className="mt-4 sm:mt-6 lg:mt-8 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[1.65] text-white/80 max-w-2xl">
-                {content.hero.text}
-              </p>
+              <Reveal immediate preset="slide-up" delay={80} distance={18}>
+                <Eyebrow variant="dark-no-dash" className="mb-6">
+                  {content.hero.eyebrow}
+                </Eyebrow>
+              </Reveal>
+              <Reveal immediate preset="slide-up" delay={220} distance={32}>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-medium leading-[1.12] tracking-tight text-white">
+                  {content.hero.title}
+                  <span className="font-extrabold italic"> {content.hero.highlight}</span>
+                </h1>
+              </Reveal>
+              <Reveal immediate preset="slide-up" delay={380} distance={24}>
+                <p className="mt-4 sm:mt-6 lg:mt-8 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[1.65] text-white/80 max-w-2xl">
+                  {content.hero.text}
+                </p>
+              </Reveal>
             </div>
 
-            <div
+            <Reveal
+              immediate
+              preset="slide-up"
+              delay={520}
+              distance={28}
               className="w-full overflow-hidden rounded-[16px] lg:rounded-none border border-white/10 lg:border-x-0 backdrop-blur-[3px] bg-black/[0.03] mb-12 sm:mb-16 lg:mb-20"
               style={{ WebkitBackdropFilter: "blur(3px)" }}
             >
@@ -80,7 +91,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                   ))}
                 </div>
               </div>
-            </div>
+            </Reveal>
           </Container>
         </div>
       </div>
@@ -88,13 +99,17 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
       {/* Case Studies Section */}
       <Section theme="light" spacing="both" className="case-studies-section">
         <Container>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[40px] font-medium tracking-tight mb-8 sm:mb-10 lg:mb-12">
-            {content.caseStudies.title}
-          </h2>
+          <Reveal preset="slide-up" distance={20}>
+            <h2 className="text-center text-3xl sm:text-4xl lg:text-[40px] font-medium tracking-tight mb-8 sm:mb-10 lg:mb-12">
+              {content.caseStudies.title}
+            </h2>
+          </Reveal>
 
           <div className="flex flex-col gap-3">
             {content.caseStudies.items.map((study, index) => (
-              <CaseStudyCard key={study.id} study={study} reverse={index % 2 !== 0} />
+              <Reveal key={study.id} preset="slide-up" distance={24} delay={index * 80}>
+                <CaseStudyCard study={study} reverse={index % 2 !== 0} />
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -103,7 +118,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
       {/* Trusted Clients Logos Grid */}
       <Section theme="light" spacing="both" className="trusted-clients-logo">
         <Container>
-          <div className="text-center mb-12 sm:mb-14 lg:mb-16">
+          <Reveal preset="slide-up" distance={20} className="text-center mb-12 sm:mb-14 lg:mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.2] tracking-[-0.8px] text-[#121826]">
               {content.logosSection.title1}{" "}
               <span className="text-[#23C55E] font-bold italic">{content.logosSection.highlight1}</span>
@@ -111,17 +126,18 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
             <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-bold italic leading-[1.2] tracking-[-0.8px] text-[#121826]">
               {content.logosSection.title2}
             </h2>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-[#E5E7EB] border border-[#E5E7EB] rounded-[16px] sm:rounded-[20px] overflow-hidden">
+          <StaggerGroup staggerDelay={60} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-[#E5E7EB] border border-[#E5E7EB] rounded-[16px] sm:rounded-[20px] overflow-hidden">
             {content.logosSection.logos.map((logo, index) => {
               const isSpan2 = index === 0 || index === 3 || index === 18;
               const isLastMobile = index === content.logosSection.logos.length - 1;
 
               return (
-                <div
+                <StaggerItem
                   key={`${logo.name}-${index}`}
-                  className={`bg-white flex items-center justify-center p-4 sm:p-5 lg:p-6 min-h-[110px] sm:min-h-[130px] lg:min-h-[150px] ${
+                  index={index}
+                  className={`card-hover bg-white flex items-center justify-center p-4 sm:p-5 lg:p-6 min-h-[110px] sm:min-h-[130px] lg:min-h-[150px] ${
                     isSpan2 ? "lg:col-span-2" : "lg:col-span-1"
                   } ${
                     isLastMobile ? "col-span-2 sm:col-span-1" : "col-span-1"
@@ -136,10 +152,10 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                       className="w-[192px] max-w-full h-[67px] max-h-full object-contain"
                     />
                   </div>
-                </div>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
         </Container>
       </Section>
 
@@ -147,17 +163,19 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
       <Section theme="dark" spacing="both" className="reviews-section">
         <Container>
           <div className="flex flex-col justify-center">
-            <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-10 sm:mb-12 lg:mb-16 text-white">
-              {content.reviewsSection.title}
-            </h2>
+            <Reveal preset="slide-up" distance={20}>
+              <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-10 sm:mb-12 lg:mb-16 text-white">
+                {content.reviewsSection.title}
+              </h2>
+            </Reveal>
 
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-7.5">
-              <div className="relative w-full lg:w-[calc(50%-15px)] rounded-[10px] border border-white/12 overflow-hidden min-h-[380px] sm:min-h-[460px] lg:min-h-[740px]">
+              <Reveal preset="slide-left" distance={20} className="group card-hover relative w-full lg:w-[calc(50%-15px)] rounded-[10px] border border-white/12 overflow-hidden min-h-[380px] sm:min-h-[460px] lg:min-h-[740px]">
                 <Image
                   src={content.reviewsSection.mainReview.image}
                   alt={content.reviewsSection.mainReview.author}
                   fill
-                  className="object-cover"
+                  className="object-cover image-hover-zoom"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121826] via-[#121826]/40 to-transparent" />
 
@@ -170,13 +188,14 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                     <p className="text-[13px] sm:text-[14px] text-white/70 mt-0.5 sm:mt-1">{content.reviewsSection.mainReview.role}</p>
                   </div>
                 </div>
-              </div>
+              </Reveal>
 
-              <div className="w-full lg:w-[calc(50%-15px)] flex flex-col justify-between gap-4">
-                {content.reviewsSection.reviews.map((review) => (
-                  <div
+              <StaggerGroup staggerDelay={140} className="w-full lg:w-[calc(50%-15px)] flex flex-col justify-between gap-4">
+                {content.reviewsSection.reviews.map((review, rIdx) => (
+                  <StaggerItem
                     key={review.id}
-                    className="bg-[#182030] rounded-[16px] sm:rounded-[20px] p-5 sm:p-6 border border-white/5 flex flex-col justify-between min-h-0 sm:min-h-[162px]"
+                    index={rIdx}
+                    className="card-hover bg-[#182030] rounded-[16px] sm:rounded-[20px] p-5 sm:p-6 border border-white/5 flex flex-col justify-between min-h-0 sm:min-h-[162px]"
                   >
                     <p className="text-[15px] sm:text-[16px] lg:text-lg font-medium leading-[1.45] text-white">
                       {review.text}
@@ -198,9 +217,9 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                         <path d="M1.69412 16.9412H6.77647L10.1647 10.1647V0H0V10.1647H5.08235L1.69412 16.9412ZM15.2471 16.9412H20.3294L23.7176 10.1647V0H13.5529V10.1647H18.6353L15.2471 16.9412Z" fill="white" />
                       </svg>
                     </div>
-                  </div>
+                  </StaggerItem>
                 ))}
-              </div>
+              </StaggerGroup>
             </div>
           </div>
         </Container>
@@ -212,7 +231,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
           <div className="flex flex-col gap-12 sm:gap-16 lg:gap-24">
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
-              <div className="pr-0 lg:pr-12">
+              <Reveal preset="slide-left" distance={20} className="pr-0 lg:pr-12">
                 <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#16181d]">
                   Where FIAB Works
                 </h2>
@@ -229,27 +248,27 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                     </span>
                   ))}
                 </div>
-              </div>
-              <div className="relative w-full aspect-[4/3] rounded-[16px] sm:rounded-[24px] overflow-hidden shadow-sm">
+              </Reveal>
+              <Reveal preset="slide-right" distance={20} className="group card-hover relative w-full aspect-[4/3] rounded-[16px] sm:rounded-[24px] overflow-hidden shadow-sm">
                 <Image
                   src="/clients/FIABworks.png"
                   alt="FIAB Works"
                   fill
-                  className="object-cover"
+                  className="object-cover image-hover-zoom"
                 />
-              </div>
+              </Reveal>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
-              <div className="relative w-full aspect-[4/3] rounded-[16px] sm:rounded-[24px] overflow-hidden order-2 lg:order-1 shadow-sm">
+              <Reveal preset="slide-left" distance={20} className="group card-hover relative w-full aspect-[4/3] rounded-[16px] sm:rounded-[24px] overflow-hidden order-2 lg:order-1 shadow-sm">
                 <Image
                   src="/clients/IntroducingFIAB.png"
                   alt="Introducing FIAB"
                   fill
-                  className="object-cover"
+                  className="object-cover image-hover-zoom"
                 />
-              </div>
-              <div className="pr-0 lg:pl-12 order-1 lg:order-2">
+              </Reveal>
+              <Reveal preset="slide-right" distance={20} className="pr-0 lg:pl-12 order-1 lg:order-2">
                 <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#16181d]">
                   Introducing FIAB to a Portfolio Company?
                 </h2>
@@ -265,7 +284,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                     className="w-full sm:w-auto"
                   />
                 </div>
-              </div>
+              </Reveal>
             </div>
 
           </div>
@@ -290,7 +309,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 // Case Study Card Component
 function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: boolean }) {
   return (
-    <div className={`relative isolate flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} overflow-hidden rounded-[16px] bg-[#121826] min-h-[500px] lg:p-12.5`}>
+    <div className={`group card-hover relative isolate flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} overflow-hidden rounded-[16px] bg-[#121826] min-h-[500px] lg:p-12.5`}>
       {/* Green corner glow */}
       <div
         aria-hidden="true"
@@ -302,7 +321,7 @@ function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: bo
           src={study.image}
           alt={study.title}
           fill
-          className="object-cover"
+          className="object-cover image-hover-zoom"
         />
       </div>
 

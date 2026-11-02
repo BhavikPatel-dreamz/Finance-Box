@@ -11,6 +11,7 @@ import { Founders } from "@/components/home/founders";
 import { Leadership } from "@/components/home/leadership";
 import { FooterHero } from "@/components/ui/footer-hero";
 import { PartnersSection } from "@/components/ui/partners-section";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import Container from "../ui/container";
 import Section from "../ui/section";
 
@@ -61,40 +62,48 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
 
             {/* Left Column */}
             <div className="lg:col-span-7 pt-2 sm:pt-4 lg:pt-8 xl:pt-[73px]">
-              <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-5">
-                {hero.eyebrow}
-              </Eyebrow>
+              <Reveal immediate preset="slide-up" delay={80} distance={18}>
+                <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-5">
+                  {hero.eyebrow}
+                </Eyebrow>
+              </Reveal>
 
-              <h1 className="text-[34px] sm:text-[50px] md:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
-                {isDefaultTitle ? (
-                  <>
-                    <span className="font-light text-white block">Your Finance</span>
-                    <span className="block">
-                      <span className="font-light text-white">Function, </span>
-                      <span className="font-bold text-[#23C55E]">Built</span>
-                    </span>
-                    <span className="font-bold text-[#23C55E] block">and Run For You</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="font-light">{hero.title}</span>{" "}
-                    <span className="font-bold text-[#23C55E]">{hero.highlight}</span>
-                  </>
-                )}
-              </h1>
+              <Reveal immediate preset="slide-up" delay={220} distance={32}>
+                <h1 className="text-[34px] sm:text-[50px] md:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
+                  {isDefaultTitle ? (
+                    <>
+                      <span className="font-light text-white block">Your Finance</span>
+                      <span className="block">
+                        <span className="font-light text-white">Function, </span>
+                        <span className="font-bold text-[#23C55E]">Built</span>
+                      </span>
+                      <span className="font-bold text-[#23C55E] block">and Run For You</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-light">{hero.title}</span>{" "}
+                      <span className="font-bold text-[#23C55E]">{hero.highlight}</span>
+                    </>
+                  )}
+                </h1>
+              </Reveal>
 
-              <p className="mt-4 sm:mt-6 max-w-[550px] text-[15px] sm:text-[16px] xl:text-[18px] font-light leading-[160%] text-white/80">
-                {hero.text}
-              </p>
+              <Reveal immediate preset="slide-up" delay={380} distance={24}>
+                <p className="mt-4 sm:mt-6 max-w-[550px] text-[15px] sm:text-[16px] xl:text-[18px] font-light leading-[160%] text-white/80">
+                  {hero.text}
+                </p>
+              </Reveal>
 
-              <div className="mt-6 sm:mt-7">
-                <GreenButton
-                  label={hero.primary.label}
-                  href={hero.primary.url}
-                  color="white"
-                  className="hover:!bg-[#23C55E] hover:!text-[#121826]"
-                />
-              </div>
+              <Reveal immediate preset="slide-up" delay={540} distance={20}>
+                <div className="mt-6 sm:mt-7">
+                  <GreenButton
+                    label={hero.primary.label}
+                    href={hero.primary.url}
+                    color="white"
+                    className="hover:!bg-[#23C55E] hover:!text-[#121826]"
+                  />
+                </div>
+              </Reveal>
             </div>
 
             {/* Right Column */}
@@ -103,7 +112,13 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
               <div className="relative w-full max-w-[420px] lg:max-w-[440px] xl:max-w-[519px]">
 
                 {/* Month-End Close Card */}
-                <div className="absolute -top-[95px] sm:-top-[110px] lg:-top-[125px] xl:-top-[143px] left-0 sm:-left-[20px] lg:-left-[50px] xl:-left-[118px] w-[130px] min-[360px]:w-[140px] sm:w-[170px] lg:w-[175px] xl:w-[196px] h-auto min-h-[115px] sm:h-[135px] lg:h-[140px] xl:h-[152px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between">
+                <Reveal
+                  immediate
+                  preset="slide-up"
+                  delay={460}
+                  distance={28}
+                  className="card-hover absolute -top-[95px] sm:-top-[110px] lg:-top-[125px] xl:-top-[143px] left-0 sm:-left-[20px] lg:-left-[50px] xl:-left-[118px] w-[130px] min-[360px]:w-[140px] sm:w-[170px] lg:w-[175px] xl:w-[196px] h-auto min-h-[115px] sm:h-[135px] lg:h-[140px] xl:h-[152px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between"
+                >
                   <div>
                     <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-mono text-white uppercase tracking-[0.86px] leading-none">
                       {hero.closeLabel}
@@ -122,10 +137,16 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
                       ↓ {hero.closeTrend}
                     </p>
                   </div>
-                </div>
+                </Reveal>
 
                 {/* Runway Card */}
-                <div className="absolute -top-[115px] sm:-top-[140px] lg:-top-[165px] xl:-top-[195px] right-0 lg:right-[20px] xl:right-[87px] w-[138px] min-[360px]:w-[150px] sm:w-[180px] lg:w-[175px] xl:w-[194px] h-auto min-h-[125px] sm:h-[140px] lg:h-[138px] xl:h-[147px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between">
+                <Reveal
+                  immediate
+                  preset="slide-up"
+                  delay={620}
+                  distance={28}
+                  className="card-hover absolute -top-[115px] sm:-top-[140px] lg:-top-[165px] xl:-top-[195px] right-0 lg:right-[20px] xl:right-[87px] w-[138px] min-[360px]:w-[150px] sm:w-[180px] lg:w-[175px] xl:w-[194px] h-auto min-h-[125px] sm:h-[140px] lg:h-[138px] xl:h-[147px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between"
+                >
                   <div>
                     <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-mono text-white uppercase tracking-[0.86px] leading-none mb-2 sm:mb-3">
                       {hero.runwayLabel}
@@ -142,10 +163,10 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
                   <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-normal text-white leading-none">
                     {hero.runwayTrend}
                   </p>
-                </div>
+                </Reveal>
 
                 {/* Chart Card */}
-                <div className="relative w-full h-[200px] sm:h-[250px] md:h-[270px] xl:h-[293px]">
+                <Reveal immediate preset="scale-up" delay={300} duration={900} className="relative w-full h-[200px] sm:h-[250px] md:h-[270px] xl:h-[293px]">
                   <Image
                     src="/home/chart.png"
                     alt={hero.chartTitle}
@@ -153,18 +174,18 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
                     priority
                     className="object-contain"
                   />
-                </div>
+                </Reveal>
               </div>
 
               {/* Book a Call Button */}
-              <div className="mt-6 sm:mt-8 lg:mt-6 xl:mt-[38px] flex justify-center lg:justify-end w-full max-w-[420px] lg:max-w-[440px] xl:max-w-[519px] lg:pr-0 xl:pr-[7px]">
+              <Reveal immediate preset="slide-up" delay={740} distance={20} className="mt-6 sm:mt-8 lg:mt-6 xl:mt-[38px] flex justify-center lg:justify-end w-full max-w-[420px] lg:max-w-[440px] xl:max-w-[519px] lg:pr-0 xl:pr-[7px]">
                 <GreenButton
                   label={hero.call.label}
                   href={hero.call.url}
                   color="green"
                   onDark={true}
                 />
-              </div>
+              </Reveal>
 
             </div>
           </div>
@@ -187,43 +208,45 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
     <Section theme="dark" spacing="both" className="differance-section">
       <Container>
 
-        <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16">
-          {difference.title.split("FIAB")[0]}
-          <span className="font-black italic">FIAB</span>
-          {difference.title.split("FIAB")[1]}
-        </h2>
+        <Reveal preset="slide-up" distance={24}>
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16">
+            {difference.title.split("FIAB")[0]}
+            <span className="font-black italic">FIAB</span>
+            {difference.title.split("FIAB")[1]}
+          </h2>
+        </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[9px] overflow-hidden">
+        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[9px] overflow-hidden">
 
-          <div className="bg-white text-[#121826] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+          <StaggerItem index={0} className="card-hover bg-white text-[#121826] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
             <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6">
               <img src={icons[0]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain" />
             </div>
             <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{difference.cards[0].title}</h3>
             <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-[#121826]/70">{difference.cards[0].text}</p>
-          </div>
+          </StaggerItem>
 
           {difference.cards.slice(1, 3).map((card, idx) => (
-            <div key={idx} className="bg-white/1 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+            <StaggerItem key={idx} index={idx + 1} className="card-hover bg-white/1 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
               <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6">
                 <img src={icons[idx + 1]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain" />
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70">{card.text}</p>
-            </div>
+            </StaggerItem>
           ))}
 
           {difference.cards.slice(3, 5).map((card, idx) => (
-            <div key={idx} className="bg-white/1 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
+            <StaggerItem key={idx} index={idx + 3} className="card-hover bg-white/1 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
               <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6">
                 <img src={icons[idx + 3]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain" />
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70">{card.text}</p>
-            </div>
+            </StaggerItem>
           ))}
 
-          <div className="bg-[#23C55E] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[383px] md:border-t border-white/10 text-white">
+          <StaggerItem index={5} className="card-hover bg-[#23C55E] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[383px] md:border-t border-white/10 text-white">
             <p className="text-[14px] sm:text-[16px] md:text-[20px] font-mono font-medium tracking-wide uppercase">
               {difference.statEyebrow}
             </p>
@@ -231,9 +254,9 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
               <p className="text-[64px] sm:text-[84px] md:text-[120px] font-normal leading-tight tracking-[-2px]">{difference.statValue}</p>
               <p className="text-[16px] sm:text-[18px] md:text-[20px] font-medium leading-[1.1] mt-1 sm:mt-2">{difference.statLabel}</p>
             </div>
-          </div>
+          </StaggerItem>
 
-        </div>
+        </StaggerGroup>
       </Container>
     </Section>
   );
@@ -244,26 +267,28 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
     <Section theme="dark" spacing="bottom" className="growth-section">
       <Container>
 
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-12">
-          <div>
-            <Eyebrow variant="green" className="mb-4 sm:mb-6">
-              {growth.eyebrow}
-            </Eyebrow>
-            <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
-              {growth.title}
-            </h2>
+        <Reveal preset="slide-up" distance={24}>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-12">
+            <div>
+              <Eyebrow variant="green" className="mb-4 sm:mb-6">
+                {growth.eyebrow}
+              </Eyebrow>
+              <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+                {growth.title}
+              </h2>
+            </div>
+            <p className="max-w-[363px] text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/70 lg:pb-2">
+              {growth.text}
+            </p>
           </div>
-          <p className="max-w-[363px] text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/70 lg:pb-2">
-            {growth.text}
-          </p>
-        </div>
+        </Reveal>
 
-        <div className="relative w-full h-[360px] sm:h-[440px] lg:h-[480px] xl:h-[551px] rounded-[10px] overflow-hidden mb-6 sm:mb-8">
+        <Reveal preset="scale-up" distance={0} className="group relative w-full h-[360px] sm:h-[440px] lg:h-[480px] xl:h-[551px] rounded-[10px] overflow-hidden mb-6 sm:mb-8">
           <Image
             src="/home/build-together.png"
             alt="Clarity is Built Together"
             fill
-            className="object-cover"
+            className="object-cover image-hover-zoom"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/85 from-[11.52%] via-[#121826]/30 via-[66.82%] to-[#121826]/50 to-[112.07%]" />
 
@@ -281,11 +306,11 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
               ))}
             </ol>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {growth.cards.map((card, idx) => (
-            <div key={idx} className="rounded-[10px] p-6 sm:p-7 md:p-8 border border-[#FFFFFF24] flex flex-col min-h-0 md:min-h-[344px]">
+            <StaggerItem key={idx} index={idx} className="card-hover rounded-[10px] p-6 sm:p-7 md:p-8 border border-[#FFFFFF24] flex flex-col min-h-0 md:min-h-[344px]">
               <h3 className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold leading-[1.15] mb-3 sm:mb-5">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[150%] text-white/60 mb-5 sm:mb-7">{card.text}</p>
 
@@ -297,11 +322,11 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
 
-        <div className="mt-8 sm:mt-10 flex justify-center">
+        <Reveal preset="slide-up" delay={150} className="mt-8 sm:mt-10 flex justify-center">
           <GreenButton
             label={growth.cta.label}
             href={growth.cta.url}
@@ -309,7 +334,7 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
             textColor="#07110d"
             onDark={true}
           />
-        </div>
+        </Reveal>
 
       </Container>
     </Section>
@@ -324,12 +349,12 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
       <Container>
         <div className="flex flex-col lg:flex-row rounded-[10px] overflow-hidden border border-gray-200">
 
-          <div className="relative w-full lg:w-1/2 xl:w-[640px] min-h-[420px] sm:min-h-[500px] lg:min-h-[620px] xl:min-h-[740px] shrink-0 overflow-hidden">
+          <Reveal preset="slide-left" distance={20} className="group relative w-full lg:w-1/2 xl:w-[640px] min-h-[420px] sm:min-h-[500px] lg:min-h-[620px] xl:min-h-[740px] shrink-0 overflow-hidden">
             <Image
               src="/home/founder-ceo.png"
               alt={decisions.name}
               fill
-              className="object-cover"
+              className="object-cover image-hover-zoom"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0C] via-[#0B0D0C]/50 to-transparent" />
 
@@ -346,9 +371,9 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
                 <p className="text-[13px] sm:text-[14px] font-normal text-[#A8AFA9] mt-0.5 sm:mt-1">{decisions.role}</p>
               </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="w-full lg:w-1/2 xl:w-[640px] bg-[#EDE9E6] p-6 sm:p-10 lg:p-8 xl:p-16 flex flex-col justify-center">
+          <Reveal preset="slide-right" distance={20} className="w-full lg:w-1/2 xl:w-[640px] bg-[#EDE9E6] p-6 sm:p-10 lg:p-8 xl:p-16 flex flex-col justify-center">
             <Eyebrow variant="light" className="mb-4 sm:mb-6">
               {decisions.eyebrow}
             </Eyebrow>
@@ -360,9 +385,9 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
               {decisions.text}
             </p>
 
-            <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8 xl:mb-10">
+            <StaggerGroup staggerDelay={130} className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8 xl:mb-10">
               {decisions.cards.map((card, idx) => (
-                <div key={idx} className="bg-white rounded-[10px] p-3.5 sm:pl-4 sm:pr-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-4">
+                <StaggerItem key={idx} index={idx} className="card-hover bg-white rounded-[10px] p-3.5 sm:pl-4 sm:pr-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-4">
                   <div className="flex flex-col md:flex-row md:items-center gap-1.5 md:gap-4 xl:gap-6 flex-1">
                     <p className="text-[22px] sm:text-[26px] lg:text-[26px] xl:text-[30px] font-medium leading-[1.1] tracking-[-0.8px] text-[#23C55E] md:w-[90px] xl:w-[100px] shrink-0">
                       {card.title}
@@ -376,9 +401,9 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
                       <path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerGroup>
 
             <div>
               <GreenButton
@@ -388,14 +413,13 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
                 textColor="#ffffff"
               />
             </div>
-          </div>
+          </Reveal>
 
         </div>
       </Container>
     </Section>
   );
 }
-
 
 // --- NAYA SECTION: Pressure (Reusable Footer Hero) ---
 function Pressure({ pressure }: { pressure: HomeContent["pressure"] }) {

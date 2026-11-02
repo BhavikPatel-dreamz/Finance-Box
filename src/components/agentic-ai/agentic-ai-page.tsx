@@ -3,7 +3,7 @@ import { HomeHeader } from "@/components/home/home-header";
 import { HomeFooter } from "@/components/home/home-page";
 import { homeContent } from "@/content/home";
 import { mergeAgenticAi } from "./merge";
-import { agenticAiContent, type AgenticAiContent } from "@/content/agentic-ai";
+import { agenticAiContent } from "@/content/agentic-ai";
 import type { RawSection } from "@/lib/wordpress/content";
 import { GreenButton } from "@/components/ui/green-button";
 import { Accordion } from "../ui/accordion";
@@ -12,6 +12,7 @@ import { PartnersSection } from "@/components/ui/partners-section";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Container from "../ui/container";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
 export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
   const content = mergeAgenticAi(agenticAiContent, sections);
@@ -33,7 +34,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
             <div className="flex-1 flex items-center pb-12">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
 
-                <div>
+                <Reveal immediate preset="slide-up" delay={80} distance={24}>
                   <Eyebrow variant="dark" className="mb-6">
                     {content.hero.eyebrow}
                   </Eyebrow>
@@ -44,24 +45,26 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                   <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-md">
                     {content.hero.text}
                   </p>
-                </div>
+                </Reveal>
 
                 <div className="max-w-md lg:justify-self-end">
-                  <ul className="space-y-6 mb-10">
+                  <StaggerGroup immediate staggerDelay={120} className="space-y-6 mb-10">
                     {content.hero.bullets.map((bullet, idx) => (
-                      <li key={idx} className="flex items-start gap-4">
+                      <StaggerItem key={idx} index={idx} className="flex items-start gap-4">
                         <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
                         <span className="text-[16px] font-light leading-[160%] text-white/80">{bullet}</span>
-                      </li>
+                      </StaggerItem>
                     ))}
-                  </ul>
+                  </StaggerGroup>
 
                   {/* Updated Button Size */}
-                  <GreenButton
-                    label={content.hero.cta.label}
-                    href={content.hero.cta.url}
-                    bgColor="#ffffff"
-                  />
+                  <Reveal immediate preset="slide-up" delay={480} distance={20}>
+                    <GreenButton
+                      label={content.hero.cta.label}
+                      href={content.hero.cta.url}
+                      bgColor="#ffffff"
+                    />
+                  </Reveal>
                 </div>
 
               </div>
@@ -74,37 +77,39 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       <Section theme="light" spacing="both">
         <Container>
 
-          <div className="flex flex-col lg:flex-row justify-between gap-10 mb-16">
-            <div className="max-w-xl">
-              <Eyebrow variant="light" className="mb-6">
-                {content.whatIs.eyebrow}
-              </Eyebrow>
-              <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
-                {content.whatIs.title}
-                <span className="font-bold italic">{content.whatIs.highlight}</span>
-              </h2>
-              <p className="text-[16px] font-light leading-[160%] text-[#0B0D0C]">
-                {content.whatIs.text1}
-              </p>
+          <Reveal preset="slide-up" distance={20}>
+            <div className="flex flex-col lg:flex-row justify-between gap-10 mb-16">
+              <div className="max-w-xl">
+                <Eyebrow variant="light" className="mb-6">
+                  {content.whatIs.eyebrow}
+                </Eyebrow>
+                <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
+                  {content.whatIs.title}
+                  <span className="font-bold italic">{content.whatIs.highlight}</span>
+                </h2>
+                <p className="text-[16px] font-light leading-[160%] text-[#0B0D0C]">
+                  {content.whatIs.text1}
+                </p>
+              </div>
+              <div className="max-w-md lg:pt-12">
+                <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70">
+                  {content.whatIs.text2}
+                </p>
+              </div>
             </div>
-            <div className="max-w-md lg:pt-12">
-              <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70">
-                {content.whatIs.text2}
-              </p>
-            </div>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {content.whatIs.features.map((feature, idx) => (
-              <div key={idx} className="flex flex-col">
-                <div className="relative w-full h-[420px] overflow-hidden mb-6">
-                  <Image src={feature.image} alt={feature.title} fill className="object-cover" />
+              <StaggerItem key={idx} index={idx} className="group card-hover flex flex-col">
+                <div className="relative w-full h-[420px] overflow-hidden mb-6 rounded-[8px]">
+                  <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />
                 </div>
                 <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
                 <p className="text-[16px] font-normal leading-[140%] text-[#121826]/80">{feature.text}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
 
         </Container>
       </Section>
@@ -114,19 +119,22 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
         <Container>
           <div className="bg-[#EDE9E6]/50 rounded-[10px] px-6 py-10 md:p-12 lg:p-20 text-center">
 
-            <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-4">
-              {content.buildYourOwn.title}
-              <span className="text-[#23C55E] font-black italic">{content.buildYourOwn.highlight}</span>
-            </h2>
-            <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70 lg:max-w-[706px] mx-auto mb-10">
-              {content.buildYourOwn.text}
-            </p>
+            <Reveal preset="slide-up" distance={20}>
+              <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-4">
+                {content.buildYourOwn.title}
+                <span className="text-[#23C55E] font-black italic">{content.buildYourOwn.highlight}</span>
+              </h2>
+              <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70 lg:max-w-[706px] mx-auto mb-10">
+                {content.buildYourOwn.text}
+              </p>
+            </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-left rounded-[10px] overflow-hidden divide-y md:divide-x divide-[#121826]/8">
+            <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-left rounded-[10px] overflow-hidden divide-y md:divide-x divide-[#121826]/8">
               {content.buildYourOwn.agents.map((agent, idx) => (
-                <div
+                <StaggerItem
                   key={idx}
-                  className="bg-white p-8 flex flex-col min-h-[255px]"
+                  index={idx}
+                  className="card-hover bg-white p-8 flex flex-col min-h-[255px]"
                 >
                   <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-[#1219280D] bg-white mb-6">
                     <div className="relative w-6 h-6">
@@ -135,9 +143,9 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                   </div>
                   <h3 className="text-[18px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
                   <p className="text-[14px] font-normal leading-[160%] text-[#121826]/70">{agent.text}</p>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerGroup>
 
           </div>
         </Container>
@@ -147,11 +155,13 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       <Section theme="dark" spacing="both" className="people-ops-section">
         <Container>
 
-          <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-12.5 mb-10">
-            {content.peopleOps.title}
-          </h2>
+          <Reveal preset="slide-up" distance={20}>
+            <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-12.5 mb-10">
+              {content.peopleOps.title}
+            </h2>
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 bg-[#191f2c] rounded-[10px] border border-white/5 overflow-hidden">
+          <StaggerGroup staggerDelay={120} className="grid grid-cols-1 md:grid-cols-3 bg-[#191f2c] rounded-[10px] border border-white/5 overflow-hidden">
             {content.peopleOps.agents.map((agent, idx) => {
               const total = content.peopleOps.agents.length;
               const totalRows = Math.ceil(total / 3);
@@ -171,9 +181,10 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                 : "border-r-0";
 
               return (
-                <div
+                <StaggerItem
                   key={idx}
-                  className={`p-10 flex flex-col min-h-[286px] border-white/5 ${borderRightClass} ${borderBottomClass}`}
+                  index={idx}
+                  className={`card-hover p-10 flex flex-col min-h-[286px] border-white/5 ${borderRightClass} ${borderBottomClass}`}
                 >
                   <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 mb-6">
                     <div className="relative w-6 h-6">
@@ -182,10 +193,10 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                   </div>
                   <h3 className="text-[22px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
                   <p className="text-[16px] font-normal leading-[150%] text-white/70">{agent.text}</p>
-                </div>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
 
         </Container>
       </Section>
@@ -194,18 +205,20 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       <Section theme="light" spacing="top">
         <Container>
 
-          <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-16 mb-8">
-            {content.opsCompliance.title}
-          </h2>
+          <Reveal preset="slide-up" distance={20}>
+            <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-16 mb-8">
+              {content.opsCompliance.title}
+            </h2>
+          </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {content.opsCompliance.cards.map((card, idx) => (
-              <div key={idx} className="relative rounded-[10px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
+              <StaggerItem key={idx} index={idx} className="group card-hover relative rounded-[10px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
                 <Image
                   src={card.image}
                   alt={card.title}
                   fill
-                  className="object-cover"
+                  className="object-cover image-hover-zoom"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/90 via-[#121826]/20 to-transparent" />
 
@@ -217,9 +230,9 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                     {card.text}
                   </p>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
 
         </Container>
       </Section>
@@ -235,20 +248,20 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       <Section theme="light" spacing="bottom" className="proven-architecture">
         <Container>
 
-          <div className="text-center md:mb-16 mb-10">
+          <Reveal preset="slide-up" distance={20} className="text-center md:mb-16 mb-10">
             <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
               {content.provenArchitecture.title}
             </h2>
             <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] text-[#23C55E]">
               {content.provenArchitecture.highlight}
             </h2>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3.5">
+          <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-3 gap-3.5">
             {content.provenArchitecture.cards.map((card, idx) => (
-              <div key={idx} className="bg-[#EDE9E680] rounded-[10px] p-6 flex flex-col">
-                <div className="relative w-full h-[320px] rounded-[10px] overflow-hidden mb-6">
-                  <Image src={card.image} alt={card.title} fill className="object-cover" />
+              <StaggerItem key={idx} index={idx} className="card-hover bg-[#EDE9E680] rounded-[10px] p-6 flex flex-col">
+                <div className="group relative w-full h-[320px] rounded-[10px] overflow-hidden mb-6">
+                  <Image src={card.image} alt={card.title} fill className="object-cover image-hover-zoom" />
                 </div>
 
                 <div className="mb-6">
@@ -267,9 +280,9 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
 
         </Container>
       </Section>
@@ -279,7 +292,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-            <div className="max-w-md lg:pt-4">
+            <Reveal preset="slide-left" distance={20} className="max-w-md lg:pt-4">
               <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
                 {content.waitlist.title}
                 <span className="font-black italic"> {content.waitlist.highlight}</span>
@@ -287,29 +300,29 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
               <p className="text-[16px] font-light leading-[160%] text-white/70">
                 {content.waitlist.text}
               </p>
-            </div>
+            </Reveal>
 
-            <div className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
+            <Reveal preset="slide-right" distance={20} className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
               <form className="flex flex-col gap-4">
                 <input
                   type="text"
                   placeholder="Name"
-                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
+                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
                 />
                 <input
                   type="email"
                   placeholder="Work E-mail"
-                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
+                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
                 />
                 <input
                   type="text"
                   placeholder="Company"
-                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
+                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
                 />
                 <textarea
                   placeholder="Write your message..."
                   rows={5}
-                  className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] resize-none"
+                  className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
                 />
                 <div className="mt-2">
                   <GreenButton
@@ -320,7 +333,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                   />
                 </div>
               </form>
-            </div>
+            </Reveal>
 
           </div>
         </Container>
@@ -330,9 +343,11 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       <Section theme="faq" spacing="both" className="faq-section">
         <Container>
           <div className="mx-auto w-full max-w-[880px]">
-            <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
-              {content.faq.title}
-            </h2>
+            <Reveal preset="slide-up" distance={20}>
+              <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
+                {content.faq.title}
+              </h2>
+            </Reveal>
 
             <Accordion items={content.faq.items} />
           </div>

@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { GreenButton } from "./green-button";
 import Container from "./container";
 import Section from "./section";
+import { Reveal } from "@/components/motion/reveal";
 
 export type FooterHeroVariant =
   | "home"
@@ -143,71 +144,73 @@ export function FooterHero({
   return (
     <Section theme="light" spacing="both" className={twMerge("footer-cta-section", className)}>
       <Container>
-        {/* Container exactly 1280x342 on desktop, flexible height on mobile */}
-        <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-15 min-h-[320px] w-full max-w-[1280px] mx-auto">
+        <Reveal preset="slide-up" distance={24}>
+          {/* Container exactly 1280x342 on desktop, flexible height on mobile */}
+          <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-15 min-h-[320px] w-full max-w-[1280px] mx-auto">
 
-          {bgImage && (
-            <div className="absolute inset-0 z-0">
-              <Image
-                src={bgImage}
-                alt="Background"
-                fill
-                className="object-cover opacity-100" // object-cover se image container ke andar crop hogi, stretch nahi
-                priority
-              />
-            </div>
-          )}
+            {bgImage && (
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src={bgImage}
+                  alt="Background"
+                  fill
+                  className="object-cover opacity-100" // object-cover se image container ke andar crop hogi, stretch nahi
+                  priority
+                />
+              </div>
+            )}
 
-          <div className="relative z-10 flex flex-col items-center">
-            <h2
-              className={twMerge(
-                "text-[26px] sm:text-[36px] md:text-[50px] leading-[1.15] font-medium tracking-[-0.8px] text-white",
-                activeTitleMaxWidth,
-                titleClassName
-              )}
-            >
-              <span>{title}</span>
-              {highlight && (
-                <>
-                  {isTwoLine ? (
-                    <br className="hidden md:inline" />
-                  ) : null}
-                  {" "}
-                  <span
-                    className={twMerge(
-                      isItalic ? "font-extrabold italic" : "font-medium",
-                      highlightClassName
-                    )}
-                  >
-                    {highlight}
-                  </span>
-                </>
-              )}
-            </h2>
-
-            {text ? (
-              <p
+            <div className="relative flex flex-col items-center">
+              <h2
                 className={twMerge(
-                  "mx-auto mt-4 sm:mt-6 text-[14px] sm:text-[16px] font-normal leading-[160%] text-white/70",
-                  activeTextMaxWidth,
-                  textClassName
+                  "text-[26px] sm:text-[36px] md:text-[50px] leading-[1.15] font-medium tracking-[-0.8px] text-white",
+                  activeTitleMaxWidth,
+                  titleClassName
                 )}
               >
-                {text}
-              </p>
-            ) : null}
+                <span>{title}</span>
+                {highlight && (
+                  <>
+                    {isTwoLine ? (
+                      <br className="hidden md:inline" />
+                    ) : null}
+                    {" "}
+                    <span
+                      className={twMerge(
+                        isItalic ? "font-extrabold italic" : "font-medium",
+                        highlightClassName
+                      )}
+                    >
+                      {highlight}
+                    </span>
+                  </>
+                )}
+              </h2>
 
-            <div className="mt-6 sm:mt-8 lg:mt-10 flex justify-center">
-              <GreenButton
-                label={buttonLabel}
-                href={buttonUrl}
-                onDark={true}
-                className="hover:!bg-white hover:!text-[#121826]"
-              />
+              {text ? (
+                <p
+                  className={twMerge(
+                    "mx-auto mt-4 sm:mt-6 text-[14px] sm:text-[16px] font-normal leading-[160%] text-white/70",
+                    activeTextMaxWidth,
+                    textClassName
+                  )}
+                >
+                  {text}
+                </p>
+              ) : null}
+
+              <div className="mt-6 sm:mt-8 lg:mt-10 flex justify-center">
+                <GreenButton
+                  label={buttonLabel}
+                  href={buttonUrl}
+                  onDark={true}
+                  className="hover:!bg-white hover:!text-[#121826]"
+                />
+              </div>
             </div>
-          </div>
 
-        </div>
+          </div>
+        </Reveal>
       </Container>
     </Section>
   );

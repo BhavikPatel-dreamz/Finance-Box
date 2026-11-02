@@ -257,7 +257,7 @@ export function HomeHeader({
 
       {/* Mobile / Tablet Dropdown Menu */}
       {menuOpen ? (
-        <div className="relative border-t border-white/10 bg-[#07110d]/98 backdrop-blur-xl shadow-2xl lg:hidden">
+        <div className="mobile-menu-enter relative border-t border-white/10 bg-[#07110d]/98 backdrop-blur-xl shadow-2xl lg:hidden">
           <Container size="header" className="px-6 md:py-5 max-h-[calc(100vh-80px)] overflow-y-auto">
             <nav aria-label="Mobile" className="flex flex-col divide-y divide-white/[0.08] pb-6">
               {header.links.map((link) => (
@@ -349,7 +349,7 @@ function DesktopItem({
         </button>
       </span>
       {open ? (
-        <div className="absolute top-full left-1/2 z-50 w-60 -translate-x-1/2 pt-2.5">
+        <div className="dropdown-enter absolute top-full left-1/2 z-50 w-60 -translate-x-1/2 pt-2.5">
           <ul className="rounded-xl border border-white/10 bg-[#121826]/98 backdrop-blur-xl p-1.5 shadow-2xl space-y-0.5">
             {link.children.map((child) => {
               const isChildActive = isUrlActive(pathname, child.url, { currentHash });

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Container from "@/components/ui/container";
+import { Reveal } from "@/components/motion/reveal";
 
 export type PartnerLogoItem = {
   name: string;
@@ -156,11 +157,13 @@ export function PartnersSection({
     >
       {title && (
         <Container className={containerClassName}>
-          <h2
-            className={`text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12 ${titleClassName}`.trim()}
-          >
-            {renderTitle(title, highlight)}
-          </h2>
+          <Reveal preset="slide-up" distance={20}>
+            <h2
+              className={`text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12 ${titleClassName}`.trim()}
+            >
+              {renderTitle(title, highlight)}
+            </h2>
+          </Reveal>
         </Container>
       )}
 
