@@ -189,14 +189,14 @@ export function PeopleOperationsPage({ sections }: { sections: RawSection[] }) {
         </Container>
       </Section>
 
-      {/* 5. Reusable Footer Hero */}
+      {/* 👇 5. Reusable Footer Hero — DYNAMIC from WordPress */}
       <FooterHero
         variant="people-operations"
-        title="Need to strengthen"
-        highlight="your people function?"
-        text="Whether you're building your HR function, scaling your team or looking to streamline existing processes, let's talk about where you need support."
-        buttonLabel="Book a Discovery Call"
-        buttonUrl="/contact-us"
+        title={content.pressure.title}
+        highlight={content.pressure.emphasis}
+        text={content.pressure.text}
+        buttonLabel={content.pressure.cta.label}
+        buttonUrl={content.pressure.cta.url}
       />
 
       <HomeFooter footer={siteFooter(homeContent.footer)} />
