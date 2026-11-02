@@ -16,7 +16,34 @@ import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
 export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
   const content = mergeAgenticAi(agenticAiContent, sections);
+  // Needs a parent with `group relative isolate overflow-hidden`. Same motion as the button circle.
+  function CardFill({ className = "bg-[#23C55E]/[0.13]" }: { className?: string }) {
+    return (
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute bottom-0 left-0 -z-10 aspect-square w-full rounded-full [transform:translate(-50%,50%)_scale(0)] transition-transform duration-[900ms] ease-in-out group-hover:[transform:translate(-50%,50%)_scale(3.5)] motion-reduce:transition-none ${className}`}
+      />
+    );
+  }
 
+  const ICON_CHIP =
+    "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-[#23C55E] motion-reduce:transition-none";
+  const ICON_IMG =
+    "relative w-6 h-6 transition-[filter] duration-500 group-hover:brightness-0 group-hover:invert";
+
+  // Needs a parent with `group relative isolate overflow-hidden`
+  function RiseGlow() {
+    return (
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 translate-y-[20%] bg-[linear-gradient(to_top,rgba(35,197,94,0.26),transparent_65%)] opacity-0 transition-[opacity,transform] duration-[600ms] ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
+      />
+    );
+  }
+
+  const ICON_CHIP_LIFT =
+    "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-[#23C55E] motion-reduce:transition-none";
+ 
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
 
@@ -101,12 +128,14 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
 
           <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {content.whatIs.features.map((feature, idx) => (
-              <StaggerItem key={idx} index={idx} className="group card-hover flex flex-col">
-                <div className="relative w-full h-[420px] overflow-hidden mb-6 rounded-[8px]">
-                  <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />
+              <StaggerItem key={idx} index={idx} className="group flex flex-col">
+                <div>
+                  <div className="relative w-full h-[420px] overflow-hidden mb-6 rounded-[8px]">
+                    <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />
+                  </div>
+                  <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
+                  <p className="text-[16px] font-normal leading-[140%] text-[#121826]/80">{feature.text}</p>
                 </div>
-                <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
-                <p className="text-[16px] font-normal leading-[140%] text-[#121826]/80">{feature.text}</p>
               </StaggerItem>
             ))}
           </StaggerGroup>
@@ -134,10 +163,11 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                 <StaggerItem
                   key={idx}
                   index={idx}
-                  className="card-hover bg-white p-8 flex flex-col min-h-[255px]"
+                  className="group relative isolate overflow-hidden bg-white p-8 flex flex-col min-h-[255px]"
                 >
-                  <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-[#1219280D] bg-white mb-6">
-                    <div className="relative w-6 h-6">
+                  <CardFill />
+                  <div className={`${ICON_CHIP} border border-[#1219280D] bg-white mb-6`}>
+                    <div className={ICON_IMG}>
                       <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
                     </div>
                   </div>
@@ -173,8 +203,8 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
               const borderBottomClass = !isLastRow
                 ? "border-b"
                 : !isLastItem
-                ? "border-b md:border-b-0"
-                : "border-b-0";
+                  ? "border-b md:border-b-0"
+                  : "border-b-0";
 
               const borderRightClass = !isLastCol
                 ? "border-r-0 md:border-r"
@@ -184,15 +214,16 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                 <StaggerItem
                   key={idx}
                   index={idx}
-                  className={`card-hover p-10 flex flex-col min-h-[286px] border-white/5 ${borderRightClass} ${borderBottomClass}`}
+                  className={`group relative isolate overflow-hidden p-10 flex flex-col min-h-[286px] border-white/5 ${borderRightClass} ${borderBottomClass}`}
                 >
-                  <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 mb-6">
-                    <div className="relative w-6 h-6">
+                  <RiseGlow />
+                  <div className={`${ICON_CHIP_LIFT} border border-white/10 mb-6`}>
+                    <div className={ICON_IMG}>
                       <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
                     </div>
                   </div>
                   <h3 className="text-[22px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
-                  <p className="text-[16px] font-normal leading-[150%] text-white/70">{agent.text}</p>
+                  <p className="text-[16px] font-normal leading-[150%] text-white/70 transition-colors duration-500 group-hover:text-white/90">{agent.text}</p>
                 </StaggerItem>
               );
             })}
@@ -213,22 +244,29 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
 
           <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {content.opsCompliance.cards.map((card, idx) => (
-              <StaggerItem key={idx} index={idx} className="group card-hover relative rounded-[10px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  fill
-                  className="object-cover image-hover-zoom"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/90 via-[#121826]/20 to-transparent" />
+              <StaggerItem key={idx} index={idx} >
+                <div className="group card-hover relative rounded-[10px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
+                  <Image
+                    src={card.image}
+                    alt={card.title}
+                    fill
+                    className="object-cover image-hover-zoom"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/90 via-[#121826]/20 to-transparent" />
 
-                <div className="relative p-8 w-full text-white">
-                  <h3 className="text-[24px] font-semibold leading-[1.2] mb-3">
-                    {card.title}
-                  </h3>
-                  <p className="text-[16px] font-normal leading-[150%] text-white/80">
-                    {card.text}
-                  </p>
+                  <div className="relative isolate p-8 w-full text-white">
+                    {/* Gradient panel behind the text: fades in and slides up on hover */}
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-x-0 bottom-0 -top-12 -z-10 translate-y-4 bg-[linear-gradient(to_top,rgba(18,24,38,0.96)_0%,rgba(18,24,38,0.82)_55%,rgba(18,24,38,0)_100%)] opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
+                    />
+                    <h3 className="text-[24px] font-semibold leading-[1.2] mb-3">
+                      {card.title}
+                    </h3>
+                    <p className="text-[16px] font-normal leading-[150%] text-white/80 transition-colors duration-500 group-hover:text-white/90">
+                      {card.text}
+                    </p>
+                  </div>
                 </div>
               </StaggerItem>
             ))}
@@ -259,8 +297,12 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
 
           <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-3 gap-3.5">
             {content.provenArchitecture.cards.map((card, idx) => (
-              <StaggerItem key={idx} index={idx} className="card-hover bg-[#EDE9E680] rounded-[10px] p-6 flex flex-col">
-                <div className="group relative w-full h-[320px] rounded-[10px] overflow-hidden mb-6">
+              <StaggerItem
+                key={idx}
+                index={idx}
+                className="group relative overflow-hidden bg-[#EDE9E680] rounded-[10px] p-6 flex flex-col"
+              >
+                <div className="relative w-full h-[320px] rounded-[10px] overflow-hidden mb-6">
                   <Image src={card.image} alt={card.title} fill className="object-cover image-hover-zoom" />
                 </div>
 
@@ -280,6 +322,12 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                     </li>
                   ))}
                 </ul>
+
+                {/* Bottom line: grows left to right on hover */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full origin-left scale-x-0 bg-[#23C55E] transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
+                />
               </StaggerItem>
             ))}
           </StaggerGroup>

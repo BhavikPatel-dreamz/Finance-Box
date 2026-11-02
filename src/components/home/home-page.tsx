@@ -227,7 +227,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
 
           <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
             <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10">
-              <img src={icons[0]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 group-hover:scale-110 motion-reduce:transition-none" />
+              <img src={icons[0]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
             </div>
             <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{difference.cards[0].title}</h3>
             <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-[#121826]/70">{difference.cards[0].text}</p>
@@ -237,7 +237,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
           {difference.cards.slice(1, 3).map((card, idx) => (
             <StaggerItem key={idx} index={idx + 1} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
               <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
-                <img src={icons[idx + 1]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 group-hover:scale-110 motion-reduce:transition-none" />
+                <img src={icons[idx + 1]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
@@ -248,7 +248,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
           {difference.cards.slice(3, 5).map((card, idx) => (
             <StaggerItem key={idx} index={idx + 3} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
               <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
-                <img src={icons[idx + 3]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 group-hover:scale-110 motion-reduce:transition-none" />
+                <img src={icons[idx + 3]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
@@ -261,7 +261,7 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
               {difference.statEyebrow}
             </p>
             <div className="mt-6 md:mt-0">
-              <p className="origin-left text-[64px] sm:text-[84px] md:text-[120px] font-normal leading-tight tracking-[-2px] transition-transform duration-500 ease-out group-hover:scale-[1.04] motion-reduce:transition-none">{difference.statValue}</p>
+              <p className="origin-left text-[64px] sm:text-[84px] md:text-[120px] font-normal leading-tight tracking-[-2px] transition-transform duration-500 ease-out motion-reduce:transition-none">{difference.statValue}</p>
               <p className="text-[16px] sm:text-[18px] md:text-[20px] font-medium leading-[1.1] mt-1 sm:mt-2">{difference.statLabel}</p>
             </div>
             <HoverLine className="bg-white" />
@@ -321,9 +321,13 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
 
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {growth.cards.map((card, idx) => (
-            <StaggerItem key={idx} index={idx} className="card-hover rounded-[10px] p-6 sm:p-7 md:p-8 border border-[#FFFFFF24] flex flex-col min-h-0 md:min-h-[344px]">
+            <StaggerItem
+              key={idx}
+              index={idx}
+              className="group relative overflow-hidden rounded-[10px] p-6 sm:p-7 md:p-8 border border-[#FFFFFF24] flex flex-col min-h-0 md:min-h-[344px] transition-colors duration-500 hover:bg-white/[0.04]"
+            >
               <h3 className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold leading-[1.15] mb-3 sm:mb-5">{card.title}</h3>
-              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[150%] text-white/60 mb-5 sm:mb-7">{card.text}</p>
+              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[150%] text-white/60 mb-5 sm:mb-7 transition-colors duration-500 group-hover:text-white/80">{card.text}</p>
 
               <ul className="mt-auto bg-[#091024] rounded-[8px] p-4 sm:p-5 space-y-3 sm:space-y-4">
                 {card.items.map((item, bIdx) => (
@@ -333,6 +337,12 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
                   </li>
                 ))}
               </ul>
+
+              {/* Bottom line: grows left to right on hover */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full origin-left scale-x-0 bg-[#23C55E] transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
+              />
             </StaggerItem>
           ))}
         </StaggerGroup>

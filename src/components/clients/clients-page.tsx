@@ -37,7 +37,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
           <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
 
           <Container>
-            <div className="pt-14 sm:pt-18 md:pt-20 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 flex flex-col items-center text-center">
+            <div className="pt-10 md:pt-12 xl:pt-24 pb-10 sm:pb-12 xl:pb-20 flex flex-col items-center text-center">
               <Reveal immediate preset="slide-up" delay={80} distance={18}>
                 <Eyebrow variant="dark-no-dash" className="mb-6">
                   {content.hero.eyebrow}
@@ -61,7 +61,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
               preset="slide-up"
               delay={520}
               distance={28}
-              className="w-full overflow-hidden rounded-[16px] lg:rounded-none border border-white/10 lg:border-x-0 backdrop-blur-[3px] bg-black/[0.03] mb-12 sm:mb-16 lg:mb-20"
+              className="w-full overflow-hidden rounded-[16px] lg:rounded-none border border-white/10 lg:border-x-0 backdrop-blur-[3px] bg-black/[0.03] mb-12 sm:mb-16 xl:mb-20"
               style={{ WebkitBackdropFilter: "blur(3px)" }}
             >
               <div className="w-full backdrop-blur-md flex flex-col lg:flex-row">
@@ -309,11 +309,11 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 // Case Study Card Component
 function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: boolean }) {
   return (
-    <div className={`group card-hover relative isolate flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} overflow-hidden rounded-[16px] bg-[#121826] min-h-[500px] lg:p-12.5`}>
+    <div className={`relative isolate flex flex-col ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} overflow-hidden rounded-[16px] bg-[#121826] min-h-[500px] lg:p-12.5`}>
       {/* Green corner glow */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute -bottom-[110px] ${reverse ? '-left-[110px]' : '-right-[110px]'} h-[220px] w-[220px] rounded-full bg-[#23C55E] blur-[90px] -z-10`}
+        className={`pointer-events-none absolute -bottom-[110px] ${reverse ? "-left-[110px]" : "-right-[110px]"} h-[220px] w-[220px] rounded-full bg-[#23C55E] blur-[90px] -z-10`}
       />
 
       <div className="relative z-10 rounded-t-[16px] lg:rounded-[10px] overflow-hidden w-full lg:w-1/2 min-h-[260px] sm:min-h-[320px] lg:min-h-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto">
@@ -321,11 +321,15 @@ function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: bo
           src={study.image}
           alt={study.title}
           fill
-          className="object-cover image-hover-zoom"
+          className="object-cover"
         />
       </div>
 
-      <div className="relative z-10 flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:py-0 lg:px-8 xl:px-12 lg:w-1/2 text-white">
+      {/* Padding only on the side facing the image, so the outer spacing matches the image side */}
+      <div
+        className={`relative z-10 flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:py-0 lg:w-1/2 text-white ${reverse ? "lg:pl-0 lg:pr-8 xl:pr-12" : "lg:pr-0 lg:pl-8 xl:pl-12"
+          }`}
+      >
         <Eyebrow variant="green-no-dash" className="mb-3 sm:mb-4">
           {study.label}
         </Eyebrow>
