@@ -19,7 +19,6 @@ export type ClientLogosItem = {
   image: string;
 };
 
-// Naya: Review Section Type
 export type ClientReview = {
   id: string;
   text: string;
@@ -48,7 +47,6 @@ export type ClientsContent = {
     title2: string;
     logos: ClientLogosItem[];
   };
-  // Naya: Reviews Section
   reviewsSection: {
     title: string;
     mainReview: {
@@ -58,6 +56,13 @@ export type ClientsContent = {
       image: string;
     };
     reviews: ClientReview[];
+  };
+  // 👇 NAYA: Pressure / CTA section
+  pressure: {
+    title: string;
+    emphasis: string;
+    text: string;
+    cta: { label: string; url: string };
   };
 };
 
@@ -129,7 +134,6 @@ export const clientsContent: ClientsContent = {
       { name: "Yobi", image: "/clients/logos/yobi.png" },
     ],
   },
-  // Naya Data
   reviewsSection: {
     title: "In Their Words",
     mainReview: {
@@ -168,5 +172,12 @@ export const clientsContent: ClientsContent = {
         avatar: "/clients/review4.png",
       },
     ],
+  },
+  // 👇 NAYA: Pressure defaults
+  pressure: {
+    title: "Your company could be",
+    emphasis: "the next case study",
+    text: "Tell us where the pressure is. A 30-minute discovery call maps what to fix first.",
+    cta: { label: "Join the Talent Network", url: "/#contact" },
   },
 };

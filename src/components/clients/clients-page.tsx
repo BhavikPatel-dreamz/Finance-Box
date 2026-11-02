@@ -115,13 +115,12 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-[#E5E7EB] border border-[#E5E7EB] rounded-[16px] sm:rounded-[20px] overflow-hidden">
             {content.logosSection.logos.map((logo, index) => {
-              // Figma layout: Row 1 ends (index 0 and 3) span 2 columns, Row 4 center (index 18 Cargomatic) spans 2 columns
               const isSpan2 = index === 0 || index === 3 || index === 18;
               const isLastMobile = index === content.logosSection.logos.length - 1;
 
               return (
                 <div
-                  key={logo.name}
+                  key={`${logo.name}-${index}`}
                   className={`bg-white flex items-center justify-center p-4 sm:p-5 lg:p-6 min-h-[110px] sm:min-h-[130px] lg:min-h-[150px] ${
                     isSpan2 ? "lg:col-span-2" : "lg:col-span-1"
                   } ${
@@ -207,7 +206,7 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
         </Container>
       </Section>
 
-      {/* Where FIAB Works Section */}
+      {/* Where FIAB Works Section — currently hardcoded (ACF layout exists but no match yet) */}
       <Section spacing="both" className="fiab-works-section bg-[#EDE9E6] text-[#16181d]">
         <Container>
           <div className="flex flex-col gap-12 sm:gap-16 lg:gap-24">
@@ -258,7 +257,6 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                   There is a dedicated page covering how an engagement starts, what your founders will experience, and the results other portfolio companies have seen.
                 </p>
                 <div className="mt-6 sm:mt-8">
-                  {/* Yahan custom color aur size apply kiya hai */}
                   <GreenButton
                     label="For VCs & Advisors"
                     href="/vc-advisors"
@@ -281,14 +279,14 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
         </Container>
       </Section>
 
-      {/* NEW: Reusable Footer Hero */}
+      {/* 👇 UPDATED: Reusable Footer Hero — DYNAMIC from WordPress */}
       <FooterHero
         variant="clients"
-        title="Your company could be"
-        highlight="the next case study"
-        text="Tell us where the pressure is. A 30-minute discovery call maps what to fix first."
-        buttonLabel="Join the Talent Network"
-        buttonUrl="/#contact"
+        title={content.pressure.title}
+        highlight={content.pressure.emphasis}
+        text={content.pressure.text}
+        buttonLabel={content.pressure.cta.label}
+        buttonUrl={content.pressure.cta.url}
       />
 
       <HomeFooter footer={homeContent.footer} />
