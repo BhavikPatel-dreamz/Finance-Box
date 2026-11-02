@@ -57,6 +57,13 @@ export type ServicesContent = {
     secondary: ServicesLink;
     cards: ServicesPhotoCard[];
   };
+  // 👇 NAYA: Pressure / CTA Section
+  pressure: {
+    title: string;
+    emphasis: string;
+    text: string;
+    cta: ServicesLink;
+  };
 };
 
 export type ServicesPhotoCard = {
@@ -264,5 +271,12 @@ export const servicesContent: ServicesContent = {
         image: { url: "/services/scroll/portfolio-6.png", alt: "Strategic leadership" },
       },
     ],
+  },
+  // 👇 NAYA: Pressure Section Defaults
+  pressure: {
+    title: "Tell Us Where",
+    emphasis: "The Pressure Is",
+    text: "A 30-minute discovery call is enough to map where your finance function is leaking time or cash, and what to fix first.",
+    cta: { label: "Join the Talent Network", url: "/contact-us" },
   },
 };
