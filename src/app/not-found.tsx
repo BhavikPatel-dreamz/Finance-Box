@@ -1,10 +1,5 @@
-import { StatusMessage } from "@/components/layout/page-shell";
+import { NotFoundPage } from "@/components/not-found/not-found-page";
 
 export default function NotFound() {
-  return (
-    <StatusMessage
-      title="Page not found"
-      body="That page is not published in WordPress."
-    />
-  );
+  return <NotFoundPage />;
 }

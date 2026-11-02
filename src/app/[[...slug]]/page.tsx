@@ -18,6 +18,7 @@ import { KnowledgeHubPage } from "@/components/knowledge-hub/knowledge-hub-page"
 import { PeopleOperationsPage } from "@/components/people-operations/people-operations-page";
 import { PrivacyPolicyPage } from "@/components/privacy-policy/privacy-policy-page";
 import { TermsConditionsPage } from "@/components/terms-conditions/terms-conditions-page";
+import { NotFoundPage } from "@/components/not-found/not-found-page";
 
 import { homeContent } from "@/content/home";
 import { servicesContent } from "@/content/services";
@@ -73,6 +74,7 @@ export async function generateMetadata({
     "/privacy-policy/": "Privacy Policy - Finance in a Box",
     "/terms-conditions/": "Terms & Conditions - Finance in a Box",
     "/terms-and-conditions/": "Terms & Conditions - Finance in a Box",
+    "/404/": "Page Not Found - Finance in a Box",
   };
 
   if (loaded.uri && staticPages[loaded.uri]) {
@@ -176,6 +178,10 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
   if (loaded.uri === "/terms-conditions/" || loaded.uri === "/terms-and-conditions/") {
     const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
     return <TermsConditionsPage sections={sections} />;
+  }
+
+  if (loaded.uri === "/404/") {
+    return <NotFoundPage />;
   }
 
   if (!loaded.uri || loaded.result.status === "not-found") notFound();
