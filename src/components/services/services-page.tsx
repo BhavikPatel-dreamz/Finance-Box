@@ -1,7 +1,7 @@
 import { HomeHeader } from "@/components/home/home-header";
 import { HomeFooter } from "@/components/home/home-page";
 import { GreenButton } from "@/components/ui/green-button";
-import { FooterHero } from "@/components/ui/footer-hero"; // Import FooterHero
+import { FooterHero } from "@/components/ui/footer-hero";
 import { servicesContent, type ServicesContent } from "@/content/services";
 import { homeContent } from "@/content/home";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -12,9 +12,10 @@ import { ArrowIcon } from "../ui/button";
 import { InvestorSlider } from "@/components/services/investor-slider";
 import { ProcessGrid } from "@/components/ui/process-grid";
 import Section from "../ui/section";
+import { mergeServices } from "@/components/services/merge";
 
 export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
-  const content = servicesContent;
+  const content = mergeServices(servicesContent, sections ?? []);
 
   return (
     <div id="top" className="min-h-screen flex flex-col bg-white text-[#16181d]">
@@ -98,14 +99,14 @@ export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
       {/* Naya Section: Investors */}
       <ServicesInvestors investors={content.investors} />
 
-      {/* NAYA SECTION: Reusable Footer Hero */}
+      {/* 👇 NAYA SECTION: Reusable Footer Hero (Dynamic from WordPress) */}
       <FooterHero
         variant="services"
-        title="Tell Us Where"
-        highlight="The Pressure Is"
-        text="A 30-minute discovery call is enough to map where your finance function is leaking time or cash, and what to fix first."
-        buttonLabel="Join the Talent Network"
-        buttonUrl="/contact-us"
+        title={content.pressure.title}
+        highlight={content.pressure.emphasis}
+        text={content.pressure.text}
+        buttonLabel={content.pressure.cta.label}
+        buttonUrl={content.pressure.cta.url}
       />
 
       <HomeFooter footer={homeContent.footer} />
@@ -251,9 +252,6 @@ function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
                   const isFullWidth = isOdd && isLastItem;
                   const isLeftCol = itemIdx % 2 === 0;
 
-                  // In desktop view (2-col):
-                  // If odd total, only the last item is in the last row.
-                  // If even total, the last two items are in the last row.
                   const isLastRowSm = isOdd ? itemIdx === total - 1 : itemIdx >= total - 2;
                   const isLastRowMobile = itemIdx === total - 1;
 
@@ -402,7 +400,7 @@ function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
   );
 }
 
-// --- Component: Investors (Updated Images & Contained Scroll) ---
+// --- Component: Investors ---
 function ServicesInvestors({ investors }: { investors: ServicesContent["investors"] }) {
   return (
     <Section theme="dark" spacing="both" className="services-process-section">

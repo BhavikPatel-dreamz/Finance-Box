@@ -1,207 +1,320 @@
 import {
   servicesContent,
   type ServicesContent,
-  type ServicesDetail,
-  type ServicesPhotoCard,
+  type ServicesLink,
+  type ServicesTier,
   type ServicesStage,
+  type ServicesDetail,
   type ServicesStep,
+  type ServicesPhotoCard,
 } from "@/content/services";
 import type { RawSection } from "@/lib/wordpress/content";
 
-function row(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  return value as Record<string, unknown>;
+/* -------------------------------------------------------------------------- */
+/*                                  Helpers                                    */
+/* -------------------------------------------------------------------------- */
+
+function str(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
 }
 
-function str(value: unknown) {
-  return typeof value === "string" && value.trim() ? value.trim() : null;
-}
-
-function keep(value: unknown, fallback: string) {
+function keep(value: unknown, fallback: string): string {
   return str(value) ?? fallback;
 }
 
-function link(label: unknown, url: unknown, fallback: { label: string; url: string }) {
-  return { label: keep(label, fallback.label), url: keep(url, fallback.url) };
+function cleanHtml(value: unknown, fallback: string): string {
+  const text = str(value);
+  if (!text) return fallback;
+  const stripped = text
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<\/p>\s*<p[^>]*>/gi, "\n\n")
+    .replace(/<[^>]*>?/gm, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .trim();
+  return stripped || fallback;
 }
 
-const icons = new Set<ServicesStage["icon"]>(["gear", "people", "person", "target"]);
-
-function iconOf(value: unknown, fallback: ServicesStage["icon"]) {
-  return typeof value === "string" && icons.has(value as ServicesStage["icon"])
-    ? (value as ServicesStage["icon"])
-    : fallback;
-}
-
-function tiers(value: unknown, fallback: ServicesContent["hero"]["tiers"]) {
-  if (!Array.isArray(value) || value.length === 0) return fallback;
-  const next = value.flatMap((item, index) => {
-    const tier = row(item);
-    const title = tier ? str(tier.title) : null;
-    if (!tier || !title) return [];
-    const base = fallback[index] ?? fallback[0];
-    return [
-      {
-        number: keep(tier.number, base?.number ?? String(index + 1).padStart(2, "0")),
-        label: keep(tier.label, base?.label ?? ""),
-        title,
-        highlight: keep(tier.highlight, base?.highlight ?? ""),
-        text: keep(tier.text, base?.text ?? ""),
-      },
-    ];
-  });
-  return next.length > 0 ? next : fallback;
-}
-
-function stages(value: unknown, fallback: ServicesContent["stages"]["cards"]) {
-  if (!Array.isArray(value) || value.length === 0) return fallback;
-  const next = value.flatMap((item, index) => {
-    const card = row(item);
-    const title = card ? str(card.title) : null;
-    if (!card || !title) return [];
-    const base = fallback[index] ?? fallback[0];
-    return [
-      {
-        title,
-        label: keep(card.label, base?.label ?? ""),
-        text: keep(card.text, base?.text ?? ""),
-        icon: iconOf(card.icon, base?.icon ?? "gear"),
-      },
-    ];
-  });
-  return next.length > 0 ? next : fallback;
-}
-
-function items(value: unknown, fallback: ServicesDetail["items"]) {
-  if (!Array.isArray(value) || value.length === 0) return fallback;
-  const next = value.flatMap((item, index) => {
-    const entry = row(item);
-    const title = entry ? str(entry.title) : null;
-    if (!entry || !title) return [];
-    const base = fallback[index] ?? fallback[0];
-    return [{ title, text: keep(entry.text, base?.text ?? "") }];
-  });
-  return next.length > 0 ? next : fallback;
-}
-
-function media(value: unknown) {
-  const item = row(value);
-  if (!item) return null;
-  const nested = row(item.node) ?? item;
-  const url = str(nested.sourceUrl) ?? str(nested.url);
-  if (!url) return null;
-  return { url, alt: str(nested.altText) ?? str(nested.alt) ?? "" };
-}
-
-function photoCards(value: unknown, fallback: ServicesPhotoCard[]) {
-  if (!Array.isArray(value) || value.length === 0) return fallback;
-  const next = value.flatMap((item, index) => {
-    const card = row(item);
-    const title = card ? str(card.title) : null;
-    if (!card || !title) return [];
-    const base = fallback[index] ?? fallback[0];
-    return [{ title, text: keep(card.text, base?.text ?? ""), image: media(card.image) ?? base?.image ?? null }];
-  });
-  return next.length > 0 ? next : fallback;
-}
-
-function steps(value: unknown, fallback: ServicesStep[]) {
-  if (!Array.isArray(value) || value.length === 0) return fallback;
-  const next = value.flatMap((item, index) => {
-    const step = row(item);
-    const title = step ? str(step.title) : null;
-    if (!step || !title) return [];
-    const base = fallback[index] ?? fallback[0];
-    return [
-      {
-        number: keep(step.number, base?.number ?? String(index + 1).padStart(2, "0")),
-        title,
-        text: keep(step.text, base?.text ?? ""),
-      },
-    ];
-  });
-  return next.length > 0 ? next : fallback;
-}
-
-function detail(section: RawSection, fallback: ServicesDetail | undefined, index: number): ServicesDetail | null {
-  const title = str(section.title);
-  if (!title) return null;
-  const base = fallback ?? {
-    anchor: `tier-${index + 1}`,
-    number: String(index + 1).padStart(2, "0"),
-    title,
-    text: "",
-    cta: { label: "Explore", url: "#tiers" },
-    items: [],
-  };
+function media(value: unknown): { url: string; alt: string } | null {
+  if (!value || typeof value !== "object") return null;
+  const item = value as Record<string, any>;
+  const nested = item.node ?? item;
+  const url = nested.sourceUrl ?? nested.url ?? null;
+  if (!url || typeof url !== "string") return null;
   return {
-    anchor: keep(section.anchor, base.anchor),
-    number: keep(section.number, base.number),
-    title,
-    text: keep(section.text, base.text),
-    cta: link(section.ctaLabel, section.ctaUrl, base.cta),
-    items: items(section.items, base.items),
+    url,
+    alt: typeof nested.altText === "string" ? nested.altText : "",
   };
 }
 
-export function mergeServices(base: ServicesContent, sections: RawSection[]) {
-  const next: ServicesContent = structuredClone(base);
-  const details: ServicesDetail[] = [];
+function link(value: unknown, fallback: ServicesLink): ServicesLink {
+  if (!value || typeof value !== "object") return fallback;
+  const item = value as Record<string, any>;
+  return {
+    label: keep(item.title ?? item.label, fallback.label),
+    url: keep(item.url, fallback.url),
+  };
+}
 
-  for (const section of sections) {
-    const typeName = typeof section.__typename === "string" ? section.__typename : "";
-    if (/ServicesHero$/.test(typeName)) {
-      next.hero = {
-        eyebrow: keep(section.eyebrow, next.hero.eyebrow),
-        title: keep(section.title, next.hero.title),
-        highlight: keep(section.highlight, next.hero.highlight),
-        text: keep(section.text, next.hero.text),
-        primary: link(section.primaryLabel, section.primaryUrl, next.hero.primary),
-        secondary: link(section.secondaryLabel, section.secondaryUrl, next.hero.secondary),
-        tiers: tiers(section.tiers, next.hero.tiers),
+function rows(value: unknown): Record<string, any>[] {
+  return Array.isArray(value) ? (value as Record<string, any>[]) : [];
+}
+
+function mapStageIcon(card: Record<string, any>): ServicesStage["icon"] {
+  const title = (str(card.title) ?? "").toLowerCase();
+  if (title.includes("foundation") || title.includes("set")) return "gear";
+  if (title.includes("momentum") || title.includes("build")) return "people";
+  if (title.includes("foresight") || title.includes("lead")) return "person";
+  if (title.includes("optimize") || title.includes("expand")) return "target";
+  return "gear";
+}
+
+function matchesLayout(typeName: string, layoutName: string): boolean {
+  return typeName.endsWith(`${layoutName}Layout`);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Section Mergers                                */
+/* -------------------------------------------------------------------------- */
+
+function mergeHero(next: ServicesContent, section: Record<string, any>): void {
+  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
+  next.hero.title = cleanHtml(section.title, next.hero.title);
+  next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
+  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.primary = link(section.primaryCtaButton, next.hero.primary);
+  next.hero.secondary = link(section.secondaryCtaButton, next.hero.secondary);
+
+  const tierCards = rows(section.tierCards);
+  if (tierCards.length > 0) {
+    next.hero.tiers = tierCards.map((card, index) => {
+      const fallback = next.hero.tiers[index] ?? {
+        number: String(index + 1).padStart(2, "0"),
+        label: "",
+        title: "",
+        highlight: "",
+        text: "",
       };
-    } else if (/ServicesStages$/.test(typeName)) {
-      next.stages = {
-        eyebrow: keep(section.eyebrow, next.stages.eyebrow),
-        title: keep(section.title, next.stages.title),
-        text: keep(section.text, next.stages.text),
-        cards: stages(section.cards, next.stages.cards),
+      return {
+        number: cleanHtml(card.label, fallback.number),
+        label: cleanHtml(card.label, fallback.label),
+        title: cleanHtml(card.title, fallback.title),
+        highlight: cleanHtml(card.highlight, fallback.highlight),
+        text: cleanHtml(card.description, fallback.text),
+      } satisfies ServicesTier;
+    });
+  }
+}
+
+function mergeStages(next: ServicesContent, section: Record<string, any>): void {
+  next.stages.eyebrow = cleanHtml(section.subTitle, next.stages.eyebrow);
+  next.stages.title = cleanHtml(section.title, next.stages.title);
+  next.stages.text = cleanHtml(section.description, next.stages.text);
+
+  const stageCards = rows(section.stageCards);
+  if (stageCards.length > 0) {
+    next.stages.cards = stageCards.map((card, index) => {
+      const fallback = next.stages.cards[index] ?? {
+        title: "",
+        label: "",
+        text: "",
+        icon: "gear" as const,
       };
-    } else if (/ServicesDepth$/.test(typeName)) {
-      next.depth = {
-        eyebrow: keep(section.eyebrow, next.depth.eyebrow),
-        title: keep(section.title, next.depth.title),
-        cta: link(section.ctaLabel, section.ctaUrl, next.depth.cta),
-      };
-    } else if (/ServicesCfo$/.test(typeName)) {
-      next.cfo = {
-        title: keep(section.title, next.cfo.title),
-        text: keep(section.text, next.cfo.text),
-        cta: link(section.ctaLabel, section.ctaUrl, next.cfo.cta),
-        cards: photoCards(section.cards, next.cfo.cards),
-      };
-    } else if (/ServicesProcess$/.test(typeName)) {
-      next.process = {
-        title: keep(section.title, next.process.title),
-        text: keep(section.text, next.process.text),
-        steps: steps(section.steps, next.process.steps),
-      };
-    } else if (/ServicesInvestors$/.test(typeName)) {
-      next.investors = {
-        eyebrow: keep(section.eyebrow, next.investors.eyebrow),
-        title: keep(section.title, next.investors.title),
-        highlight: keep(section.highlight, next.investors.highlight),
-        text: keep(section.text, next.investors.text),
-        primary: link(section.primaryLabel, section.primaryUrl, next.investors.primary),
-        secondary: link(section.secondaryLabel, section.secondaryUrl, next.investors.secondary),
-        cards: photoCards(section.cards, next.investors.cards),
-      };
-    } else if (/ServicesDetail$/.test(typeName)) {
-      const parsed = detail(section, base.details[details.length], details.length);
-      if (parsed) details.push(parsed);
+      return {
+        title: cleanHtml(card.title, fallback.title),
+        label: cleanHtml(card.stageLabel, fallback.label),
+        text: cleanHtml(card.description, fallback.text),
+        icon: mapStageIcon(card),
+      } satisfies ServicesStage;
+    });
+  }
+}
+
+function mergeDepthAndDetails(
+  next: ServicesContent,
+  section: Record<string, any>,
+): void {
+  next.depth.eyebrow = cleanHtml(section.subTitle, next.depth.eyebrow);
+  next.depth.title = cleanHtml(section.title, next.depth.title);
+  next.depth.cta = link(section.ctaButton, next.depth.cta);
+
+  const tiers = rows(section.tiers);
+  if (tiers.length > 0) {
+    next.details = tiers.map((tier, index) => {
+      const fallback = next.details[index];
+      const number = str(tier.number) ?? fallback?.number ?? String(index + 1).padStart(2, "0");
+      const slugAnchor =
+        str(tier.title)?.split(".")[0]?.trim().toLowerCase().replace(/\s+/g, "-") ??
+        fallback?.anchor ??
+        `tier-${index + 1}`;
+
+      const nestedServices = rows(tier.services);
+      const items =
+        nestedServices.length > 0
+          ? nestedServices.map((svc) => ({
+              title: cleanHtml(svc.title, ""),
+              text: cleanHtml(svc.description, ""),
+            }))
+          : fallback?.items ?? [];
+
+      return {
+        anchor: fallback?.anchor ?? slugAnchor,
+        number,
+        title: cleanHtml(tier.title, fallback?.title ?? ""),
+        text: cleanHtml(tier.description, fallback?.text ?? ""),
+        cta: link(tier.ctaButton, fallback?.cta ?? { label: "Explore", url: "#" }),
+        items,
+      } satisfies ServicesDetail;
+    });
+  }
+}
+
+function mergeCfo(next: ServicesContent, section: Record<string, any>): void {
+  next.cfo.title = cleanHtml(section.title, next.cfo.title);
+  next.cfo.text = cleanHtml(section.description, next.cfo.text);
+  next.cfo.cta = link(section.ctaButton, next.cfo.cta);
+
+  const deliverables = rows(section.deliverables);
+  if (deliverables.length > 0) {
+    next.cfo.cards = deliverables.map((card, index) => {
+      const fallback = next.cfo.cards[index];
+      return {
+        title: cleanHtml(card.label, fallback?.title ?? ""),
+        text: cleanHtml(card.description, fallback?.text ?? ""),
+        image: media(card.image) ?? fallback?.image ?? null,
+      } satisfies ServicesPhotoCard;
+    });
+  }
+}
+
+function mergeProcess(next: ServicesContent, section: Record<string, any>): void {
+  next.process.title = cleanHtml(section.title, next.process.title);
+  next.process.text = cleanHtml(section.description, next.process.text);
+
+  const steps = rows(section.steps);
+  if (steps.length > 0) {
+    next.process.steps = steps.map((step, index) => {
+      const fallback = next.process.steps[index];
+      return {
+        number: str(step.number) ?? fallback?.number ?? String(index + 1).padStart(2, "0"),
+        title: cleanHtml(step.title, fallback?.title ?? ""),
+        text: cleanHtml(step.description, fallback?.text ?? ""),
+      } satisfies ServicesStep;
+    });
+  }
+}
+
+function mergeInvestors(next: ServicesContent, section: Record<string, any>): void {
+  next.investors.eyebrow = cleanHtml(section.subTitle, next.investors.eyebrow);
+  next.investors.title = cleanHtml(section.title, next.investors.title);
+  next.investors.highlight = cleanHtml(section.highlight, next.investors.highlight);
+  next.investors.text = cleanHtml(section.description, next.investors.text);
+  next.investors.primary = link(section.primaryCtaButton, next.investors.primary);
+  next.investors.secondary = link(section.secondaryCtaButton, next.investors.secondary);
+
+  const cards = rows(section.investorCards);
+  if (cards.length > 0) {
+    next.investors.cards = cards.map((card, index) => {
+      const fallback = next.investors.cards[index];
+      return {
+        title: cleanHtml(card.title, fallback?.title ?? ""),
+        text: cleanHtml(card.description, fallback?.text ?? ""),
+        image: media(card.image) ?? fallback?.image ?? null,
+      } satisfies ServicesPhotoCard;
+    });
+  }
+}
+
+/** CTA Section → pressure (the "Tell Us Where The Pressure Is" block). */
+function mergePressure(next: ServicesContent, section: Record<string, any>): void {
+  const rawTitle = str(section.title) ?? "";
+  
+  // Extract <b> or <strong> content
+  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
+  const cleanTitle = cleanHtml(section.title, next.pressure.title);
+
+  if (boldMatch && boldMatch[1]) {
+    const highlight = cleanHtml(boldMatch[1], "").trim();
+    if (highlight) {
+      const remainder = cleanTitle
+        .replace(highlight, "")
+        .replace(/\s+/g, " ")
+        .trim();
+      
+      next.pressure.title = remainder || cleanTitle;
+      next.pressure.emphasis = highlight;
+    } else {
+      next.pressure.title = cleanTitle;
+    }
+  } else {
+    next.pressure.title = cleanTitle;
+  }
+
+  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.cta = link(section.ctaButton, next.pressure.cta);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Public Entry Point                             */
+/* -------------------------------------------------------------------------- */
+
+export function mergeServices(
+  base: ServicesContent,
+  sections: RawSection[],
+): ServicesContent {
+  const next: ServicesContent = structuredClone(base);
+
+  for (const section of sections ?? []) {
+    const typeName =
+      typeof section.__typename === "string" ? section.__typename : "";
+    const data = section as Record<string, any>;
+
+    if (matchesLayout(typeName, "ServicesBannerSection")) {
+      mergeHero(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "ServicesFindYourStageSection")) {
+      mergeStages(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "ServicesTiersInDepthSection")) {
+      mergeDepthAndDetails(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "ServicesFractionalCfoSection")) {
+      mergeCfo(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "ServicesOperatingCadenceSection")) {
+      mergeProcess(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "ServicesInvestorsSection")) {
+      mergeInvestors(next, data);
+      continue;
+    }
+
+    // 👇 NAYA: Handle CTA Section for the "Pressure" block
+    if (matchesLayout(typeName, "CtaSection")) {
+      mergePressure(next, data);
+      continue;
     }
   }
 
-  if (details.length > 0) next.details = details;
   return next;
+}
+
+export function mergeServicesContent(sections: RawSection[]): ServicesContent {
+  return mergeServices(servicesContent, sections);
 }

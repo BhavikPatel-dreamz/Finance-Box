@@ -12,7 +12,6 @@ export type CareersHiringStep = {
   text: string;
 };
 
-// Naya: FAQ Item Type
 export type CareersFaq = {
   question: string;
   answer: string;
@@ -46,10 +45,16 @@ export type CareersContent = {
     text: string;
     steps: CareersHiringStep[];
   };
-  // Naya: FAQ Section
   faq: {
     title: string;
     items: CareersFaq[];
+  };
+  // 👇 NAYA: Footer CTA
+  pressure: {
+    title: string;
+    emphasis: string;
+    text: string;
+    cta: CareersLink;
   };
 };
 
@@ -114,7 +119,6 @@ export const careersContent: CareersContent = {
       { number: "05", title: "Offer", text: "We align on scope, SLAs, and a ramp plan." },
     ],
   },
-  // Naya Data
   faq: {
     title: "Frequently Asked Questions",
     items: [
@@ -135,5 +139,12 @@ export const careersContent: CareersContent = {
         answer: "Fixed fee or hourly, depending on your needs.",
       },
     ],
+  },
+  // 👇 NAYA: Footer CTA defaults
+  pressure: {
+    title: "Build your",
+    emphasis: "next chapter here",
+    text: "Whether you love closing the books, designing automations, or building dashboards, FIAB gives you room to own real outcomes.",
+    cta: { label: "Join the Talent Network", url: "/careers/open-roles" },
   },
 };

@@ -1,86 +1,386 @@
-import type { HomeContent, HomeLink, HomeMedia } from "@/content/home";
+import {
+  homeContent,
+  type HomeContent,
+  type HomeMedia,
+  type HomeCard,
+  type HomePerson,
+} from "@/content/home";
 import type { RawSection } from "@/lib/wordpress/content";
 
-function row(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  return value as Record<string, unknown>;
+/* -------------------------------------------------------------------------- */
+/*                                  Helpers                                    */
+/* -------------------------------------------------------------------------- */
+
+function str(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
 }
 
-function str(value: unknown) {
-  return typeof value === "string" && value.trim() ? value.trim() : null;
-}
-
-function keep(value: unknown, fallback: string) {
+function keep(value: unknown, fallback: string): string {
   return str(value) ?? fallback;
 }
 
+function cleanHtml(value: unknown, fallback: string): string {
+  const text = str(value);
+  if (!text) return fallback;
+  const stripped = text
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<\/p>\s*<p[^>]*>/gi, "\n\n")
+    .replace(/<[^>]*>?/gm, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .trim();
+  return stripped || fallback;
+}
+
 function media(value: unknown): HomeMedia | null {
-  const item = row(value);
-  if (!item) return null;
-  const nested = row(item.node);
-  const source = nested ?? item;
-  const url = str(source.sourceUrl) ?? str(source.url);
-  if (!url) return null;
-  return { url, alt: str(source.altText) ?? str(source.alt) ?? "" };
+  if (!value || typeof value !== "object") return null;
+  const item = value as Record<string, any>;
+  const nested = item.node ?? item;
+  const url = nested.sourceUrl ?? nested.url ?? null;
+  if (!url || typeof url !== "string") return null;
+  return {
+    url,
+    alt: typeof nested.altText === "string" ? nested.altText : "",
+  };
 }
 
-function link(label: unknown, url: unknown, fallback: HomeLink): HomeLink {
-  return { label: keep(label, fallback.label), url: keep(url, fallback.url) };
+function link(value: unknown, fallback: { label: string; url: string }) {
+  if (!value || typeof value !== "object") return fallback;
+  const item = value as Record<string, any>;
+  return {
+    label: keep(item.title ?? item.label, fallback.label),
+    url: keep(item.url, fallback.url),
+  };
 }
 
-export function mergeHome(base: HomeContent, sections: RawSection[]) {
+function rows(value: unknown): Record<string, any>[] {
+  return Array.isArray(value) ? (value as Record<string, any>[]) : [];
+}
+
+function extractListItems(html: string): string[] {
+  const items: string[] = [];
+  const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = liRegex.exec(html)) !== null) {
+    const text = cleanHtml(match[1], "");
+    if (text) items.push(text);
+  }
+  if (items.length > 0) return items;
+
+  return cleanHtml(html, "")
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          Section Type Matching                              */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * WPGraphQL + ACF flexible content types follow the pattern:
+ *   PageBuilderPageBuilder<LayoutName>Layout
+ * This helper checks the `<LayoutName>Layout` suffix so it works
+ * for both bare and namespaced typenames.
+ */
+function matchesLayout(typeName: string, layoutName: string): boolean {
+  return typeName.endsWith(`${layoutName}Layout`);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Section Mergers                                */
+/* -------------------------------------------------------------------------- */
+
+/** Home Banner Section → hero + stat cards. */
+function mergeHero(next: HomeContent, section: Record<string, any>): void {
+  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
+  next.hero.title = cleanHtml(section.title, next.hero.title);
+  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
+  next.hero.primary = link(section.ctaButton, next.hero.primary);
+
+  if (section.floatingCtaButton) {
+    next.hero.call = link(section.floatingCtaButton, next.hero.call);
+  }
+
+  const statCards = rows(section.statCards);
+  if (statCards.length > 0) {
+    const [first, second] = statCards;
+    if (first) {
+      next.hero.closeLabel = cleanHtml(first.label, next.hero.closeLabel);
+      next.hero.closeValue = cleanHtml(first.value, next.hero.closeValue);
+      next.hero.closeUnit = cleanHtml(first.note, next.hero.closeUnit);
+    }
+    if (second) {
+      next.hero.runwayLabel = cleanHtml(second.label, next.hero.runwayLabel);
+      next.hero.runwayValue = cleanHtml(second.value, next.hero.runwayValue);
+      next.hero.runwayUnit = cleanHtml(second.note, next.hero.runwayUnit);
+    }
+  }
+}
+
+/** Home When Finance Matters → founders. */
+function mergeFounders(next: HomeContent, section: Record<string, any>): void {
+  next.founders.eyebrow = cleanHtml(section.subTitle, next.founders.eyebrow);
+  next.founders.title = cleanHtml(section.title, next.founders.title);
+  next.founders.text = cleanHtml(section.description, next.founders.text);
+  next.founders.cta = link(section.ctaButton, next.founders.cta);
+
+  const moments = rows(section.moments);
+  if (moments.length > 0) {
+    next.founders.cards = moments.map((moment, index) => {
+      const fallback = next.founders.cards[index] ?? {
+        icon: null,
+        title: "",
+        text: "",
+      };
+      return {
+        icon: null,
+        title: cleanHtml(moment.title, fallback.title),
+        text: cleanHtml(moment.content, fallback.text),
+      } satisfies HomeCard;
+    });
+  }
+}
+
+/** Home What Makes FIAB Different → difference. */
+function mergeDifference(next: HomeContent, section: Record<string, any>): void {
+  next.difference.title = cleanHtml(section.title, next.difference.title);
+
+  const cards = rows(section.cards);
+  if (cards.length > 0) {
+    next.difference.cards = cards.map((card, index) => {
+      const fallback = next.difference.cards[index];
+      return {
+        // `icon` may not be present in the schema — media() safely returns null.
+        icon: media(card.icon),
+        title: cleanHtml(card.title, fallback?.title ?? ""),
+        text: cleanHtml(card.content, fallback?.text ?? ""),
+        tone: fallback?.tone ?? "dark",
+      };
+    });
+  }
+
+  next.difference.statEyebrow = cleanHtml(
+    section.outcomeLabel,
+    next.difference.statEyebrow,
+  );
+  next.difference.statValue = cleanHtml(
+    section.outcomeValue,
+    next.difference.statValue,
+  );
+  next.difference.statLabel = cleanHtml(
+    section.outcomeText,
+    next.difference.statLabel,
+  );
+}
+
+/** Home Finance That Grows → growth. */
+function mergeGrowth(next: HomeContent, section: Record<string, any>): void {
+  next.growth.eyebrow = cleanHtml(section.subTitle, next.growth.eyebrow);
+  next.growth.title = cleanHtml(section.title, next.growth.title);
+  next.growth.text = cleanHtml(section.description, next.growth.text);
+  next.growth.image = media(section.image) ?? next.growth.image;
+  next.growth.overlay = cleanHtml(section.imageTitle, next.growth.overlay);
+  next.growth.cta = link(section.ctaButton, next.growth.cta);
+
+  const imageSteps = rows(section.imageSteps);
+  if (imageSteps.length > 0) {
+    next.growth.stages = imageSteps.map((step) => keep(step.label, ""));
+  }
+
+  const tiers = rows(section.tiers);
+  if (tiers.length > 0) {
+    next.growth.cards = tiers.map((tier, index) => {
+      const fallback = next.growth.cards[index];
+      return {
+        icon: null,
+        title: cleanHtml(tier.title, fallback?.title ?? ""),
+        text: cleanHtml(tier.description, fallback?.text ?? ""),
+        // `points` may not be present — fall back to existing items safely.
+        items:
+          typeof tier.points === "string"
+            ? extractListItems(tier.points)
+            : fallback?.items ?? [],
+      };
+    });
+  }
+}
+
+/** Home Client Perspective → decisions. */
+function mergeDecisions(next: HomeContent, section: Record<string, any>): void {
+  next.decisions.quote = cleanHtml(section.quote, next.decisions.quote);
+  next.decisions.name = cleanHtml(section.name, next.decisions.name);
+  next.decisions.role = cleanHtml(section.designation, next.decisions.role);
+  next.decisions.portrait = media(section.image) ?? next.decisions.portrait;
+
+  next.decisions.eyebrow = cleanHtml(section.subTitle, next.decisions.eyebrow);
+  next.decisions.title = cleanHtml(section.title, next.decisions.title);
+  next.decisions.text = cleanHtml(section.description, next.decisions.text);
+  next.decisions.cta = link(section.ctaButton, next.decisions.cta);
+
+  const metrics = rows(section.metrics);
+  if (metrics.length > 0) {
+    next.decisions.cards = metrics.map((metric, index) => {
+      const fallback = next.decisions.cards[index];
+      return {
+        icon: null,
+        title: cleanHtml(metric.value, fallback?.title ?? ""),
+        text: cleanHtml(metric.description, fallback?.text ?? ""),
+      } satisfies HomeCard;
+    });
+  }
+}
+
+/** Home Leadership → leadership. */
+function mergeLeadership(next: HomeContent, section: Record<string, any>): void {
+  next.leadership.eyebrow = cleanHtml(section.subTitle, next.leadership.eyebrow);
+
+  const slides = rows(section.slides);
+  if (slides.length > 0) {
+    const titles = slides
+      .map((slide) => cleanHtml(slide.title, ""))
+      .filter(Boolean);
+    const descriptions = slides
+      .map((slide) => cleanHtml(slide.description, ""))
+      .filter(Boolean);
+    if (titles.length > 0) next.leadership.title = titles.join(" ");
+    if (descriptions.length > 0) next.leadership.text = descriptions.join("\n\n");
+  }
+
+  // GraphQL alias in section.tsx is `teamMembersList` (to disambiguate
+  // against another `teamMembers` field on the Page type). Fallback kept
+  // so merge still works if the alias is ever reverted.
+  const teamMembers = rows(section.teamMembersList ?? section.teamMembers);
+  if (teamMembers.length > 0) {
+    next.leadership.people = teamMembers.map((member, index) => {
+      const fallback = next.leadership.people[index];
+      return {
+        image: media(member.image) ?? fallback?.image ?? null,
+        name: cleanHtml(member.name, fallback?.name ?? ""),
+        role: cleanHtml(member.designation, fallback?.role ?? ""),
+      } satisfies HomePerson;
+    });
+  }
+}
+
+/** CTA Section → pressure (the "Tell Us Where The Pressure Is" block). */
+function mergePressure(next: HomeContent, section: Record<string, any>): void {
+  const rawTitle = str(section.title) ?? "";
+  // ACF WYSIWYG title may include <b>...</b> for the green highlight phrase.
+  const boldMatch =
+    rawTitle.match(/<b>(.*?)<\/b>/i) ||
+    rawTitle.match(/<strong>(.*?)<\/strong>/i);
+
+  const cleanTitle = cleanHtml(section.title, next.pressure.title);
+
+  if (boldMatch && boldMatch[1]) {
+    const highlight = cleanHtml(boldMatch[1], "").trim();
+    if (highlight) {
+      const remainder = cleanTitle
+        .replace(highlight, "")
+        .replace(/\s+/g, " ")
+        .trim();
+      next.pressure.title = remainder || cleanTitle;
+      next.pressure.emphasis = highlight;
+    } else {
+      next.pressure.title = cleanTitle;
+    }
+  } else {
+    next.pressure.title = cleanTitle;
+  }
+
+  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.cta = link(section.ctaButton, next.pressure.cta);
+}
+
+/** Agentic Official Partner Stack → partners (title + logos). */
+function mergePartners(next: HomeContent, section: Record<string, any>): void {
+  if (section.title) {
+    next.partners.title = cleanHtml(section.title, next.partners.title);
+  }
+
+  const partners = rows(section.officialPartners);
+  if (partners.length > 0) {
+    next.partners.logos = partners.map((partner) => {
+      const image = media(partner.logo);
+      return {
+        image,
+        name: image?.alt ?? "Partner",
+        caption: "",
+      };
+    });
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Public Entry Point                             */
+/* -------------------------------------------------------------------------- */
+
+export function mergeHome(
+  base: HomeContent,
+  sections: RawSection[],
+): HomeContent {
   const next: HomeContent = structuredClone(base);
 
-  for (const section of sections) {
-    const typeName = typeof section.__typename === "string" ? section.__typename : "";
+  for (const section of sections ?? []) {
+    const typeName =
+      typeof section.__typename === "string" ? section.__typename : "";
+    const data = section as Record<string, any>;
 
-    if (/HomeHeader$/.test(typeName)) {
-      next.header = {
-        logo: media(section.logo) ?? next.header.logo,
-        links: Array.isArray(section.links) && section.links.length > 0
-          ? section.links.map((item: any, index: number) => {
-              const linkRow = row(item);
-              const label = linkRow ? str(linkRow.label) : null;
-              const url = linkRow ? str(linkRow.url) : null;
-              const base = next.header.links[index] ?? next.header.links[0];
-              return {
-                label: label ?? base.label,
-                url: url ?? base.url,
-                children: Array.isArray(linkRow?.children)
-                  ? linkRow.children.map((child: any) => {
-                      const childRow = row(child);
-                      return {
-                        label: childRow ? str(childRow.label) ?? "" : "",
-                        url: childRow ? str(childRow.url) ?? "" : "",
-                      };
-                    })
-                  : base.children,
-              };
-            })
-          : next.header.links,
-        cta: link(section.ctaLabel, section.ctaUrl, next.header.cta),
-      };
-    } else if (/HomeHero$/.test(typeName)) {
-      next.hero = {
-        eyebrow: keep(section.eyebrow, next.hero.eyebrow),
-        title: keep(section.title, next.hero.title),
-        highlight: keep(section.highlight, next.hero.highlight),
-        text: keep(section.text, next.hero.text),
-        primary: link(section.primaryLabel, section.primaryUrl, next.hero.primary),
-        closeLabel: keep(section.closeLabel, next.hero.closeLabel),
-        closeValue: keep(section.closeValue, next.hero.closeValue),
-        closeUnit: keep(section.closeUnit, next.hero.closeUnit),
-        closeTrend: keep(section.closeTrend, next.hero.closeTrend),
-        runwayLabel: keep(section.runwayLabel, next.hero.runwayLabel),
-        runwayValue: keep(section.runwayValue, next.hero.runwayValue),
-        runwayUnit: keep(section.runwayUnit, next.hero.runwayUnit),
-        runwayTrend: keep(section.runwayTrend, next.hero.runwayTrend),
-        chartTitle: keep(section.chartTitle, next.hero.chartTitle),
-        chartRange: keep(section.chartRange, next.hero.chartRange),
-        call: link(section.callLabel, section.callUrl, next.hero.call),
-      };
+    if (matchesLayout(typeName, "HomeBannerSection")) {
+      mergeHero(next, data);
+      continue;
     }
+
+    if (matchesLayout(typeName, "HomeWhenFinanceMattersSection")) {
+      mergeFounders(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "HomeWhatMakesFiabDifferentSection")) {
+      mergeDifference(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "HomeFinanceThatGrowsSection")) {
+      mergeGrowth(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "HomeClientPerspectiveSection")) {
+      mergeDecisions(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "HomeLeadershipSection")) {
+      mergeLeadership(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "AgenticOfficialPartnerStack")) {
+      mergePartners(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "CtaSection")) {
+      mergePressure(next, data);
+      continue;
+    }
+
+    // Intentionally ignored on Home:
+    //  - WhyFiabTrustedBySectionLayout (home uses its own <TrustedBy> strip)
   }
 
   return next;
+}
+
+export function mergeHomeContent(sections: RawSection[]): HomeContent {
+  return mergeHome(homeContent, sections);
 }
