@@ -258,9 +258,18 @@ export const agenticAiContent: AgenticAiContent = {
         question: "Is this a chatbot?",
         answer: "No. Agents reason over data, follow policies, and take actions (with approvals).",
       },
-      { question: "Do humans still approve?", answer: "" },
-      { question: "Will it work with our current tools?", answer: "" },
-      { question: "How do we price pilots?", answer: "" },
+      {
+        question: "Do humans still approve?",
+        answer: "Yes. You define thresholds—above that, agents seek approval; below that, they act and log.",
+      },
+      {
+        question: "Will it work with our current tools?",
+        answer: "If it’s NetSuite, Zoho, Salesforce, Power BI, ManageEngine, Keka, or Rippling—yes, natively. Others connect via secure integrations.",
+      },
+      {
+        question: "How do we price pilots?",
+        answer: "Fixed fee or hourly, depending on your needs.",
+      },
     ],
   },
 };

@@ -119,12 +119,21 @@ export const careersContent: CareersContent = {
     title: "Frequently Asked Questions",
     items: [
       {
-        question: "Do you hire remotely?",
-        answer: "Yes. We're remote-first across the US and India, with time-zone aligned roles",
+        question: "Is this a chatbot?",
+        answer: "No. Agents reason over data, follow policies, and take actions (with approvals).",
       },
-      { question: "What tools do I need to know?", answer: "" }, // Blank answer
-      { question: "Do you offer growth paths?", answer: "" },   // Blank answer
-      { question: "What's the work culture like?", answer: "" }, // Blank answer
+      {
+        question: "Do humans still approve?",
+        answer: "Yes. You define thresholds—above that, agents seek approval; below that, they act and log.",
+      },
+      {
+        question: "Will it work with our current tools?",
+        answer: "If it’s NetSuite, Zoho, Salesforce, Power BI, ManageEngine, Keka, or Rippling—yes, natively. Others connect via secure integrations.",
+      },
+      {
+        question: "How do we price pilots?",
+        answer: "Fixed fee or hourly, depending on your needs.",
+      },
     ],
   },
 };

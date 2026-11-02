@@ -26,7 +26,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
           style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
         />
 
-        <div className="relative z-10 flex flex-col h-full">
+        <div className="relative z-10 flex flex-col justify-center h-full">
           <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
 
           <Container>
@@ -152,20 +152,39 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 bg-[#191f2c] rounded-[10px] border border-white/5 overflow-hidden">
-            {content.peopleOps.agents.map((agent, idx) => (
-              <div
-                key={idx}
-                className="p-10 flex flex-col min-h-[286px] border-r border-b md:border-b-0 border-white/5 last:border-r-0"
-              >
-                <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 mb-6">
-                  <div className="relative w-6 h-6">
-                    <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+            {content.peopleOps.agents.map((agent, idx) => {
+              const total = content.peopleOps.agents.length;
+              const totalRows = Math.ceil(total / 3);
+              const currentRow = Math.floor(idx / 3);
+              const isLastRow = currentRow === totalRows - 1;
+              const isLastCol = (idx + 1) % 3 === 0;
+              const isLastItem = idx === total - 1;
+
+              const borderBottomClass = !isLastRow
+                ? "border-b"
+                : !isLastItem
+                ? "border-b md:border-b-0"
+                : "border-b-0";
+
+              const borderRightClass = !isLastCol
+                ? "border-r-0 md:border-r"
+                : "border-r-0";
+
+              return (
+                <div
+                  key={idx}
+                  className={`p-10 flex flex-col min-h-[286px] border-white/5 ${borderRightClass} ${borderBottomClass}`}
+                >
+                  <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 mb-6">
+                    <div className="relative w-6 h-6">
+                      <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+                    </div>
                   </div>
+                  <h3 className="text-[22px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
+                  <p className="text-[16px] font-normal leading-[150%] text-white/70">{agent.text}</p>
                 </div>
-                <h3 className="text-[22px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
-                <p className="text-[16px] font-normal leading-[150%] text-white/70">{agent.text}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </Container>
@@ -209,10 +228,11 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       <PartnersSection
         title={content.partners.title}
         logos={content.partners.logos}
+        variant="bordered"
       />
 
       {/* 7. Proven Architecture */}
-      <Section theme="light" spacing="both" className="proven-architecture">
+      <Section theme="light" spacing="bottom" className="proven-architecture">
         <Container>
 
           <div className="text-center md:mb-16 mb-10">
@@ -297,13 +317,6 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                     href="#"
                     bgColor="#ffffff"
                     textColor="#0B0D0C"
-                    size={{
-                      width: "140px",
-                      height: "50px",
-                      paddingX: "30px",
-                      paddingY: "10px",
-                      fontSize: "16px"
-                    }}
                   />
                 </div>
               </form>
@@ -314,7 +327,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       </Section>
 
       {/* 9. Naya Section: FAQ */}
-      <Section theme="light" spacing="both" className="faq">
+      <Section theme="faq" spacing="both" className="faq-section">
         <Container>
           <div className="mx-auto w-full max-w-[880px]">
             <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">

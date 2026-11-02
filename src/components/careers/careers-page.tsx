@@ -205,18 +205,19 @@ export function CareersPage({ sections }: { sections: RawSection[] }) {
         </Container>
       </section>
 
-      {/* 6. Frequently Asked Questions */}
-      <section className="faq-section bg-[#F5F3F2] py-14 sm:py-16 lg:py-24 text-[#121826]">
+       {/* 9. Naya Section: FAQ */}
+      <Section theme="faq" spacing="both" className="faq-section">
         <Container>
           <div className="mx-auto w-full max-w-[880px]">
-            <h2 className="text-center text-[30px] sm:text-[38px] lg:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-10 sm:mb-12 text-[#121826]">
+            <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
               {content.faq.title}
             </h2>
 
             <Accordion items={content.faq.items} />
           </div>
         </Container>
-      </section>
+      </Section>
+
 
       {/* 7. Reusable Footer Hero (CTA Banner) */}
       <FooterHero

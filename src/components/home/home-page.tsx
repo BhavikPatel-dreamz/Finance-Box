@@ -163,7 +163,6 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
                   href={hero.call.url}
                   color="green"
                   onDark={true}
-                  size={{ width: "182px", height: "58px", fontSize: "16px" }}
                 />
               </div>
 
@@ -309,7 +308,6 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
             bgColor="#23C55E"
             textColor="#07110d"
             onDark={true}
-            size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
           />
         </div>
 
@@ -388,7 +386,6 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
                 href={decisions.cta.url}
                 bgColor="#121826"
                 textColor="#ffffff"
-                size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
               />
             </div>
           </div>

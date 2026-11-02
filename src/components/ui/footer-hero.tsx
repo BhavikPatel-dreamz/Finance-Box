@@ -71,7 +71,7 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
     layout: "two-line",
     titleMaxWidth: "max-w-[560px]",
     highlightItalic: false,
-    textMaxWidth: "max-w-full",
+    textMaxWidth: "max-w-[628px]",
   },
   "single-line": {
     layout: "single-line",
@@ -113,6 +113,7 @@ export type FooterHeroProps = {
   highlightClassName?: string;
   textClassName?: string;
   className?: string;
+  textMaxWidth?: string;
 };
 
 export function FooterHero({
@@ -121,10 +122,11 @@ export function FooterHero({
   text,
   buttonLabel,
   buttonUrl,
-  bgImage = "/media/Footer-bg.png",
+  bgImage = "/media/Footer-bg.svg",
   variant = "default",
   layout,
   titleMaxWidth,
+  textMaxWidth,
   highlightItalic,
   titleClassName,
   highlightClassName,
@@ -134,15 +136,15 @@ export function FooterHero({
   const config = VARIANT_CONFIGS[variant] || VARIANT_CONFIGS.default;
   const activeLayout = layout ?? config.layout;
   const activeTitleMaxWidth = titleMaxWidth ?? config.titleMaxWidth;
+  const activeTextMaxWidth = textMaxWidth ?? config.textMaxWidth;
   const isItalic = highlightItalic ?? config.highlightItalic;
-  const activeTextMaxWidth = config.textMaxWidth;
   const isTwoLine = activeLayout === "two-line";
 
   return (
     <Section theme="light" spacing="both" className={twMerge("footer-cta-section", className)}>
       <Container>
         {/* Container exactly 1280x342 on desktop, flexible height on mobile */}
-        <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-13 min-h-[320px] lg:h-[342px] w-full max-w-[1280px] mx-auto">
+        <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-15 min-h-[320px] w-full max-w-[1280px] mx-auto">
 
           {bgImage && (
             <div className="absolute inset-0 z-0">

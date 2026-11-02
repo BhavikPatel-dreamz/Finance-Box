@@ -1,7 +1,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-export type SectionTheme = "light" | "dark";
+export type SectionTheme = "light" | "dark" | "faq" | "cream";
 export type SectionSpacing = "both" | "top" | "bottom" | "none";
 
 export type SectionProps = {
@@ -17,6 +17,8 @@ export type SectionProps = {
 const themeStyles: Record<SectionTheme, string> = {
   light: "bg-white text-[#121826]",
   dark: "bg-[#121826] text-white",
+  faq: "bg-[#EDE9E6] text-[#121826]",
+  cream:"bg-[#EDE9E6] text-[#121826]",
 };
 
 const spacingStyles: Record<SectionSpacing, string> = {
