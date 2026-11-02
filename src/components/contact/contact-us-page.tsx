@@ -117,7 +117,7 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
             </Reveal>
 
             {/* Right Side: Form */}
-            <Reveal preset="slide-right" distance={20} className="w-full lg:w-[788px] bg-[#EDE9E6]/50 rounded-[10px] p-6 sm:p-8 md:p-10 lg:py-15 lg:px-12.5">
+            <Reveal preset="slide-right" distance={20} className="w-full lg:w-[788px] bg-[#EDE9E6]/50 rounded-[10px] p-6 sm:p-8 md:p-10 xl:py-15 xl:px-12.5">
               <h2 className="text-[26px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-medium leading-[1.15] sm:leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-2.5 sm:mb-4">
                 {content.formSection.title}
               </h2>

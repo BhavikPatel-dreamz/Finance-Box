@@ -258,7 +258,7 @@ function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
                   bgColor="#23C55E"
                   textColor="#121826"
                   onDark={true}
-                  className="mt-6 sm:mt-8 lg:mt-10 hover:!bg-white hover:!text-[#121826]"
+                  className="mt-6 sm:mt-8 lg:mt-10"
                 />
               </div>
 

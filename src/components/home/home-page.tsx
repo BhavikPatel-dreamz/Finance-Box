@@ -100,7 +100,6 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
                     label={hero.primary.label}
                     href={hero.primary.url}
                     color="white"
-                    className="hover:!bg-[#23C55E] hover:!text-[#121826]"
                   />
                 </div>
               </Reveal>
@@ -203,6 +202,14 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
     "/icons/cost-intelligence.png",
     "/icons/automation.png",
   ];
+  function HoverLine({ className = "bg-[#23C55E]" }: { className?: string }) {
+    return (
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none ${className}`}
+      />
+    );
+  }
 
   return (
     <Section theme="dark" spacing="both" className="differance-section">
@@ -218,42 +225,46 @@ function Difference({ difference }: { difference: HomeContent["difference"] }) {
 
         <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[9px] overflow-hidden">
 
-          <StaggerItem index={0} className="card-hover bg-white text-[#121826] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
-            <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6">
-              <img src={icons[0]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain" />
+          <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+            <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10">
+              <img src={icons[0]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 group-hover:scale-110 motion-reduce:transition-none" />
             </div>
             <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{difference.cards[0].title}</h3>
             <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-[#121826]/70">{difference.cards[0].text}</p>
+            <HoverLine />
           </StaggerItem>
 
           {difference.cards.slice(1, 3).map((card, idx) => (
-            <StaggerItem key={idx} index={idx + 1} className="card-hover bg-white/1 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
-              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6">
-                <img src={icons[idx + 1]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain" />
+            <StaggerItem key={idx} index={idx + 1} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
+                <img src={icons[idx + 1]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 group-hover:scale-110 motion-reduce:transition-none" />
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
-              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70">{card.text}</p>
+              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
+              <HoverLine />
             </StaggerItem>
           ))}
 
           {difference.cards.slice(3, 5).map((card, idx) => (
-            <StaggerItem key={idx} index={idx + 3} className="card-hover bg-white/1 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
-              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6">
-                <img src={icons[idx + 3]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain" />
+            <StaggerItem key={idx} index={idx + 3} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
+              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
+                <img src={icons[idx + 3]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 group-hover:scale-110 motion-reduce:transition-none" />
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
-              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70">{card.text}</p>
+              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
+              <HoverLine />
             </StaggerItem>
           ))}
 
-          <StaggerItem index={5} className="card-hover bg-[#23C55E] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[383px] md:border-t border-white/10 text-white">
+          <StaggerItem index={5} className="card-hover group relative overflow-hidden bg-[#23C55E] transition-colors duration-500 hover:bg-[#1FAF53] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[383px] md:border-t border-white/10 text-white">
             <p className="text-[14px] sm:text-[16px] md:text-[20px] font-mono font-medium tracking-wide uppercase">
               {difference.statEyebrow}
             </p>
             <div className="mt-6 md:mt-0">
-              <p className="text-[64px] sm:text-[84px] md:text-[120px] font-normal leading-tight tracking-[-2px]">{difference.statValue}</p>
+              <p className="origin-left text-[64px] sm:text-[84px] md:text-[120px] font-normal leading-tight tracking-[-2px] transition-transform duration-500 ease-out group-hover:scale-[1.04] motion-reduce:transition-none">{difference.statValue}</p>
               <p className="text-[16px] sm:text-[18px] md:text-[20px] font-medium leading-[1.1] mt-1 sm:mt-2">{difference.statLabel}</p>
             </div>
+            <HoverLine className="bg-white" />
           </StaggerItem>
 
         </StaggerGroup>

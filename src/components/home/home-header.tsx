@@ -211,14 +211,14 @@ export function HomeHeader({
             </nav>
 
             {/* Updated Button Size */}
-            <div className="btn-cta hidden lg:block">
+            <div className="hidden lg:block">
               <Button
                 color="green"
                 size="header"
                 text={header.cta.label}
                 href={header.cta.url}
                 onDark={true}
-                className="w-[154px] hover:!bg-white hover:!text-[#121826]"
+                className="w-[154px]"
               />
             </div>
 
@@ -275,15 +275,15 @@ export function HomeHeader({
               ))}
 
               <div className="pt-5 mt-2 border-t-0">
-                <Button
-                  color="green"
-                  size="header"
-                  text={header.cta.label}
-                  href={header.cta.url}
-                  onDark={true}
-                  className="w-full justify-center hover:!bg-white hover:!text-[#121826] font-semibold text-center"
-                  onClick={() => setMenuOpen(false)}
-                />
+                  <Button
+                    color="green"
+                    size="header"
+                    text={header.cta.label}
+                    href={header.cta.url}
+                    onDark={true}
+                    className="w-full justify-center text-center"
+                    onClick={() => setMenuOpen(false)}
+                  />
               </div>
             </nav>
           </Container>

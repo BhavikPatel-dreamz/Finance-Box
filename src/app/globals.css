@@ -179,9 +179,7 @@ button, input, select, textarea {
   a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
   button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
 ) {
-  background-color: #ffffff !important;
   color: #121826 !important;
-  border-color: transparent !important;
 }
 
 :is(

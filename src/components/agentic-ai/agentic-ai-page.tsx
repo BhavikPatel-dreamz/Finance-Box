@@ -222,7 +222,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/90 via-[#121826]/20 to-transparent" />
 
-                <div className="relative z-10 p-8 w-full text-white">
+                <div className="relative p-8 w-full text-white">
                   <h3 className="text-[24px] font-semibold leading-[1.2] mb-3">
                     {card.title}
                   </h3>
