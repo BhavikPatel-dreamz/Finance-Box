@@ -184,36 +184,6 @@ function assertIdentifier(value: string) {
   return value;
 }
 
-function confirmedSelection(selection: string, confirmed: Set<string>) {
-  // 🚀 FIX: Agar selection mein inline fragment (... on Type) hai, toh usko bypass karo
-  if (selection.includes("... on")) {
-    return selection;
-  }
-
-  const chunks: string[] = [];
-  const source = selection.trim();
-  let index = 0;
-  while (index < source.length) {
-    while (index < source.length && /\s/.test(source[index])) index += 1;
-    if (index >= source.length) break;
-    const start = index;
-    while (index < source.length && /[A-Za-z0-9_]/.test(source[index])) index += 1;
-    const name = source.slice(start, index);
-    while (index < source.length && /\s/.test(source[index])) index += 1;
-    if (source[index] === "{") {
-      let depth = 1;
-      index += 1;
-      while (index < source.length && depth > 0) {
-        if (source[index] === "{") depth += 1;
-        else if (source[index] === "}") depth -= 1;
-        index += 1;
-      }
-    }
-    if (confirmed.has(name)) chunks.push(source.slice(start, index).trim());
-  }
-  return chunks.join(" ");
-}
-
 async function readTypeInfo(name: string) {
   if (!graphqlEndpoint()) return null;
   const data = await graphqlRequest<TypeByNameResult>(TYPE_BY_NAME_QUERY, { name });
@@ -347,28 +317,29 @@ async function loadSections(uri: string, preview: boolean) {
     for (const typeName of possibleTypes) {
       const registration = sectionRegistry.find((section) => section.matchesType(typeName));
       if (!registration) continue;
-      const layoutType = await getTypeInfo(typeName);
-      const fields = registration.fields.filter((field) =>
-        layoutType?.fields.some((candidate) => candidate.name === field),
-      );
-      if (fields.length === 0) continue;
-      const confirmed = new Set(fields);
-      const selection =
-        registration.selection && fields.length === registration.fields.length
-          ? registration.selection
-          : registration.selection
-            ? confirmedSelection(registration.selection, confirmed)
-            : fields.map(assertIdentifier).join(" ");
-      
-      // 🚀 FIX: Regex ko update kiya gaya hai taaki dots (...) allow ho sakein inline fragments ke liye
-      if (!/^[\sA-Za-z0-9_{}.]+$/.test(selection)) {
+
+      // ────────────────────────────────────────────────────────────────
+      // 🚀 FIX: Trust registration.selection as-is.
+      //
+      // The previous version filtered fields via GraphQL introspection and
+      // silently stripped everything when the introspection result didn't
+      // include the field names (or when introspection was blocked).
+      // registration.selection is authored in our own source code, so it's
+      // safe to pass through after a light character whitelist check.
+      // ────────────────────────────────────────────────────────────────
+      const selection = registration.selection?.trim();
+      if (!selection) continue;
+
+      // Allow only the GraphQL selection characters we actually use:
+      // letters, digits, whitespace, { } ( ) : , . $ _
+      if (!/^[\sA-Za-z0-9_{}():,\.$]+$/.test(selection)) {
         throw new GraphQLRequestError("Refusing to query an unexpected GraphQL selection.");
       }
-      
+
       fragments.push(`... on ${assertIdentifier(typeName)} { __typename ${selection} }`);
     }
 
-    if (possibleTypes.length === 0) {
+    if (possibleTypes.length === 0 || fragments.length === 0) {
       return { sections: [] as RawSection[], sectionError: null };
     }
 
