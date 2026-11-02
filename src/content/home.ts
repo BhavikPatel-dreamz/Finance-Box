@@ -331,6 +331,12 @@ export const homeContent: HomeContent = {
     people: [
       { image: { url: "/home/amit-mulchandani.png", alt: "Amit Mulchandani" }, name: "Amit Mulchandani", role: "FOUNDER & CEO, FINANCE IN A BOX" },
       { image: { url: "/home/Berena-Reynoso.png", alt: "Berena Reynoso" }, name: "Berena Reynoso", role: "HEAD OF OPERATIONS" },
+      { image: { url: "/home/Galina-Puzankova.png", alt: "Galina Puzankova" }, name: "Galina Puzankova", role: "VICE PRESIDENT, DELIVERY" },
+      { image: { url: "/home/Aswathy-Vijayakumar.png", alt: "Aswathy Vijayakumar" }, name: "Aswathy Vijayakumar", role: "DIRECTOR FP&A" },
+      { image: { url: "/home/Neeti-Chauhan.png", alt: "Neeti Chauhan" }, name: "Neeti Chauhan", role: "FINANCE CONTROLLER" },
+      { image: { url: "/home/Jitheesh.png", alt: "Jitheesh" }, name: "Jitheesh", role: "HEAD OF OTC REVOPS" },
+      { image: { url: "/home/Denise-Uniacke.png", alt: "Denise Uniacke" }, name: "Denise Uniacke", role: "BUSINESS DEVELOPMENT & CLIENT SUCCESS MANAGER" },
+      { image: { url: "/home/Siddharth-Nagrath.png", alt: "Siddharth Nagrath" }, name: "Siddharth Nagrath", role: "TRAINING MANAGER - L&D OPERATIONS" },
     ],
   },
   pressure: {

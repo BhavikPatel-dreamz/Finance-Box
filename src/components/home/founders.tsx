@@ -39,13 +39,18 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
           <div className="flex flex-col gap-3 sm:gap-4">
             {founders.cards.map((card, index) => {
               const isOpen = openIndex === index;
+              const panelId = `founders-panel-${index}`;
+
               return (
                 <div
                   key={index}
-                  className="bg-[#121826] rounded-[14px] overflow-hidden transition-all duration-300"
+                  className="bg-[#121826] rounded-[14px] overflow-hidden"
                 >
                   <button
+                    type="button"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
                     className="w-full flex items-center justify-between p-4 sm:p-5.5 text-left focus:outline-none"
                   >
                     <span className="text-[17px] sm:text-[20px] md:text-[25px] font-medium text-white pr-3 sm:pr-4">
@@ -53,7 +58,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
                     </span>
 
                     <span
-                      className={`flex h-10 w-10 sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? "bg-[#23C55E] text-[#121826]" : "bg-white/10 text-white"
+                      className={`flex h-10 w-10 sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${isOpen ? "bg-[#23C55E] text-[#121826]" : "bg-white/10 text-white"
                         }`}
                     >
                       <svg
@@ -70,11 +75,19 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
                     </span>
                   </button>
 
-                  {isOpen && card.text && (
-                    <div className="px-4 sm:px-6 pb-4 sm:pb-6 text-[14px] sm:text-base md:text-lg font-light leading-[160%] text-white/70">
-                      {card.text}
+                  {/* Animated answer: grid rows go 0fr -> 1fr */}
+                  <div
+                    id={panelId}
+                    role="region"
+                    className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-4 sm:px-6 pb-4 sm:pb-6 text-[14px] sm:text-base md:text-lg font-light leading-[160%] text-white/70">
+                        {card.text}
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}
