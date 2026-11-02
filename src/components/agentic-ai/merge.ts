@@ -1,20 +1,331 @@
-import { agenticAiContent, type AgenticAiContent } from "@/content/agentic-ai";
+import {
+  agenticAiContent,
+  type AgenticAiContent,
+  type AgenticAiAgent,
+  type AgenticAiArchitectureCard,
+  type AgenticAiFaq,
+  type AgenticAiFeature,
+  type AgenticAiPartner,
+} from "@/content/agentic-ai";
 import type { RawSection } from "@/lib/wordpress/content";
+
+/* -------------------------------------------------------------------------- */
+/*                                  Helpers                                    */
+/* -------------------------------------------------------------------------- */
+
+function str(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+}
+
+function keep(value: unknown, fallback: string): string {
+  return str(value) ?? fallback;
+}
+
+function cleanHtml(value: unknown, fallback: string): string {
+  const text = str(value);
+  if (!text) return fallback;
+  const stripped = text
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<\/p>\s*<p[^>]*>/gi, "\n\n")
+    .replace(/<[^>]*>?/gm, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .trim();
+  return stripped || fallback;
+}
+
+function media(value: unknown): { url: string; alt: string } | null {
+  if (!value || typeof value !== "object") return null;
+  const item = value as Record<string, any>;
+  const nested = item.node ?? item;
+  const url = nested.sourceUrl ?? nested.url ?? null;
+  if (!url || typeof url !== "string") return null;
+  return {
+    url,
+    alt: typeof nested.altText === "string" ? nested.altText : "",
+  };
+}
+
+function link(value: unknown, fallback: { label: string; url: string }) {
+  if (!value || typeof value !== "object") return fallback;
+  const item = value as Record<string, any>;
+  return {
+    label: keep(item.title ?? item.label, fallback.label),
+    url: keep(item.url, fallback.url),
+  };
+}
+
+function rows(value: unknown): Record<string, any>[] {
+  return Array.isArray(value) ? (value as Record<string, any>[]) : [];
+}
+
+function matchesLayout(typeName: string, layoutName: string): boolean {
+  return typeName.endsWith(`${layoutName}Layout`);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Section Mergers                                */
+/* -------------------------------------------------------------------------- */
+
+/** Common Banner Section → hero. */
+function mergeHero(next: AgenticAiContent, section: Record<string, any>): void {
+  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
+  next.hero.title = cleanHtml(section.title, next.hero.title);
+  
+  const rawTitle = str(section.title) ?? "";
+  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
+  if (boldMatch && boldMatch[1]) {
+    next.hero.highlight = cleanHtml(boldMatch[1], "").trim();
+  } else {
+    next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
+  }
+
+  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.cta = link(section.ctaButton, next.hero.cta);
+  
+  // TagLine → bullets (textarea ki lines ko bullet items me convert karta hai)
+  if (section.tagLine) {
+    const tagLine = cleanHtml(section.tagLine, "");
+    if (tagLine) {
+      next.hero.bullets = tagLine
+        .split(/\n+/)
+        .map((s) => s.replace(/^[-•*]\s*/, "").trim())
+        .filter(Boolean);
+    }
+  }
+}
+
+/** About Agentic Section → whatIs. */
+function mergeWhatIs(next: AgenticAiContent, section: Record<string, any>): void {
+  next.whatIs.eyebrow = cleanHtml(section.subTitle, next.whatIs.eyebrow);
+  next.whatIs.title = cleanHtml(section.title, next.whatIs.title);
+  
+  // ❌ highlight aur text2 ACF me nahi hain, isliye default static values rahengi.
+  
+  next.whatIs.text1 = cleanHtml(section.description, next.whatIs.text1);
+
+  const features = rows(section.aboutAgentics);
+  if (features.length > 0) {
+    next.whatIs.features = features.map((f, index) => {
+      const fallback = next.whatIs.features[index];
+      return {
+        image: media(f.image)?.url ?? fallback?.image ?? "",
+        title: cleanHtml(f.title, fallback?.title ?? ""),
+        text: cleanHtml(f.content, fallback?.text ?? ""),
+      } satisfies AgenticAiFeature;
+    });
+  }
+}
+
+/** Your Own Agentic Section → buildYourOwn. */
+function mergeBuildYourOwn(next: AgenticAiContent, section: Record<string, any>): void {
+  next.buildYourOwn.title = cleanHtml(section.title, next.buildYourOwn.title);
+  next.buildYourOwn.text = cleanHtml(section.description, next.buildYourOwn.text);
+
+  const agents = rows(section.buildYourOwnAgentic);
+  if (agents.length > 0) {
+    next.buildYourOwn.agents = agents.map((agent, index) => {
+      const fallback = next.buildYourOwn.agents[index];
+      return {
+        icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
+        title: cleanHtml(agent.title, fallback?.title ?? ""),
+        text: cleanHtml(agent.content, fallback?.text ?? ""),
+      } satisfies AgenticAiAgent;
+    });
+  }
+}
+
+/** Agentic People Ops Section → peopleOps. */
+function mergePeopleOps(next: AgenticAiContent, section: Record<string, any>): void {
+  next.peopleOps.title = cleanHtml(section.title, next.peopleOps.title);
+
+  const agents = rows(section.agents);
+  if (agents.length > 0) {
+    next.peopleOps.agents = agents.map((agent, index) => {
+      const fallback = next.peopleOps.agents[index];
+      return {
+        icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
+        title: cleanHtml(agent.title, fallback?.title ?? ""),
+        text: cleanHtml(agent.content, fallback?.text ?? ""),
+      } satisfies AgenticAiAgent;
+    });
+  }
+}
+
+/** Agentic Ops & Compliance Section → opsCompliance. */
+function mergeOpsCompliance(next: AgenticAiContent, section: Record<string, any>): void {
+  next.opsCompliance.title = cleanHtml(section.title, next.opsCompliance.title);
+
+  const cards = rows(section.agents);
+  if (cards.length > 0) {
+    next.opsCompliance.cards = cards.map((card, index) => {
+      const fallback = next.opsCompliance.cards[index];
+      return {
+        // ACF me field ka naam `icon` hai, `backgroundImage` nahi.
+        image: media(card.icon)?.url ?? fallback?.image ?? "",
+        title: cleanHtml(card.title, fallback?.title ?? ""),
+        text: cleanHtml(card.content, fallback?.text ?? ""),
+      };
+    });
+  }
+}
+
+/** Agentic Official Partner Stack → partners. */
+function mergePartners(next: AgenticAiContent, section: Record<string, any>): void {
+  next.partners.title = cleanHtml(section.title, next.partners.title);
+
+  const partners = rows(section.officialPartners);
+  if (partners.length > 0) {
+    next.partners.logos = partners.map((partner) => {
+      const image = media(partner.logo);
+      return {
+        name: image?.alt ?? "Partner",
+        logo: image?.url ?? "",
+      } satisfies AgenticAiPartner;
+    });
+  }
+}
+
+/** Agentic Proven Architecture Section → provenArchitecture. */
+function mergeProvenArchitecture(next: AgenticAiContent, section: Record<string, any>): void {
+  next.provenArchitecture.title = cleanHtml(section.title, next.provenArchitecture.title);
+  next.provenArchitecture.highlight = cleanHtml(section.highlightTitle, next.provenArchitecture.highlight);
+
+  const cards = rows(section.architectureCards);
+  if (cards.length > 0) {
+    next.provenArchitecture.cards = cards.map((card, index) => {
+      const fallback = next.provenArchitecture.cards[index];
+      return {
+        image: media(card.image)?.url ?? fallback?.image ?? "",
+        title: cleanHtml(card.title, fallback?.title ?? ""),
+        text: cleanHtml(card.content, fallback?.text ?? ""),
+        // Bullets ACF me hain hi nahi, isliye fallback static bullets hi rahenge.
+        bullets: fallback?.bullets ?? [],
+      } satisfies AgenticAiArchitectureCard;
+    });
+  }
+}
+
+/** Join Waitlist Section → waitlist. */
+function mergeWaitlist(next: AgenticAiContent, section: Record<string, any>): void {
+  next.waitlist.title = cleanHtml(section.title, next.waitlist.title);
+  next.waitlist.text = cleanHtml(section.description, next.waitlist.text);
+}
+
+/** FAQ Section → faq. */
+function mergeFaq(next: AgenticAiContent, section: Record<string, any>): void {
+  next.faq.title = cleanHtml(section.title, next.faq.title);
+
+  const faqs = rows(section.faqs);
+  if (faqs.length > 0) {
+    next.faq.items = faqs.map((faq, index) => {
+      const fallback = next.faq.items[index];
+      return {
+        question: cleanHtml(faq.question, fallback?.question ?? ""),
+        answer: cleanHtml(faq.answer, fallback?.answer ?? ""),
+      } satisfies AgenticAiFaq;
+    });
+  }
+}
+
+/** CTA Section → pressure. */
+function mergePressure(next: AgenticAiContent, section: Record<string, any>): void {
+  const rawTitle = str(section.title) ?? "";
+  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
+  const cleanTitle = cleanHtml(section.title, next.pressure.title);
+
+  if (boldMatch && boldMatch[1]) {
+    const highlight = cleanHtml(boldMatch[1], "").trim();
+    if (highlight) {
+      const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
+      next.pressure.title = remainder || cleanTitle;
+      next.pressure.emphasis = highlight;
+    } else {
+      next.pressure.title = cleanTitle;
+    }
+  } else {
+    next.pressure.title = cleanTitle;
+  }
+
+  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.cta = link(section.ctaButton, next.pressure.cta);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Public Entry Point                             */
+/* -------------------------------------------------------------------------- */
 
 export function mergeAgenticAi(
   base: AgenticAiContent,
-  sections: RawSection[]
+  sections: RawSection[],
 ): AgenticAiContent {
   const next: AgenticAiContent = structuredClone(base);
-  
-  next.whatIs = next.whatIs ?? base.whatIs;
-  next.buildYourOwn = next.buildYourOwn ?? base.buildYourOwn;
-  next.peopleOps = next.peopleOps ?? base.peopleOps;
-  next.opsCompliance = next.opsCompliance ?? base.opsCompliance;
-  next.partners = next.partners ?? base.partners;
-  next.provenArchitecture = next.provenArchitecture ?? base.provenArchitecture;
-  next.waitlist = next.waitlist ?? base.waitlist;
-  next.faq = next.faq ?? base.faq; // Naya
+
+  for (const section of sections ?? []) {
+    const typeName =
+      typeof section.__typename === "string" ? section.__typename : "";
+    const data = section as Record<string, any>;
+
+    if (matchesLayout(typeName, "CommonBannerSection")) {
+      mergeHero(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "AboutAgenticSection")) {
+      mergeWhatIs(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "YourOwnAgenticSection")) {
+      mergeBuildYourOwn(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "AgenticPeopleOpsPayrollItSection")) {
+      mergePeopleOps(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "AgenticOpsComplianceSection")) {
+      mergeOpsCompliance(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "AgenticOfficialPartnerStack")) {
+      mergePartners(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "AgenticProvenArchitectureSection")) {
+      mergeProvenArchitecture(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "JoinWaitlistSection")) {
+      mergeWaitlist(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "FaqSection")) {
+      mergeFaq(next, data);
+      continue;
+    }
+
+    if (matchesLayout(typeName, "CtaSection")) {
+      mergePressure(next, data);
+      continue;
+    }
+  }
 
   return next;
+}
+
+export function mergeAgenticAiContent(sections: RawSection[]): AgenticAiContent {
+  return mergeAgenticAi(agenticAiContent, sections);
 }

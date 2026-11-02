@@ -320,14 +320,14 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
         </div>
       </section>
 
-      {/* 10. NAYA: Reusable Footer Hero */}
+      {/* 👇 10. NAYA: Reusable Footer Hero (DYNAMIC) */}
       <FooterHero
         variant="agentic-ai"
-        title="Ready to co-pilot your back"
-        highlight="office with Agentic AI?"
-        text=""
-        buttonLabel="Join the Talent Network"
-        buttonUrl="/careers/open-roles"
+        title={content.pressure.title}
+        highlight={content.pressure.emphasis}
+        text={content.pressure.text}
+        buttonLabel={content.pressure.cta.label}
+        buttonUrl={content.pressure.cta.url}
       />
 
       <HomeFooter footer={homeContent.footer} />

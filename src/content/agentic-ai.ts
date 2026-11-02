@@ -34,7 +34,6 @@ export type AgenticAiArchitectureCard = {
   bullets: { boldText: string; normalText: string }[];
 };
 
-// Naya: FAQ Type
 export type AgenticAiFaq = {
   question: string;
   answer: string;
@@ -85,10 +84,16 @@ export type AgenticAiContent = {
     highlight: string;
     text: string;
   };
-  // Naya Section
   faq: {
     title: string;
     items: AgenticAiFaq[];
+  };
+  // 👇 NAYA: Pressure / CTA section
+  pressure: {
+    title: string;
+    emphasis: string;
+    text: string;
+    cta: AgenticAiLink;
   };
 };
 
@@ -250,7 +255,6 @@ export const agenticAiContent: AgenticAiContent = {
     highlight: "Waitlist",
     text: "Be among the first to deploy Agentic AI with FIAB specialists.",
   },
-  // Naya Data
   faq: {
     title: "Frequently Asked Questions",
     items: [
@@ -262,5 +266,12 @@ export const agenticAiContent: AgenticAiContent = {
       { question: "Will it work with our current tools?", answer: "" },
       { question: "How do we price pilots?", answer: "" },
     ],
+  },
+  // 👇 NAYA: Pressure defaults
+  pressure: {
+    title: "Ready to co-pilot your back",
+    emphasis: "office with Agentic AI?",
+    text: "",
+    cta: { label: "Join the Talent Network", url: "/careers/open-roles" },
   },
 };
