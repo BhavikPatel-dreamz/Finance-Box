@@ -12,73 +12,79 @@ export type ProcessGridProps = {
   className?: string;
 };
 
+// Full class names so Tailwind can detect them at build time
+const DESKTOP_COLS: Record<number, string> = {
+  3: "lg:grid-cols-3",
+  4: "lg:grid-cols-4",
+  5: "lg:grid-cols-5",
+};
+
 export function ProcessGrid({ steps, className = "" }: ProcessGridProps) {
   const total = steps.length;
+  if (total === 0) return null;
+
+  const hasOddCount = total % 2 !== 0;
 
   return (
     <div
       className={twMerge(
-        "rounded-[16px] sm:rounded-[20px] border border-white/10 bg-[#191F2D] overflow-hidden",
+        "overflow-hidden border border-white/10 bg-[#191F2D]",
         className
       )}
     >
-      <div
+      <ol
         className={twMerge(
           "grid grid-cols-1 sm:grid-cols-2",
-          total === 5
-            ? "lg:grid-cols-5"
-            : total === 4
-            ? "lg:grid-cols-4"
-            : total === 3
-            ? "lg:grid-cols-3"
-            : "lg:grid-cols-5"
+          DESKTOP_COLS[total] ?? "lg:grid-cols-5"
         )}
       >
         {steps.map((step, idx) => {
           const isLast = idx === total - 1;
-          const isOddInSm = idx % 2 === 0; // left col on 2-col tablet layout
-          const isLastSmRow = total % 2 !== 0 ? isLast : idx >= total - 2;
-          const isLastOnSmSpanned = total % 2 !== 0 && isLast;
+          const isLeftColOnSm = idx % 2 === 0;
+          const isSpannedOnSm = hasOddCount && isLast;
+          const isLastRowOnSm = hasOddCount ? isLast : idx >= total - 2;
 
           return (
-            <div
-              key={idx}
+            <li
+              key={`${step.number}-${idx}`}
               className={twMerge(
-                "relative py-8 sm:py-9 lg:py-10 flex flex-col justify-between bg-[#191F2D] min-h-[200px] sm:min-h-[290px] lg:min-h-[311px]",
-                // Mobile borders (1 column)
-                !isLast ? "border-b border-white/10" : "border-b-0",
-                // Tablet borders (2 columns)
-                isOddInSm && !isLastOnSmSpanned
-                  ? "sm:border-r sm:border-white/10"
-                  : "sm:border-r-0",
-                !isLastSmRow ? "sm:border-b sm:border-white/10" : "sm:border-b-0",
-                isLastOnSmSpanned ? "sm:col-span-2 lg:col-span-1" : "",
-                // Desktop borders (5 columns)
+                "relative flex min-h-[200px] flex-col bg-[#191F2D] pb-8 pt-8 sm:min-h-[290px] sm:pt-9 lg:min-h-[311px] lg:pt-10",
+                // Mobile (1 column)
+                !isLast && "border-b border-white/10",
+                // Tablet (2 columns)
+                isLeftColOnSm && !isSpannedOnSm && "sm:border-r sm:border-white/10",
+                !isLeftColOnSm && "sm:border-r-0",
+                isLastRowOnSm ? "sm:border-b-0" : "sm:border-b sm:border-white/10",
+                isSpannedOnSm && "sm:col-span-2 lg:col-span-1",
+                // Desktop (single row)
                 "lg:border-b-0",
                 !isLast ? "lg:border-r lg:border-white/10" : "lg:border-r-0"
               )}
             >
-              {/* Top: Green vertical indicator flush with left edge + Step Number */}
-              <div className="h-[56px] sm:h-[68px] lg:h-[76px] shrink-0 flex items-start gap-4 sm:gap-5 lg:gap-6">
-                <div className="w-[3px] h-[36px] sm:h-[44px] lg:h-[48px] bg-[#23C55E] -ml-[1px] shrink-0" />
-                <span className="text-[32px] sm:text-[38px] lg:text-[40px] font-extrabold leading-none text-white tracking-tight">
+              {/* Green bar + step number */}
+              <div className="flex h-[36px] shrink-0 items-center gap-[17px] sm:h-[44px] sm:gap-[21px] lg:h-[48px]">
+                <span
+                  aria-hidden="true"
+                  className="h-full w-[3px] shrink-0 bg-[#23C55E]"
+                />
+                <span className="text-[32px] font-extrabold leading-none tracking-tight text-white sm:text-[38px] lg:text-[40px]">
                   {step.number}
                 </span>
               </div>
 
-              {/* Bottom: Title & Description aligned to bottom */}
-              <div className="px-5 sm:px-6 lg:px-6.5 flex flex-col flex-grow justify-end">
-                <h3 className="text-[22px] sm:text-[26px] lg:text-[28px] font-semibold text-white mb-2 leading-tight">
+              {/* Top-aligned so every title starts on the same line across columns */}
+              <div className="mt-8 px-5 sm:mt-10 sm:px-6 lg:mt-[54px]">
+                <h3 className="mb-2 text-[22px] font-semibold leading-tight text-white sm:text-[26px] lg:text-[28px]">
                   {step.title}
                 </h3>
-                <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-normal leading-[150%] sm:leading-[160%] text-white/70">
+                <p className="text-[14px] font-normal leading-[150%] text-white/70 sm:text-[15px] sm:leading-[160%] lg:text-[16px]">
                   {step.text}
                 </p>
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ol>
     </div>
   );
 }
