@@ -11,6 +11,7 @@ import Container from "../ui/container";
 import { ArrowIcon } from "../ui/button";
 import { InvestorSlider } from "@/components/services/investor-slider";
 import { ProcessGrid } from "@/components/ui/process-grid";
+import Section from "../ui/section";
 
 export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
   const content = servicesContent;
@@ -112,8 +113,6 @@ export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
   );
 }
 
-// ... (Baaki saare components: Stages, DepthIntro, Details, Cfo, Process, Investors waise hi rahenge)
-
 // --- Component: Stages ---
 function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
   const iconMap = {
@@ -124,9 +123,8 @@ function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
   };
 
   return (
-    <section className="find-stage-section bg-white py-12 sm:py-16 lg:py-20 text-[#121826]">
+    <Section theme="light" spacing="both" className="find-stage-section">
       <Container>
-
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-12">
           <div>
             <Eyebrow variant="light">
@@ -179,22 +177,21 @@ function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
           })}
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
 
 // --- Component: Depth Intro ---
 function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] }) {
   return (
-    <section className="services-depth-intro bg-[#121826] py-12 sm:py-16 lg:py-20 text-white">
+    <Section theme="dark" spacing="space60" className="services-depth-intro">
       <Container>
         <div className="flex flex-col items-center text-center px-4">
-
           <Eyebrow variant="green">
             {depth.eyebrow}
           </Eyebrow>
 
-          <h2 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+          <h2 className="mt-5.5 sm:mt-7.5 text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             <span className="font-medium">What's</span>
             <span className="font-extrabold italic"> Inside Each Tier</span>
           </h2>
@@ -208,19 +205,20 @@ function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] }) {
           />
         </div>
       </Container>
-    </section>
+    </Section>
+
   );
 }
 
 // --- Component: Details ---
 function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
   return (
-    <section className="services-details bg-[#191F2D] text-white">
+    <Section theme="lightblue" spacing="none" className="services-details">
       {details.map((detail, idx) => (
         <div
           key={detail.anchor}
           id={detail.anchor}
-          className={`py-12 sm:py-16 lg:py-24 scroll-mt-20 lg:scroll-mt-24 ${idx > 0 ? "border-t border-white/12" : ""
+          className={`py-10 sm:py-12.5 lg:py-15 scroll-mt-20 lg:scroll-mt-24 ${idx > 0 ? "border-t border-white/12" : ""
             }`}
         >
           <Container>
@@ -282,7 +280,7 @@ function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
           </Container>
         </div>
       ))}
-    </section>
+    </Section>
   );
 }
 
@@ -295,7 +293,7 @@ function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   ];
 
   return (
-    <section className="services-cfo-section bg-white py-12 sm:py-16 lg:py-20 text-[#121826]">
+    <Section theme="light" spacing="both" className="services-cfo-section">
       <Container>
         <div className="bg-[#EDE9E6] rounded-[10px] p-6 sm:p-10 md:px-12.5 md:py-20 text-[#121826]">
 
@@ -376,14 +374,14 @@ function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
 
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
 
 // --- Component: Process ---
 function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
   return (
-    <section className="services-process-section bg-[#121826] py-12 sm:py-16 lg:py-20 text-white">
+    <Section theme="dark" spacing="both" className="services-process-section">
       <Container>
 
         {/* Header */}
@@ -400,14 +398,14 @@ function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
         <ProcessGrid steps={process.steps} />
 
       </Container>
-    </section>
+    </Section>
   );
 }
 
 // --- Component: Investors (Updated Images & Contained Scroll) ---
 function ServicesInvestors({ investors }: { investors: ServicesContent["investors"] }) {
   return (
-    <section className="services-investors bg-[#121826] py-14 sm:py-20 lg:py-24 text-white overflow-hidden">
+    <Section theme="dark" spacing="both" className="services-process-section">
       <Container>
         {/* Header Area - Contained */}
         <div className="mx-auto w-full mb-10 sm:mb-14 lg:mb-16">
@@ -453,6 +451,6 @@ function ServicesInvestors({ investors }: { investors: ServicesContent["investor
 
       {/* Full-bleed slider wisely aligned with container on left */}
       <InvestorSlider cards={investors.cards} />
-    </section>
+    </Section>
   );
 }
