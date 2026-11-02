@@ -20,51 +20,53 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
 
       {/* Hero Section (Header + Hero = 525px) */}
-      <section className="hero-section relative h-[525px] overflow-hidden bg-[#121826] text-white">
+      <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:h-[525px] overflow-hidden bg-[#121826] text-white">
         <div
           className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
           style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
         />
 
-        <div className="relative z-10 flex flex-col h-full">
+        <div className="relative z-10 flex flex-col justify-center h-full">
           <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
 
-          <div className="flex-1 flex items-center w-full max-w-[1280px] mx-auto px-6 pb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+          <Container>
+            <div className="flex-1 flex items-center pb-12">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
 
-              <div>
-                <Eyebrow variant="dark" className="mb-6">
-                  {content.hero.eyebrow}
-                </Eyebrow>
-                <h1 className="text-[54px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 text-white lg:max-w-[400px]">
-                  {content.hero.title}
-                  <span className="text-[#23C55E]">{content.hero.highlight}</span>
-                </h1>
-                <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-md">
-                  {content.hero.text}
-                </p>
+                <div>
+                  <Eyebrow variant="dark" className="mb-6">
+                    {content.hero.eyebrow}
+                  </Eyebrow>
+                  <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6 lg:max-w-[400px]">
+                    {content.hero.title}
+                    <span className="text-[#23C55E]">{content.hero.highlight}</span>
+                  </h1>
+                  <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-md">
+                    {content.hero.text}
+                  </p>
+                </div>
+
+                <div className="max-w-md lg:justify-self-end">
+                  <ul className="space-y-6 mb-10">
+                    {content.hero.bullets.map((bullet, idx) => (
+                      <li key={idx} className="flex items-start gap-4">
+                        <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
+                        <span className="text-[16px] font-light leading-[160%] text-white/80">{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Updated Button Size */}
+                  <GreenButton
+                    label={content.hero.cta.label}
+                    href={content.hero.cta.url}
+                    bgColor="#ffffff"
+                  />
+                </div>
+
               </div>
-
-              <div className="max-w-md lg:justify-self-end">
-                <ul className="space-y-6 mb-10">
-                  {content.hero.bullets.map((bullet, idx) => (
-                    <li key={idx} className="flex items-start gap-4">
-                      <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
-                      <span className="text-[16px] font-light leading-[160%] text-white/80">{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Updated Button Size */}
-                <GreenButton
-                  label={content.hero.cta.label}
-                  href={content.hero.cta.url}
-                  bgColor="#ffffff"
-                />
-              </div>
-
             </div>
-          </div>
+          </Container>
         </div>
       </section>
 
@@ -77,7 +79,7 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
               <Eyebrow variant="light" className="mb-6">
                 {content.whatIs.eyebrow}
               </Eyebrow>
-              <h2 className="text-[54px] font-medium leading-[1.0] tracking-[-0.8px] mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
                 {content.whatIs.title}
                 <span className="font-bold italic">{content.whatIs.highlight}</span>
               </h2>
@@ -110,17 +112,17 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       {/* 3. Build your own Agentic AI Section */}
       <section className="build-agentic-ai-section bg-white pb-24">
         <Container>
-          <div className="bg-[#EDE9E6]/50 rounded-[10px] p-12 lg:p-20 text-center">
+          <div className="bg-[#EDE9E6]/50 rounded-[10px] px-6 py-10 md:p-12 lg:p-20 text-center">
 
-            <h2 className="text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-4">
               {content.buildYourOwn.title}
               <span className="text-[#23C55E] font-black italic">{content.buildYourOwn.highlight}</span>
             </h2>
-            <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70 max-w-[706px] mx-auto mb-10">
+            <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70 lg:max-w-[706px] mx-auto mb-10">
               {content.buildYourOwn.text}
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-left rounded-[10px] overflow-hidden divide-x md:divide-[#121826]/8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-left rounded-[10px] overflow-hidden divide-y md:divide-x divide-[#121826]/8">
               {content.buildYourOwn.agents.map((agent, idx) => (
                 <div
                   key={idx}
@@ -145,41 +147,60 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       <Section theme="dark" spacing="both" className="people-ops-section">
         <Container>
 
-          <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-12.5">
+          <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-12.5 mb-10">
             {content.peopleOps.title}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 bg-[#191f2c] rounded-[10px] border border-white/5 overflow-hidden">
-            {content.peopleOps.agents.map((agent, idx) => (
-              <div
-                key={idx}
-                className="p-10 flex flex-col min-h-[286px] border-r border-b md:border-b-0 border-white/5 last:border-r-0"
-              >
-                <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 mb-6">
-                  <div className="relative w-6 h-6">
-                    <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+            {content.peopleOps.agents.map((agent, idx) => {
+              const total = content.peopleOps.agents.length;
+              const totalRows = Math.ceil(total / 3);
+              const currentRow = Math.floor(idx / 3);
+              const isLastRow = currentRow === totalRows - 1;
+              const isLastCol = (idx + 1) % 3 === 0;
+              const isLastItem = idx === total - 1;
+
+              const borderBottomClass = !isLastRow
+                ? "border-b"
+                : !isLastItem
+                ? "border-b md:border-b-0"
+                : "border-b-0";
+
+              const borderRightClass = !isLastCol
+                ? "border-r-0 md:border-r"
+                : "border-r-0";
+
+              return (
+                <div
+                  key={idx}
+                  className={`p-10 flex flex-col min-h-[286px] border-white/5 ${borderRightClass} ${borderBottomClass}`}
+                >
+                  <div className="flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/10 mb-6">
+                    <div className="relative w-6 h-6">
+                      <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+                    </div>
                   </div>
+                  <h3 className="text-[22px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
+                  <p className="text-[16px] font-normal leading-[150%] text-white/70">{agent.text}</p>
                 </div>
-                <h3 className="text-[22px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
-                <p className="text-[16px] font-normal leading-[150%] text-white/70">{agent.text}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </Container>
       </Section>
 
       {/* 5. Ops & Compliance Section */}
-      <Section theme="light" spacing="both">
+      <Section theme="light" spacing="top">
         <Container>
 
-          <h2 className="text-center text-[44px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
+          <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-16 mb-8">
             {content.opsCompliance.title}
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {content.opsCompliance.cards.map((card, idx) => (
-              <div key={idx} className="relative rounded-[10px] overflow-hidden min-h-[633px] flex items-end">
+              <div key={idx} className="relative rounded-[10px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
                 <Image
                   src={card.image}
                   alt={card.title}
@@ -207,17 +228,18 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
       <PartnersSection
         title={content.partners.title}
         logos={content.partners.logos}
+        variant="bordered"
       />
 
       {/* 7. Proven Architecture */}
-      <section className="proven-architecture bg-white px-6 pb-24 text-[#16181d]">
+      <Section theme="light" spacing="bottom" className="proven-architecture">
         <Container>
 
-          <div className="text-center mb-16">
-            <h2 className="text-[50px] font-medium leading-[1.05] tracking-[-0.8px]">
+          <div className="text-center md:mb-16 mb-10">
+            <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
               {content.provenArchitecture.title}
             </h2>
-            <h2 className="text-[50px] font-black italic leading-[1.05] tracking-[-0.8px] text-[#23C55E]">
+            <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] text-[#23C55E]">
               {content.provenArchitecture.highlight}
             </h2>
           </div>
@@ -250,75 +272,72 @@ export function AgenticAiPage({ sections }: { sections: RawSection[] }) {
           </div>
 
         </Container>
-      </section>
+      </Section>
 
       {/* 8. Waitlist Section */}
-      <Section theme="dark" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <Section theme="dark" spacing="both" className="waitlist-section">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-          <div className="max-w-md lg:pt-4">
-            <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6">
-              {content.waitlist.title}
-              <span className="font-black italic"> {content.waitlist.highlight}</span>
-            </h2>
-            <p className="text-[16px] font-light leading-[160%] text-white/70">
-              {content.waitlist.text}
-            </p>
-          </div>
+            <div className="max-w-md lg:pt-4">
+              <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
+                {content.waitlist.title}
+                <span className="font-black italic"> {content.waitlist.highlight}</span>
+              </h2>
+              <p className="text-[16px] font-light leading-[160%] text-white/70">
+                {content.waitlist.text}
+              </p>
+            </div>
 
-          <div className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
-            <form className="flex flex-col gap-4">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
-              />
-              <input
-                type="email"
-                placeholder="Work E-mail"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
-              />
-              <input
-                type="text"
-                placeholder="Company"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
-              />
-              <textarea
-                placeholder="Write your message..."
-                rows={5}
-                className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] resize-none"
-              />
-              <div className="mt-2">
-                <GreenButton
-                  label="Submit"
-                  href="#"
-                  bgColor="#ffffff"
-                  textColor="#0B0D0C"
-                  size={{
-                    width: "140px",
-                    height: "50px",
-                    paddingX: "30px",
-                    paddingY: "10px",
-                    fontSize: "16px"
-                  }}
+            <div className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
+              <form className="flex flex-col gap-4">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
                 />
-              </div>
-            </form>
-          </div>
+                <input
+                  type="email"
+                  placeholder="Work E-mail"
+                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
+                />
+                <input
+                  type="text"
+                  placeholder="Company"
+                  className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
+                />
+                <textarea
+                  placeholder="Write your message..."
+                  rows={5}
+                  className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] resize-none"
+                />
+                <div className="mt-2">
+                  <GreenButton
+                    label="Submit"
+                    href="#"
+                    bgColor="#ffffff"
+                    textColor="#0B0D0C"
+                  />
+                </div>
+              </form>
+            </div>
 
-        </div>
+          </div>
+        </Container>
       </Section>
 
       {/* 9. Naya Section: FAQ */}
-      <section className="bg-[#EDE9E6] px-6 py-24 text-[#16181d]">
-        <div className="mx-auto w-full max-w-[880px]">
-          <h2 className="text-center text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-12">
-            {content.faq.title}
-          </h2>
+      <Section theme="faq" spacing="both" className="faq-section">
+        <Container>
+          <div className="mx-auto w-full max-w-[880px]">
+            <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
+              {content.faq.title}
+            </h2>
 
-          <Accordion items={content.faq.items} />
-        </div>
-      </section>
+            <Accordion items={content.faq.items} />
+          </div>
+        </Container>
+      </Section>
 
       {/* 👇 10. NAYA: Reusable Footer Hero (DYNAMIC) */}
       <FooterHero

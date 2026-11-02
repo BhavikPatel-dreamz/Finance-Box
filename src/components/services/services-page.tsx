@@ -28,7 +28,7 @@ export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
         <div className="relative z-10">
           <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
           <Container>
-            <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center py-10 sm:py-14 md:py-16 lg:py-20">
+            <div className="flex-1 grid grid-cols-1 min-[890px]:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center py-10 sm:py-14 md:py-12 lg:py-20">
               <div className="max-w-2xl">
                 <Eyebrow variant="dark">
                   {content.hero.eyebrow}
@@ -46,7 +46,6 @@ export function ServicesPage({ sections }: { sections?: RawSection[] } = {}) {
                     href={content.hero.primary.url}
                     bgColor="#ffffff"
                     textColor="#07110d"
-                    size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
                   />
                   <a href="#" className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1">See How an Engagement Works <ArrowIcon /></a>
                 </div>
@@ -156,13 +155,13 @@ function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
                   <h3 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold leading-[1.2] text-white">
                     {card.title}
                   </h3>
-                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:border-[#23C55E]">
+                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]">
                     <Image
                       src={iconSrc}
                       alt={card.title}
                       width={22}
                       height={22}
-                      className="object-contain"
+                      className="object-contain group-hover:invert transition-colors duration-300"
                     />
                   </div>
                 </div>
@@ -204,7 +203,6 @@ function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] }) {
             href={depth.cta.url}
             bgColor="#ffffff"
             textColor="#121826"
-            size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "18px" }}
             className="mt-8 sm:mt-10"
           />
         </div>
@@ -242,7 +240,6 @@ function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
                   bgColor="#23C55E"
                   textColor="#121826"
                   onDark={true}
-                  size={{ width: "auto", height: "50px", paddingX: "20px", paddingY: "10px", fontSize: "14px" }}
                   className="mt-6 sm:mt-8 lg:mt-10 hover:!bg-white hover:!text-[#121826]"
                 />
               </div>
@@ -390,7 +387,7 @@ function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
           <h2 className="text-3xl sm:text-4xl md:text-[50px] font-medium leading-[1.15] sm:leading-[1.1] tracking-[-0.8px] mb-3 sm:mb-4">
             {process.title}
           </h2>
-          <p className="text-[14px] sm:text-[16px] font-light leading-[160%] text-white/70 max-w-2xl px-2">
+          <p className="text-[14px] sm:text-[16px] font-light leading-[160%] text-white/70 max-w-[680px] px-2">
             {process.text}
           </p>
         </div>
@@ -436,7 +433,6 @@ function ServicesInvestors({ investors }: { investors: ServicesContent["investor
                   href={investors.primary.url}
                   bgColor="#ffffff"
                   textColor="#121826"
-                  size={{ width: "auto", height: "54px", paddingX: "28px", paddingY: "10px", fontSize: "15px" }}
                 />
                 <a
                   href={investors.secondary.url}

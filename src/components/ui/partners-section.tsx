@@ -8,6 +8,8 @@ export type PartnerLogoItem = {
   caption?: string;
 };
 
+export type PartnersVariant = "plain" | "bordered";
+
 export type PartnersSectionProps = {
   /** The section title. Can be a string or custom ReactNode */
   title?: ReactNode;
@@ -18,6 +20,8 @@ export type PartnersSectionProps = {
   highlight?: string;
   /** List of partner logos to show in the marquee */
   logos?: PartnerLogoItem[];
+  /** plain: logos only | bordered: each logo inside a bordered square card */
+  variant?: PartnersVariant;
   /** Custom marquee scroll speed (default: "65s") */
   marqueeDuration?: string;
   /** Custom class for the section wrapper */
@@ -28,6 +32,18 @@ export type PartnersSectionProps = {
   titleClassName?: string;
   /** Optional id for anchor scrolling */
   id?: string;
+};
+
+// NOTE: the track's right padding must equal its gap, otherwise the loop jumps.
+const variantStyles: Record<PartnersVariant, { track: string; item: string }> = {
+  plain: {
+    track: "gap-10 sm:gap-14 md:gap-16 pr-10 sm:pr-14 md:pr-16",
+    item: "w-[150px] sm:w-[170px] h-[60px]",
+  },
+  bordered: {
+    track: "gap-6 pr-6",
+    item: "w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] lg:w-[220px] lg:h-[220px] rounded-[10px] border border-[#121826]/6 bg-white p-6 sm:p-8",
+  },
 };
 
 function getLogoUrl(item: PartnerLogoItem): string | null {
@@ -70,10 +86,58 @@ function renderTitle(title?: ReactNode, highlight?: string) {
   return title;
 }
 
+function LogoTrack({
+  logos,
+  variant,
+  duration,
+  keyPrefix,
+  hidden = false,
+}: {
+  logos: PartnerLogoItem[];
+  variant: PartnersVariant;
+  duration: string;
+  keyPrefix: string;
+  hidden?: boolean;
+}) {
+  const styles = variantStyles[variant];
+
+  return (
+    <ul
+      className={`flex shrink-0 items-center ${styles.track} animate-marquee group-hover:[animation-play-state:paused]`}
+      style={{ animationDuration: duration }}
+      aria-hidden={hidden || undefined}
+    >
+      {logos.map((item, idx) => {
+        const url = getLogoUrl(item);
+        const alt = getLogoAlt(item);
+        return (
+          <li
+            key={`${keyPrefix}-${idx}`}
+            className="flex flex-col items-center justify-center shrink-0"
+          >
+            <div className={`relative flex items-center justify-center ${styles.item}`}>
+              {url ? (
+                <img
+                  src={url}
+                  alt={alt}
+                  className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-300 hover:scale-105"
+                />
+              ) : (
+                <span className="text-xl font-bold">{item.name}</span>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export function PartnersSection({
   title,
   highlight,
   logos = [],
+  variant = "plain",
   marqueeDuration = "65s",
   className = "",
   containerClassName = "",
@@ -102,66 +166,21 @@ export function PartnersSection({
 
       {/* Infinite Logo Slider */}
       <div className="group relative w-full overflow-hidden">
-        {/* Marquee Track Container */}
         <div className="flex w-max select-none">
-          {/* Primary Track */}
-          <ul
-            className="flex shrink-0 items-center gap-10 sm:gap-14 md:gap-16 pr-10 sm:pr-14 md:pr-16 animate-marquee group-hover:[animation-play-state:paused]"
-            style={{ animationDuration: marqueeDuration }}
-          >
-            {trackLogos.map((item, idx) => {
-              const url = getLogoUrl(item);
-              const alt = getLogoAlt(item);
-              return (
-                <li
-                  key={`partner-logo-a-${idx}`}
-                  className="flex flex-col items-center justify-center shrink-0"
-                >
-                  <div className="w-[150px] sm:w-[170px] h-[60px] flex items-center justify-center relative">
-                    {url ? (
-                      <img
-                        src={url}
-                        alt={alt}
-                        className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-300 hover:scale-105"
-                      />
-                    ) : (
-                      <span className="text-xl font-bold">{item.name}</span>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Duplicate Track (for continuous seamless loop) */}
-          <ul
-            className="flex shrink-0 items-center gap-10 sm:gap-14 md:gap-16 pr-10 sm:pr-14 md:pr-16 animate-marquee group-hover:[animation-play-state:paused]"
-            style={{ animationDuration: marqueeDuration }}
-            aria-hidden="true"
-          >
-            {trackLogos.map((item, idx) => {
-              const url = getLogoUrl(item);
-              const alt = getLogoAlt(item);
-              return (
-                <li
-                  key={`partner-logo-b-${idx}`}
-                  className="flex flex-col items-center justify-center shrink-0"
-                >
-                  <div className="w-[150px] sm:w-[170px] h-[60px] flex items-center justify-center relative">
-                    {url ? (
-                      <img
-                        src={url}
-                        alt={alt}
-                        className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-300 hover:scale-105"
-                      />
-                    ) : (
-                      <span className="text-xl font-bold">{item.name}</span>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+          <LogoTrack
+            logos={trackLogos}
+            variant={variant}
+            duration={marqueeDuration}
+            keyPrefix="partner-logo-a"
+          />
+          {/* Duplicate track for a seamless loop */}
+          <LogoTrack
+            logos={trackLogos}
+            variant={variant}
+            duration={marqueeDuration}
+            keyPrefix="partner-logo-b"
+            hidden
+          />
         </div>
       </div>
     </section>

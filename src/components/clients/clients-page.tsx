@@ -262,13 +262,6 @@ export function ClientsPage({ sections }: { sections: RawSection[] }) {
                     href="/vc-advisors"
                     bgColor="#121826"
                     textColor="#ffffff"
-                    size={{
-                      width: "257px",
-                      height: "62px",
-                      paddingX: "30px",
-                      paddingY: "10px",
-                      fontSize: "16px"
-                    }}
                     className="w-full sm:w-auto"
                   />
                 </div>

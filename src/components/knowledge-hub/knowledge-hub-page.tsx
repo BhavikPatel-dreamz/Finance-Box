@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { HomeHeader } from "@/components/home/home-header";
 import { HomeFooter } from "@/components/home/home-page";
-import { homeContent } from "@/content/home";
+import { homeContent, type HomeContent } from "@/content/home";
 import { mergeKnowledgeHub } from "./merge";
 import { knowledgeHubContent } from "@/content/knowledge-hub";
 import type { RawSection } from "@/lib/wordpress/content";
@@ -9,236 +9,266 @@ import { GreenButton } from "@/components/ui/green-button";
 import { FooterHero } from "../ui/footer-hero";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
+import Container from "../ui/container";
+
+function withSiteLinks<T extends { url: string }>(value: T): T {
+  return { ...value, url: value.url.startsWith("#") ? `/${value.url}` : value.url };
+}
+
+function siteHeader(header: HomeContent["header"]): HomeContent["header"] {
+  return {
+    ...header,
+    links: header.links.map((link) => ({
+      ...link,
+      ...withSiteLinks(link),
+      children: link.children.map(withSiteLinks),
+    })),
+    cta: withSiteLinks(header.cta),
+  };
+}
+
+function siteFooter(footer: HomeContent["footer"]): HomeContent["footer"] {
+  return {
+    ...footer,
+    columns: footer.columns.map((column) => ({
+      ...column,
+      links: column.links.map(withSiteLinks),
+    })),
+  };
+}
 
 export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
   const content = mergeKnowledgeHub(knowledgeHubContent, sections);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
+    <div className="min-h-screen flex flex-col bg-white text-[#16181d] overflow-x-clip">
 
       {/* 1. Hero Section */}
-      <section className="relative w-full h-[525px] flex flex-col overflow-hidden bg-[#07110d]">
-        <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 opacity-40"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(40,92,62,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(40,92,62,0.35) 1px, transparent 1px)",
-              backgroundSize: "56px 56px",
-            }}
-          />
-          <div className="absolute inset-x-0 bottom-0 h-64 bg-[radial-gradient(ellipse_at_bottom,rgba(35,197,94,0.15),transparent_70%)]" />
-        </div>
+      <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:h-[525px] overflow-hidden bg-[#121826] text-white">
+        <div
+          className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
+          style={{ backgroundImage: "url(/contact-us/contactus-hero-bg.svg)" }}
+        />
 
-        <div className="relative z-10 flex flex-col h-full">
-          <HomeHeader header={homeContent.header} surface="plain" logoHref="/" />
+        <div className="relative z-10 flex flex-col justify-center h-full">
+          <HomeHeader header={siteHeader(homeContent.header)} surface="plain" logoHref="/" />
 
-          <div className="flex-1 flex items-center w-full max-w-[1280px] mx-auto px-6 pb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-              <div>
-                <Eyebrow variant="dark" className="mb-6">
-                  {content.hero.eyebrow}
-                </Eyebrow>
-                <h1 className="text-[54px] font-medium leading-[1.1] tracking-[-0.8px] text-white mb-6">
-                  {content.hero.title}
-                  <span className="text-[#23C55E]">{content.hero.highlight}</span>
-                </h1>
-              </div>
-              <div className="max-w-md lg:justify-self-end">
-                <p className="text-[16px] font-light leading-[160%] text-white/80 mb-8">
-                  {content.hero.text}
-                </p>
+          <Container>
+            <div className="flex-1 flex items-center pt-6 sm:pt-8 lg:pt-0 pb-10 sm:pb-12">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center w-full">
                 <div>
-                  <GreenButton
-                    label={content.hero.cta.label}
-                    href={content.hero.cta.url}
-                    bgColor="#ffffff"
-                    size={{ width: "275px", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
-                  />
+                  <Eyebrow variant="dark" className="mb-4 sm:mb-6">
+                    {content.hero.eyebrow}
+                  </Eyebrow>
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 lg:max-w-[400px]">
+                    {content.hero.title}
+                    <span className="text-[#23C55E]">{content.hero.highlight}</span>
+                  </h1>
+                </div>
+                <div className="max-w-md lg:justify-self-end">
+                  <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] lg:leading-[160%] text-white/80 mb-6 sm:mb-8">
+                    {content.hero.text}
+                  </p>
+                  <div>
+                    <GreenButton
+                      label={content.hero.cta.label}
+                      href={content.hero.cta.url}
+                      bgColor="#ffffff"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Container>
         </div>
       </section>
 
       {/* 2. Our Blogs Section */}
       <Section theme="light" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px]">
+        <Container>
 
-          <h2 className="text-center text-[44px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16">
             {content.blogs.title}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {content.blogs.items.map((blog, idx) => (
-              <div key={idx} className="relative rounded-[10px] overflow-hidden h-[661px] flex items-end bg-gray-100">
-                <Image src={blog.image} alt={blog.title} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121826] via-transparent to-transparent opacity-80" />
+              <div
+                key={idx}
+                className="relative rounded-[10px] overflow-hidden h-[480px] sm:h-[540px] md:h-[580px] lg:h-[661px] flex items-end bg-gray-100 shadow-sm"
+              >
+                <Image
+                  src={blog.image}
+                  alt={blog.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[24.97%] to-black/50 to-[100%]" />
 
-                <div className="relative z-10 bg-[#121826] rounded-[10px] p-6 m-4 w-[calc(100%-32px)] text-white flex flex-col justify-between min-h-[247px]">
+                <div className="relative bg-[#121826] rounded-[14px] sm:rounded-[16px] p-4.5 sm:p-5 lg:p-6 m-3 sm:m-3.5 lg:m-4 w-[calc(100%-24px)] sm:w-[calc(100%-28px)] lg:w-[calc(100%-32px)] text-white flex flex-col justify-between min-h-[210px] sm:min-h-[225px] lg:min-h-[247px]">
                   <div>
-                    <div className="flex items-center gap-3 text-[12px] font-normal text-white/70 mb-4">
-                      <span className="text-[#23C55E] font-medium">{blog.category}</span>
-                      <span>|</span>
-                      <span>{blog.date}</span>
-                      <span>|</span>
-                      <span>{blog.readTime}</span>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 lg:gap-3 text-[11px] sm:text-[11.5px] lg:text-[12px] font-normal text-white/60 mb-3 sm:mb-3.5 lg:mb-4">
+                      <span className="text-white font-medium uppercase font-mono tracking-wider">{blog.category}</span>
+                      <span className="opacity-40">|</span>
+                      <span className="font-mono">{blog.date}</span>
+                      <span className="opacity-40">|</span>
+                      <span className="font-mono">{blog.readTime}</span>
                     </div>
-                    <h3 className="text-[24px] font-semibold leading-[1.2] mb-6">{blog.title}</h3>
+                    <h3 className="text-[18px] sm:text-[20px] lg:text-[24px] font-semibold leading-[1.25] lg:leading-[1.2] mb-4 sm:mb-5 lg:mb-6">
+                      {blog.title}
+                    </h3>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="relative w-[38px] h-[38px] rounded-full overflow-hidden border border-white/10">
+                    <div className="relative w-[34px] h-[34px] sm:w-[38px] sm:h-[38px] rounded-full overflow-hidden border border-white/10 shrink-0">
                       <Image src={blog.author.avatar} alt={blog.author.name} fill className="object-cover" />
                     </div>
-                    <span className="text-[14px] font-medium text-white/80">{blog.author.name}</span>
+                    <span className="text-[13px] sm:text-[14px] font-medium text-white/80">{blog.author.name}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-16 flex justify-center">
+          <div className="mt-8 sm:mt-10 lg:mt-12.5 flex justify-center">
             <GreenButton
               label={content.blogs.cta.label}
               href={content.blogs.cta.url}
               bgColor="#121826"
               textColor="#ffffff"
-              size={{ width: "232px", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
             />
           </div>
 
-        </div>
+        </Container>
       </Section>
 
       {/* 3. Resources Banner */}
-      <section className="bg-[#EDE9E6] px-6 py-16 text-[#16181d]">
-        <div className="mx-auto w-full max-w-[1280px] flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <h2 className="text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-4">
-              {content.resources.title}
-              <span className="text-[#23C55E] font-black italic">{content.resources.highlight}</span>
-            </h2>
-            <p className="text-[16px] font-light leading-[160%] text-[#121826]/70">
-              {content.resources.text}
-            </p>
+      <Section theme="cream" className="py-10 sm:py-12 md:py-15">
+        <Container>
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl sm:text-4xl md:text-[44px] lg:text-[50px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-3 sm:mb-4">
+                {content.resources.title}
+                <span className="text-[#23C55E] font-black italic">{content.resources.highlight}</span>
+              </h2>
+              <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70 lg:text-[#121826]/60">
+                {content.resources.text}
+              </p>
+            </div>
+            <div className="shrink-0">
+              <GreenButton
+                label={content.resources.cta.label}
+                href={content.resources.cta.url}
+                bgColor="#121826"
+                textColor="#ffffff"
+              />
+            </div>
           </div>
-          <div className="shrink-0">
-            <GreenButton
-              label={content.resources.cta.label}
-              href={content.resources.cta.url}
-              bgColor="#121826"
-              textColor="#ffffff"
-              size={{ width: "273px", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
-            />
-          </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* 4. Case Study Section */}
       <Section theme="light" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px]">
+        <Container>
 
-          <h2 className="text-center text-[50px] font-medium leading-[1.05] tracking-[-0.8px] mb-16">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-12 lg:mb-16">
             {content.caseStudy.title}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-6 md:gap-4 lg:gap-5">
             {content.caseStudy.items.map((item, idx) => (
               <div key={idx} className="flex flex-col">
-                <div className="relative w-full h-[560px] rounded-[5px] overflow-hidden mb-6">
-                  <Image src={item.image} alt={item.title} fill className="object-cover" />
+                <div className="relative w-full aspect-[414/560] max-h-[460px] sm:max-h-[500px] md:max-h-none lg:aspect-auto lg:h-[560px] rounded-[6px] sm:rounded-[8px] lg:rounded-[5px] overflow-hidden mb-4 sm:mb-5 lg:mb-6">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
-                <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{item.title}</h3>
-                <p className="text-[14px] font-normal leading-[160%] text-[#121826]/70">{item.text}</p>
+                <h3 className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[1.3] lg:leading-[1.2] mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-[13px] sm:text-[14px] font-normal leading-[160%] text-[#121826]/70">
+                  {item.text}
+                </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-16 flex justify-center">
+          <div className="mt-8 sm:mt-10 lg:mt-12.5 flex justify-center">
             <GreenButton
               label={content.caseStudy.cta.label}
               href={content.caseStudy.cta.url}
               bgColor="#121826"
               textColor="#ffffff"
-              size={{ width: "250px", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
             />
           </div>
 
-        </div>
+        </Container>
       </Section>
 
       {/* 5. Naya Section: Newsletter */}
       <Section theme="dark" spacing="both">
-        <div className="mx-auto w-full max-w-[1280px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-start">
 
-          {/* Left Side: Text & CTA */}
-          <div className="max-w-md lg:pt-4">
-            <h2 className="text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6">
-              {content.newsletter.title} <br />
-              <span className="font-black italic">{content.newsletter.highlight}</span>
-            </h2>
-            <p className="text-[16px] font-light leading-[160%] text-white/70 mb-8">
-              {content.newsletter.text}
-            </p>
+            {/* Left Side: Text & CTA */}
+            <div className="w-full max-w-xl lg:max-w-md lg:pt-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] lg:leading-[1.1] tracking-[-0.8px] mb-4 sm:mb-6">
+                {content.newsletter.title} <br className="hidden sm:inline" />
+                <span className="font-black italic">{content.newsletter.highlight}</span>
+              </h2>
+              <p className="text-[14px] sm:text-[16px] font-light leading-[160%] text-white/70 mb-6 sm:mb-8">
+                {content.newsletter.text}
+              </p>
 
-            {/* Updated Button Size */}
-            <GreenButton
-              label={content.newsletter.cta.label}
-              href={content.newsletter.cta.url}
-              bgColor="#23C55E"
-              onDark={true}
-              size={{
-                width: "250px",
-                height: "50px",
-                paddingX: "20px",
-                paddingY: "10px",
-                fontSize: "16px"
-              }}
-            />
-          </div>
+              {/* Updated Button Size */}
+              <GreenButton
+                label={content.newsletter.cta.label}
+                href={content.newsletter.cta.url}
+                bgColor="#23C55E"
+                onDark={true}
+              />
+            </div>
 
-          {/* Right Side: Form */}
-          <div className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
-            <form className="flex flex-col gap-4">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
-              />
-              <input
-                type="email"
-                placeholder="Work E-mail"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
-              />
-              <input
-                type="text"
-                placeholder="Role"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
-              />
-              <textarea
-                placeholder="Write your message..."
-                rows={5}
-                className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] resize-none"
-              />
-              <div className="mt-2">
-                <GreenButton
-                  label="Submit"
-                  href="#"
-                  bgColor="#ffffff"
-                  size={{
-                    width: "140px",
-                    height: "50px",
-                    paddingX: "30px",
-                    paddingY: "10px",
-                    fontSize: "16px"
-                  }}
+            {/* Right Side: Form */}
+            <div className="w-full bg-[#191F2D] rounded-[10px] p-4.5 sm:p-6 md:p-7.5 border border-white/6">
+              <form className="flex flex-col gap-3.5 sm:gap-4">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
                 />
-              </div>
-            </form>
-          </div>
+                <input
+                  type="email"
+                  placeholder="Work E-mail"
+                  className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
+                />
+                <input
+                  type="text"
+                  placeholder="Role"
+                  className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E]"
+                />
+                <textarea
+                  placeholder="Write your message..."
+                  rows={5}
+                  className="w-full rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] resize-none"
+                />
+                <div className="mt-2">
+                  <GreenButton
+                    label="Submit"
+                    href="#"
+                    bgColor="#ffffff"
+                    size="50"
+                  />
+                </div>
+              </form>
+            </div>
 
-        </div>
+          </div>
+        </Container>
       </Section>
 
       {/* 6. NAYA: Reusable Footer Hero */}
@@ -251,7 +281,7 @@ export function KnowledgeHubPage({ sections }: { sections: RawSection[] }) {
         buttonUrl="/careers"
       />
 
-      <HomeFooter footer={homeContent.footer} />
+      <HomeFooter footer={siteFooter(homeContent.footer)} />
     </div>
   );
 }

@@ -148,13 +148,6 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                     href="#"
                     bgColor="#121826"
                     textColor="#ffffff"
-                    size={{
-                      width: "217px",
-                      height: "62px",
-                      paddingX: "30px",
-                      paddingY: "10px",
-                      fontSize: "16px"
-                    }}
                   />
                 </div>
               </form>
@@ -196,13 +189,6 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                   href={content.socialSection.linkedin.buttonUrl}
                   bgColor="#121826"
                   textColor="#ffffff"
-                  size={{
-                    width: "165px",
-                    height: "62px",
-                    paddingX: "30px",
-                    paddingY: "10px",
-                    fontSize: "16px"
-                  }}
                 />
               </div>
 
@@ -238,13 +224,6 @@ export function ContactUsPage({ sections }: { sections: RawSection[] }) {
                   href="#"
                   bgColor="#ffffff"
                   textColor="#121826"
-                  size={{
-                    width: "180px",
-                    height: "62px",
-                    paddingX: "30px",
-                    paddingY: "10px",
-                    fontSize: "16px"
-                  }}
                 />
               </div>
             </div>

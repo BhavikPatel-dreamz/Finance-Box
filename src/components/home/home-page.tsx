@@ -163,7 +163,6 @@ export function Hero({ hero, header }: { hero: HomeContent["hero"]; header: Home
                   href={hero.call.url}
                   color="green"
                   onDark={true}
-                  size={{ width: "182px", height: "58px", fontSize: "16px" }}
                 />
               </div>
 
@@ -309,7 +308,6 @@ function Growth({ growth }: { growth: HomeContent["growth"] }) {
             bgColor="#23C55E"
             textColor="#07110d"
             onDark={true}
-            size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
           />
         </div>
 
@@ -388,7 +386,6 @@ function Decisions({ decisions }: { decisions: HomeContent["decisions"] }) {
                 href={decisions.cta.url}
                 bgColor="#121826"
                 textColor="#ffffff"
-                size={{ width: "auto", height: "62px", paddingX: "30px", paddingY: "10px", fontSize: "16px" }}
               />
             </div>
           </div>
@@ -430,7 +427,7 @@ export function HomeFooter({ footer }: { footer: HomeContent["footer"] }) {
           <div>
             <img src={footer.logo.url} alt={footer.logo.alt} className="h-12 sm:h-16 w-auto" />
             <p className="mt-5 sm:mt-6 max-w-[16rem] text-[14px] sm:text-base font-light leading-[140%] text-white/80">{footer.text}</p>
-            <a href={`mailto:${footer.email}`} className="mt-7 sm:mt-9 inline-flex items-center gap-3 text-[15px] sm:text-base font-semibold text-white hover:text-[#23C55E] transition duration-300 group">
+            <a href={`mailto:${footer.email}`} className="mt-7 sm:mt-9 inline-flex items-center gap-3 text-[15px] sm:text-base font-medium text-white hover:text-[#23C55E] transition duration-300 group">
               <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.5 12C1.0875 12 0.7345 11.8533 0.441 11.5597C0.1475 11.2662 0.0005 10.913 0 10.5V1.5C0 1.0875 0.147 0.7345 0.441 0.441C0.735 0.1475 1.088 0.0005 1.5 0H13.5C13.9125 0 14.2657 0.147 14.5597 0.441C14.8538 0.735 15.0005 1.088 15 1.5V10.5C15 10.9125 14.8533 11.2657 14.5597 11.5597C14.2662 11.8538 13.913 12.0005 13.5 12H1.5ZM7.69725 6.591C7.76575 6.572 7.83125 6.54375 7.89375 6.50625L13.2 3.1875C13.3 3.125 13.375 3.047 13.425 2.9535C13.475 2.86 13.5 2.75675 13.5 2.64375C13.5 2.39375 13.3938 2.20625 13.1813 2.08125C12.9688 1.95625 12.75 1.9625 12.525 2.1L7.5 5.25L2.475 2.1C2.25 1.9625 2.03125 1.9595 1.81875 2.091C1.60625 2.2225 1.5 2.40675 1.5 2.64375C1.5 2.76875 1.525 2.87825 1.575 2.97225C1.625 3.06625 1.7 3.138 1.8 3.1875L7.10625 6.50625C7.16875 6.54375 7.2345 6.572 7.3035 6.591C7.3725 6.61 7.438 6.61925 7.5 6.61875C7.562 6.61825 7.62775 6.609 7.69725 6.591Z" fill="white" className="group-hover:fill-[#23C55E] transition duration-300" />
               </svg>
