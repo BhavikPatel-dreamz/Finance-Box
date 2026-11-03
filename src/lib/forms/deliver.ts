@@ -6,25 +6,9 @@ export type ContactDeliveryResult =
 
 type Payload = Pick<ContactInput, "name" | "email" | "subject" | "message">;
 
-async function postJson(url: string, body: unknown, headers: Record<string, string>) {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      ...headers,
-    },
-    body: JSON.stringify(body),
-    cache: "no-store",
-  });
-
-  return response;
-}
-
 async function deliverToWordPress(payload: Payload): Promise<ContactDeliveryResult> {
   const base = process.env.WORDPRESS_URL?.trim().replace(/\/$/, "");
-  const secret = process.env.CONTACT_FORM_SECRET?.trim();
-  if (!base || !secret) {
+  if (!base) {
     return {
       ok: false,
       status: 503,
@@ -33,22 +17,48 @@ async function deliverToWordPress(payload: Payload): Promise<ContactDeliveryResu
   }
 
   try {
-    const response = await postJson(`${base}/wp-json/financebox/v1/leads`, payload, {
-      "X-Financebox-Secret": secret,
+    // Aapka naya Contact Form 7 ID
+    const FORM_ID = "1284"; 
+    
+    // CF7 ko FormData format mein data chahiye hota hai
+    const formData = new FormData();
+    
+    // React fields se CF7 fields mein mapping (subject = company)
+    formData.append("your-name", payload.name);
+    formData.append("your-email", payload.email);
+    formData.append("your-company", payload.subject); // subject ko company mein bhej rahe hain
+    formData.append("your-message", payload.message);
+
+    // CF7 Hidden Fields (Security bypass ke liye zaroori hai)
+    formData.append("_wpcf7", FORM_ID);
+    formData.append("_wpcf7_version", "6.2.4.1"); 
+    formData.append("_wpcf7_locale", "en_US");
+    formData.append("_wpcf7_unit_tag", `wpcf7-f${FORM_ID}-p1284-o1`);
+    formData.append("_wpcf7_container_post", "1284");
+
+    const response = await fetch(`${base}/wp-json/contact-form-7/v1/contact-forms/${FORM_ID}/feedback`, {
+      method: "POST",
+      body: formData,
     });
-    if (!response.ok) {
+
+    const data = await response.json();
+
+    if (data.status === "mail_sent") {
+      return { ok: true };
+    } else {
+      console.error("CF7 Error:", data);
       return {
         ok: false,
-        status: 502,
-        message: "The message could not be saved.",
+        status: 400,
+        message: data.message || "Validation failed.",
       };
     }
-    return { ok: true };
-  } catch {
+  } catch (error) {
+    console.error("CF7 Fetch Error:", error);
     return {
       ok: false,
       status: 502,
-      message: "The message could not be saved.",
+      message: "The message could not be delivered.",
     };
   }
 }
@@ -65,9 +75,16 @@ async function deliverToWebhook(payload: Payload): Promise<ContactDeliveryResult
   }
 
   try {
-    const response = await postJson(url, payload, {
-      Authorization: `Bearer ${secret}`,
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${secret}`,
+      },
+      body: JSON.stringify(payload),
+      cache: "no-store",
     });
+    
     if (!response.ok) {
       return {
         ok: false,
