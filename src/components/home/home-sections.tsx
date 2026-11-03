@@ -161,6 +161,15 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
   );
 }
 
+function HoverLine({ className = "bg-[#23C55E]" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`pointer-events-none absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none ${className}`}
+    />
+  );
+}
+
 export function HomeDifference({ difference }: { difference: HomeContent["difference"] }) {
   const icons = [
     "/icons/one-finace-team.png",
@@ -169,14 +178,6 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
     "/icons/cost-intelligence.png",
     "/icons/automation.png",
   ];
-  function HoverLine({ className = "bg-[#23C55E]" }: { className?: string }) {
-    return (
-      <span
-        aria-hidden="true"
-        className={`pointer-events-none absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none ${className}`}
-      />
-    );
-  }
 
   return (
     <Section theme="dark" spacing="both" className="differance-section">

@@ -12,7 +12,7 @@ import type { SiteChrome } from "@/lib/wordpress/site-chrome";
  */
 export function PageFrame({ chrome, children }: { chrome: SiteChrome; children: ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-clip bg-white text-[#16181d]">
+    <div className="flex min-h-screen flex-col overflow-x-clip bg-[#07090f] text-white">
       <main className="flex flex-1 flex-col">{children}</main>
       <SiteFooter footer={chrome.footer} />
     </div>
