@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { HomeContent } from "@/content/home";
 import { Button } from "@/components/ui/button";
@@ -190,9 +191,9 @@ export function HomeHeader({
         ) : null}
         <div ref={barRef}>
           <Container size="header" className="relative flex items-center justify-between gap-6 py-5 sm:py-6 lg:py-7">
-            <a href={logoHref} className="shrink-0 outline-0">
+            <Link href={logoHref} className="shrink-0 outline-0">
               <img src={header.logo.url} alt={header.logo.alt} className="h-10 sm:h-12 lg:h-13.75 w-auto object-contain" />
-            </a>
+            </Link>
             <nav
               ref={navRef}
               aria-label="Primary"
@@ -313,28 +314,28 @@ function DesktopItem({
 
   if (link.children.length === 0) {
     return (
-      <a
+      <Link
         href={link.url}
         className={`whitespace-nowrap transition-colors ${
           isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-white"
         }`}
       >
         {link.label}
-      </a>
+      </Link>
     );
   }
 
   return (
     <div className="relative" onMouseEnter={() => onOpen(link.label)} onMouseLeave={() => onOpen(null)}>
       <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
-        <a
+        <Link
           href={link.url}
           className={`transition-colors ${
             isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-white"
           }`}
         >
           {link.label}
-        </a>
+        </Link>
         <button
           type="button"
           className={`transition-colors ${
@@ -355,7 +356,7 @@ function DesktopItem({
               const isChildActive = isUrlActive(pathname, child.url, { currentHash });
               return (
                 <li key={child.label}>
-                  <a
+                  <Link
                     href={child.url}
                     className={`flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm transition-all duration-150 ${
                       isChildActive
@@ -368,7 +369,7 @@ function DesktopItem({
                     {isChildActive && (
                       <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_6px_#23C55E]" />
                     )}
-                  </a>
+                  </Link>
                 </li>
               );
             })}
@@ -401,7 +402,7 @@ function MobileItem({
   if (link.children.length === 0) {
     return (
       <div className="py-1">
-        <a
+        <Link
           href={link.url}
           onClick={onNavigate}
           className={`flex items-center justify-between py-2.5 text-[16px] sm:text-[17px] font-medium transition-colors ${
@@ -412,7 +413,7 @@ function MobileItem({
           {isDirectActive && (
             <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_8px_#23C55E]" />
           )}
-        </a>
+        </Link>
       </div>
     );
   }
@@ -420,7 +421,7 @@ function MobileItem({
   return (
     <div className="py-1">
       <div className="flex items-center justify-between py-2.5">
-        <a
+        <Link
           href={link.url}
           onClick={onNavigate}
           className={`text-[16px] sm:text-[17px] font-medium transition-colors ${
@@ -428,7 +429,7 @@ function MobileItem({
           }`}
         >
           {link.label}
-        </a>
+        </Link>
         <button
           type="button"
           aria-expanded={open}
@@ -448,7 +449,7 @@ function MobileItem({
             const isChildActive = isUrlActive(pathname, child.url, { currentHash });
             return (
               <li key={child.label}>
-                <a
+                <Link
                   href={child.url}
                   onClick={onNavigate}
                   className={`flex items-center gap-2 py-2 text-[15px] transition-colors ${
@@ -461,7 +462,7 @@ function MobileItem({
                     <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_6px_#23C55E]" />
                   )}
                   {child.label}
-                </a>
+                </Link>
               </li>
             );
           })}

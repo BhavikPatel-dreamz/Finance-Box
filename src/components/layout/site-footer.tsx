@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { SiteFooterContent } from "@/lib/wordpress/site-chrome";
 import { Container } from "@/components/ui/container";
 
@@ -24,10 +25,10 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
                 <ul className="mt-5 sm:mt-7.5 space-y-4 sm:space-y-5 text-sm font-normal text-white">
                   {column.links.map((item) => (
                     <li key={item.label}>
-                      <a href={item.url} className="inline-flex items-center gap-2 hover:text-[#23C55E] transition duration-300 group">
+                      <Link href={item.url} className="inline-flex items-center gap-2 hover:text-[#23C55E] transition duration-300 group">
                         {item.label.toLowerCase() === "linkedin" ? <LinkedInMark /> : null}
                         {item.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

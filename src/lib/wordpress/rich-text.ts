@@ -1,5 +1,6 @@
 import "server-only";
 import sanitizeHtml from "sanitize-html";
+import { siteHref } from "@/lib/wordpress/links";
 
 /**
  * The only place WordPress HTML may be turned into markup: post, case study
@@ -7,40 +8,6 @@ import sanitizeHtml from "sanitize-html";
  * styles, event handlers, iframes, forms, inline styles, classes and unknown
  * URL schemes — so editor content can never run code on the site.
  */
-
-function wordpressOrigins() {
-  const origins = new Set<string>();
-  for (const value of [process.env.WORDPRESS_URL, process.env.WORDPRESS_GRAPHQL_URL]) {
-    try {
-      if (value) origins.add(new URL(value).origin);
-    } catch {
-      // ignore malformed env values
-    }
-  }
-  return origins;
-}
-
-function wordpressBasePath() {
-  try {
-    return new URL(process.env.WORDPRESS_URL ?? "").pathname.replace(/\/$/, "");
-  } catch {
-    return "";
-  }
-}
-
-/** Links pointing at the CMS host become site-relative, so readers stay on the Next.js site. */
-function rewriteHref(href: string) {
-  try {
-    const url = new URL(href);
-    if (!wordpressOrigins().has(url.origin)) return href;
-    const base = wordpressBasePath();
-    if (url.pathname.startsWith("/wp-content/") || url.pathname.startsWith(`${base}/wp-content/`)) return href;
-    const path = base && url.pathname.startsWith(base) ? url.pathname.slice(base.length) || "/" : url.pathname;
-    return `${path}${url.search}${url.hash}`;
-  } catch {
-    return href;
-  }
-}
 
 const OPTIONS: sanitizeHtml.IOptions = {
   allowedTags: [
@@ -62,7 +29,7 @@ const OPTIONS: sanitizeHtml.IOptions = {
   transformTags: {
     h1: "h2",
     a: (tagName, attribs) => {
-      const href = attribs.href ? rewriteHref(attribs.href) : undefined;
+      const href = attribs.href ? siteHref(attribs.href) : undefined;
       const external = href ? /^https?:\/\//.test(href) : false;
       return {
         tagName,

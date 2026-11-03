@@ -3,6 +3,7 @@ import { GreenButton } from "@/components/ui/green-button";
 import { type ServicesContent } from "@/content/services";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "../ui/container";
 import { ArrowIcon } from "../ui/button";
 import { InvestorSlider } from "@/components/services/investor-slider";
@@ -424,13 +425,13 @@ export function ServicesInvestors({ investors }: { investors: ServicesContent["i
                   bgColor="#ffffff"
                   textColor="#121826"
                 />
-                <a
+                <Link
                   href={investors.secondary.url}
                   className="group inline-flex items-center gap-3 text-[15px] sm:text-[16px] font-semibold text-white hover:text-[#23C55E] transition-colors duration-300 py-2"
                 >
                   <span>{investors.secondary.label}</span>
                   <ArrowIcon />
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { plainText } from "@/lib/wordpress/text";
+import { siteHref } from "@/lib/wordpress/links";
 
 /**
  * Safe readers for ACF values returned by WPGraphQL. Each returns `null` (or
@@ -17,7 +18,7 @@ export type CmsLink = { label: string; url: string };
 export function link(value: unknown, fallback: CmsLink): CmsLink {
   if (!value || typeof value !== "object") return fallback;
   const item = value as { title?: unknown; url?: unknown };
-  return { label: text(item.title, fallback.label), url: text(item.url, fallback.url) };
+  return { label: text(item.title, fallback.label), url: siteHref(text(item.url, fallback.url)) };
 }
 
 export type CmsMedia = { url: string; alt: string };
