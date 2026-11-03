@@ -107,6 +107,8 @@ export async function graphqlRequest<TData>(
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     Accept: "application/json",
+    // A named client is easier to allow in a firewall than the default "node" agent.
+    "User-Agent": "Financebox-Headless/1.0 (+Next.js)",
   };
   if (options.preview) headers.Authorization = previewAuthorization();
 
@@ -134,5 +136,35 @@ export async function graphqlRequest<TData>(
     console.warn(`[wordpress] ${operationName(query)} returned errors: ${messages.join("; ")}`);
   }
 
+<<<<<<< HEAD
   return result.data;
+=======
+  if (!response.ok) {
+    // Log which layer refused the request: Cloudflare adds cf-ray / cf-mitigated,
+    // a server firewall (ModSecurity, Imunify360) usually returns an HTML page.
+    const snippet = (await response.text().catch(() => "")).replace(/\s+/g, " ").slice(0, 300);
+    console.error("[wordpress] GraphQL request refused", {
+      status: response.status,
+      server: response.headers.get("server"),
+      cfRay: response.headers.get("cf-ray"),
+      cfMitigated: response.headers.get("cf-mitigated"),
+      body: snippet,
+    });
+    throw new GraphQLRequestError(`WordPress GraphQL responded with HTTP ${response.status}.`);
+  }
+
+  let body: GraphQLResponse<TData>;
+  try {
+    body = (await response.json()) as GraphQLResponse<TData>;
+  } catch {
+    throw new GraphQLRequestError("WordPress GraphQL returned a response that was not JSON.");
+  }
+
+  if (!body.data) {
+    const message = body.errors?.map((error) => error.message).filter(Boolean).join("; ");
+    throw new GraphQLRequestError(message || "WordPress GraphQL returned no data.");
+  }
+
+  return body.data;
+>>>>>>> 08032ef (403 issue fix)
 }
