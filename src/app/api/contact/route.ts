@@ -1,40 +1,28 @@
+// Aapki file kuch aisi dikhni chahiye:
+import { NextResponse } from "next/server";
+import { contactSchema } from "@/lib/validation/contact";
 import { deliverContact } from "@/lib/forms/deliver";
-import { rateLimit } from "@/lib/forms/rate-limit";
-import { validateContact } from "@/lib/validation/contact";
+import { rateLimit } from "@/lib/forms/rate-limit"; // if exists
 
-export async function POST(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  const limit = rateLimit(forwarded || "local");
-  if (!limit.allowed) {
-    return Response.json(
-      { ok: false, message: "Too many messages. Try again later." },
-      { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } },
-    );
-  }
-
-  let payload: unknown;
+export async function POST(req: Request) {
   try {
-    payload = await request.json();
-  } catch {
-    return Response.json({ ok: false, message: "Invalid request." }, { status: 400 });
-  }
+    const body = await req.json();
+    
+    // Validation (Agar aapke schema mein 'subject' hai)
+    const parsed = contactSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ ok: false, message: "Invalid data" }, { status: 400 });
+    }
 
-  const parsed = validateContact(payload);
-  if (!parsed.success) {
-    return Response.json(
-      { ok: false, message: "Check the form and try again.", errors: parsed.errors },
-      { status: 400 },
-    );
-  }
+    // Delivery Call
+    const result = await deliverContact(parsed.data);
+    
+    if (!result.ok) {
+      return NextResponse.json({ ok: false, message: result.message }, { status: result.status });
+    }
 
-  if (parsed.data.companyWebsite.trim()) {
-    return Response.json({ ok: true });
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    return NextResponse.json({ ok: false, message: "Server error" }, { status: 500 });
   }
-
-  const result = await deliverContact(parsed.data);
-  if (!result.ok) {
-    return Response.json({ ok: false, message: result.message }, { status: result.status });
-  }
-
-  return Response.json({ ok: true });
 }

@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { GreenButton } from "@/components/ui/green-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -7,8 +9,7 @@ import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { ContactUsContent } from "@/content/contact-us";
 
-export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]; header: ReactNode }) {
-  // Hero Section (Header + Hero = 525px on Desktop)
+export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]; header: React.ReactNode }) {
   return (
     <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:h-[525px] overflow-hidden bg-[#121826] text-white flex flex-col">
       <div
@@ -44,7 +45,53 @@ export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]
 }
 
 export function ContactFormBlock({ formSection }: { formSection: ContactUsContent["formSection"] }) {
-  // Form Section
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: "",
+  });
+  
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // Backend validation ke hisaab se 'subject' field bhej rahe hain
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.company, 
+          message: formData.message,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", company: "", message: "" });
+      } else {
+        setStatus("error");
+        setErrorMessage(data.message || "Validation failed.");
+      }
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage("Network error. Please try again.");
+    }
+  };
+
   return (
     <Section theme="light" spacing="both" className="contact-form-section">
       <Container>
@@ -95,37 +142,62 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
               {formSection.subtitle}
             </p>
 
-            <form className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {formSection.form.fields.slice(0, 2).map((field) => (
-                  <input
-                    key={field.name}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-                  />
-                ))}
-              </div>
-              {formSection.form.fields.slice(2).map((field) => (
                 <input
-                  key={field.name}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your name"
+                  required
+                  className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
                 />
-              ))}
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Write your email"
+                  required
+                  className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
+                />
+              </div>
+              
+              <input
+                type="text"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                placeholder="Your company"
+                className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
+              />
+
               <textarea
-                placeholder={formSection.form.notesPlaceholder}
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Write your notes..."
                 rows={5}
+                required
                 className="w-full rounded-[10px] border border-[#747C761A] bg-white py-3.5 sm:py-4 px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
               />
-              <div className="mt-2 sm:mt-4 flex justify-start">
-                <GreenButton
-                  label={formSection.form.submitLabel}
-                  href="#"
-                  bgColor="#121826"
-                  textColor="#ffffff"
-                />
+
+              <div className="mt-2 sm:mt-4 flex flex-col justify-start items-start gap-3">
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="flex items-center justify-center h-[50px] px-8 rounded-[10px] bg-[#121826] text-white text-[15px] font-medium transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === "loading" ? "Sending..." : formSection.form.submitLabel}
+                </button>
+
+                {status === "success" && (
+                  <p className="text-sm font-medium text-green-600">Message sent successfully!</p>
+                )}
+                {status === "error" && (
+                  <p className="text-sm font-medium text-red-600">{errorMessage}</p>
+                )}
               </div>
             </form>
           </Reveal>
@@ -137,7 +209,6 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
 }
 
 export function ContactConnected({ socialSection }: { socialSection: ContactUsContent["socialSection"] }) {
-  // Stay Connected Section
   return (
     <section className="bg-white px-4 sm:px-6 pb-16 sm:pb-20 lg:pb-24 stay-connect-section">
       <Container>
@@ -152,8 +223,6 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
         </Reveal>
 
         <StaggerGroup staggerDelay={150} className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-4">
-
-          {/* LinkedIn Card */}
           <StaggerItem index={0} className="card-hover relative w-full lg:w-1/2 rounded-[10px] bg-[#EDE9E6] p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px] overflow-hidden">
             <div className="relative z-10 max-w-[70%] sm:max-w-[65%] lg:max-w-none">
               <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4">
@@ -183,7 +252,6 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
             </div>
           </StaggerItem>
 
-          {/* Newsletter Card */}
           <StaggerItem index={1} className="card-hover w-full lg:w-1/2 rounded-[10px] bg-[#121826] p-6 sm:p-8 md:p-10 lg:p-12.5 text-white flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px]">
             <div>
               <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4 lg:mb-6.5">
@@ -208,7 +276,6 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
               />
             </div>
           </StaggerItem>
-
         </StaggerGroup>
       </Container>
     </section>
