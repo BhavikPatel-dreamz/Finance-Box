@@ -6,7 +6,7 @@ WordPress post types other than pages have their own Next.js routes (they do not
 | --- | --- | --- | --- | --- |
 | `post` | `Post` | `/<slug>/` (redirected) | `/blog/<slug>/`; archive `/blog/`, `/blog/page/<n>/` | `src/app/blog/` |
 | `case-study` | `CaseStudy` (+ ACF `caseStudiesOptions`) | `/case-study/<slug>/` | same; archive `/case-study/` | `src/app/case-study/` |
-| `team` | `Team` | `/team/<slug>/` | same (no archive; the team list is on Why FIAB) | `src/app/team/[slug]/` |
+| `team` | `Team` | `/team/<slug>/` | same; list `/team/` (header and footer "Team" links) | `src/app/team/` |
 
 URL helpers for all of these live in `src/lib/wordpress/paths.ts`; change routes there only.
 
@@ -23,7 +23,7 @@ URL helpers for all of these live in `src/lib/wordpress/paths.ts`; change routes
 | --- | --- | --- |
 | `components/blog/blog-card.tsx` | Knowledge Hub "Our Blog" | Knowledge Hub, `/blog`, post "More articles" |
 | `components/case-studies/case-study-card.tsx` | Clients featured case studies | Clients, `/case-study` |
-| `components/team/team-card.tsx` (`TeamProfileCard`) | Why FIAB team | Why FIAB (links to profile), `/team/<slug>/` |
+| `components/team/team-card.tsx` (`TeamProfileCard`) | Why FIAB team | Why FIAB and `/team/` (link to profile), `/team/<slug>/` |
 | `components/content/article-hero.tsx` | Legal page banner | legal pages, all routes above |
 
 ## Editor notes

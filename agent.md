@@ -46,7 +46,7 @@ Stack: Next.js 16.4.2 (App Router, Turbopack, Cache Components), React 19.3, Typ
 
 ## Post types (2026-11-03, second pass)
 
-`post` (3), `case-study` (3) and `team` (2) were all 404 before; the Clients "Read a Full Case Study" buttons were broken links. Now: `/blog`, `/blog/page/<n>`, `/blog/<slug>`, `/case-study`, `/case-study/<slug>`, `/team/<slug>` as separate route files; root-level post URLs 308 to `/blog/<slug>/`; `/category/*` → `/blog`. Details: `docs/content-types.md`.
+`post` (3), `case-study` (3) and `team` (2) were all 404 before; the Clients "Read a Full Case Study" buttons were broken links. Now: `/blog`, `/blog/page/<n>`, `/blog/<slug>`, `/case-study`, `/case-study/<slug>`, `/team`, `/team/<slug>` as separate route files; root-level post URLs 308 to `/blog/<slug>/`; `/category/*` → `/blog`. Details: `docs/content-types.md`.
 
 - Moved existing UI into shared files: blog card, case study card, team profile card, article hero; `mapTeamMember` → `src/components/team/team-member.ts`.
 - Knowledge Hub blog/case-study cards, Clients case studies and Why FIAB team names now link to these pages. Blog cards show the real category, author, avatar and reading time (were hardcoded "Consulting", "By Guruprasad", "3 min read"). "Explore Blogs"/"Explore Case Studies" go to the archives (WordPress has `#`; static defaults pointed at non-existent `/blogs`, `/case-studies`).
@@ -55,6 +55,7 @@ Stack: Next.js 16.4.2 (App Router, Turbopack, Cache Components), React 19.3, Typ
 - Body HTML rendered only via `sanitize-html@2.18.1` allowlist (2.18.0 and below have an advisory). XSS payload test passed.
 - Sitemap includes the new routes; webhook accepts `post`, `case-study`, `team`.
 - Verified on dev against live WordPress: all routes 200, unknown slugs 404, redirects 308/307, links on Knowledge Hub/Clients/Why FIAB, sitemap, webhook scopes, screenshots of post, case study, team pages. `tsc`, lint (no new errors), `sections:check`, `next build` pass.
+- Header (About Us → Team) and footer "Team" links pointed to `/#team` and `/#about`, anchors that do not exist on the homepage; they now go to `/team/`.
 - **Content gaps in WordPress** (not code): the 3 posts have no body or excerpt; all 3 case studies use template placeholder text in Featured Content (DeepScribe's mentions FLYR) and have no body.
 - No Figma exists for these pages; they are composed from existing design pieces and should be reviewed by design.
 
