@@ -1,6 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { fromSection } from "@/components/sections/from-section";
+import { HeroSection } from "@/components/hero";
 import { CareersBanner } from "@/components/careers/careers-sections";
 import { AgenticBanner } from "@/components/agentic-ai/agentic-ai-sections";
 import { KnowledgeHubBanner } from "@/components/knowledge-hub/knowledge-hub-sections";
@@ -28,8 +29,25 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
   hero: true,
   render: (data, { header, variant }) => {
     switch ((variant ?? "knowledge-hub") as Variant) {
-      case "careers":
-        return <CareersBanner hero={fromSection(mergeCareers, careersContent, data).hero} header={header} />;
+      case "careers": {
+        const { hero } = fromSection(mergeCareers, careersContent, data);
+        return (
+          <HeroSection
+            page="careers"
+            headerNode={header}
+            overrides={{
+              eyebrow: hero.eyebrow,
+              title: hero.title,
+              highlight: hero.highlight,
+              highlight2: hero.highlight2,
+              description: hero.text,
+              primaryCta: hero.cta
+                ? { label: hero.cta.label, url: hero.cta.url, color: "white" }
+                : undefined,
+            }}
+          />
+        );
+      }
       case "agentic-ai": {
         const { hero } = fromSection(mergeAgenticAi, agenticAiContent, data);
         // Editors enter the bullet points as a list in `description`; `tagLine` is the lead sentence.
