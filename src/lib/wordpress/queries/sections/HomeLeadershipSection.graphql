@@ -1,0 +1,7 @@
+fragment HomeLeadershipSection on PageBuilderPageBuilderHomeLeadershipSectionLayout {
+  __typename
+  subTitle
+  slides { title description }
+  # Aliased: TeamMembersSection.teamMembers is a connection, this one is a repeater.
+  teamMembersList: teamMembers { image { node { sourceUrl altText } } name designation }
+}

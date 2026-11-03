@@ -1,10 +1,12 @@
-import { StatusMessage } from "@/components/layout/page-shell";
+import type { Metadata } from "next";
+import { NotFoundPage } from "@/components/not-found/not-found-page";
+import { getSiteChrome } from "@/lib/wordpress/site-chrome";
 
-export default function NotFound() {
-  return (
-    <StatusMessage
-      title="Page not found"
-      body="That page is not published in WordPress."
-    />
-  );
+export const metadata: Metadata = {
+  title: "Page not found",
+  robots: { index: false, follow: false },
+};
+
+export default async function NotFound() {
+  return <NotFoundPage chrome={await getSiteChrome()} />;
 }

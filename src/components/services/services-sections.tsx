@@ -1,0 +1,444 @@
+import type { ReactNode } from "react";
+import { GreenButton } from "@/components/ui/green-button";
+import { type ServicesContent } from "@/content/services";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import Image from "next/image";
+import Container from "../ui/container";
+import { ArrowIcon } from "../ui/button";
+import { InvestorSlider } from "@/components/services/investor-slider";
+import { ProcessGrid } from "@/components/ui/process-grid";
+import Section from "../ui/section";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
+
+export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]; header: ReactNode }) {
+  // Hero Section
+  return (
+    <section className="hero-section relative overflow-hidden bg-[#121826] text-white">
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
+        style={{ backgroundImage: "url(/services/services-hero-bg.svg)" }}
+      />
+      <div className="relative z-10">
+        {header}
+        <Container>
+          <div className="flex-1 grid grid-cols-1 min-[890px]:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center py-10 sm:py-14 md:py-12 lg:py-20">
+            <div className="max-w-2xl">
+              <Reveal immediate preset="slide-up" delay={80} distance={18}>
+                <Eyebrow variant="dark">
+                  {hero.eyebrow}
+                </Eyebrow>
+              </Reveal>
+
+              <Reveal immediate preset="slide-up" delay={220} distance={32}>
+                <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.15] lg:leading-[1.12] font-medium tracking-tight text-white">
+                  {hero.title}
+                  <span className="whitespace-pre-line text-[#23C55E]"> {hero.highlight}</span>
+                </h1>
+              </Reveal>
+
+              <Reveal immediate preset="slide-up" delay={380} distance={24}>
+                <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/90 mt-4 sm:mt-5 lg:max-w-[508px]">
+                  {hero.text}
+                </p>
+              </Reveal>
+
+              <Reveal immediate preset="slide-up" delay={540} distance={20}>
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-8 sm:mt-10">
+                  <GreenButton
+                    label={hero.primary.label}
+                    href={hero.primary.url}
+                    bgColor="#ffffff"
+                    textColor="#07110d"
+                  />
+                  <a href="#" className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1">See How an Engagement Works <ArrowIcon /></a>
+                </div>
+              </Reveal>
+            </div>
+
+            <StaggerGroup immediate staggerDelay={140} className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-[506px] lg:justify-self-end">
+              {/* Vertical Gradient Divider Line matching Figma specs */}
+              <div
+                aria-hidden="true"
+                className="hidden lg:block absolute -left-5 xl:-left-6 -top-7 w-[1.5px] h-[510px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
+                style={{
+                  borderLeft: "1.5px solid transparent",
+                  borderImageSource: "linear-gradient(180deg, #23C55E 0%, rgba(35, 197, 94, 0) 89.31%)",
+                  borderImageSlice: 1,
+                }}
+              />
+              {hero.tiers.map((tier, idx) => (
+                <StaggerItem
+                  key={idx}
+                  index={idx}
+                  className="card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                >
+                  <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E]">
+                    {tier.number}
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-[12px] font-mono font-medium tracking-[1.5px] text-white/70 uppercase mb-1">
+                      {tier.label}
+                    </p>
+                    <h3 className="text-[18px] sm:text-[20px] font-semibold leading-[26px] sm:leading-[30px] text-white">
+                      {tier.title} <span className="font-semibold text-[#23C55E]">{tier.highlight}</span>
+                    </h3>
+                    <p className="text-[13px] sm:text-[14px] font-normal leading-[18px] sm:leading-[16px] text-white/60 mt-1">
+                      {tier.text}
+                    </p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        </Container>
+      </div>
+    </section>
+  );
+}
+
+// --- Component: Stages ---
+export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
+  const iconMap = {
+    gear: "/icons/set-the-foundation.png",
+    people: "/icons/build-momentum.png",
+    person: "/icons/lead-with-foresight.png",
+    target: "/icons/optimize-and-expand.png",
+  };
+
+  return (
+    <Section theme="light" spacing="both" className="find-stage-section">
+      <Container>
+        <Reveal preset="slide-up" distance={20}>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-12">
+            <div>
+              <Eyebrow variant="light">
+                {stages.eyebrow}
+              </Eyebrow>
+              <h2 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-[46px] lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+                {stages.title.split("Company")[0]}
+                <br />
+                <span className="font-black italic">Company Today?</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826]/80">
+              {stages.text}
+            </p>
+          </div>
+        </Reveal>
+
+        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+          {stages.cards.map((card, idx) => {
+            const iconSrc = iconMap[card.icon] || "/icons/set-the-foundation.png";
+
+            return (
+              <StaggerItem
+                key={idx}
+                index={idx}
+                className="card-hover bg-[#121826] rounded-[16px] p-6 sm:p-8 flex flex-col justify-between min-h-[200px] sm:min-h-[226px] relative group border border-white/5"
+              >
+                <div className="flex justify-between items-start gap-4 mb-5 sm:mb-6">
+                  <h3 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold leading-[1.2] text-white">
+                    {card.title}
+                  </h3>
+                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]">
+                    <Image
+                      src={iconSrc}
+                      alt={card.title}
+                      width={22}
+                      height={22}
+                      className="object-contain group-hover:invert transition-colors duration-300"
+                    />
+                  </div>
+                </div>
+
+                <p className="text-[13px] sm:text-[14px] font-medium tracking-[0.06em] uppercase text-white/70 mb-3 sm:mb-4 max-w-[85%] sm:max-w-[80%] leading-[129%]">
+                  {card.label}
+                </p>
+
+                <p className="text-[15px] sm:text-[16px] lg:text-[18px] font-normal leading-[150%] text-white/70">
+                  {card.text}
+                </p>
+              </StaggerItem>
+            );
+          })}
+        </StaggerGroup>
+      </Container>
+    </Section>
+  );
+}
+
+// --- Component: Depth Intro ---
+export function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] }) {
+  return (
+    <Section theme="dark" spacing="space60" className="services-depth-intro">
+      <Container>
+        <Reveal preset="slide-up" distance={20} className="flex flex-col items-center text-center px-4">
+          <Eyebrow variant="green">
+            {depth.eyebrow}
+          </Eyebrow>
+
+          <h2 className="mt-5.5 sm:mt-7.5 text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+            <span className="font-medium">What&apos;s</span>
+            <span className="font-extrabold italic"> Inside Each Tier</span>
+          </h2>
+
+          <GreenButton
+            label={depth.cta.label}
+            href={depth.cta.url}
+            bgColor="#ffffff"
+            textColor="#121826"
+            className="mt-8 sm:mt-10"
+          />
+        </Reveal>
+      </Container>
+    </Section>
+  );
+}
+
+// --- Component: Details ---
+export function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
+  return (
+    <Section theme="lightblue" spacing="none" className="services-details">
+      {details.map((detail, idx) => (
+        <Reveal
+          key={detail.anchor}
+          preset="slide-up"
+          distance={20}
+          as="div"
+          id={detail.anchor}
+          className={`py-10 sm:py-12.5 lg:py-15 scroll-mt-20 lg:scroll-mt-24 ${idx > 0 ? "border-t border-white/12" : ""
+            }`}
+        >
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 sm:gap-10 lg:gap-20 items-start">
+              <div className="max-w-md">
+                <div className="flex size-8.5 items-center justify-center rounded-full border border-white/7 bg-[#121826] text-[14px] font-semibold text-[#23C55E]">
+                  {detail.number}
+                </div>
+                <h2 className="text-[28px] sm:text-[32px] lg:text-[36px] font-medium leading-[1.15] sm:leading-[1.1] tracking-[-0.8px] text-white my-4 sm:my-6">
+                  {detail.title}
+                </h2>
+                <p className="text-[15px] sm:text-[16px] font-light leading-[160%] text-white/80">
+                  {detail.text}
+                </p>
+                <GreenButton
+                  label={detail.cta.label}
+                  href={detail.cta.url}
+                  bgColor="#23C55E"
+                  textColor="#121826"
+                  onDark={true}
+                  className="mt-6 sm:mt-8 lg:mt-10"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border border-white/12 rounded-[9px] overflow-hidden bg-[#121826]">
+                {detail.items.map((item, itemIdx) => {
+                  const total = detail.items.length;
+                  const isOdd = total % 2 !== 0;
+                  const isLastItem = itemIdx === total - 1;
+                  const isFullWidth = isOdd && isLastItem;
+                  const isLeftCol = itemIdx % 2 === 0;
+
+                  const isLastRowSm = isOdd ? itemIdx === total - 1 : itemIdx >= total - 2;
+                  const isLastRowMobile = itemIdx === total - 1;
+
+                  return (
+                    <div
+                      key={itemIdx}
+                      className={`card-hover bg-[#121826] p-6 sm:p-8 flex flex-col justify-start min-h-0 sm:min-h-[191px] 
+                        ${isFullWidth ? "sm:col-span-2 sm:border-r-0" : isLeftCol ? "sm:border-r sm:border-white/12" : "sm:border-r-0"} 
+                        ${isLastRowMobile ? "border-b-0" : "border-b border-white/12"} 
+                        ${isLastRowSm ? "sm:border-b-0" : "sm:border-b sm:border-white/12"}
+                      `}
+                    >
+                      <h3 className="text-[19px] sm:text-[22px] font-semibold leading-[1.25] sm:leading-[1.2] mb-2 sm:mb-3 text-white">
+                        {item.title}
+                      </h3>
+                      <p className="text-[14px] sm:text-[16px] font-normal leading-[140%] text-white/70">
+                        {item.text}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </Container>
+        </Reveal>
+      ))}
+    </Section>
+  );
+}
+
+// --- Component: Fractional CFO ---
+export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
+  const images = [
+    "/services/cfo-img-01.png",
+    "/services/cfo-img-02.png",
+    "/services/cfo-img-03.png",
+  ];
+
+  return (
+    <Section theme="light" spacing="both" className="services-cfo-section">
+      <Container>
+        <div className="bg-[#EDE9E6] rounded-[10px] p-6 sm:p-10 md:px-12.5 md:py-20 text-[#121826]">
+
+          <Reveal preset="slide-up" distance={20}>
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
+              <div>
+                <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+                  {cfo.title.split("\n")[0]}
+                  <br />
+                  <span className="font-extrabold italic">{cfo.title.split("\n")[1]}</span>
+                </h2>
+              </div>
+              <div className="max-w-md">
+                <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] text-[#121826]/70 mb-6 sm:mb-8">
+                  {cfo.text}
+                </p>
+                <GreenButton
+                  label={cfo.cta.label}
+                  href={cfo.cta.url}
+                  bgColor="#121826"
+                  textColor="#ffffff"
+                />
+              </div>
+            </div>
+          </Reveal>
+
+          <StaggerGroup staggerDelay={140} className="cfo-cards grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+            {cfo.cards.map((card, idx) => (
+              <StaggerItem
+                key={idx}
+                index={idx}
+                className="group card-hover relative w-full h-[350px] sm:h-[480px] md:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
+              >
+                <Image
+                  src={images[idx] || card.image?.url || ""}
+                  alt={card.title}
+                  fill
+                  className="object-cover image-hover-zoom"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+
+                {/* Bottom-left cutout wrapper matching Figma geometry */}
+                <div className="absolute bottom-0 left-0 bg-[#EDE9E6] pt-3 pr-3 sm:pt-3.5 sm:pr-3.5 rounded-tr-[12px] w-[calc(100%-55px)] sm:w-[calc(100%-75px)] max-w-[315px]">
+                  {/* Top-left corner radius for upper photo */}
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    className="absolute left-0 bottom-full pointer-events-none"
+                    aria-hidden="true"
+                  >
+                    <path d="M 0 0 A 20 20 0 0 0 20 20 H 0 V 0 Z" fill="#EDE9E6" />
+                  </svg>
+
+                  {/* Bottom-left corner radius for right photo strip */}
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    className="absolute left-full bottom-0 pointer-events-none"
+                    aria-hidden="true"
+                  >
+                    <path d="M 0 0 A 20 20 0 0 0 20 20 H 0 V 0 Z" fill="#EDE9E6" />
+                  </svg>
+
+                  {/* Dark Box */}
+                  <div className="bg-[#121826] text-white rounded-[8px] p-5 sm:p-6 flex flex-col justify-start min-h-[145px] sm:min-h-[160px]">
+                    <h3 className="text-[16px] sm:text-[18px] font-extrabold uppercase tracking-[1px] leading-[20px] mb-2 sm:mb-3 text-white">
+                      {card.title}
+                    </h3>
+                    <p className="text-[13px] sm:text-[14px] font-normal leading-[140%] text-white/70">
+                      {card.text}
+                    </p>
+                  </div>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+
+        </div>
+      </Container>
+    </Section>
+  );
+}
+
+// --- Component: Process ---
+export function ServicesProcess({ process }: { process: ServicesContent["process"] }) {
+  return (
+    <Section theme="dark" spacing="top" className="services-process-section">
+      <Container>
+
+        {/* Header */}
+        <Reveal preset="slide-up" distance={20} className="flex flex-col items-center text-center mb-8 sm:mb-12.5">
+          <h2 className="text-3xl sm:text-4xl md:text-[50px] font-medium leading-[1.15] sm:leading-[1.1] tracking-[-0.8px] mb-3 sm:mb-4">
+            {process.title}
+          </h2>
+          <p className="text-[14px] sm:text-[16px] font-light leading-[160%] text-white/70 max-w-[680px] px-2">
+            {process.text}
+          </p>
+        </Reveal>
+
+        {/* Cards Grid */}
+        <ProcessGrid steps={process.steps} />
+
+      </Container>
+    </Section>
+  );
+}
+
+// --- Component: Investors ---
+export function ServicesInvestors({ investors }: { investors: ServicesContent["investors"] }) {
+  return (
+    <Section theme="dark" spacing="both" className="services-process-section">
+      <Container>
+        {/* Header Area - Contained */}
+        <Reveal preset="slide-up" distance={20} className="mx-auto w-full mb-10 sm:mb-14 lg:mb-16">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 sm:gap-10 lg:gap-16">
+            <div className="max-w-2xl">
+              <p className="inline-flex items-center gap-3 text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-5 sm:mb-6">
+                <span className="h-px w-6 bg-[#23C55E]" />
+                {investors.eyebrow}
+              </p>
+              <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.1] sm:leading-[1.05] tracking-[-0.8px] text-white">
+                {investors.title.split("\n")[0]}
+                <br />
+                {investors.title.split("\n")[1]}{" "}
+                <span className="font-extrabold italic">{investors.highlight}</span>
+                <br />
+                <span className="font-extrabold italic">{investors.title.split("\n")[2]}</span>
+              </h2>
+            </div>
+
+            <div className="max-w-xl lg:pb-2">
+              <p className="text-[15px] sm:text-[16px] font-light leading-[160%] text-white/80 mb-6 sm:mb-8">
+                {investors.text}
+              </p>
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                <GreenButton
+                  label={investors.primary.label}
+                  href={investors.primary.url}
+                  bgColor="#ffffff"
+                  textColor="#121826"
+                />
+                <a
+                  href={investors.secondary.url}
+                  className="group inline-flex items-center gap-3 text-[15px] sm:text-[16px] font-semibold text-white hover:text-[#23C55E] transition-colors duration-300 py-2"
+                >
+                  <span>{investors.secondary.label}</span>
+                  <ArrowIcon />
+                </a>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </Container>
+
+      {/* Full-bleed slider wisely aligned with container on left */}
+      <InvestorSlider cards={investors.cards} />
+    </Section>
+  );
+}

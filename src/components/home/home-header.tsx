@@ -174,7 +174,7 @@ export function HomeHeader({
       />
 
       <header
-        className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-99 border-b transition-all duration-300 ease-in-out ${
           isHeaderVisible ? "translate-y-0" : "-translate-y-full"
         } ${headerSurface(surface, isHeaderSticky, menuOpen)}`}
       >
@@ -211,14 +211,14 @@ export function HomeHeader({
             </nav>
 
             {/* Updated Button Size */}
-            <div className="btn-cta hidden lg:block">
+            <div className="hidden lg:block">
               <Button
                 color="green"
                 size="header"
                 text={header.cta.label}
                 href={header.cta.url}
                 onDark={true}
-                className="w-[154px] hover:!bg-white hover:!text-[#121826]"
+                className="w-[154px]"
               />
             </div>
 
@@ -275,15 +275,15 @@ export function HomeHeader({
               ))}
 
               <div className="pt-5 mt-2 border-t-0">
-                <Button
-                  color="green"
-                  size="header"
-                  text={header.cta.label}
-                  href={header.cta.url}
-                  onDark={true}
-                  className="w-full justify-center hover:!bg-white hover:!text-[#121826] font-semibold text-center"
-                  onClick={() => setMenuOpen(false)}
-                />
+                  <Button
+                    color="green"
+                    size="header"
+                    text={header.cta.label}
+                    href={header.cta.url}
+                    onDark={true}
+                    className="w-full justify-center text-center"
+                    onClick={() => setMenuOpen(false)}
+                  />
               </div>
             </nav>
           </Container>
@@ -349,7 +349,7 @@ function DesktopItem({
         </button>
       </span>
       {open ? (
-        <div className="dropdown-enter absolute top-full left-1/2 z-50 w-60 -translate-x-1/2 pt-2.5">
+        <div className="dropdown-enter absolute top-full left-0 z-50 w-60 pt-2.5">
           <ul className="rounded-xl border border-white/10 bg-[#121826]/98 backdrop-blur-xl p-1.5 shadow-2xl space-y-0.5">
             {link.children.map((child) => {
               const isChildActive = isUrlActive(pathname, child.url, { currentHash });

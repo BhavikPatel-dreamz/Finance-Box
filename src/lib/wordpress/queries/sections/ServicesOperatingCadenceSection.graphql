@@ -1,0 +1,8 @@
+fragment ServicesOperatingCadenceSection on PageBuilderPageBuilderServicesOperatingCadenceSectionLayout {
+  __typename
+  title
+  description
+  # Editor-selected layout: "up-down" or "side-by-side".
+  sectionSetting
+  steps { number title description }
+}

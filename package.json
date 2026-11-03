@@ -10,13 +10,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "schema": "node scripts/fetch-schema.mjs",
+    "sections:inventory": "node scripts/section-inventory.mjs",
+    "sections:check": "node scripts/check-sections.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "graphql": "^17.0.2",
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "sanitize-html": "^2.18.1",
+    "server-only": "^0.0.1",
     "swiper": "^14.3.0",
     "tailwind-merge": "^3.7.0",
     "zod": "^4.6.7"
@@ -30,6 +36,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/sanitize-html": "^2.16.2",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "tailwindcss": "^4",

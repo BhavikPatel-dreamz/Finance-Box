@@ -1,0 +1,5 @@
+fragment PeopleOperationsWhatWeDoSection on PageBuilderPageBuilderPeopleOperationsWhatWeDoSectionLayout {
+  __typename
+  title
+  whatWeDoItems { image { node { sourceUrl altText } } title description points }
+}

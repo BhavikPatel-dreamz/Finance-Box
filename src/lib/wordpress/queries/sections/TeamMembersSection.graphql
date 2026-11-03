@@ -1,0 +1,10 @@
+fragment TeamMembersSection on PageBuilderPageBuilderTeamMembersSectionLayout {
+  __typename
+  title
+  ctaButton { title url }
+  teamMembers {
+    nodes {
+      ... on Team { ...TeamCard }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+fragment WhyFiabBannerSection on PageBuilderPageBuilderWhyFiabBannerSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  ctaButton { title url }
+  highlights { number title }
+}

@@ -204,7 +204,6 @@ export function FooterHero({
                   label={buttonLabel}
                   href={buttonUrl}
                   onDark={true}
-                  className="hover:!bg-white hover:!text-[#121826]"
                 />
               </div>
             </div>

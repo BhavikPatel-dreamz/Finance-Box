@@ -1,0 +1,8 @@
+fragment ClientsBannerSection on PageBuilderPageBuilderClientsBannerSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  clientProof
+  stats { number label }
+}

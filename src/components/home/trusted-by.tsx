@@ -8,8 +8,12 @@ import { Autoplay } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 
+export type TrustedLogo = { name: string; src: string };
+
 interface TrustedByProps {
   trust?: HomeContent["trust"];
+  /** Logos from WordPress. Falls back to the bundled logos when empty. */
+  logos?: TrustedLogo[];
   className?: string;
 }
 
@@ -19,7 +23,7 @@ const defaultTrust: HomeContent["trust"] = {
   detail: "growing companies in the USA and globally",
 };
 
-const partnerLogos = [
+const defaultLogos: TrustedLogo[] = [
   { name: "Standard Bots", src: "/home/logos/standard-bots.png" },
   { name: "American Robotics", src: "/home/logos/american-robotics.png" },
   { name: "Ondas", src: "/home/logos/ondas.png" },
@@ -28,7 +32,8 @@ const partnerLogos = [
   { name: "Embolx", src: "/home/logos/embolx.png" },
 ];
 
-export function TrustedBy({ trust = defaultTrust, className = "" }: TrustedByProps) {
+export function TrustedBy({ trust = defaultTrust, logos, className = "" }: TrustedByProps) {
+  const partnerLogos = logos && logos.length > 0 ? logos : defaultLogos;
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const frozenTranslateRef = useRef<number | null>(null);
 

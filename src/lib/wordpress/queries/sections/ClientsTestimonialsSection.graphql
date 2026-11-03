@@ -1,0 +1,9 @@
+fragment ClientsTestimonialsSection on PageBuilderPageBuilderClientsTestimonialsSectionLayout {
+  __typename
+  title
+  featuredImage { node { sourceUrl altText } }
+  featuredQuote
+  featuredName
+  featuredDesignation
+  testimonials { content authorImage { node { sourceUrl altText } } authorInfo }
+}

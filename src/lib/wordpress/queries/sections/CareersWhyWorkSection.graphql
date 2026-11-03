@@ -1,0 +1,6 @@
+fragment CareersWhyWorkSection on PageBuilderPageBuilderCareersWhyWorkSectionLayout {
+  __typename
+  image { node { sourceUrl altText } }
+  title
+  points { content }
+}

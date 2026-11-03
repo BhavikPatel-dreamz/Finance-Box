@@ -1,0 +1,6 @@
+fragment PeopleOperationsIntroSection on PageBuilderPageBuilderPeopleOperationsIntroSectionLayout {
+  __typename
+  image { node { sourceUrl altText } }
+  title
+  description
+}

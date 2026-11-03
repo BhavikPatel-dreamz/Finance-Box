@@ -1,0 +1,9 @@
+fragment ClientsFeaturedCaseStudiesSection on PageBuilderPageBuilderClientsFeaturedCaseStudiesSectionLayout {
+  __typename
+  title
+  caseStudies {
+    nodes {
+      ... on CaseStudy { ...CaseStudyCard }
+    }
+  }
+}

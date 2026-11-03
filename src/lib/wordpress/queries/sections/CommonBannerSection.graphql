@@ -1,0 +1,8 @@
+fragment CommonBannerSection on PageBuilderPageBuilderCommonBannerSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  tagLine
+  ctaButton { title url }
+}

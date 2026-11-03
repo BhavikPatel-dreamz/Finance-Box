@@ -1,0 +1,9 @@
+fragment ServicesInvestorsSection on PageBuilderPageBuilderServicesInvestorsSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  primaryCtaButton { title url }
+  secondaryCtaButton { title url }
+  investorCards { image { node { sourceUrl altText } } title description }
+}

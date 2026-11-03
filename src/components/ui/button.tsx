@@ -14,11 +14,10 @@ export type ButtonSizeObject = {
 
 export type ButtonProps = {
   /**
-   * The button color/type.
-   * - "green" (#23C55E): Normal -> bg #23C55E, text #121826 | Hover -> bg #121826, text white
-   * - "green-on-dark":   Normal -> bg #23C55E, text #121826 | Hover -> bg white,   text #121826
-   * - "dark"  (#121826): Normal -> bg #121826, text white   | Hover -> bg #23C55E, text #121826
-   * - "white" (#ffffff): Normal -> bg white,   text #121826 | Hover -> bg #23C55E, text #121826
+   * - "green":         bg #23C55E, text #121826 | hover bg #121826, text white
+   * - "green-on-dark": bg #23C55E, text #121826 | hover bg white,   text #121826
+   * - "dark":          bg #121826, text white   | hover bg #23C55E, text #121826
+   * - "white":         bg white,   text #121826 | hover bg #23C55E, text #121826
    */
   color?: "green" | "dark" | "white" | "green-on-dark" | string;
   /** Alias for color */
@@ -30,7 +29,7 @@ export type ButtonProps = {
   /** Legacy hover color */
   hoverColor?: string;
 
-  /** Set true when the button is inside a dark section/container. For green button, hover state is bg white and text #121826. */
+  /** Set true inside dark sections so the green button fills white on hover. */
   onDark?: boolean;
 
   /** Button text */
@@ -40,45 +39,32 @@ export type ButtonProps = {
   /** Children as button text */
   children?: React.ReactNode;
 
-  /** Link URL (renders a Next.js <Link> when provided) */
+  /** Renders a Next.js <Link> when provided */
   href?: string;
-  /** Click handler (renders a <button> when no href) */
+  /** Renders a <button> when no href */
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-  /** HTML button type */
   type?: "button" | "submit" | "reset";
-  /** Disabled state */
   disabled?: boolean;
-  /** Target attribute for links (e.g. "_blank") */
   target?: string;
-  /** Rel attribute for links */
   rel?: string;
 
-  /** Whether to show the right circle-arrow icon (default: true) */
+  /** Show the circle-arrow icon (default: true) */
   showArrow?: boolean;
   /** Custom icon override */
   icon?: React.ReactNode;
 
   /**
-   * Button sizes:
-   * - "62" | "lg" (Default):
-   *     Desktop: height 62px, font 18px, padding-x 30px
-   *     Tablet:  height 56px, font 16px, padding-x 30px
-   *     Mobile:  height 50px, font 15px, padding-x 24px
-   *
-   * - "50" | "sm":
-   *     Desktop: height 50px, font 18px, padding-x 30px
-   *     Tablet:  height 48px, font 16px, padding-x 30px
-   *     Mobile:  height 44px, font 15px, padding-x 20px
-   *
-   * - "header":
-   *     Fixed height 50px, width 154px, font 14px, padding-x 20px (Header Contact Button)
-   *
-   * Or pass a custom size object: { width?: string; height?: string; ... }
+   * - "62" | "lg" (default): 50px mobile, 56px tablet, 62px desktop
+   * - "50" | "sm":           44px mobile, 48px tablet, 50px desktop
+   * - "header":              40px mobile, 50px desktop
+   * - object:                custom width via { width }
    */
   size?: "62" | "50" | "lg" | "sm" | "md" | "header" | ButtonSizeObject;
 
-  /** Additional classes */
+  /** Additional classes for the button */
   className?: string;
+  /** Override the hover circle color, e.g. "bg-[#1FAF53]" */
+  fillClassName?: string;
 };
 
 function resolveVariant(
@@ -104,24 +90,35 @@ function resolveVariant(
   return "green";
 }
 
-const variantStyles: Record<ButtonVariant, string> = {
-  // Green button (light section): bg #23C55E, text #121826 -> Hover: bg #121826, text white
-  green: "bg-[#23C55E] text-[#121826] hover:bg-[#121826] hover:text-white border border-transparent hover:border-white/10",
-
-  // Green button (dark section): bg #23C55E, text #121826 -> Hover: bg white, text #121826
-  "green-on-dark": "bg-[#23C55E] text-[#121826] hover:bg-white hover:text-[#121826] border border-transparent hover:border-transparent",
-
-  // Dark button: bg #121826, text white -> Hover: bg #23C55E, text #121826
-  dark: "bg-[#121826] text-white hover:bg-[#23C55E] hover:text-[#121826] border border-white/10 hover:border-transparent",
-
-  // White button: bg white, text #121826 -> Hover: bg #23C55E, text #121826
-  white: "bg-white text-[#121826] hover:bg-[#23C55E] hover:text-[#121826] border border-transparent shadow-sm",
+// `base`: resting colors + hover text. `fill`: the circle color that grows on hover.
+const variantStyles: Record<ButtonVariant, { base: string; fill: string }> = {
+  green: {
+    base: "bg-[#23C55E] text-[#121826] hover:text-white",
+    fill: "bg-[#121826]",
+  },
+  "green-on-dark": {
+    base: "bg-[#23C55E] text-[#121826]",
+    fill: "bg-white",
+  },
+  dark: {
+    base: "bg-[#121826] text-white hover:text-[#121826]",
+    fill: "bg-[#23C55E]",
+  },
+  white: {
+    base: "bg-white text-[#121826] shadow-sm",
+    fill: "bg-[#23C55E]",
+  },
 };
 
 export function ArrowIcon({ isHeader = false, className = "" }: { isHeader?: boolean; className?: string }) {
-  const sizeClass = isHeader ? "h-[18px] w-[18px] fill-[#1118281A]" : "h-5 w-5 lg:h-[22px] lg:w-[22px] fill-[#1118281A]";
+  const sizeClass = isHeader ? "h-[18px] w-[18px]" : "h-5 w-5 lg:h-[22px] lg:w-[22px]";
   return (
-    <span className={`inline-flex shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 ${className}`}>
+    <span
+      className={twMerge(
+        "inline-flex shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none",
+        className
+      )}
+    >
       <svg
         viewBox="0 0 20 20"
         fill="none"
@@ -159,16 +156,14 @@ export function Button({
   icon,
   size,
   className = "",
+  fillClassName = "",
   hoverColor,
   onDark,
 }: ButtonProps) {
   const activeVariant = resolveVariant(variant, color, bgColor, onDark, hoverColor);
+  const styles = variantStyles[activeVariant];
   const content = text ?? label ?? children;
 
-  // Determine size mode:
-  // 1. "header" -> 50px height, 20px padding, 14px font
-  // 2. 50px button ("50" | "sm" | object with height 50px)
-  // 3. 62px button (default | "62" | "lg" | "md" | object with height 62px or other)
   const isHeader = size === "header";
   const is50px =
     size === "50" ||
@@ -181,16 +176,11 @@ export function Button({
   if (isHeader) {
     sizeClasses = "sm:h-[50px] h-[40px] min-h-[40px] sm:min-h-[50px] px-3.75 text-[14px] sm:text-[16px]";
   } else if (is50px) {
-    // 50px in desktop view, 30px horizontal padding, 18px font size on desktop
-    // Responsive: 44px mobile -> 48px tablet -> 50px desktop
     sizeClasses = "sm:h-[44px] h-[40px] min-h-[40px] sm:min-h-[44px] px-3.75 text-[14px] md:h-[48px] md:min-h-[48px] md:px-[20px] md:text-[16px] lg:h-[50px] lg:min-h-[50px] lg:px-[20px] lg:text-[18px]";
   } else {
-    // 62px in desktop view, 30px horizontal padding, 18px font size on desktop
-    // Responsive: 50px mobile -> 56px tablet -> 62px desktop
     sizeClasses = "sm:h-[50px] h-[40px] min-h-[40px] sm:min-h-[50px] px-3.75 text-[14px] md:h-[56px] md:min-h-[56px] md:px-[30px] md:text-[16px] lg:h-[62px] lg:min-h-[62px] lg:px-[30px] lg:text-[18px]";
   }
 
-  // Handle custom width or dimensions from object if passed
   if (size && typeof size === "object") {
     if (size.width && size.width !== "auto") {
       customStyle = { width: size.width };
@@ -198,17 +188,32 @@ export function Button({
   }
 
   const baseClasses = twMerge(
-    "group inline-flex max-w-full items-center justify-center gap-3.5 rounded-full font-semibold transition-all duration-300 ease-in-out cursor-pointer select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#23C55E]/60 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
-    variantStyles[activeVariant],
+    "group relative isolate inline-flex max-w-full items-center justify-center gap-3.5 overflow-hidden rounded-full font-semibold cursor-pointer select-none",
+    "transition-[color,transform] duration-500 ease-in-out active:scale-[0.98]",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#23C55E]/60 focus-visible:ring-offset-2",
+    "disabled:opacity-50 disabled:pointer-events-none",
+    styles.base,
     sizeClasses,
     className
   );
 
   const innerContent = (
     <>
+      {/* Circle centered on the bottom-left corner; scale 2.5 is enough to cover wide buttons */}
+      <span
+        aria-hidden="true"
+        className={twMerge(
+          "pointer-events-none absolute bottom-0 left-0 -z-10 aspect-square w-full rounded-full",
+          "[transform:translate(-50%,50%)_scale(0)] transition-transform duration-[900ms] ease-in-out",
+          "group-hover:[transform:translate(-50%,50%)_scale(2.5)] group-focus-visible:[transform:translate(-50%,50%)_scale(2.5)]",
+          "motion-reduce:transition-none",
+          styles.fill,
+          fillClassName
+        )}
+      />
       <span className="whitespace-nowrap">{content}</span>
       {icon ? (
-        <span className="inline-flex shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5">
+        <span className="inline-flex shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none">
           {icon}
         </span>
       ) : showArrow ? (

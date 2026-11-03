@@ -1,0 +1,10 @@
+# Team member (custom post type `team`). The bio in `content` is parsed into the profile card.
+fragment TeamCard on Team {
+  databaseId
+  title
+  slug
+  uri
+  excerpt
+  content
+  featuredImage { node { sourceUrl altText } }
+}

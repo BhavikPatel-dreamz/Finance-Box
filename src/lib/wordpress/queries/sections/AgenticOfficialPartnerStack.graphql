@@ -1,0 +1,6 @@
+fragment AgenticOfficialPartnerStack on PageBuilderPageBuilderAgenticOfficialPartnerStackLayout {
+  __typename
+  title
+  logoView
+  officialPartners { logo { node { sourceUrl altText } } }
+}

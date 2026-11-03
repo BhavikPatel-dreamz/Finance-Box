@@ -7,6 +7,8 @@ import {
   type ClientReview,
 } from "@/content/clients";
 import type { RawSection } from "@/lib/wordpress/content";
+import type { CaseStudyCardFragment } from "@/lib/wordpress/generated/graphql";
+import { caseStudyCardFromNode } from "@/lib/wordpress/cards";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Helpers                                    */
@@ -114,29 +116,10 @@ function mergeCaseStudies(next: ClientsContent, section: Record<string, any>): v
   const caseStudies = rows(section.caseStudies?.nodes ?? section.caseStudies);
   
   if (caseStudies.length > 0) {
-    next.caseStudies.items = caseStudies.map((node, index) => {
-      const fallback = next.caseStudies.items[index];
-      const image = media(node.featuredImage);
-      const title = cleanHtml(node.title, fallback?.title ?? "");
-      const tagLine = cleanHtml(node.caseStudiesOptions?.tagLine, "");
-      const featuredContent = cleanHtml(
-        node.caseStudiesOptions?.featuredContent,
-        "",
-      );
-
-      return {
-        id: String(node.databaseId ?? node.id ?? index + 1),
-        label: tagLine || fallback?.label || "",
-        title,
-        // ACF doesn't split challenge/solution/outcome — put featuredContent
-        // in challenge; solution/outcome keep the static fallback.
-        challenge: featuredContent || fallback?.challenge || "",
-        solution: fallback?.solution ?? "",
-        outcome: fallback?.outcome ?? "",
-        image: image?.url ?? fallback?.image ?? "",
-        ctaUrl: node.uri ?? fallback?.ctaUrl ?? "#",
-      } satisfies ClientCaseStudy;
-    });
+    next.caseStudies.items = caseStudies.map((node, index) =>
+      // Challenge / Solution / Outcome are parsed from the bold labels in `featuredContent`.
+      caseStudyCardFromNode(node as CaseStudyCardFragment, next.caseStudies.items[index]),
+    );
   }
 }
 

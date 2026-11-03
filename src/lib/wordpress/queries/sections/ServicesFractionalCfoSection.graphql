@@ -1,0 +1,7 @@
+fragment ServicesFractionalCfoSection on PageBuilderPageBuilderServicesFractionalCfoSectionLayout {
+  __typename
+  title
+  description
+  ctaButton { title url }
+  deliverables { image { node { sourceUrl altText } } label description }
+}

@@ -1,11 +1,8 @@
-import {
-  knowledgeHubContent,
-  type KnowledgeHubContent,
-  type KnowledgeHubBlog,
-  type KnowledgeHubLink,
-  type KnowledgeHubCaseStudy,
-} from "@/content/knowledge-hub";
+import { knowledgeHubContent, type KnowledgeHubContent } from "@/content/knowledge-hub";
 import type { RawSection } from "@/lib/wordpress/content";
+import type { CaseStudyCardFragment, PostCardFragment } from "@/lib/wordpress/generated/graphql";
+import { blogCardFromPost, caseStudyCardFromNode } from "@/lib/wordpress/cards";
+import { blogArchivePath, CASE_STUDY_BASE, isPlaceholderUrl } from "@/lib/wordpress/paths";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Helpers                                    */
@@ -102,23 +99,13 @@ function mergeBlogs(next: KnowledgeHubContent, section: Record<string, any>): vo
   next.blogs.title = cleanHtml(section.title, next.blogs.title);
   next.blogs.cta = link(section.allBlogCta, next.blogs.cta);
 
+  if (isPlaceholderUrl(next.blogs.cta.url)) next.blogs.cta = { ...next.blogs.cta, url: blogArchivePath() };
+
   const blogs = rows(section.selectBlog?.nodes ?? section.selectBlog);
   if (blogs.length > 0) {
-    next.blogs.items = blogs.map((post, index) => {
-      const fallback = next.blogs.items[index];
-      return {
-        image: media(post.featuredImage)?.url ?? fallback?.image ?? "",
-        category: "Consulting", // ACF me category nahi hai, static rakh rahe hain
-        date: post.date ? new Date(post.date).toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric" }) : fallback?.date ?? "",
-        readTime: "3 min read", // ACF me nahi hai, static
-        title: cleanHtml(post.title, fallback?.title ?? ""),
-        author: {
-          name: "By Guruprasad", // ACF me nahi hai, static
-          avatar: "/knowledge-hub/guruprasad.png",
-        },
-        url: post.uri ?? fallback?.url ?? "/",
-      } satisfies KnowledgeHubBlog;
-    });
+    next.blogs.items = blogs.map((post, index) =>
+      blogCardFromPost(post as PostCardFragment, next.blogs.items[index]),
+    );
   }
 }
 
@@ -133,6 +120,11 @@ function mergeResources(next: KnowledgeHubContent, section: Record<string, any>)
 function mergeCaseStudy(next: KnowledgeHubContent, section: Record<string, any>): void {
   next.caseStudy.title = cleanHtml(section.title, next.caseStudy.title);
   
+  next.caseStudy.cta = {
+    label: cleanHtml(section.allCaseStudy, next.caseStudy.cta.label),
+    url: isPlaceholderUrl(next.caseStudy.cta.url) ? CASE_STUDY_BASE : next.caseStudy.cta.url,
+  };
+
   const caseStudies = rows(section.selectCaseStudy?.nodes ?? section.selectCaseStudy);
   if (caseStudies.length > 0) {
     next.caseStudy.items = caseStudies.map((post, index) => {
@@ -142,6 +134,7 @@ function mergeCaseStudy(next: KnowledgeHubContent, section: Record<string, any>)
         title: cleanHtml(post.title, fallback?.title ?? ""),
         // Yahan excerpt clean ho raha hai, jisse &#8230; hat jayega
         text: cleanHtml(post.excerpt, fallback?.text ?? ""),
+        url: caseStudyCardFromNode(post as CaseStudyCardFragment).ctaUrl,
       };
     });
   }

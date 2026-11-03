@@ -152,7 +152,7 @@ export const homeContent: HomeContent = {
         url: "/#about",
         children: [
           { label: "Why FIAB", url: "/why-fiab/" },
-          { label: "Team", url: "/#team" },
+          { label: "Team", url: "/team/" },
           { label: "Careers", url: "/careers/" },
           { label: "Knowledge Hub", url: "/knowledge-hub/" },
         ],
@@ -354,7 +354,7 @@ export const homeContent: HomeContent = {
         title: "Company",
         links: [
           { label: "Why FIAB", url: "/why-fiab/" },
-          { label: "Team", url: "/#about" },
+          { label: "Team", url: "/team/" },
           { label: "Careers", url: "/careers/" },
           { label: "Contact", url: "/contact-us/" },
         ],
@@ -381,8 +381,8 @@ export const homeContent: HomeContent = {
       {
         title: "Support",
         links: [
-          { label: "Privacy Policy", url: "/privacy-policy" },
-          { label: "Terms & Conditions", url: "/privacy-policy" },
+          { label: "Privacy Policy", url: "/privacy-policy/" },
+          { label: "Terms & Conditions", url: "/terms-conditions/" },
         ],
       },
       {
