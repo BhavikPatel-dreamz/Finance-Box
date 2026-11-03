@@ -10,6 +10,7 @@ import { InvestorSlider } from "@/components/services/investor-slider";
 import { ProcessGrid } from "@/components/ui/process-grid";
 import Section from "../ui/section";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
+import { RiseGlow } from "@/components/ui/rise-glow";
 
 export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]; header: ReactNode }) {
   // Hero Section
@@ -246,16 +247,17 @@ export function ServicesDetails({ details }: { details: ServicesContent["details
                   return (
                     <div
                       key={itemIdx}
-                      className={`card-hover bg-[#121826] p-6 sm:p-8 flex flex-col justify-start min-h-0 sm:min-h-[191px] 
+                      className={`group relative isolate overflow-hidden bg-[#121826] p-6 sm:p-8 flex flex-col justify-start min-h-0 sm:min-h-[191px] 
                         ${isFullWidth ? "sm:col-span-2 sm:border-r-0" : isLeftCol ? "sm:border-r sm:border-white/12" : "sm:border-r-0"} 
                         ${isLastRowMobile ? "border-b-0" : "border-b border-white/12"} 
                         ${isLastRowSm ? "sm:border-b-0" : "sm:border-b sm:border-white/12"}
                       `}
                     >
+                      <RiseGlow />
                       <h3 className="text-[19px] sm:text-[22px] font-semibold leading-[1.25] sm:leading-[1.2] mb-2 sm:mb-3 text-white">
                         {item.title}
                       </h3>
-                      <p className="text-[14px] sm:text-[16px] font-normal leading-[140%] text-white/70">
+                      <p className="text-[14px] sm:text-[16px] font-normal leading-[140%] text-white/70 transition-colors duration-500 group-hover:text-white/90">
                         {item.text}
                       </p>
                     </div>
@@ -311,7 +313,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
               <StaggerItem
                 key={idx}
                 index={idx}
-                className="group card-hover relative w-full h-[350px] sm:h-[480px] md:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
+                className="group card-hover relative w-full h-[350px] sm:h-[480px] md:h-[400px] xl:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
               >
                 <Image
                   src={images[idx] || card.image?.url || ""}
@@ -348,11 +350,11 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                   </svg>
 
                   {/* Dark Box */}
-                  <div className="bg-[#121826] text-white rounded-[8px] p-5 sm:p-6 flex flex-col justify-start min-h-[145px] sm:min-h-[160px]">
-                    <h3 className="text-[16px] sm:text-[18px] font-extrabold uppercase tracking-[1px] leading-[20px] mb-2 sm:mb-3 text-white">
+                  <div className="bg-[#121826] group-hover:bg-[#23C55E] text-white rounded-[8px] p-5 sm:p-6 flex flex-col justify-start min-h-[145px] sm:min-h-[160px] transition-all duration-300">
+                    <h3 className="text-[16px] sm:text-[18px] font-extrabold uppercase tracking-[1px] leading-[20px] mb-2 sm:mb-3 text-white group-hover:text-[#0B0D0C] transition-all duration-300">
                       {card.title}
                     </h3>
-                    <p className="text-[13px] sm:text-[14px] font-normal leading-[140%] text-white/70">
+                    <p className="text-[13px] sm:text-[14px] font-normal leading-[140%] text-white/70 group-hover:text-[#0B0D0C] transition-all duration-300">
                       {card.text}
                     </p>
                   </div>
