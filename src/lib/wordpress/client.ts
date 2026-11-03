@@ -120,6 +120,10 @@ export async function graphqlRequest<TData>(
     // A named client is easier to allow in a firewall than the default "node" agent.
     "User-Agent": "Financebox-Headless/1.0 (+Next.js)",
   };
+  // Shared secret that lets a Cloudflare WAF "Skip" rule exempt this server
+  // from bot challenges (Vercel's data-centre IPs are otherwise challenged).
+  const firewallToken = process.env.WORDPRESS_FIREWALL_TOKEN?.trim();
+  if (firewallToken) headers["X-Financebox-Token"] = firewallToken;
   if (options.preview) headers.Authorization = previewAuthorization();
 
   const query = queryText(document);
