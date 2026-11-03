@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { BLOG_CARD_CLASS, BlogCard } from "@/components/blog/blog-card";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { GreenButton } from "@/components/ui/green-button";
@@ -65,40 +67,8 @@ export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs
 
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {blogs.items.map((blog, idx) => (
-            <StaggerItem
-              key={idx}
-              index={idx}
-              className="group card-hover relative rounded-[10px] overflow-hidden h-[480px] sm:h-[540px] md:h-[580px] lg:h-[661px] flex items-end bg-gray-100 shadow-sm"
-            >
-              <Image
-                src={blog.image}
-                alt={blog.title}
-                fill
-                className="object-cover image-hover-zoom"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[24.97%] to-black/50 to-[100%]" />
-
-              <div className="relative bg-[#121826] rounded-[14px] sm:rounded-[16px] p-4.5 sm:p-5 lg:p-6 m-3 sm:m-3.5 lg:m-4 w-[calc(100%-24px)] sm:w-[calc(100%-28px)] lg:w-[calc(100%-32px)] text-white flex flex-col justify-between min-h-[210px] sm:min-h-[225px] lg:min-h-[247px]">
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 lg:gap-3 text-[11px] sm:text-[11.5px] lg:text-[12px] font-normal text-white/60 mb-3 sm:mb-3.5 lg:mb-4">
-                    <span className="text-white font-medium uppercase font-mono tracking-wider">{blog.category}</span>
-                    <span className="opacity-40">|</span>
-                    <span className="font-mono">{blog.date}</span>
-                    <span className="opacity-40">|</span>
-                    <span className="font-mono">{blog.readTime}</span>
-                  </div>
-                  <h3 className="text-[18px] sm:text-[20px] lg:text-[24px] font-semibold leading-[1.25] lg:leading-[1.2] mb-4 sm:mb-5 lg:mb-6">
-                    {blog.title}
-                  </h3>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="relative w-[34px] h-[34px] sm:w-[38px] sm:h-[38px] rounded-full overflow-hidden border border-white/10 shrink-0">
-                    <Image src={blog.author.avatar} alt={blog.author.name} fill className="object-cover" />
-                  </div>
-                  <span className="text-[13px] sm:text-[14px] font-medium text-white/80">{blog.author.name}</span>
-                </div>
-              </div>
+            <StaggerItem key={blog.url || idx} index={idx} className={BLOG_CARD_CLASS}>
+              <BlogCard blog={blog} />
             </StaggerItem>
           ))}
         </StaggerGroup>
@@ -160,7 +130,7 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
 
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-6 md:gap-4 lg:gap-5">
           {caseStudy.items.map((item, idx) => (
-            <StaggerItem key={idx} index={idx} className="group card-hover flex flex-col">
+            <StaggerItem key={item.url || idx} index={idx} className="group card-hover relative flex flex-col">
               <div className="relative w-full aspect-[414/560] max-h-[460px] sm:max-h-[500px] md:max-h-none lg:aspect-auto lg:h-[560px] rounded-[6px] sm:rounded-[8px] lg:rounded-[5px] overflow-hidden mb-4 sm:mb-5 lg:mb-6">
                 <Image
                   src={item.image}
@@ -171,7 +141,13 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
                 />
               </div>
               <h3 className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[1.3] lg:leading-[1.2] mb-2">
-                {item.title}
+                {item.url ? (
+                  <Link href={item.url} className="after:absolute after:inset-0 after:content-[''] hover:text-[#23C55E] transition-colors duration-300">
+                    {item.title}
+                  </Link>
+                ) : (
+                  item.title
+                )}
               </h3>
               <p className="text-[13px] sm:text-[14px] font-normal leading-[160%] text-[#121826]/70">
                 {item.text}

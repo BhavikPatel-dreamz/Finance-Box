@@ -5,7 +5,11 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 // Refresh it with `npm run schema` after changing ACF fields, then run `npm run codegen`.
 const config: CodegenConfig = {
   schema: "src/lib/wordpress/schema.graphql",
-  documents: ["src/lib/wordpress/queries/*.graphql", "src/lib/wordpress/queries/sections/*.graphql"],
+  documents: [
+    "src/lib/wordpress/queries/*.graphql",
+    "src/lib/wordpress/queries/fragments/*.graphql",
+    "src/lib/wordpress/queries/sections/*.graphql",
+  ],
   generates: {
     "src/lib/wordpress/generated/graphql.ts": {
       plugins: ["typescript-operations", "typed-document-node"],

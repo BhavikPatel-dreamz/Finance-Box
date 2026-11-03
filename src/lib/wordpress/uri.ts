@@ -14,6 +14,11 @@ export const RESERVED_SEGMENTS: ReadonlySet<string> = new Set([
   "terms-conditions",
   "terms-and-conditions",
   "404",
+  // Served by their own routes: src/app/blog, src/app/case-study, src/app/team.
+  "blog",
+  "case-study",
+  "team",
+  "category",
 ]);
 
 /**

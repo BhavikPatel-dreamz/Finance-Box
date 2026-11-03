@@ -1,0 +1,13 @@
+query TeamMemberBySlug($slug: ID!) {
+  team(id: $slug, idType: SLUG) {
+    ...TeamCard
+    status
+  }
+}
+
+query TeamList($first: Int!, $after: String) {
+  teams(first: $first, after: $after, where: { status: PUBLISH }) {
+    pageInfo { hasNextPage endCursor }
+    nodes { ...TeamCard }
+  }
+}

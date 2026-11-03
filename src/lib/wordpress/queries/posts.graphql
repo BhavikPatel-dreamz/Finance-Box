@@ -1,0 +1,14 @@
+query PostBySlug($slug: ID!) {
+  post(id: $slug, idType: SLUG) {
+    ...PostCard
+    status
+    tags(first: 20) { nodes { name } }
+  }
+}
+
+query PostsList($first: Int!, $after: String) {
+  posts(first: $first, after: $after, where: { status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
+    pageInfo { hasNextPage endCursor }
+    nodes { ...PostCard }
+  }
+}

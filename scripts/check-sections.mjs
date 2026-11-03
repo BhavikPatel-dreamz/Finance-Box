@@ -42,6 +42,8 @@ for (const [layout, file] of registered) {
 }
 
 const pageCore = readFileSync("src/lib/wordpress/queries/page-core.graphql", "utf8");
+const sharedDir = "src/lib/wordpress/queries/fragments";
+const shared = readdirSync(sharedDir).filter((file) => file.endsWith(".graphql")).map((file) => readFileSync(`${sharedDir}/${file}`, "utf8"));
 const query = `
   query PageByUri($uri: String!) {
     nodeByUri(uri: $uri) {
@@ -50,6 +52,7 @@ const query = `
     }
   }
   ${pageCore}
+  ${shared.join("\n")}
   ${fragments.map((fragment) => fragment.source).join("\n")}
 `;
 for (const error of validate(schema, parse(query))) problems.push(`composed page query: ${error.message}`);

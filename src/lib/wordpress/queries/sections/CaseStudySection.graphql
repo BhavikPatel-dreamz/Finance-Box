@@ -4,13 +4,7 @@ fragment CaseStudySection on PageBuilderPageBuilderCaseStudySectionLayout {
   allCaseStudy
   selectCaseStudy {
     nodes {
-      ... on CaseStudy {
-        databaseId
-        uri
-        title
-        excerpt
-        featuredImage { node { sourceUrl altText } }
-      }
+      ... on CaseStudy { ...CaseStudyCard }
     }
   }
 }

@@ -4,12 +4,7 @@ fragment TeamMembersSection on PageBuilderPageBuilderTeamMembersSectionLayout {
   ctaButton { title url }
   teamMembers {
     nodes {
-      ... on Team {
-        title
-        excerpt
-        content
-        featuredImage { node { sourceUrl altText } }
-      }
+      ... on Team { ...TeamCard }
     }
   }
 }

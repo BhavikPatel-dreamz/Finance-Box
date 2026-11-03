@@ -35,6 +35,9 @@ function wordpressImagePatterns(): RemotePattern[] {
     }
   }
 
+  // Post author avatars.
+  patterns.push({ protocol: "https", hostname: "secure.gravatar.com", pathname: "/avatar/**" });
+
   return patterns;
 }
 
@@ -45,7 +48,11 @@ const nextConfig: NextConfig = {
     remotePatterns: wordpressImagePatterns(),
   },
   async redirects() {
-    return [{ source: "/terms-and-conditions", destination: "/terms-conditions", permanent: true }];
+    return [
+      { source: "/terms-and-conditions", destination: "/terms-conditions", permanent: true },
+      // WordPress category archives; the site has one blog archive.
+      { source: "/category/:path*", destination: "/blog", permanent: false },
+    ];
   },
   turbopack: {
     rules: {

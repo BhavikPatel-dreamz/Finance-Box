@@ -29,6 +29,8 @@ export type WhyTeamMember = {
   industries: string;
   image: string;
   imagePosition?: "left" | "right";
+  /** Profile page, when the member comes from WordPress. */
+  url?: string;
 };
 
 export type WhyContent = {

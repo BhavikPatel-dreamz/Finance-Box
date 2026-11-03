@@ -9,6 +9,7 @@ Single dynamic template. WordPress controls content and section order; Next.js c
 - Every WordPress page renders through `src/app/[[...slug]]/page.tsx` → `PageFrame` → `SectionRenderer` → `section-registry.ts` → one definition per layout in `src/components/sections/`.
 - Shared header/footer: `src/components/layout/site-header.tsx`, `site-footer.tsx`, data from `src/lib/wordpress/site-chrome.ts` (WordPress menus, static fallback).
 - Data: `src/lib/wordpress/client.ts` (server-only, timeout, retry), `content.ts` (cached loaders), one composed GraphQL request per page.
+- Posts, case studies, team: own routes under `src/app/blog`, `src/app/case-study`, `src/app/team` (`docs/content-types.md`).
 - Details: `docs/architecture.md`. Adding a section: `docs/section-development.md`. Inventory: `docs/sections/inventory.md`. Caching/webhook: `docs/caching.md`. WordPress: `docs/wordpress-setup.md`.
 
 Stack: Next.js 16.4.2 (App Router, Turbopack, Cache Components), React 19.3, TypeScript 5, Tailwind 4, Node 22, GraphQL Codegen.
@@ -43,7 +44,23 @@ Stack: Next.js 16.4.2 (App Router, Turbopack, Cache Components), React 19.3, Typ
 12. Reserved routes, URI normalisation, `/terms-and-conditions` redirect, escaped JSON-LD.
 13. Documentation: architecture, caching, WordPress setup, section guide, inventory, README, `.cursor/skills/financebox`.
 
+## Post types (2026-11-03, second pass)
+
+`post` (3), `case-study` (3) and `team` (2) were all 404 before; the Clients "Read a Full Case Study" buttons were broken links. Now: `/blog`, `/blog/page/<n>`, `/blog/<slug>`, `/case-study`, `/case-study/<slug>`, `/team/<slug>` as separate route files; root-level post URLs 308 to `/blog/<slug>/`; `/category/*` → `/blog`. Details: `docs/content-types.md`.
+
+- Moved existing UI into shared files: blog card, case study card, team profile card, article hero; `mapTeamMember` → `src/components/team/team-member.ts`.
+- Knowledge Hub blog/case-study cards, Clients case studies and Why FIAB team names now link to these pages. Blog cards show the real category, author, avatar and reading time (were hardcoded "Consulting", "By Guruprasad", "3 min read"). "Explore Blogs"/"Explore Case Studies" go to the archives (WordPress has `#`; static defaults pointed at non-existent `/blogs`, `/case-studies`).
+- Fixed: Clients cards put the whole `featuredContent` into "Challenge" and showed static Solution/Outcome; now parsed by label.
+- `plainText` now decodes numeric entities (`&#8217;`, `&#038;`).
+- Body HTML rendered only via `sanitize-html@2.18.1` allowlist (2.18.0 and below have an advisory). XSS payload test passed.
+- Sitemap includes the new routes; webhook accepts `post`, `case-study`, `team`.
+- Verified on dev against live WordPress: all routes 200, unknown slugs 404, redirects 308/307, links on Knowledge Hub/Clients/Why FIAB, sitemap, webhook scopes, screenshots of post, case study, team pages. `tsc`, lint (no new errors), `sections:check`, `next build` pass.
+- **Content gaps in WordPress** (not code): the 3 posts have no body or excerpt; all 3 case studies use template placeholder text in Featured Content (DeepScribe's mentions FLYR) and have no body.
+- No Figma exists for these pages; they are composed from existing design pieces and should be reviewed by design.
+
 ## Pending / needs a decision
+
+- Preview for posts/case studies/team (preview currently supports pages only).
 
 - **Menus**: assign WordPress menus to Primary and Footer (see `docs/wordpress-setup.md`). Until then navigation is static.
 - **Header/footer globals**: logo, footer text, email, legal line have no WordPress source. Needs an ACF options page (decision: which fields).

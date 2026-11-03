@@ -6,6 +6,7 @@ Next.js renders every page on the server from the external WordPress GraphQL API
 - Architecture: `docs/architecture.md`
 - Adding a section: `docs/section-development.md`
 - Section inventory: `docs/sections/inventory.md`
+- Posts, case studies, team: `docs/content-types.md`
 - WordPress setup, menus, preview: `docs/wordpress-setup.md`
 - Caching and webhook: `docs/caching.md`
 

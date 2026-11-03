@@ -13,7 +13,8 @@ export type SectionFragment = {
   layout: string;
   typename: string;
   name: string;
-  definition: FragmentDefinitionNode;
+  /** The layout fragment followed by the fragments it spreads (e.g. `PostCard`). */
+  definitions: FragmentDefinitionNode[];
 };
 
 function collectSectionFragments(): SectionFragment[] {
@@ -21,19 +22,28 @@ function collectSectionFragments(): SectionFragment[] {
   for (const value of Object.values(generated)) {
     const document = value as DocumentNode | undefined;
     if (!document || typeof document !== "object" || document.kind !== Kind.DOCUMENT) continue;
-    for (const definition of document.definitions) {
-      if (definition.kind !== Kind.FRAGMENT_DEFINITION) continue;
-      const typename = definition.typeCondition.name.value;
-      if (!typename.startsWith(LAYOUT_TYPE_PREFIX) || !typename.endsWith(LAYOUT_TYPE_SUFFIX)) continue;
-      const layout = layoutFromTypename(typename);
-      if (!layout || seen.has(typename)) continue;
-      seen.set(typename, { layout, typename, name: definition.name.value, definition });
-    }
+    // Codegen emits each fragment document as [the fragment, …fragments it depends on].
+    const [definition, ...dependencies] = document.definitions;
+    if (definition?.kind !== Kind.FRAGMENT_DEFINITION) continue;
+    const typename = definition.typeCondition.name.value;
+    if (!typename.startsWith(LAYOUT_TYPE_PREFIX) || !typename.endsWith(LAYOUT_TYPE_SUFFIX)) continue;
+    const layout = layoutFromTypename(typename);
+    if (!layout || seen.has(typename)) continue;
+    const nested = dependencies.filter((node): node is FragmentDefinitionNode => node.kind === Kind.FRAGMENT_DEFINITION);
+    seen.set(typename, { layout, typename, name: definition.name.value, definitions: [definition, ...nested] });
   }
   return [...seen.values()].sort((a, b) => a.layout.localeCompare(b.layout));
 }
 
 export const sectionFragments: readonly SectionFragment[] = collectSectionFragments();
+
+function uniqueDefinitions(fragments: readonly SectionFragment[]) {
+  const byName = new Map<string, FragmentDefinitionNode>();
+  for (const fragment of fragments) {
+    for (const definition of fragment.definitions) byName.set(definition.name.value, definition);
+  }
+  return [...byName.values()];
+}
 
 const selectionCache = new Map<string, { spreads: string; definitions: string }>();
 
@@ -50,7 +60,7 @@ export function sectionSelection(liveTypes: ReadonlySet<string> | null) {
   const fragments = sectionFragments.filter((fragment) => !liveTypes || liveTypes.has(fragment.typename));
   const result = {
     spreads: fragments.map((fragment) => `...${fragment.name}`).join("\n"),
-    definitions: fragments.map((fragment) => print(fragment.definition)).join("\n\n"),
+    definitions: uniqueDefinitions(fragments).map((definition) => print(definition)).join("\n\n"),
   };
   selectionCache.set(key, result);
   return result;

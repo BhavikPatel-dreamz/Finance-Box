@@ -28,6 +28,7 @@ import {
 } from "@/lib/wordpress/generated/graphql";
 import type { SectionData } from "@/lib/page-builder/types";
 import { canonicalUrl, plainText, siteOrigin } from "@/lib/wordpress/text";
+import { blogPath, isSlug } from "@/lib/wordpress/paths";
 import { print } from "graphql";
 
 export type CmsImage = {
@@ -62,6 +63,7 @@ export type PublicPage = {
 };
 
 export type PageLoadResult =
+  | { status: "redirect"; to: string }
   | { status: "unconfigured" }
   | { status: "unavailable" }
   | { status: "not-found" }
@@ -162,6 +164,7 @@ function publicPageQuery(capabilities: SchemaCapabilities) {
       nodeByUri(uri: $uri) {
         __typename
         ... on Page { ${selection} }
+        ... on Post { slug status }
       }
     }
     ${definitions}
@@ -202,7 +205,7 @@ type PageNode = PageCoreFragment & {
   pageBuilder?: { pageBuilder?: Array<SectionData | null> | null } | null;
 };
 
-type PublicPageResponse = { nodeByUri?: PageNode | null };
+type PublicPageResponse = { nodeByUri?: (PageNode | { __typename: "Post"; slug?: string | null; status?: string | null }) | null };
 type PreviewPageResponse = {
   page?: (PageNode & { desiredSlug?: string | null; preview?: { node?: PageNode | null } | null }) | null;
 };
@@ -296,6 +299,10 @@ async function readPublicPage(uri: string): Promise<PageLoadResult> {
     const capabilities = await getCapabilities();
     const data = await graphqlRequest<PublicPageResponse>(publicPageQuery(capabilities), { uri });
     const node = data.nodeByUri;
+    // WordPress puts posts at /<slug>/; the site serves them under /blog/.
+    if (node?.__typename === "Post") {
+      return node.status === "publish" && isSlug(node.slug) ? { status: "redirect", to: blogPath(node.slug) } : { status: "not-found" };
+    }
     // Only published WordPress pages are public. Posts, terms and attachments
     // resolve through nodeByUri too, but they are not rendered by this template.
     if (!node || node.__typename !== "Page" || node.status !== "publish") return { status: "not-found" };

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { SiteHeader } from "@/components/layout/site-header";
+import { ArticleHero } from "@/components/content/article-hero";
 import { SiteFooter } from "@/components/layout/site-footer";
 import type { SiteChrome } from "@/lib/wordpress/site-chrome";
 import type { LegalDocContent } from "@/content/privacy-policy";
@@ -8,26 +8,12 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
       {/* 1. Clean Compact Hero Banner */}
-      <section className="relative bg-[#121826] text-white overflow-hidden">
-        <div
-          className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat opacity-80"
-          style={{ backgroundImage: "url(/contact-us/contactus-hero-bg.svg)" }}
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10">
-          <SiteHeader header={chrome.header} />
-
-          <div className="max-w-4xl mx-auto px-6 pt-10 pb-12 sm:pt-14 sm:pb-16 text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-3">
-              {content.hero.title} <span className="text-[#23C55E]">{content.hero.highlight}</span>
-            </h1>
-            <p className="text-xs sm:text-sm text-white/60">
-              Last updated: {content.hero.effectiveDate}
-            </p>
-          </div>
-        </div>
-      </section>
+      <ArticleHero
+        chrome={chrome}
+        title={content.hero.title}
+        highlight={content.hero.highlight}
+        meta={<p>Last updated: {content.hero.effectiveDate}</p>}
+      />
 
       {/* 2. Clean Single-Column Reading Body */}
       <main className="flex-1 bg-white py-12 sm:py-16 md:py-20">

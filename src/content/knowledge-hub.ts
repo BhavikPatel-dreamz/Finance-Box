@@ -26,6 +26,8 @@ export type KnowledgeHubCaseStudy = {
     image: string;
     title: string;
     text: string;
+    /** Case study page, when the item comes from WordPress. */
+    url?: string;
   }[];
 };
 
@@ -64,11 +66,7 @@ export type KnowledgeHubContent = {
   };
   caseStudy: {
     title: string;
-    items: {
-      image: string;
-      title: string;
-      text: string;
-    }[];
+    items: KnowledgeHubCaseStudy["items"];
     cta: KnowledgeHubLink;
   };
   newsletter: {
@@ -96,7 +94,7 @@ export const knowledgeHubContent: KnowledgeHubContent = {
   },
   blogs: {
     title: "Our Blogs",
-    cta: { label: "Explore Blogs", url: "/blogs" },
+    cta: { label: "Explore Blogs", url: "/blog/" },
     items: [
       {
         image: "/knowledge-hub/blog1.png",
@@ -135,7 +133,7 @@ export const knowledgeHubContent: KnowledgeHubContent = {
   },
   caseStudy: {
     title: "Case Study",
-    cta: { label: "Explore Case Studies", url: "/case-studies" },
+    cta: { label: "Explore Case Studies", url: "/case-study/" },
     items: [
       {
         image: "/knowledge-hub/case-study1.png",

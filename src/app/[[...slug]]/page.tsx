@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { cookies, draftMode } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { SectionRenderer } from "@/components/page-builder/section-renderer";
 import { MessagePage, PageFrame, siteHeaderNode } from "@/components/layout/page-frame";
 import { getPreviewPage, getPublicPage, getSettings, type PageLoadResult } from "@/lib/wordpress/content";
@@ -76,6 +76,7 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
   const [loaded, chrome] = await Promise.all([loadPage(slug), getSiteChrome()]);
 
   if (!loaded || loaded.result.status === "not-found") notFound();
+  if (loaded.result.status === "redirect") permanentRedirect(loaded.result.to);
 
   if (loaded.result.status === "unconfigured") {
     return (

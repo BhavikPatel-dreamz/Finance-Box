@@ -24,3 +24,16 @@ export const settingsTag = "settings";
 export const menusTag = "menus";
 export const schemaTag = "schema";
 export const sitemapTag = "sitemap";
+
+/** WordPress post types served by their own routes (/blog, /case-study, /team). */
+export type ContentType = "post" | "case-study" | "team";
+
+/** One post, case study or team member, e.g. `case-study:deepscribe`. */
+export function itemTag(type: ContentType, slug: string) {
+  return `${type}:${slug}`;
+}
+
+/** Every item of a type (lists, archives, sitemap), e.g. `list:case-study`. */
+export function collectionTag(type: ContentType) {
+  return `list:${type}`;
+}

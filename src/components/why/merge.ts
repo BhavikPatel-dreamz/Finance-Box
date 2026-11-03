@@ -1,5 +1,6 @@
 import { type WhyContent, type WhyTeamMember } from "@/content/why-fiab";
 import type { RawSection } from "@/lib/wordpress/content";
+import { mapTeamMember } from "@/components/team/team-member";
 
 function str(value: unknown): string | null {
   return typeof value === "string" && value.trim() ? value.trim() : null;
@@ -51,91 +52,6 @@ function link(value: unknown, fallback: { label: string; url: string }) {
   return { label: keep(l.title, fallback.label), url: keep(l.url, fallback.url) };
 }
 
-// ---------------------------------------------------------
-// TEAM MEMBER PARSER
-// ---------------------------------------------------------
-export function mapTeamMember(node: any, fallback: WhyTeamMember): WhyTeamMember {
-  const contentHtml = node.content || "";
-
-  const textWithNewlines = contentHtml
-    .replace(/<\/p>|<br\s*\/?>|<\/li>|<\/h[1-6]>/gi, "\n")
-    .replace(/<[^>]*>?/gm, "")
-    .replace(/&#038;/g, "&")
-    .replace(/&#8217;/g, "'")
-    .replace(/&#8211;/g, "–")
-    .replace(/&#8212;/g, "—")
-    .replace(/&#8230;/g, "…")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"');
-
-  const lines = textWithNewlines
-    .split("\n")
-    .map((l: string) => l.trim())
-    .filter(Boolean);
-
-  const result: Partial<WhyTeamMember> = {};
-  const introLines: string[] = [];
-
-  const isKnownPrefix = (line: string) => {
-    const l = line.toLowerCase();
-    return (
-      l.startsWith("focus & expertise:") ||
-      l.startsWith("focus & expertise :") ||
-      l.startsWith("focus:") ||
-      l.startsWith("focus :") ||
-      l.startsWith("partnerships:") ||
-      l.startsWith("partnerships :") ||
-      l.startsWith("notable work:") ||
-      l.startsWith("notable work :") ||
-      l.startsWith("tools & platforms:") ||
-      l.startsWith("tools & platforms :") ||
-      l.startsWith("industries:") ||
-      l.startsWith("industries :")
-    );
-  };
-
-  for (const line of lines) {
-    if (isKnownPrefix(line)) break;
-    introLines.push(line);
-  }
-
-  if (introLines.length > 0) result.quote = introLines[0];
-  if (introLines.length > 1) result.bio = introLines.slice(1).join(" ");
-
-  for (const line of lines) {
-    const lowerLine = line.toLowerCase();
-    if (lowerLine.startsWith("focus & expertise:") || lowerLine.startsWith("focus & expertise :") || lowerLine.startsWith("focus:") || lowerLine.startsWith("focus :")) {
-      result.focusTitle = "FOCUS & EXPERTISE:";
-      result.focusText = line.replace(/^.*?[:]\s*/i, "");
-    } else if (lowerLine.startsWith("partnerships:") || lowerLine.startsWith("partnerships :")) {
-      result.partnerships = "PARTNERSHIPS:\n" + line.replace(/^.*?[:]\s*/i, "");
-    } else if (lowerLine.startsWith("notable work:") || lowerLine.startsWith("notable work :")) {
-      result.work = line.replace(/^.*?[:]\s*/i, "");
-    } else if (lowerLine.startsWith("tools & platforms:") || lowerLine.startsWith("tools & platforms :")) {
-      result.tools = line.replace(/^.*?[:]\s*/i, "");
-    } else if (lowerLine.startsWith("industries:") || lowerLine.startsWith("industries :")) {
-      result.industries = line.replace(/^.*?[:]\s*/i, "");
-    }
-  }
-
-  return {
-    name: cleanHtml(node.title, fallback.name),
-    role: cleanHtml(node.excerpt, fallback.role),
-    image: media(node.featuredImage)?.url ?? fallback.image,
-    quote: result.quote ?? fallback.quote,
-    bio: result.bio ?? fallback.bio,
-    focusTitle: result.focusTitle ?? fallback.focusTitle,
-    focusText: result.focusText ?? fallback.focusText,
-    partnerships: result.partnerships ?? fallback.partnerships,
-    work: result.work ?? fallback.work,
-    tools: result.tools ?? fallback.tools,
-    industries: result.industries ?? fallback.industries,
-    imagePosition: fallback.imagePosition ?? "right",
-  };
-}
 
 export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
   const next: WhyContent = structuredClone(base);

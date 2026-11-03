@@ -20,6 +20,8 @@ Measured on 2026-11-03 against the live site (`next start`): first `/` request 1
 | `menus`, `menu:PRIMARY`, `menu:FOOTER` | Navigation |
 | `schema` | Live layout types / SEO field detection |
 | `sitemap` | Published page URIs |
+| `post:<slug>`, `case-study:<slug>`, `team:<slug>` | One post, case study or team member |
+| `list:post`, `list:case-study`, `list:team` | Archives, lists and sitemap entries of that type |
 
 ## Webhook
 
@@ -27,7 +29,8 @@ Measured on 2026-11-03 against the live site (`next start`): first `/` request 1
 
 | `type` | Expires |
 | --- | --- |
-| `page` / `post` (+ `uri`, optional `oldUri`) | `page:<uri>`, `page:<oldUri>`, `pages`, `sitemap`, and the route paths |
+| `page` (+ `uri`, optional `oldUri`) | `page:<uri>`, `page:<oldUri>`, `pages`, `sitemap`, and the route paths |
+| `post`, `case-study`, `team` (+ `slug`, optional `oldSlug`, or `uri`) | the item tag and path, `list:<type>`, `pages`, `sitemap` |
 | `menu` | `menus`, `menu:PRIMARY`, `menu:FOOTER` |
 | `settings` / `options` | `settings` |
 | `schema` | `schema` and everything a `page` event expires |

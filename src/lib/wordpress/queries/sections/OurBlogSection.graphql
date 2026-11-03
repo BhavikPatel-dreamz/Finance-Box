@@ -4,14 +4,7 @@ fragment OurBlogSection on PageBuilderPageBuilderOurBlogSectionLayout {
   allBlogCta { title url }
   selectBlog {
     nodes {
-      ... on Post {
-        databaseId
-        uri
-        title
-        date
-        excerpt
-        featuredImage { node { sourceUrl altText } }
-      }
+      ... on Post { ...PostCard }
     }
   }
 }

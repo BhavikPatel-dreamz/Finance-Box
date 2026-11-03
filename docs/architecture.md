@@ -17,7 +17,7 @@ src/app/[[...slug]]/page.tsx   ← the single template for every WordPress page
 
 ## Request flow
 
-1. `[[...slug]]/page.tsx` turns the path into a WordPress URI (`/`, `/services/`, `/services/web-development/`). Reserved first segments (`api`, `_next`, `preview`, the static legal pages, `404`), malformed segments and paths deeper than 6 levels return 404 (`src/lib/wordpress/uri.ts`).
+1. `[[...slug]]/page.tsx` turns the path into a WordPress URI (`/`, `/services/`, `/services/web-development/`). Reserved first segments (`api`, `_next`, `preview`, `blog`, `case-study`, `team`, `category`, the static legal pages, `404`), malformed segments and paths deeper than 6 levels return 404 (`src/lib/wordpress/uri.ts`).
 2. `getPublicPage(uri)` (or `getPreviewPage(id)` in Draft Mode) sends **one** GraphQL request: page core fields, optional Yoast `seo`, and `pageBuilder.pageBuilder` with one fragment per layout. Only `Page` nodes with status `publish` are public; anything else is 404.
 3. `getSiteChrome()` loads header and footer content once per request (WordPress menus, falling back to `src/content/home.ts`).
 4. `SectionRenderer` renders each row in the order WordPress returned it. The renderer:
@@ -63,6 +63,7 @@ Logo, footer text, email and legal line have no WordPress source yet.
 
 | Route | Source |
 | --- | --- |
+| `/blog`, `/blog/<slug>`, `/case-study`, `/case-study/<slug>`, `/team/<slug>` | WordPress posts, case studies, team members. See [content-types.md](content-types.md). Root-level post URLs redirect to `/blog/<slug>/`. |
 | `/privacy-policy`, `/terms-conditions` | Static content in `src/content/` (no WordPress page exists). `/terms-and-conditions` redirects. |
 | `not-found.tsx` | 404 page with shared header/footer |
 | `/api/revalidate`, `/api/preview`, `/api/preview/exit`, `/api/contact` | Route handlers |
