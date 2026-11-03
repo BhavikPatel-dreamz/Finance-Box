@@ -68,11 +68,10 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Backend validation ke hisaab se 'subject' field bhej rahe hain
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          subject: formData.company, 
+          subject: formData.company, // backend schema uses 'subject'
           message: formData.message,
         }),
       });
@@ -209,6 +208,40 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
 }
 
 export function ContactConnected({ socialSection }: { socialSection: ContactUsContent["socialSection"] }) {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus("loading");
+    setMessage("");
+
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (data.ok) {
+        setStatus("success");
+        setMessage("Subscribed successfully!");
+        setEmail("");
+      } else {
+        setStatus("error");
+        setMessage(data.message || "Subscription failed.");
+      }
+    } catch (err) {
+      setStatus("error");
+      setMessage("Network error.");
+    }
+  };
+
   return (
     <section className="bg-white px-4 sm:px-6 pb-16 sm:pb-20 lg:pb-24 stay-connect-section">
       <Container>
@@ -223,6 +256,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
         </Reveal>
 
         <StaggerGroup staggerDelay={150} className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-4">
+          {/* LinkedIn Card */}
           <StaggerItem index={0} className="card-hover relative w-full lg:w-1/2 rounded-[10px] bg-[#EDE9E6] p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px] overflow-hidden">
             <div className="relative z-10 max-w-[70%] sm:max-w-[65%] lg:max-w-none">
               <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4">
@@ -252,6 +286,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
             </div>
           </StaggerItem>
 
+          {/* Newsletter Card */}
           <StaggerItem index={1} className="card-hover w-full lg:w-1/2 rounded-[10px] bg-[#121826] p-6 sm:p-8 md:p-10 lg:p-12.5 text-white flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px]">
             <div>
               <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4 lg:mb-6.5">
@@ -262,19 +297,35 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
               </p>
             </div>
 
-            <div className="mt-6 sm:mt-8">
+            <form onSubmit={handleSubscribe} className="mt-6 sm:mt-8">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder={socialSection.newsletter.placeholder}
-                className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#FFFFFF0F] bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-6 sm:mb-8 lg:mb-10 transition-colors duration-200"
+                required
+                className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#FFFFFF0F] bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-4 transition-colors duration-200"
               />
-              <GreenButton
-                label={socialSection.newsletter.buttonLabel}
-                href="#"
-                bgColor="#ffffff"
-                textColor="#121826"
-              />
-            </div>
+              
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="flex items-center justify-center gap-2 h-[50px] px-8 rounded-full bg-white text-[#121826] text-[15px] font-medium transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {status === "loading" ? "Subscribing..." : socialSection.newsletter.buttonLabel}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              {/* Status Messages */}
+              {status === "success" && (
+                <p className="text-sm font-medium text-green-400 mt-3">{message}</p>
+              )}
+              {status === "error" && (
+                <p className="text-sm font-medium text-red-400 mt-3">{message}</p>
+              )}
+            </form>
           </StaggerItem>
         </StaggerGroup>
       </Container>
