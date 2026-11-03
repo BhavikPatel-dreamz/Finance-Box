@@ -1,8 +1,13 @@
 # Financebox
 
-Next.js renders every page on the server from the external WordPress GraphQL API. Editors change content in WordPress. This repository does not contain WordPress.
+Next.js renders every page on the server from the external WordPress GraphQL API. Editors build pages in WordPress from Page Builder sections; this repository does not contain WordPress.
 
-Status notes live in `agent.md`. The section workflow lives in `.cursor/skills/financebox/SKILL.md`.
+- Status: `agent.md`
+- Architecture: `docs/architecture.md`
+- Adding a section: `docs/section-development.md`
+- Section inventory: `docs/sections/inventory.md`
+- WordPress setup, menus, preview: `docs/wordpress-setup.md`
+- Caching and webhook: `docs/caching.md`
 
 Node 22 is required (`.nvmrc`).
 
@@ -12,6 +17,10 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
-
-`npm run codegen` refreshes GraphQL types. Set `WORDPRESS_GRAPHQL_URL` first when regenerating from a live schema.
+| Script | Purpose |
+| --- | --- |
+| `npm run schema` | Download the live WordPress schema to `src/lib/wordpress/schema.graphql` |
+| `npm run codegen` | Validate GraphQL documents and generate types |
+| `npm run sections:inventory` | List every ACF layout and its GraphQL fields |
+| `npm run sections:check` | Check fragment ↔ registry wiring and the composed page query |
+| `npm run typecheck` / `npm run lint` / `npm run build` | Checks |

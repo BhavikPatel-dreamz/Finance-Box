@@ -2,43 +2,97 @@
 
 Updated: 2026-11-03
 
-> Status: **audit complete, refactor in progress.** This file is rewritten at the end of the refactor with the final state.
+## Architecture (current)
 
-## Phase 0 audit (2026-11-03)
+Single dynamic template. WordPress controls content and section order; Next.js controls design.
 
-### Next.js
+- Every WordPress page renders through `src/app/[[...slug]]/page.tsx` → `PageFrame` → `SectionRenderer` → `section-registry.ts` → one definition per layout in `src/components/sections/`.
+- Shared header/footer: `src/components/layout/site-header.tsx`, `site-footer.tsx`, data from `src/lib/wordpress/site-chrome.ts` (WordPress menus, static fallback).
+- Data: `src/lib/wordpress/client.ts` (server-only, timeout, retry), `content.ts` (cached loaders), one composed GraphQL request per page.
+- Details: `docs/architecture.md`. Adding a section: `docs/section-development.md`. Inventory: `docs/sections/inventory.md`. Caching/webhook: `docs/caching.md`. WordPress: `docs/wordpress-setup.md`.
 
-- Next.js 16.4.2, React 19.3, TypeScript 5, Tailwind 4, `cacheComponents: true`, Node 22.
-- Routes: `src/app/[[...slug]]/page.tsx` (catch-all), `api/revalidate`, `api/preview`, `api/preview/exit`, `api/contact`, `sitemap.ts`, `robots.ts`, `not-found.tsx`, `error.tsx`.
-- Codegen: `@graphql-codegen` with `typed-document-node`, operations in `src/lib/wordpress/queries/`.
-- Styling: Tailwind 4 + shared UI in `src/components/ui/` (Section, Container, Eyebrow, GreenButton, Button, FooterHero, ProcessGrid, PartnersSection, Accordion). Motion in `src/components/motion/reveal.tsx`.
+Stack: Next.js 16.4.2 (App Router, Turbopack, Cache Components), React 19.3, TypeScript 5, Tailwind 4, Node 22, GraphQL Codegen.
 
-### WordPress (`https://web3.dddemo.net/wordpress/2026/finance/graphql`)
+## Technical decisions
 
-- WPGraphQL + ACF Pro + WPGraphQL for ACF active. **Introspection is now open** (it was disabled on 2026-10-23).
-- One shared field group: `Page.pageBuilder` (type `PageBuilder`) → flexible field `pageBuilder` (interface `PageBuilderPageBuilder_Layout`). The spec's `page_sections` name is not what is installed; the installed ACF field resolves to GraphQL `pageBuilder.pageBuilder`.
-- 46 layouts. GraphQL type name pattern: `PageBuilderPageBuilder<Layout>Layout`.
-- 13 published pages. `foundation`, `momentum`, `foresight`, `sample-page` have no sections.
-- Menus: `MenuLocationEnum` has `PRIMARY`, `FOOTER`, `MENU_1`, but **no menus are assigned**. No ACF options page for header/footer.
-- No SEO plugin GraphQL fields (`Page.seo` absent). No `excerpt` on `Page`.
-- The host intermittently returns non-JSON responses (observed during the audit); the client must retry.
+| Decision | Why |
+| --- | --- |
+| Keep the installed field `Page.pageBuilder.pageBuilder` and its 46 real layouts | The spec's generic layouts (`hero_banner`, …) and `page_sections` name do not exist in WordPress; inventing them was out of scope. |
+| Committed schema snapshot (`npm run schema`) drives codegen | Real validation (caught the broken preview query); builds don't need WordPress. |
+| Fragments in `.graphql`, page query composed at runtime from generated fragment docs, filtered by live layout types | One request per page; removing a layout in WordPress cannot break the query. |
+| `defineSection<Fragment>()` type-checks the layout key against `__typename` | Registry keys cannot drift from GraphQL types. |
+| Header passed into a leading `hero` section | The fixed header must sit on the hero's background (pixel-identical to before). |
+| Existing `merge.ts` mappers reused per section (`fromSection`) | Preserves current output and design-default fallbacks exactly. |
+| Variants: ACF fields where they exist (`sectionSetting`, `logoView`); a URI→variant presentation map for `CommonBannerSection`, `CtaSection`, `JoinWaitlistSection` | Those three have several Figma designs and no ACF field to choose one. Map lives only in `section-variants.ts`. |
+| Cache in production only, `WORDPRESS_CACHE=off` escape hatch | Development stays live; production gets 1 h cache + webhook. |
+| Legal pages are static app routes | No WordPress pages exist for them. |
 
-### Architecture problems found
+## Completed (2026-11-03)
 
-1. **Not a single dynamic template.** `[[...slug]]/page.tsx` dispatched hardcoded URIs to ten page components (`HomePage`, `ServicesPage`, …).
-2. **WordPress did not control section order.** Each page component rendered a fixed section order and `merge.ts` overlaid WordPress values onto static content. Adding, removing or reordering sections in WordPress had no effect.
-3. **Registry was not used for rendering.** Each registry entry's `render` returned the whole page component (`<HomePage sections={[section]} />`). Registry lookup was regex-suffix based; shared layouts (`CtaSection`, …) were registered several times.
-4. **Header and footer were not shared.** Each page rendered `HomeHeader` inside its hero and `HomeFooter` at the end, from static `homeContent`.
-5. Public reads were never cached (`publicReadsAreCached()` returned `false`).
-6. `src/lib/wordpress/schema.graphql` was a hand-written partial schema; `acf-json/group_fb_page_builder.json` is stale (21 old layout names, none of which exist live).
-7. `ClientsWhereFiabWorksSection` and `WhyFiabTrustedBySection` ignored WordPress data.
+1. Audit of Next.js app and live WordPress schema (findings below).
+2. Live schema snapshot + `scripts/fetch-schema.mjs`, `scripts/section-inventory.mjs`, `scripts/check-sections.mjs`; npm scripts `schema`, `sections:inventory`, `sections:check`, `typecheck`.
+3. 46 section fragments, all validated by codegen; `PageCore`, `SchemaCapabilities` operations; menu query gets `cssClasses`.
+4. GraphQL client: `server-only`, 15 s timeout, 2 retries on transient errors / non-JSON, partial-error logging.
+5. Data layer rewrite (`content.ts`): one request per page, `publish`-only, request dedupe with React `cache()`, cache tags incl. new `pages`, Yoast detection, front-page title from lead section.
+6. Split ten page components into 46 per-layout components (`src/components/<domain>/<domain>-sections.tsx`), JSX unchanged; removed `HomePage`, `ServicesPage`, … and the per-URI dispatch.
+7. Section definitions, registry (duplicate guard), renderer (WordPress order, header injection, safe skip), dev-only fallback.
+8. Shared header/footer + menu mapping (`menu-cta` class for the CTA). Legal pages and 404 use them.
+9. `WhyFiabTrustedBySection` and `ClientsWhereFiabWorksSection` now read WordPress (they were hardcoded).
+10. Preview fixed: the old query used `asPreview`, which this WPGraphQL version does not have, so preview never worked. Now `DATABASE_ID` + `preview.node`, preview cookie, noindex, badge, safe exit redirect.
+11. Webhook: header or body secret, typed scopes (`page`/`menu`/`settings`/`schema`/`all`), `oldUri`, idempotent, error handling.
+12. Reserved routes, URI normalisation, `/terms-and-conditions` redirect, escaped JSON-LD.
+13. Documentation: architecture, caching, WordPress setup, section guide, inventory, README, `.cursor/skills/financebox`.
 
-### Decisions
+## Pending / needs a decision
 
-- Keep the installed ACF field (`pageBuilder.pageBuilder`) and the 46 real layouts. The spec's generic layouts (`hero_banner`, …) do not exist in WordPress and are not invented.
-- One React component per layout in `src/components/sections/`. Each section file owns its GraphQL fragment reference and its render function.
-- Fragments live in `src/lib/wordpress/queries/sections/*.graphql` and are validated by codegen against the live schema (`npm run schema` refreshes it).
-- Registry keyed by exact layout name; unknown layouts fail safely.
-- Shared header/footer rendered once by the template. Because the fixed header overlays the hero background, the header is passed into the first section when it is a hero layout.
-- Layouts reused with different designs use WordPress variant fields where they exist (`sectionSetting`, `logoView`). Where WordPress has no variant field (`CommonBannerSection`, `CtaSection`, `JoinWaitlistSection`), a single documented presentation map chooses the variant by page URI until an ACF "variant" field is added.
-- Existing `merge.ts` mappers are reused per section to keep current field fallbacks.
+- **Menus**: assign WordPress menus to Primary and Footer (see `docs/wordpress-setup.md`). Until then navigation is static.
+- **Header/footer globals**: logo, footer text, email, legal line have no WordPress source. Needs an ACF options page (decision: which fields).
+- **Variant fields**: add an ACF `variant` select to `CommonBannerSection`, `CtaSection`, `JoinWaitlistSection` so editors pick the design; then drop them from `section-variants.ts`.
+- **SEO plugin**: none installed. Activating WPGraphQL Yoast SEO is picked up automatically.
+- **Forms**: Contact, waitlist and newsletter forms are static markup that does not submit (unchanged from before). A working `ContactForm` + `/api/contact` exists but is unused. Needs a decision on delivery (WordPress leads vs webhook) and on the shortcode fields.
+- **Real 404 status in production** (soft 404 today, see `docs/caching.md`): add a Proxy check.
+- **Stale `acf-json/group_fb_page_builder.json`**: must not be imported; replace with an export of the live group.
+- **Content quirks visible on the live site (WordPress data / existing merge logic, unchanged)**: Agentic AI headings repeat the highlight ("Agentic AIAgentic AI", "TalentPeople Ops & Talent"), Careers "What Makes FIAB Stand Out? hhhhhh", "Why work at FIAB? at FIAB?".
+- Optional cleanup: consolidate the nine near-identical `merge.ts` helpers; fix pre-existing lint errors (`any` in `merge.ts`, `reveal.tsx`, `home-header.tsx`).
+
+## GraphQL schema findings (live, 2026-11-03)
+
+- Introspection open. `Page.pageBuilder: PageBuilder { pageBuilder: [PageBuilderPageBuilder_Layout] }`, 46 possible types.
+- `RootQuery.page(id, idType: DATABASE_ID | ID | URI)`; no `asPreview` argument. `Page.preview: { node: Page }`, `Page.status`, `Page.desiredSlug`, `Page.isFrontPage`.
+- `MenuLocationEnum`: `PRIMARY`, `FOOTER`, `MENU_1`; no menus assigned. `MenuItem.cssClasses` available.
+- No `Page.seo`, no `Page.excerpt`. Custom post types referenced by layouts: `Team`, `CaseStudy` (`caseStudiesOptions { tagLine featuredContent }`), `Post`.
+- Field-name conflict: `teamMembers` is a repeater on `HomeLeadershipSection` and a relationship on `TeamMembersSection` → aliased `teamMembersList`.
+- Host intermittently returns non-JSON responses; retries handle it.
+
+## ACF layout mappings
+
+All 46 layouts → component, fragment, variant and live pages: `docs/sections/inventory.md`. Unregistered live layouts: none.
+
+## Validation status (all run 2026-11-03)
+
+| Check | Result |
+| --- | --- |
+| `npm run codegen` | Pass (all documents valid against live schema) |
+| `npm run sections:check` | Pass: 46 fragments, 46 sections, 46 schema layouts. Negative test (removed alias) correctly fails. |
+| `tsc --noEmit` | Pass |
+| ESLint | No new errors. Remaining errors are pre-existing (`merge.ts` `any`, `reveal.tsx`, `home-header.tsx`, unused `Eyebrow` import in 404 page). |
+| `next build` | Pass. `/[[...slug]]` partial prerender, 1 h / 1 d. |
+| Rendered-text diff vs pre-refactor site (11 pages, live WordPress) | Identical except intended changes: WordPress logos in "Trusted by" (Home, Why FIAB), WordPress images/link in Clients "Where FIAB Works", Agentic banner bullets/paragraph from WordPress, page titles from WordPress. |
+| Screenshots vs pre-refactor (headless Chrome) | Home desktop (hero + full page) and mobile hero, Careers, Agentic AI, Knowledge Hub: layout identical; header in hero unchanged. Other pages verified by text diff only. |
+| Unknown layout (FaqSection unregistered temporarily) | Section skipped with dev notice naming it; rest of page and footer rendered. |
+| Webhook | No/bad secret 401; `page` and `menu` scopes expire the right tags; prod cache refetches after `page` event. |
+| Preview | Bad secret 401; real credentials: entry 307 + cookies, draft render with badge and `noindex`; exit; open-redirect blocked. |
+| Production cache (`next start`) | Repeat requests 35–130 ms vs cold 0.8–13 s. |
+| 404 | `next dev`: 404. `next start`: soft 404 (200 + noindex), documented. |
+| Not tested | Real draft content (no draft page exists), WordPress menus (none assigned), Yoast fields, CMS add/remove/reorder by an editor (no admin access; ordering is verified by code path and by matching live order). |
+
+## Environment
+
+See `.env.example`: `WORDPRESS_GRAPHQL_URL`, `WORDPRESS_URL`, `NEXT_PUBLIC_SITE_URL`, `WORDPRESS_CACHE`, `REVALIDATE_SECRET`, `PREVIEW_SECRET`, `WORDPRESS_PREVIEW_USER`, `WORDPRESS_PREVIEW_PASSWORD`, `CONTACT_*`.
+
+## Known limitations
+
+- Soft 404 in production (above).
+- Contact rate limit is in memory, per process.
+- Draft Mode makes the page dynamic for that visitor only; public responses stay cached.
+- Section field defaults come from `src/content/*.ts`: clearing a field in WordPress shows the design copy rather than nothing.
