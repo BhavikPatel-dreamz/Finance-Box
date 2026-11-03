@@ -1,0 +1,11 @@
+fragment HomeFinanceThatGrowsSection on PageBuilderPageBuilderHomeFinanceThatGrowsSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  image { node { sourceUrl altText } }
+  imageTitle
+  imageSteps { label }
+  tiers { title description }
+  ctaButton { title url }
+}

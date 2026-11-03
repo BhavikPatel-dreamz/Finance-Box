@@ -1,0 +1,17 @@
+fragment OurBlogSection on PageBuilderPageBuilderOurBlogSectionLayout {
+  __typename
+  title
+  allBlogCta { title url }
+  selectBlog {
+    nodes {
+      ... on Post {
+        databaseId
+        uri
+        title
+        date
+        excerpt
+        featuredImage { node { sourceUrl altText } }
+      }
+    }
+  }
+}

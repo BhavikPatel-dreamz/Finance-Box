@@ -1,0 +1,6 @@
+fragment ContactBannerSection on PageBuilderPageBuilderContactBannerSectionLayout {
+  __typename
+  subtitle
+  title
+  description
+}

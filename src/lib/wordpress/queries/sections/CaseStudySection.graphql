@@ -1,0 +1,16 @@
+fragment CaseStudySection on PageBuilderPageBuilderCaseStudySectionLayout {
+  __typename
+  title
+  allCaseStudy
+  selectCaseStudy {
+    nodes {
+      ... on CaseStudy {
+        databaseId
+        uri
+        title
+        excerpt
+        featuredImage { node { sourceUrl altText } }
+      }
+    }
+  }
+}

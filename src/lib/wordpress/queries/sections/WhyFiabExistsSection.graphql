@@ -1,0 +1,7 @@
+fragment WhyFiabExistsSection on PageBuilderPageBuilderWhyFiabExistsSectionLayout {
+  __typename
+  title
+  description
+  missionSubTitle
+  missionContent
+}

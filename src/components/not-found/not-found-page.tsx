@@ -1,36 +1,10 @@
 import Link from "next/link";
-import { HomeHeader } from "@/components/home/home-header";
-import { HomeFooter } from "@/components/home/home-page";
-import { homeContent, type HomeContent } from "@/content/home";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
+import type { SiteChrome } from "@/lib/wordpress/site-chrome";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Container from "@/components/ui/container";
-
-function withSiteLinks<T extends { url: string }>(value: T): T {
-  return { ...value, url: value.url.startsWith("#") ? `/${value.url}` : value.url };
-}
-
-function siteHeader(header: HomeContent["header"]): HomeContent["header"] {
-  return {
-    ...header,
-    links: header.links.map((link) => ({
-      ...link,
-      ...withSiteLinks(link),
-      children: link.children.map(withSiteLinks),
-    })),
-    cta: withSiteLinks(header.cta),
-  };
-}
-
-function siteFooter(footer: HomeContent["footer"]): HomeContent["footer"] {
-  return {
-    ...footer,
-    columns: footer.columns.map((column) => ({
-      ...column,
-      links: column.links.map(withSiteLinks),
-    })),
-  };
-}
 
 const POPULAR_DESTINATIONS = [
   { label: "Services", href: "/services/" },
@@ -40,11 +14,11 @@ const POPULAR_DESTINATIONS = [
   { label: "Careers", href: "/careers/" },
 ];
 
-export function NotFoundPage() {
+export function NotFoundPage({ chrome }: { chrome: SiteChrome }) {
   return (
     <div className="min-h-screen flex flex-col bg-[#07110d] text-white selection:bg-[#23C55E]/30 selection:text-white overflow-x-clip">
       {/* 1. Header */}
-      <HomeHeader header={siteHeader(homeContent.header)} surface="plain" logoHref="/" />
+      <SiteHeader header={chrome.header} />
 
       {/* 2. Main 404 Hero Section */}
       <main className="relative flex-1 flex items-center justify-center py-16 sm:py-20 lg:py-24 overflow-hidden">
@@ -127,7 +101,7 @@ export function NotFoundPage() {
       </main>
 
       {/* 3. Site Footer */}
-      <HomeFooter footer={siteFooter(homeContent.footer)} />
+      <SiteFooter footer={chrome.footer} />
     </div>
   );
 }

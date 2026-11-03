@@ -1,0 +1,15 @@
+fragment TeamMembersSection on PageBuilderPageBuilderTeamMembersSectionLayout {
+  __typename
+  title
+  ctaButton { title url }
+  teamMembers {
+    nodes {
+      ... on Team {
+        title
+        excerpt
+        content
+        featuredImage { node { sourceUrl altText } }
+      }
+    }
+  }
+}

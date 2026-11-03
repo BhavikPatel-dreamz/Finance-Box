@@ -1,0 +1,5 @@
+fragment AgenticOpsComplianceSection on PageBuilderPageBuilderAgenticOpsComplianceSectionLayout {
+  __typename
+  title
+  agents { icon { node { sourceUrl altText } } title content }
+}

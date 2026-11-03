@@ -1,0 +1,5 @@
+fragment CareersStandOutSection on PageBuilderPageBuilderCareersStandOutSectionLayout {
+  __typename
+  title
+  cards { backgroundImage { node { sourceUrl altText } } title content }
+}

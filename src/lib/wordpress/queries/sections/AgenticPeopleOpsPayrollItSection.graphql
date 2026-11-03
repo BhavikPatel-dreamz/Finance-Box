@@ -1,0 +1,5 @@
+fragment AgenticPeopleOpsPayrollItSection on PageBuilderPageBuilderAgenticPeopleOpsPayrollItSectionLayout {
+  __typename
+  title
+  agents { icon { node { sourceUrl altText } } title content }
+}

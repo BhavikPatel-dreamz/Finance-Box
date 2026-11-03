@@ -44,6 +44,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: wordpressImagePatterns(),
   },
+  async redirects() {
+    return [{ source: "/terms-and-conditions", destination: "/terms-conditions", permanent: true }];
+  },
   turbopack: {
     rules: {
       "*.css": {

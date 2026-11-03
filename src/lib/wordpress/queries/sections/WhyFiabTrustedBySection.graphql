@@ -1,0 +1,5 @@
+fragment WhyFiabTrustedBySection on PageBuilderPageBuilderWhyFiabTrustedBySectionLayout {
+  __typename
+  title
+  logos { logo { node { sourceUrl altText } } }
+}

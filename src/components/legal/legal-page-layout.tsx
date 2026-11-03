@@ -1,36 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { HomeHeader } from "@/components/home/home-header";
-import { HomeFooter } from "@/components/home/home-page";
-import { homeContent, type HomeContent } from "@/content/home";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
+import type { SiteChrome } from "@/lib/wordpress/site-chrome";
 import type { LegalDocContent } from "@/content/privacy-policy";
 
-function withSiteLinks<T extends { url: string }>(value: T): T {
-  return { ...value, url: value.url.startsWith("#") ? `/${value.url}` : value.url };
-}
-
-function siteHeader(header: HomeContent["header"]): HomeContent["header"] {
-  return {
-    ...header,
-    links: header.links.map((link) => ({
-      ...link,
-      ...withSiteLinks(link),
-      children: link.children.map(withSiteLinks),
-    })),
-    cta: withSiteLinks(header.cta),
-  };
-}
-
-function siteFooter(footer: HomeContent["footer"]): HomeContent["footer"] {
-  return {
-    ...footer,
-    columns: footer.columns.map((column) => ({
-      ...column,
-      links: column.links.map(withSiteLinks),
-    })),
-  };
-}
-
-export function LegalPageLayout({ content }: { content: LegalDocContent }) {
+export function LegalPageLayout({ content, chrome }: { content: LegalDocContent; chrome: SiteChrome }) {
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
       {/* 1. Clean Compact Hero Banner */}
@@ -42,7 +16,7 @@ export function LegalPageLayout({ content }: { content: LegalDocContent }) {
         />
 
         <div className="relative z-10">
-          <HomeHeader header={siteHeader(homeContent.header)} surface="plain" logoHref="/" />
+          <SiteHeader header={chrome.header} />
 
           <div className="max-w-4xl mx-auto px-6 pt-10 pb-12 sm:pt-14 sm:pb-16 text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white mb-3">
@@ -156,7 +130,7 @@ export function LegalPageLayout({ content }: { content: LegalDocContent }) {
       </main>
 
       {/* 3. Site Footer */}
-      <HomeFooter footer={siteFooter(homeContent.footer)} />
+      <SiteFooter footer={chrome.footer} />
     </div>
   );
 }

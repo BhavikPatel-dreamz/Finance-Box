@@ -1,0 +1,15 @@
+fragment ClientsFeaturedCaseStudiesSection on PageBuilderPageBuilderClientsFeaturedCaseStudiesSectionLayout {
+  __typename
+  title
+  caseStudies {
+    nodes {
+      ... on CaseStudy {
+        databaseId
+        uri
+        title
+        featuredImage { node { sourceUrl altText } }
+        caseStudiesOptions { tagLine featuredContent }
+      }
+    }
+  }
+}

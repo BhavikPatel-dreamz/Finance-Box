@@ -1,0 +1,6 @@
+fragment CtaSection on PageBuilderPageBuilderCtaSectionLayout {
+  __typename
+  title
+  description
+  ctaButton { title url }
+}

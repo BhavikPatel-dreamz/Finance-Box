@@ -1,0 +1,14 @@
+# Which page-builder layouts and optional plugin fields the live schema exposes.
+# Lets the page query skip fragments for layouts that were removed in WordPress.
+query SchemaCapabilities {
+  layouts: __type(name: "PageBuilderPageBuilder_Layout") {
+    possibleTypes {
+      name
+    }
+  }
+  page: __type(name: "Page") {
+    fields {
+      name
+    }
+  }
+}

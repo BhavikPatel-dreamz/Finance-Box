@@ -1,0 +1,8 @@
+fragment HomeWhatMakesFiabDifferentSection on PageBuilderPageBuilderHomeWhatMakesFiabDifferentSectionLayout {
+  __typename
+  title
+  cards { title content }
+  outcomeLabel
+  outcomeValue
+  outcomeText
+}

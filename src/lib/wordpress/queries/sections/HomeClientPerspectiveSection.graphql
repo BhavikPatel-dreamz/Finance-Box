@@ -1,0 +1,13 @@
+fragment HomeClientPerspectiveSection on PageBuilderPageBuilderHomeClientPerspectiveSectionLayout {
+  __typename
+  image { node { sourceUrl altText } }
+  imageLabel
+  quote
+  name
+  designation
+  subTitle
+  title
+  description
+  metrics { value description }
+  ctaButton { title url }
+}
