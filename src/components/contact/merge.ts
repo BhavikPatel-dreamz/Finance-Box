@@ -55,6 +55,8 @@ export function mergeContactUs(
       next.formSection.subtitle = cleanHtml(section.formDescription, next.formSection.subtitle);
       next.formSection.image = media(section.contactImage) ?? next.formSection.image;
       next.formSection.email.value = keep(section.contactEmail, next.formSection.email.value);
+      const formId = typeof section.formId === "string" ? section.formId.trim() : "";
+      if (/^\d+$/.test(formId)) next.formSection.formId = formId;
     }
 
     // 3. Contact Connected (Social)

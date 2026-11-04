@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { BLOG_CARD_CLASS, BlogCard } from "@/components/blog/blog-card";
 import type { ReactNode } from "react";
@@ -58,7 +60,6 @@ export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs
   return (
     <Section theme="light" spacing="both">
       <Container>
-
         <Reveal preset="slide-up" distance={20}>
           <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16">
             {blogs.title}
@@ -81,7 +82,6 @@ export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs
             textColor="#ffffff"
           />
         </Reveal>
-
       </Container>
     </Section>
   );
@@ -136,7 +136,6 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
   return (
     <Section theme="light" spacing="both">
       <Container>
-
         <Reveal preset="slide-up" distance={20}>
           <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-12 lg:mb-16">
             {caseStudy.title}
@@ -179,14 +178,12 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
             textColor="#ffffff"
           />
         </Reveal>
-
       </Container>
     </Section>
   );
 }
 
-export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHubContent["newsletter"] }) {
-  // 5. Newsletter Section
+export function KnowledgeHubNewsletter({ newsletter, form }: { newsletter: KnowledgeHubContent["newsletter"]; form: ReactNode }) {
   return (
     <Section theme="dark" spacing="both">
       <Container>
@@ -223,36 +220,7 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
 
           {/* Right Side: Form */}
           <Reveal preset="slide-right" distance={20} className="w-full bg-[#191F2D] rounded-[10px] p-4.5 sm:p-6 md:p-7.5 border border-white/6">
-            <form className="flex flex-col gap-3.5 sm:gap-4">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-              />
-              <input
-                type="email"
-                placeholder="Work E-mail"
-                className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-              />
-              <input
-                type="text"
-                placeholder="Role"
-                className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-              />
-              <textarea
-                placeholder="Write your message..."
-                rows={5}
-                className="w-full rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
-              />
-              <div className="mt-2">
-                <GreenButton
-                  label="Submit"
-                  href="#"
-                  bgColor="#ffffff"
-                  size="50"
-                />
-              </div>
-            </form>
+            {form}
           </Reveal>
 
         </div>

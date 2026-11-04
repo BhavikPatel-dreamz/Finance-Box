@@ -1,3 +1,5 @@
+"use client";
+
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { GreenButton } from "@/components/ui/green-button";
@@ -36,7 +38,6 @@ function RiseGlow() {
 
 const ICON_CHIP_LIFT =
   "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-[#23C55E] motion-reduce:transition-none";
- 
 
 export function AgenticBanner({ hero, header }: { hero: AgenticAiContent["hero"]; header: ReactNode }) {
   // Hero Section (Header + Hero = 525px)
@@ -77,7 +78,6 @@ export function AgenticBanner({ hero, header }: { hero: AgenticAiContent["hero"]
                   ))}
                 </StaggerGroup>
 
-                {/* Updated Button Size */}
                 <Reveal immediate preset="slide-up" delay={480} distance={20}>
                   <GreenButton
                     label={hero.cta.label}
@@ -380,8 +380,7 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
   );
 }
 
-export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["waitlist"] }) {
-  // 8. Waitlist Section
+export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent["waitlist"]; form: ReactNode }) {
   return (
     <Section theme="dark" spacing="both" className="waitlist-section">
       <Container>
@@ -409,36 +408,7 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
           </Reveal>
 
           <Reveal preset="slide-right" distance={20} className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
-            <form className="flex flex-col gap-4">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-              />
-              <input
-                type="email"
-                placeholder="Work E-mail"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-              />
-              <input
-                type="text"
-                placeholder="Company"
-                className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-              />
-              <textarea
-                placeholder="Write your message..."
-                rows={5}
-                className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
-              />
-              <div className="mt-2">
-                <GreenButton
-                  label="Submit"
-                  href="#"
-                  bgColor="#ffffff"
-                  textColor="#0B0D0C"
-                />
-              </div>
-            </form>
+            {form}
           </Reveal>
 
         </div>
