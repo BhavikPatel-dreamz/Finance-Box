@@ -11,8 +11,8 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
 
   return (
     <Container>
-      <div className="flex-1 flex items-center pb-12 sm:pb-16 lg:pb-24 pt-8 sm:pt-12 lg:pt-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
+      <div className="flex-1 flex items-center pb-10 sm:pb-14 md:pb-16 lg:pb-24 pt-6 sm:pt-10 md:pt-12 lg:pt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center w-full">
           {/* Left Column */}
           <Reveal immediate preset="slide-up" delay={80} distance={24}>
             {eyebrowData && (
@@ -23,12 +23,13 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
                 {eyebrowData.text}
               </Eyebrow>
             )}
-            <h1 className="text-[32px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
+            <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
               {config.title.includes("\n") ? (
                 config.title.split("\n").map((line, idx) => (
                   <React.Fragment key={idx}>
                     {line}
-                    <br />
+                    <br className="hidden sm:inline" />
+                    {" "}
                   </React.Fragment>
                 ))
               ) : (
@@ -39,7 +40,8 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
               {config.highlight && (
                 <>
                   <span className="text-[#23C55E]">{config.highlight}</span>
-                  <br />
+                  <br className="hidden sm:inline" />
+                  {" "}
                 </>
               )}
               {config.highlight2 && (
@@ -54,10 +56,10 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
             preset="slide-up"
             delay={260}
             distance={24}
-            className="max-w-md lg:justify-self-end"
+            className="max-w-md lg:justify-self-end w-full"
           >
             {config.description && (
-              <p className="text-[15px] sm:text-[16px] font-light leading-[160%] text-white/80 mb-6 sm:mb-8">
+              <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-white/80 mb-6 sm:mb-8">
                 {config.description}
               </p>
             )}
