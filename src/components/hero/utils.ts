@@ -55,3 +55,52 @@ export function formatSiteHeader(
     cta: withSiteLinks(header.cta || { label: "Contact Us", url: "/contact-us/" }),
   };
 }
+
+export function normalizeHeroConfig(config: import("./types").HeroConfig): import("./types").HeroConfig {
+  let title = config.title;
+  let highlight = config.highlight;
+  const highlight2 = config.highlight2;
+
+  // 1. If title contains HTML <span>, <b>, or <strong> tags (e.g. from WordPress WYSIWYG or ACF)
+  if (typeof title === "string" && /<(?:span|b|strong)[^>]*>/i.test(title)) {
+    const match = title.match(/(.*?)<(?:span|b|strong)[^>]*>(.*?)<\/(?:span|b|strong)>(.*)/i);
+    if (match) {
+      const before = match[1].replace(/<[^>]*>/g, "").trim();
+      const tagContent = match[2].replace(/<[^>]*>/g, "").trim();
+      const after = match[3].replace(/<[^>]*>/g, "").trim();
+      title = (before + (after ? ` ${after}` : "")).trim();
+      highlight = tagContent;
+    }
+  }
+
+  // 2. If highlight already ends with highlight2 (e.g. "for growth companies" and "companies"), split them
+  if (typeof highlight === "string" && typeof highlight2 === "string" && highlight2) {
+    if (highlight.endsWith(highlight2)) {
+      highlight = highlight.slice(0, -highlight2.length).trim();
+    }
+  }
+
+  // 3. If title ends with or contains highlight, strip it from title so it's not duplicated
+  if (typeof title === "string" && typeof highlight === "string" && highlight) {
+    if (typeof highlight2 === "string" && highlight2) {
+      const combined = `${highlight} ${highlight2}`;
+      if (title.endsWith(combined)) {
+        title = title.slice(0, -combined.length).trim();
+      } else if (title.endsWith(highlight2)) {
+        title = title.slice(0, -highlight2.length).trim();
+        if (title.endsWith(highlight)) {
+          title = title.slice(0, -highlight.length).trim();
+        }
+      }
+    } else if (title.endsWith(highlight)) {
+      title = title.slice(0, -highlight.length).trim();
+    }
+  }
+
+  return {
+    ...config,
+    title,
+    highlight,
+    highlight2,
+  };
+}

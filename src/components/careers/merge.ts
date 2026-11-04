@@ -67,6 +67,40 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
   return typeName.endsWith(`${layoutName}Layout`);
 }
 
+function splitHighlight(
+  raw: unknown,
+  fallbackTitle: string,
+  fallbackHighlight: string,
+): { title: string; highlight: string } {
+  const text = str(raw) ?? "";
+  if (!text) {
+    return { title: fallbackTitle, highlight: fallbackHighlight };
+  }
+
+  const match = text.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+  if (match) {
+    const before = cleanHtml(match[1], "");
+    const highlight = cleanHtml(match[2], fallbackHighlight);
+    const after = cleanHtml(match[3], "");
+    const fullBefore = (before + (after ? ` ${after}` : "")).trim();
+    return {
+      title: fullBefore || fallbackTitle,
+      highlight: highlight || fallbackHighlight,
+    };
+  }
+
+  const clean = cleanHtml(text, fallbackTitle);
+  if (fallbackHighlight && clean.endsWith(fallbackHighlight) && clean.length > fallbackHighlight.length) {
+    const trimmedTitle = clean.slice(0, -fallbackHighlight.length).trim();
+    return {
+      title: trimmedTitle || fallbackTitle,
+      highlight: fallbackHighlight,
+    };
+  }
+
+  return { title: clean || fallbackTitle, highlight: fallbackHighlight };
+}
+
 /* -------------------------------------------------------------------------- */
 /*                              Section Mergers                                */
 /* -------------------------------------------------------------------------- */
@@ -74,17 +108,17 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
 /** Common Banner Section → hero. */
 function mergeHero(next: CareersContent, section: Record<string, any>): void {
   next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  next.hero.title = cleanHtml(section.title, next.hero.title);
-  
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  if (boldMatch && boldMatch[1]) {
-    next.hero.highlight = cleanHtml(boldMatch[1], "").trim();
-  } else {
-    next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
+  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.title = titleData.title;
+  let resolvedHighlight = cleanHtml(section.highlight, titleData.highlight);
+  const resolvedHighlight2 = cleanHtml(section.highlight2, next.hero.highlight2);
+
+  if (resolvedHighlight && resolvedHighlight2 && resolvedHighlight.endsWith(resolvedHighlight2)) {
+    resolvedHighlight = resolvedHighlight.slice(0, -resolvedHighlight2.length).trim();
   }
 
-  next.hero.highlight2 = cleanHtml(section.highlight2, next.hero.highlight2);
+  next.hero.highlight = resolvedHighlight;
+  next.hero.highlight2 = resolvedHighlight2;
   next.hero.text = cleanHtml(section.description, next.hero.text);
   next.hero.cta = link(section.ctaButton, next.hero.cta);
 }

@@ -10,8 +10,9 @@ import Section from "../ui/section";
 
 export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: ReactNode }) {
   const isDefaultTitle =
-    hero.title === "Your Finance Function," &&
-    hero.highlight === "Built and Run For You";
+    Boolean(hero.title) &&
+    hero.title.replace(/,$/, "").trim() === "Your Finance Function" &&
+    hero.highlight?.trim() === "Built and Run For You";
 
   return (
     <section id="product" className="hero-section relative overflow-hidden bg-[#121826] text-white">
@@ -100,7 +101,11 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
                       </span>
                     </div>
                     <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-normal text-white leading-none">
-                      ↓ {hero.closeTrend}
+                      {hero.closeTrend
+                        ? hero.closeTrend.startsWith("↓")
+                          ? hero.closeTrend
+                          : `↓ ${hero.closeTrend}`
+                        : "↓ Down from 18"}
                     </p>
                   </div>
                 </Reveal>

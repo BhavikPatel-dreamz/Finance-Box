@@ -11,8 +11,9 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
   const eyebrowData = parseEyebrow(config.eyebrow, "green-no-dash");
 
   const isDefaultTitle =
-    config.title === "Your Finance Function," &&
-    config.highlight === "Built and Run For You";
+    Boolean(config.title) &&
+    config.title.replace(/,$/, "").trim() === "Your Finance Function" &&
+    config.highlight?.trim() === "Built and Run For You";
 
   return (
     <Container className="relative flex-1 flex flex-col justify-end lg:justify-start pb-10 sm:pb-12 lg:pb-8">
@@ -105,7 +106,11 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                     </span>
                   </div>
                   <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-normal text-white leading-none">
-                    ↓ {config.closeTrend || "Down from 18"}
+                    {config.closeTrend
+                      ? config.closeTrend.startsWith("↓")
+                        ? config.closeTrend
+                        : `↓ ${config.closeTrend}`
+                      : "↓ Down from 18"}
                   </p>
                 </div>
               </Reveal>

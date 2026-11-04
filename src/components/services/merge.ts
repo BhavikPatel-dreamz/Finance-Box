@@ -79,14 +79,49 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
   return typeName.endsWith(`${layoutName}Layout`);
 }
 
+function splitHighlight(
+  raw: unknown,
+  fallbackTitle: string,
+  fallbackHighlight: string,
+): { title: string; highlight: string } {
+  const text = str(raw) ?? "";
+  if (!text) {
+    return { title: fallbackTitle, highlight: fallbackHighlight };
+  }
+
+  const match = text.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+  if (match) {
+    const before = cleanHtml(match[1], "");
+    const highlight = cleanHtml(match[2], fallbackHighlight);
+    const after = cleanHtml(match[3], "");
+    const fullBefore = (before + (after ? ` ${after}` : "")).trim();
+    return {
+      title: fullBefore || fallbackTitle,
+      highlight: highlight || fallbackHighlight,
+    };
+  }
+
+  const clean = cleanHtml(text, fallbackTitle);
+  if (fallbackHighlight && clean.endsWith(fallbackHighlight) && clean.length > fallbackHighlight.length) {
+    const trimmedTitle = clean.slice(0, -fallbackHighlight.length).trim();
+    return {
+      title: trimmedTitle || fallbackTitle,
+      highlight: fallbackHighlight,
+    };
+  }
+
+  return { title: clean || fallbackTitle, highlight: fallbackHighlight };
+}
+
 /* -------------------------------------------------------------------------- */
 /*                              Section Mergers                                */
 /* -------------------------------------------------------------------------- */
 
 function mergeHero(next: ServicesContent, section: Record<string, any>): void {
   next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  next.hero.title = cleanHtml(section.title, next.hero.title);
-  next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
+  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.title = titleData.title;
+  next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
   next.hero.text = cleanHtml(section.description, next.hero.text);
   next.hero.primary = link(section.primaryCtaButton, next.hero.primary);
   next.hero.secondary = link(section.secondaryCtaButton, next.hero.secondary);

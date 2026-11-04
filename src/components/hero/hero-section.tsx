@@ -2,7 +2,7 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 import type { HeroConfig, HeroOverrides, HeroPageKey } from "./types";
 import { getHeroConfig } from "@/config/hero.config";
-import { resolveHeroBackground, formatSiteHeader } from "./utils";
+import { resolveHeroBackground, formatSiteHeader, normalizeHeroConfig } from "./utils";
 import { homeContent, type HomeContent } from "@/content/home";
 import { HomeHeader } from "@/components/home/home-header";
 
@@ -56,9 +56,10 @@ export function HeroSection({
   id,
 }: HeroSectionProps) {
   // 1. Resolve final configuration (Base Config + Page Config + Overrides)
-  const resolvedConfig: HeroConfig = config
+  const rawConfig: HeroConfig = config
     ? { ...config, ...(overrides || {}) }
     : getHeroConfig(page, overrides);
+  const resolvedConfig = normalizeHeroConfig(rawConfig);
 
   // 2. Resolve background image styling
   const bgImage = resolveHeroBackground(resolvedConfig.background);
