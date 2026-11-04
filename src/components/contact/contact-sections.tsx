@@ -13,7 +13,7 @@ import { useFormSubmit } from "@/hooks/use-form-submit";
 
 export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]; header: ReactNode }) {
   return (
-    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:h-[525px] overflow-hidden bg-[#121826] text-white flex flex-col">
+    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-[#121826] text-white flex flex-col">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/contact-us/contactus-hero-bg.svg)" }}

@@ -2,5 +2,5 @@ fragment YourOwnAgenticSection on PageBuilderPageBuilderYourOwnAgenticSectionLay
   __typename
   title
   description
-  buildYourOwnAgentic { icon { node { sourceUrl altText } } title content }
+  buildYourOwnAgentic { icon { node { sourceUrl altText } } title content greatFor }
 }

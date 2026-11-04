@@ -134,7 +134,8 @@ function mergeWhatIs(next: AgenticAiContent, section: Record<string, any>): void
   const titleData = splitHighlight(section.title, next.whatIs.title, next.whatIs.highlight);
   next.whatIs.title = titleData.title;
   next.whatIs.highlight = titleData.highlight;
-  next.whatIs.text1 = cleanHtml(section.description, next.whatIs.text1);
+  next.whatIs.text1 = cleanHtml(section.tagLine, next.whatIs.text1);
+  next.whatIs.text2 = cleanHtml(section.description, next.whatIs.text2);
 
   const features = rows(section.aboutAgentics);
   if (features.length > 0) {
@@ -170,6 +171,7 @@ function mergeBuildYourOwn(next: AgenticAiContent, section: Record<string, any>)
         icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
         title: cleanHtml(agent.title, fallback?.title ?? ""),
         text,
+        greatFor: cleanHtml(agent.greatFor, fallback?.greatFor ?? ""),
       } satisfies AgenticAiAgent;
     });
   }
@@ -193,6 +195,7 @@ function mergePeopleOps(next: AgenticAiContent, section: Record<string, any>): v
         icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
         title: cleanHtml(agent.title, fallback?.title ?? ""),
         text,
+        greatFor: cleanHtml(agent.greatFor, fallback?.greatFor ?? ""),
       } satisfies AgenticAiAgent;
     });
   }
