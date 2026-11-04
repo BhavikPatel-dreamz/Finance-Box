@@ -10,11 +10,13 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
         <div className="grid gap-10 sm:gap-12 lg:gap-10 xl:gap-16 2xl:gap-20 py-12 sm:py-14 lg:py-16 xl:py-20 lg:grid-cols-[240px_1fr] xl:grid-cols-[280px_1fr] 2xl:grid-cols-[310px_1fr] items-start">
           {/* Brand Info Column */}
           <div className="flex flex-col items-start max-w-sm lg:max-w-none">
-            <img
-              src={footer.logo.url}
-              alt={footer.logo.alt}
-              className="max-w-[182px] w-full object-contain"
-            />
+            <Link href="/" aria-label="Finance in a Box" className="inline-block">
+              <img
+                src={footer.logo.url}
+                alt={footer.logo.alt}
+                className="max-w-[182px] w-full object-contain"
+              />
+            </Link>
             <p className="mt-4 sm:mt-5 lg:mt-6 max-w-[17rem] text-[13px] sm:text-[14px] xl:text-[15px] font-light leading-[155%] text-white/75">
               {footer.text}
             </p>
