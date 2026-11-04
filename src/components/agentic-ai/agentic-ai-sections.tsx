@@ -11,6 +11,7 @@ import Section from "@/components/ui/section";
 import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { AgenticAiContent } from "@/content/agentic-ai";
+import { useFormSubmit } from "@/hooks/use-form-submit";
 
 // Needs a parent with `group relative isolate overflow-hidden`. Same motion as the button circle.
 function CardFill({ className = "bg-[#23C55E]/[0.13]" }: { className?: string }) {
@@ -363,8 +364,8 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
     message: "",
   });
   
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
+  // Using our custom hook
+  const { status, message, submitForm } = useFormSubmit();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -372,29 +373,11 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("loading");
-    setMessage("");
-
-    try {
-      const res = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (data.ok) {
-        setStatus("success");
-        setMessage("Successfully joined the waitlist!");
-        setFormData({ name: "", email: "", company: "", message: "" });
-      } else {
-        setStatus("error");
-        setMessage(data.message || "Something went wrong.");
-      }
-    } catch (err) {
-      setStatus("error");
-      setMessage("Network error. Please try again.");
+    
+    const success = await submitForm("/api/waitlist", formData);
+    
+    if (success) {
+      setFormData({ name: "", email: "", company: "", message: "" });
     }
   };
 
@@ -467,7 +450,7 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
                 </button>
 
                 {status === "success" && (
-                  <p className="text-sm font-medium text-green-400">{message}</p>
+                  <p className="text-sm font-medium text-green-400">Successfully joined the waitlist!</p>
                 )}
                 {status === "error" && (
                   <p className="text-sm font-medium text-red-400">{message}</p>

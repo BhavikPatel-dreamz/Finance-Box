@@ -8,6 +8,7 @@ import Section from "@/components/ui/section";
 import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { ContactUsContent } from "@/content/contact-us";
+import { useFormSubmit } from "@/hooks/use-form-submit";
 
 export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]; header: React.ReactNode }) {
   return (
@@ -52,8 +53,7 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
     message: "",
   });
   
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const { status, message, submitForm } = useFormSubmit();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -61,33 +61,16 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("loading");
-    setErrorMessage("");
+    
+    const success = await submitForm("/api/contact", {
+      name: formData.name,
+      email: formData.email,
+      subject: formData.company, 
+      message: formData.message,
+    });
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.company, // backend schema uses 'subject'
-          message: formData.message,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.ok) {
-        setStatus("success");
-        setFormData({ name: "", email: "", company: "", message: "" });
-      } else {
-        setStatus("error");
-        setErrorMessage(data.message || "Validation failed.");
-      }
-    } catch (err) {
-      setStatus("error");
-      setErrorMessage("Network error. Please try again.");
+    if (success) {
+      setFormData({ name: "", email: "", company: "", message: "" });
     }
   };
 
@@ -195,7 +178,7 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
                   <p className="text-sm font-medium text-green-600">Message sent successfully!</p>
                 )}
                 {status === "error" && (
-                  <p className="text-sm font-medium text-red-600">{errorMessage}</p>
+                  <p className="text-sm font-medium text-red-600">{message}</p>
                 )}
               </div>
             </form>
@@ -209,37 +192,15 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
 
 export function ContactConnected({ socialSection }: { socialSection: ContactUsContent["socialSection"] }) {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
+  
+  const { status, message, submitForm } = useFormSubmit();
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
-    setStatus("loading");
-    setMessage("");
-
-    try {
-      const res = await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-
-      if (data.ok) {
-        setStatus("success");
-        setMessage("Subscribed successfully!");
-        setEmail("");
-      } else {
-        setStatus("error");
-        setMessage(data.message || "Subscription failed.");
-      }
-    } catch (err) {
-      setStatus("error");
-      setMessage("Network error.");
-    }
+    const success = await submitForm("/api/newsletter", { email });
+    if (success) setEmail(""); 
   };
 
   return (
@@ -320,7 +281,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
 
               {/* Status Messages */}
               {status === "success" && (
-                <p className="text-sm font-medium text-green-400 mt-3">{message}</p>
+                <p className="text-sm font-medium text-green-400 mt-3">Subscribed successfully!</p>
               )}
               {status === "error" && (
                 <p className="text-sm font-medium text-red-400 mt-3">{message}</p>
