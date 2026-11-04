@@ -10,6 +10,7 @@ export type AgenticAiAgent = {
   icon: string;
   title: string;
   text: string;
+  greatFor?: string;
 };
 
 export type AgenticAiPeopleOps = {
@@ -148,21 +149,25 @@ export const agenticAiContent: AgenticAiContent = {
         icon: "/icons/collections-agent.svg",
         title: "Collections Agent",
         text: "monitors aging, sends nudges, proposes payment plans, updates CRM, and creates tasks for exceptions.",
+        greatFor: "DSO reduction, cleaner cash flow. Works with: NetSuite, Zoho Books, Salesforce, email, Slack.",
       },
       {
         icon: "/icons/ap-agent.svg",
         title: "AP Agent",
         text: "Ingests invoices, performs 2/3-way matching, flags coding discrepancies, routes for approval, and schedules payments.",
+        greatFor: "touchless AP. Works with: NetSuite, Zoho Books, QuickBooks, bank/Payables apps.",
       },
       {
         icon: "/icons/billing-agent.svg",
         title: "Billing Agent",
         text: "validates entitlements, drafts invoices/credit memos, flags anomalies, and posts to ERP after approval.",
+        greatFor: "error-free billing; fewer disputes. Works with: Salesforce, usage/billing tools, NetSuite/Zoho.",
       },
       {
         icon: "/icons/fp-a-copilot.svg",
         title: "FP&A Copilot",
         text: "builds rolling forecasts, variance notes, and \"what-if\" scenarios; populates board pack sections.",
+        greatFor: "faster planning cycles. Works with: Power BI, Sheets, and data warehouses.",
       },
     ],
   },
@@ -173,16 +178,19 @@ export const agenticAiContent: AgenticAiContent = {
         icon: "/icons/on-offboarding-agent.png",
         title: "On/Offboarding Agent",
         text: "Creates offers, checklists, access tickets; provisions in HRIS/ITSM; books orientation; confirms completion.",
+        greatFor: "First-day ready, SoD enforcement. Works with: Rippling, Keka, ManageEngine, Slack, Gmail.",
       },
       {
         icon: "/icons/service-desk-agent.png",
         title: "Service Desk Agent",
         text: "Triages HR/IT tickets, answers FAQs, resolves routine requests, escalates when needed.",
+        greatFor: "Faster SLAs. Works with: ManageEngine, Slack/Teams, Google Workspace/M365.",
       },
       {
         icon: "/icons/payrol.png",
         title: "Payroll Prep Agent",
-        text: "Aggregates timesheets, validates deductions, calculates commission tiers, and generates pre-payroll audit summaries.",
+        text: "Creates offers, checklists, access tickets; provisions in HRIS/ITSM; books orientation; confirms completion.",
+        greatFor: "Accurate, timely payroll. Works with: Keka, Rippling, ADP, Gusto, and ERP",
       },
     ],
   },

@@ -228,7 +228,7 @@ export const contactHeroConfig: HeroConfig = {
   description:
     contactUsContent.hero.text ||
     "Whether you're looking to build your finance function from scratch, prepare for a fundraise, or optimize existing operations, we're here to help.",
-  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:h-[525px]",
+  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:min-h-[525px]",
 };
 
 // ----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ export const agenticAiHeroConfig: HeroConfig = {
     bgColor: "#ffffff",
     textColor: "#07110d",
   },
-  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:h-[525px]",
+  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:min-h-[525px]",
 };
 
 // ----------------------------------------------------------------------------
@@ -283,7 +283,7 @@ export const knowledgeHubHeroConfig: HeroConfig = {
     color: "green",
     onDark: true,
   },
-  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:h-[525px]",
+  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:min-h-[525px]",
 };
 
 // ----------------------------------------------------------------------------
@@ -301,7 +301,7 @@ export const peopleOperationsHeroConfig: HeroConfig = {
   description:
     peopleOperationsContent.hero.text ||
     "Modern HR, payroll, benefits, and equity administration designed to support scaling teams without the administrative friction.",
-  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:h-[525px]",
+  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:min-h-[525px]",
 };
 
 // ----------------------------------------------------------------------------

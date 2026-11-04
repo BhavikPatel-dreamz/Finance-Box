@@ -2,6 +2,7 @@ fragment AboutAgenticSection on PageBuilderPageBuilderAboutAgenticSectionLayout 
   __typename
   subTitle
   title
+  tagLine
   description
   aboutAgentics { image { node { sourceUrl altText } } title content }
 }

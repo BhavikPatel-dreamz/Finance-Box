@@ -41,7 +41,7 @@ const ICON_CHIP_LIFT =
 export function AgenticBanner({ hero, header }: { hero: AgenticAiContent["hero"]; header: ReactNode }) {
   // Hero Section (Header + Hero = 525px)
   return (
-    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:h-[525px] overflow-hidden bg-[#121826] text-white">
+    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-[#121826] text-white">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
@@ -126,7 +126,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
                 {whatIs.text1}
               </p>
             </div>
-            <div className="max-w-md lg:pt-12">
+            <div className="max-w-[492px] lg:pt-12">
               <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70">
                 {whatIs.text2}
               </p>
@@ -138,7 +138,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
           {whatIs.features.map((feature, idx) => (
             <StaggerItem key={idx} index={idx} className="group flex flex-col">
               <div>
-                <div className="relative w-full h-[420px] overflow-hidden mb-6 rounded-[8px]">
+                <div className="relative w-full h-[420px] overflow-hidden mb-6">
                   <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />
                 </div>
                 <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
@@ -153,26 +153,31 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
   );
 }
 
-export function AgenticBuildYourOwn({ buildYourOwn }: { buildYourOwn: AgenticAiContent["buildYourOwn"] }) {
-  // 3. Build your own Agentic AI Section
+export function AgenticBuildYourOwn({
+  buildYourOwn,
+}: {
+  buildYourOwn: AgenticAiContent["buildYourOwn"];
+}) {
   return (
     <section className="build-agentic-ai-section bg-white text-[#121826] pb-24">
       <Container>
-        <div className="bg-[#EDE9E6]/50 rounded-[10px] px-6 py-10 md:p-12 lg:p-20 text-center">
+        <div className="rounded-[10px] bg-[#EDE9E6]/50 px-6 py-10 text-center md:p-12 lg:p-20">
 
           <Reveal preset="slide-up" distance={20}>
-            <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium text-[#121826] leading-[1.15] tracking-[-0.8px] mb-4">
+            <h2 className="mb-4 text-3xl font-medium leading-[1.15] tracking-[-0.8px] text-[#121826] sm:text-4xl md:text-[54px]">
               {(() => {
                 let title = buildYourOwn.title;
                 const hl = buildYourOwn.highlight;
+
                 if (title && hl && title.endsWith(hl)) {
                   title = title.slice(0, -hl.length).trim();
                 }
+
                 return (
                   <>
                     {title}{" "}
                     {hl && (
-                      <span className="text-[#23C55E] font-black italic">
+                      <span className="font-black italic text-[#23C55E]">
                         {hl}
                       </span>
                     )}
@@ -180,26 +185,58 @@ export function AgenticBuildYourOwn({ buildYourOwn }: { buildYourOwn: AgenticAiC
                 );
               })()}
             </h2>
-            <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70 lg:max-w-[706px] mx-auto mb-10">
+
+            <p className="mx-auto mb-10 text-[16px] font-light leading-[160%] text-[#16181d]/70 lg:max-w-[706px]">
               {buildYourOwn.text}
             </p>
           </Reveal>
 
-          <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-left rounded-[10px] overflow-hidden divide-y md:divide-x divide-[#121826]/8">
+          <StaggerGroup
+            staggerDelay={140}
+            className="grid grid-cols-1 overflow-hidden rounded-[10px] text-left divide-y divide-[#121826]/[0.08] md:grid-cols-2 md:divide-y-0 md:divide-x lg:grid-cols-4"
+          >
             {buildYourOwn.agents.map((agent, idx) => (
               <StaggerItem
                 key={idx}
                 index={idx}
-                className="group relative isolate overflow-hidden bg-white p-8 flex flex-col min-h-[255px]"
+                className="group relative isolate flex min-h-[255px] flex-col overflow-hidden bg-white p-8 transition-colors duration-500 ease-in-out hover:bg-[#121826]"
               >
-                <CardFill />
-                <div className={`${ICON_CHIP} border border-[#1219280D] bg-white mb-6`}>
-                  <div className={ICON_IMG}>
-                    <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+                {/* Default Card Content */}
+                <div className="flex h-full flex-col transition-all duration-300 ease-in-out group-hover:translate-y-[-5px] group-hover:opacity-0">
+                  <div
+                    className={`${ICON_CHIP} mb-6 border border-[#1219280D] bg-white`}
+                  >
+                    <div className={ICON_IMG}>
+                      <Image
+                        src={agent.icon}
+                        alt={agent.title}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
                   </div>
+
+                  <h3 className="mb-3 text-[18px] font-semibold leading-[1.2] text-[#121826]">
+                    {agent.title}
+                  </h3>
+
+                  <p className="text-[14px] font-normal leading-[160%] text-[#121826]/70">
+                    {agent.text}
+                  </p>
                 </div>
-                <h3 className="text-[18px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
-                <p className="text-[14px] font-normal leading-[160%] text-[#121826]/70">{agent.text}</p>
+
+                {/* Hover Content */}
+                {agent.greatFor && (
+                  <div className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-start bg-[#121826] p-8 opacity-0 transition-all duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
+                    <h4 className="mb-4 translate-y-2 text-[16px] font-semibold leading-[1.2] text-white transition-transform duration-500 ease-in-out group-hover:translate-y-0">
+                      Great for:
+                    </h4>
+
+                    <p className="translate-y-2 text-[14px] font-medium leading-[160%] text-white/90 transition-transform delay-75 duration-500 ease-in-out group-hover:translate-y-0">
+                      {agent.greatFor}
+                    </p>
+                  </div>
+                )}
               </StaggerItem>
             ))}
           </StaggerGroup>
@@ -247,14 +284,26 @@ export function AgenticPeopleOps({ peopleOps }: { peopleOps: AgenticAiContent["p
                 index={idx}
                 className={`group relative isolate overflow-hidden p-10 flex flex-col min-h-[286px] border-white/5 ${borderRightClass} ${borderBottomClass}`}
               >
-                <RiseGlow />
-                <div className={`${ICON_CHIP_LIFT} border border-white/10 mb-6`}>
-                  <div className={ICON_IMG}>
-                    <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+                <div className="flex flex-col h-full transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-hover:pointer-events-none">
+                  <div className={`${ICON_CHIP_LIFT} border border-white/10 mb-8.5`}>
+                    <div className={ICON_IMG}>
+                      <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+                    </div>
                   </div>
+                  <h3 className="text-[22px] font-semibold leading-[1.2] mb-3 text-white">{agent.title}</h3>
+                  <p className="text-[16px] font-normal leading-[150%] text-white/70">{agent.text}</p>
                 </div>
-                <h3 className="text-[22px] font-semibold leading-[1.2] mb-3">{agent.title}</h3>
-                <p className="text-[16px] font-normal leading-[150%] text-white/70 transition-colors duration-500 group-hover:text-white/90">{agent.text}</p>
+
+                {agent.greatFor && (
+                  <div className="absolute inset-0 z-10 p-10 flex flex-col justify-start bg-white text-[#121826] rounded-[10px] shadow-2xl opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+                    <h4 className="text-[18px] sm:text-[20px] font-bold leading-[1.2] mb-4 text-[#121826]">
+                      Great for:
+                    </h4>
+                    <p className="text-[15px] font-normal leading-[160%] text-[#121826]/80">
+                      {agent.greatFor}
+                    </p>
+                  </div>
+                )}
               </StaggerItem>
             );
           })}
