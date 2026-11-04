@@ -1,7 +1,7 @@
 import type { ContactInput } from "@/lib/validation/contact";
 
 export type ContactDeliveryResult =
-  | { ok: true }
+  | { ok: true; message?: string } // 👈 Success message add kiya
   | { ok: false; message: string; status: number };
 
 type Payload = Pick<ContactInput, "name" | "email" | "subject" | "message">;
@@ -26,7 +26,7 @@ async function deliverToWordPress(payload: Payload): Promise<ContactDeliveryResu
     // React fields se CF7 fields mein mapping (subject = company)
     formData.append("your-name", payload.name);
     formData.append("your-email", payload.email);
-    formData.append("your-company", payload.subject); // subject ko company mein bhej rahe hain
+    formData.append("your-company", payload.subject);
     formData.append("your-message", payload.message);
 
     // CF7 Hidden Fields (Security bypass ke liye zaroori hai)
@@ -44,7 +44,7 @@ async function deliverToWordPress(payload: Payload): Promise<ContactDeliveryResu
     const data = await response.json();
 
     if (data.status === "mail_sent") {
-      return { ok: true };
+      return { ok: true, message: data.message }; // 👈 WordPress ka success message bheja
     } else {
       console.error("CF7 Error:", data);
       return {
