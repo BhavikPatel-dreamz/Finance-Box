@@ -11,6 +11,7 @@ import Section from "@/components/ui/section";
 import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { KnowledgeHubContent } from "@/content/knowledge-hub";
+import { useFormSubmit } from "@/hooks/use-form-submit";
 
 export function KnowledgeHubBanner({ hero, header }: { hero: KnowledgeHubContent["hero"]; header: ReactNode }) {
   // 1. Hero Section
@@ -192,8 +193,8 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
     message: "",
   });
   
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
+  // Using our custom hook
+  const { status, message, submitForm } = useFormSubmit();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -201,29 +202,11 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("loading");
-    setMessage("");
-
-    try {
-      const res = await fetch("/api/insights", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (data.ok) {
-        setStatus("success");
-        setMessage("Subscribed successfully!");
-        setFormData({ name: "", email: "", role: "", message: "" });
-      } else {
-        setStatus("error");
-        setMessage(data.message || "Something went wrong.");
-      }
-    } catch (err) {
-      setStatus("error");
-      setMessage("Network error. Please try again.");
+    
+    const success = await submitForm("/api/insights", formData);
+    
+    if (success) {
+      setFormData({ name: "", email: "", role: "", message: "" });
     }
   };
 
@@ -312,7 +295,7 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
                 </button>
 
                 {status === "success" && (
-                  <p className="text-sm font-medium text-green-400">{message}</p>
+                  <p className="text-sm font-medium text-green-400">Subscribed successfully!</p>
                 )}
                 {status === "error" && (
                   <p className="text-sm font-medium text-red-400">{message}</p>
