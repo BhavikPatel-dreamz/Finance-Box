@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+"use client";
+import { useEffect, useRef, useState, type ReactNode } from "react"; 
 import { GreenButton } from "@/components/ui/green-button";
 import { type ServicesContent } from "@/content/services";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -10,6 +11,7 @@ import { InvestorSlider } from "@/components/services/investor-slider";
 import { ProcessGrid } from "@/components/ui/process-grid";
 import Section from "../ui/section";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
+
 
 export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]; header: ReactNode }) {
   // Hero Section
@@ -56,7 +58,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
               </Reveal>
             </div>
 
-            <StaggerGroup immediate staggerDelay={140} className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-[506px] lg:justify-self-end">
+            <StaggerGroup immediate staggerDelay={140} className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-2xl min-[890px]:max-w-[506px] lg:justify-self-end">
               {/* Vertical Gradient Divider Line matching Figma specs */}
               <div
                 aria-hidden="true"
@@ -81,7 +83,23 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
                       {tier.label}
                     </p>
                     <h3 className="text-[18px] sm:text-[20px] font-semibold leading-[26px] sm:leading-[30px] text-white">
-                      {tier.title} <span className="font-semibold text-[#23C55E]">{tier.highlight}</span>
+                      {(() => {
+                        let title = tier.title;
+                        const hl = tier.highlight;
+                        if (title && hl && title.endsWith(hl)) {
+                          title = title.slice(0, -hl.length).trim();
+                        }
+                        return (
+                          <>
+                            {title}{" "}
+                            {hl && (
+                              <span className="font-semibold text-[#23C55E]">
+                                {hl}
+                              </span>
+                            )}
+                          </>
+                        );
+                      })()}
                     </h3>
                     <p className="text-[13px] sm:text-[14px] font-normal leading-[18px] sm:leading-[16px] text-white/60 mt-1">
                       {tier.text}
@@ -135,12 +153,17 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
               <StaggerItem
                 key={idx}
                 index={idx}
-                className="card-hover bg-[#121826] rounded-[16px] p-6 sm:p-8 flex flex-col justify-between min-h-[200px] sm:min-h-[226px] relative group border border-white/5"
+                className="card-hover bg-[#121826] rounded-[16px] p-6 sm:p-8 flex flex-col justify-between min-h-[200px] sm:min-h-[226px] h-full relative group border border-white/5"
               >
                 <div className="flex justify-between items-start gap-4 mb-5 sm:mb-6">
-                  <h3 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold leading-[1.2] text-white">
-                    {card.title}
-                  </h3>
+                  <div className="flex flex-col gap-y-3.75">
+                    <h3 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold leading-[1.2] text-white">
+                      {card.title}
+                    </h3>
+                    <p className="text-[13px] sm:text-[14px] font-medium tracking-[0.06em] uppercase text-white/70 mb-3 sm:mb-4 max-w-[85%] sm:max-w-[80%] leading-[129%]">
+                      {card.label}
+                    </p>
+                  </div>
                   <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]">
                     <Image
                       src={iconSrc}
@@ -152,9 +175,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
                   </div>
                 </div>
 
-                <p className="text-[13px] sm:text-[14px] font-medium tracking-[0.06em] uppercase text-white/70 mb-3 sm:mb-4 max-w-[85%] sm:max-w-[80%] leading-[129%]">
-                  {card.label}
-                </p>
+
 
                 <p className="text-[15px] sm:text-[16px] lg:text-[18px] font-normal leading-[150%] text-white/70">
                   {card.text}
@@ -174,7 +195,7 @@ export function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] 
     <Section theme="dark" spacing="space60" className="services-depth-intro">
       <Container>
         <Reveal preset="slide-up" distance={20} className="flex flex-col items-center text-center px-4">
-          <Eyebrow variant="green">
+          <Eyebrow variant="green" dashVariant="no-dash">
             {depth.eyebrow}
           </Eyebrow>
 
@@ -197,75 +218,201 @@ export function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] 
 }
 
 // --- Component: Details ---
+type ServiceDetail = ServicesContent["details"][number];
+type ServiceItem = ServiceDetail["items"][number] & { description?: string };
+
+/**
+ * Pinned block offset to accommodate the fixed header on desktop/laptop.
+ */
+const STICKY_OFFSET = 92;
+
+/**
+ * Pins the block on desktop/laptop screens (>= 1024px).
+ * On smaller screens (tablets & mobile), sticky positioning is disabled,
+ * and inline styles are cleared to prevent negative offset overlapping.
+ */
+function useStickyTop(offset: number) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const update = () => {
+      // Disable sticky calculation on mobile & tablet (< 1024px)
+      if (window.innerWidth < 1024) {
+        el.style.top = "";
+        return;
+      }
+
+      const headerOffset = offset || 92;
+      const minTop = window.innerHeight - el.offsetHeight;
+
+      // When the card fits comfortably within the viewport
+      if (el.offsetHeight + headerOffset <= window.innerHeight) {
+        el.style.top = `${headerOffset}px`;
+      } else {
+        // When viewport height is constrained on laptops (e.g. 768px height),
+        // ensure top heading isn't cut off behind header
+        const clampedTop = Math.max(headerOffset - 40, minTop);
+        el.style.top = `${clampedTop}px`;
+      }
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [offset]);
+
+  return ref;
+}
+
+// Card: dark by default, turns white on hover/tap and reveals the detailed description
+function ServiceCard({
+  item,
+  className,
+}: {
+  item: ServiceItem;
+  className: string;
+}) {
+  const hasHover = Boolean(item.description);
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div
+      tabIndex={hasHover ? 0 : undefined}
+      role={hasHover ? "button" : undefined}
+      aria-expanded={hasHover ? isOpen : undefined}
+      onClick={() => {
+        if (hasHover) setIsOpen((prev) => !prev);
+      }}
+      onKeyDown={(e) => {
+        if (hasHover && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          setIsOpen((prev) => !prev);
+        }
+      }}
+      className={`group relative overflow-hidden bg-[#121826] p-5 sm:p-6 lg:p-5 xl:p-7 2xl:p-8 flex flex-col justify-start min-h-[160px] sm:min-h-[175px] md:min-h-[180px] lg:min-h-[175px] xl:min-h-[195px] 2xl:min-h-[205px] outline-none transition-all duration-300 ease-out select-none ${
+        hasHover
+          ? "cursor-pointer hover:bg-white focus-visible:bg-white active:bg-white"
+          : "cursor-default"
+      } ${isOpen ? "bg-white" : ""} ${className}`}
+    >
+      {/* Default content: fades up and out on hover or active */}
+      <div
+        className={`transition-all duration-300 ease-out ${
+          hasHover
+            ? `group-hover:-translate-y-1 group-hover:opacity-0 group-focus-visible:-translate-y-1 group-focus-visible:opacity-0 ${
+                isOpen ? "-translate-y-1 opacity-0 pointer-events-none" : ""
+              }`
+            : ""
+        }`}
+      >
+        <h3 className="text-[17px] sm:text-[19px] md:text-[20px] lg:text-[18px] xl:text-[21px] 2xl:text-[22px] font-semibold leading-[1.25] sm:leading-[1.2] mb-1.5 sm:mb-2 text-white">
+          {item.title}
+        </h3>
+        <p className="text-[13px] sm:text-[14px] md:text-[14.5px] lg:text-[13.5px] xl:text-[15px] 2xl:text-[16px] font-normal leading-[140%] text-white/70">
+          {item.text}
+        </p>
+      </div>
+
+      {/* Hover & touch active content: reveals description with clean typography & scroll protection */}
+      {hasHover && (
+        <div
+          className={`absolute inset-0 p-5 sm:p-6 lg:p-5 xl:p-7 2xl:p-8 flex flex-col justify-start overflow-y-auto transition-all duration-300 ease-out ${
+            isOpen
+              ? "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 translate-y-1 pointer-events-none group-hover:translate-y-0 group-hover:opacity-100 group-hover:pointer-events-auto group-focus-visible:translate-y-0 group-focus-visible:opacity-100 group-active:translate-y-0 group-active:opacity-100"
+          }`}
+        >
+          <p className="text-[12.5px] sm:text-[13.5px] md:text-[14px] lg:text-[13px] xl:text-[14.5px] 2xl:text-[15.5px] font-normal leading-[150%] xl:leading-[160%] text-[#121826]">
+            {item.description}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// One tier block. Pins at the top on desktop/laptop; the next block slides over it
+function DetailBlock({ detail, idx }: { detail: ServiceDetail; idx: number }) {
+  const ref = useStickyTop(STICKY_OFFSET);
+  const total = detail.items.length;
+  const isOdd = total % 2 !== 0;
+
+  return (
+    <div
+      ref={ref}
+      id={detail.anchor}
+      className={`relative bg-inherit py-8 sm:py-10 md:py-12 lg:py-10 xl:py-14 scroll-mt-20 lg:scroll-mt-24 lg:sticky lg:after:pointer-events-none lg:after:absolute lg:after:inset-x-0 lg:after:top-full lg:after:h-screen lg:after:bg-inherit lg:after:content-[''] ${
+        idx > 0 ? "border-t border-white/12" : ""
+      }`}
+    >
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-7 sm:gap-9 lg:gap-8 xl:gap-14 2xl:gap-20 items-start">
+          <div className="w-full max-w-2xl lg:max-w-md min-w-0">
+            <div className="flex size-8 lg:size-8.5 items-center justify-center rounded-full border border-white/10 bg-[#121826] text-[13px] lg:text-[14px] font-semibold text-[#23C55E] tabular-nums">
+              {String(idx + 1).padStart(2, "0")}
+            </div>
+            <h2 className="text-[26px] sm:text-[30px] md:text-[32px] lg:text-[28px] xl:text-[34px] 2xl:text-[36px] font-medium leading-[1.18] sm:leading-[1.12] tracking-[-0.8px] text-white my-3.5 sm:my-5 lg:my-4 xl:my-6">
+              {detail.title}
+            </h2>
+            <p className="text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/80">
+              {detail.text}
+            </p>
+            <GreenButton
+              label={detail.cta.label}
+              href={detail.cta.url}
+              bgColor="#23C55E"
+              textColor="#121826"
+              onDark={true}
+              className="mt-5 sm:mt-6 lg:mt-6 xl:mt-8"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border border-white/12 rounded-[10px] overflow-hidden bg-[#121826]">
+            {detail.items.map((item: ServiceItem, itemIdx: number) => {
+              const isLastItem = itemIdx === total - 1;
+              const isFullWidth = isOdd && isLastItem;
+              const isLeftCol = itemIdx % 2 === 0;
+
+              const isLastRowSm = isOdd ? isLastItem : itemIdx >= total - 2;
+              const isLastRowMobile = isLastItem;
+
+              const borders = `
+                ${isFullWidth ? "sm:col-span-2 sm:border-r-0" : isLeftCol ? "sm:border-r sm:border-white/12" : "sm:border-r-0"}
+                ${isLastRowMobile ? "border-b-0" : "border-b border-white/12"}
+                ${isLastRowSm ? "sm:border-b-0" : "sm:border-b sm:border-white/12"}
+              `;
+
+              return <ServiceCard key={itemIdx} item={item} className={borders} />;
+            })}
+          </div>
+        </div>
+      </Container>
+    </div>
+  );
+}
+
 export function ServicesDetails({ details }: { details: ServicesContent["details"] }) {
   return (
     <Section theme="lightblue" spacing="none" className="services-details">
-      {details.map((detail, idx) => (
-        <Reveal
-          key={detail.anchor}
-          preset="slide-up"
-          distance={20}
-          as="div"
-          id={detail.anchor}
-          className={`py-10 sm:py-12.5 lg:py-15 scroll-mt-20 lg:scroll-mt-24 ${idx > 0 ? "border-t border-white/12" : ""
-            }`}
-        >
-          <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 sm:gap-10 lg:gap-20 items-start">
-              <div className="max-w-md">
-                <div className="flex size-8.5 items-center justify-center rounded-full border border-white/7 bg-[#121826] text-[14px] font-semibold text-[#23C55E]">
-                  {detail.number}
-                </div>
-                <h2 className="text-[28px] sm:text-[32px] lg:text-[36px] font-medium leading-[1.15] sm:leading-[1.1] tracking-[-0.8px] text-white my-4 sm:my-6">
-                  {detail.title}
-                </h2>
-                <p className="text-[15px] sm:text-[16px] font-light leading-[160%] text-white/80">
-                  {detail.text}
-                </p>
-                <GreenButton
-                  label={detail.cta.label}
-                  href={detail.cta.url}
-                  bgColor="#23C55E"
-                  textColor="#121826"
-                  onDark={true}
-                  className="mt-6 sm:mt-8 lg:mt-10"
-                />
-              </div>
+      {/* overflow-clip (not overflow-hidden, which would break sticky) stops the cover strip under the
+          last block from painting over the sections that follow. */}
+      <div className="overflow-clip bg-inherit">
+        {details.map((detail, idx) => (
+          <DetailBlock key={detail.anchor} detail={detail} idx={idx} />
+        ))}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border border-white/12 rounded-[9px] overflow-hidden bg-[#121826]">
-                {detail.items.map((item, itemIdx) => {
-                  const total = detail.items.length;
-                  const isOdd = total % 2 !== 0;
-                  const isLastItem = itemIdx === total - 1;
-                  const isFullWidth = isOdd && isLastItem;
-                  const isLeftCol = itemIdx % 2 === 0;
-
-                  const isLastRowSm = isOdd ? itemIdx === total - 1 : itemIdx >= total - 2;
-                  const isLastRowMobile = itemIdx === total - 1;
-
-                  return (
-                    <div
-                      key={itemIdx}
-                      className={`card-hover bg-[#121826] p-6 sm:p-8 flex flex-col justify-start min-h-0 sm:min-h-[191px] 
-                        ${isFullWidth ? "sm:col-span-2 sm:border-r-0" : isLeftCol ? "sm:border-r sm:border-white/12" : "sm:border-r-0"} 
-                        ${isLastRowMobile ? "border-b-0" : "border-b border-white/12"} 
-                        ${isLastRowSm ? "sm:border-b-0" : "sm:border-b sm:border-white/12"}
-                      `}
-                    >
-                      <h3 className="text-[19px] sm:text-[22px] font-semibold leading-[1.25] sm:leading-[1.2] mb-2 sm:mb-3 text-white">
-                        {item.title}
-                      </h3>
-                      <p className="text-[14px] sm:text-[16px] font-normal leading-[140%] text-white/70">
-                        {item.text}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </Container>
-        </Reveal>
-      ))}
+        {/* Keeps the last block pinned while the next section (ServicesCfo) slides up over it.
+            Must match the negative top margin on ServicesCfo (-mt-[100svh]). */}
+        <div aria-hidden="true" className="hidden lg:block h-[100svh]" />
+      </div>
     </Section>
   );
 }
@@ -279,7 +426,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   ];
 
   return (
-    <Section theme="light" spacing="both" className="services-cfo-section">
+    <Section theme="light" spacing="both" className="services-cfo-section relative z-10 lg:-mt-[100svh]">
       <Container>
         <div className="bg-[#EDE9E6] rounded-[10px] p-6 sm:p-10 md:px-12.5 md:py-20 text-[#121826]">
 
@@ -306,12 +453,12 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
             </div>
           </Reveal>
 
-          <StaggerGroup staggerDelay={140} className="cfo-cards grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+          <StaggerGroup staggerDelay={140} className="cfo-cards grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
             {cfo.cards.map((card, idx) => (
               <StaggerItem
                 key={idx}
                 index={idx}
-                className="group card-hover relative w-full h-[350px] sm:h-[480px] md:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
+                className="group card-hover relative w-full h-[340px] sm:h-[400px] md:h-[420px] lg:h-[430px] xl:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
               >
                 <Image
                   src={images[idx] || card.image?.url || ""}
@@ -322,7 +469,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                 />
 
                 {/* Bottom-left cutout wrapper matching Figma geometry */}
-                <div className="absolute bottom-0 left-0 bg-[#EDE9E6] pt-3 pr-3 sm:pt-3.5 sm:pr-3.5 rounded-tr-[12px] w-[calc(100%-55px)] sm:w-[calc(100%-75px)] max-w-[315px]">
+                <div className="absolute bottom-0 left-0 bg-[#EDE9E6] pt-2.5 pr-2.5 sm:pt-3 sm:pr-3 xl:pt-3.5 xl:pr-3.5 rounded-tr-[12px] w-[calc(100%-45px)] sm:w-[calc(100%-55px)] xl:w-[calc(100%-75px)] max-w-[315px]">
                   {/* Top-left corner radius for upper photo */}
                   <svg
                     width="12"
@@ -348,11 +495,11 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                   </svg>
 
                   {/* Dark Box */}
-                  <div className="bg-[#121826] text-white rounded-[8px] p-5 sm:p-6 flex flex-col justify-start min-h-[145px] sm:min-h-[160px]">
-                    <h3 className="text-[16px] sm:text-[18px] font-extrabold uppercase tracking-[1px] leading-[20px] mb-2 sm:mb-3 text-white">
+                  <div className="bg-[#121826] group-hover:bg-[#23C55E] text-white rounded-[8px] p-3.5 sm:p-4.5 xl:p-6 flex flex-col justify-start min-h-[130px] sm:min-h-[145px] xl:min-h-[160px] transition-all duration-300">
+                    <h3 className="text-[14px] sm:text-[15px] xl:text-[18px] font-extrabold uppercase tracking-[0.8px] xl:tracking-[1px] leading-[18px] sm:leading-[20px] mb-1.5 sm:mb-2 xl:mb-3 text-white group-hover:text-[#0B0D0C] transition-all duration-300">
                       {card.title}
                     </h3>
-                    <p className="text-[13px] sm:text-[14px] font-normal leading-[140%] text-white/70">
+                    <p className="text-[12px] sm:text-[12.5px] xl:text-[14px] font-normal leading-[140%] text-white/70 group-hover:text-[#0B0D0C] transition-all duration-300">
                       {card.text}
                     </p>
                   </div>

@@ -1,4 +1,4 @@
-import { contactUsContent, type ContactUsContent } from "@/content/contact-us";
+import type { ContactUsContent } from "@/content/contact-us";
 import type { RawSection } from "@/lib/wordpress/content";
 
 function str(value: unknown) {

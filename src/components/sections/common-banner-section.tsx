@@ -1,10 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { fromSection } from "@/components/sections/from-section";
-import { CareersBanner } from "@/components/careers/careers-sections";
-import { AgenticBanner } from "@/components/agentic-ai/agentic-ai-sections";
-import { KnowledgeHubBanner } from "@/components/knowledge-hub/knowledge-hub-sections";
-import { PeopleOperationsBanner } from "@/components/people-operations/people-operations-sections";
+import { HeroSection } from "@/components/hero";
 import { mergeCareers } from "@/components/careers/merge";
 import { mergeAgenticAi } from "@/components/agentic-ai/merge";
 import { mergeKnowledgeHub } from "@/components/knowledge-hub/merge";
@@ -28,30 +25,94 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
   hero: true,
   render: (data, { header, variant }) => {
     switch ((variant ?? "knowledge-hub") as Variant) {
-      case "careers":
-        return <CareersBanner hero={fromSection(mergeCareers, careersContent, data).hero} header={header} />;
-      case "agentic-ai": {
-        const { hero } = fromSection(mergeAgenticAi, agenticAiContent, data);
-        // Editors enter the bullet points as a list in `description`; `tagLine` is the lead sentence.
-        const bullets = listItems(data.description);
+      case "careers": {
+        const { hero } = fromSection(mergeCareers, careersContent, data);
         return (
-          <AgenticBanner
-            hero={bullets.length > 0 ? { ...hero, bullets, text: text(data.tagLine, hero.text) } : hero}
-            header={header}
+          <HeroSection
+            page="careers"
+            headerNode={header}
+            overrides={{
+              eyebrow: hero.eyebrow,
+              title: hero.title,
+              highlight: hero.highlight,
+              highlight2: hero.highlight2,
+              description: hero.text,
+              primaryCta: hero.cta
+                ? { label: hero.cta.label, url: hero.cta.url, color: "white" }
+                : undefined,
+            }}
           />
         );
       }
-      case "people-operations":
+      case "agentic-ai": {
+        const { hero } = fromSection(mergeAgenticAi, agenticAiContent, data);
+        // Editors enter the bullet points as a list in `description`; `tagLine` is the lead sentence.
+        const rawBullets = listItems(data.description);
+        const descriptionText = rawBullets.length > 0 ? text(data.tagLine, hero.text) : hero.text;
+        const normalizedLead = (descriptionText || "").trim().toLowerCase();
+        const bullets = (rawBullets.length > 0 ? rawBullets : (hero.bullets ?? []))
+          .filter((b) => b.trim().toLowerCase() !== normalizedLead);
         return (
-          <PeopleOperationsBanner
-            hero={fromSection(mergePeopleOperations, peopleOperationsContent, data).hero}
-            header={header}
+          <HeroSection
+            page="agentic-ai"
+            headerNode={header}
+            overrides={{
+              eyebrow: hero.eyebrow,
+              title: hero.title,
+              highlight: hero.highlight,
+              description: descriptionText,
+              bullets,
+              primaryCta: hero.cta
+                ? {
+                    label: hero.cta.label,
+                    url: hero.cta.url,
+                    color: "white",
+                    bgColor: "#ffffff",
+                    textColor: "#07110d",
+                  }
+                : undefined,
+            }}
           />
         );
-      default:
+      }
+      case "people-operations": {
+        const { hero } = fromSection(mergePeopleOperations, peopleOperationsContent, data);
         return (
-          <KnowledgeHubBanner hero={fromSection(mergeKnowledgeHub, knowledgeHubContent, data).hero} header={header} />
+          <HeroSection
+            page="people-operations"
+            headerNode={header}
+            overrides={{
+              eyebrow: hero.eyebrow,
+              title: hero.title,
+              highlight: hero.highlight,
+              description: hero.text,
+            }}
+          />
         );
+      }
+      default: {
+        const { hero } = fromSection(mergeKnowledgeHub, knowledgeHubContent, data);
+        return (
+          <HeroSection
+            page="knowledge-hub"
+            headerNode={header}
+            overrides={{
+              eyebrow: hero.eyebrow,
+              title: hero.title,
+              highlight: hero.highlight,
+              description: hero.text,
+              primaryCta: hero.cta
+                ? {
+                    label: hero.cta.label,
+                    url: hero.cta.url,
+                    color: "green",
+                    onDark: true,
+                  }
+                : undefined,
+            }}
+          />
+        );
+      }
     }
   },
 });

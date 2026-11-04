@@ -70,6 +70,40 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
   return typeName.endsWith(`${layoutName}Layout`);
 }
 
+function splitHighlight(
+  raw: unknown,
+  fallbackTitle: string,
+  fallbackHighlight: string,
+): { title: string; highlight: string } {
+  const text = str(raw) ?? "";
+  if (!text) {
+    return { title: fallbackTitle, highlight: fallbackHighlight };
+  }
+
+  const match = text.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+  if (match) {
+    const before = cleanHtml(match[1], "");
+    const highlight = cleanHtml(match[2], fallbackHighlight);
+    const after = cleanHtml(match[3], "");
+    const fullBefore = (before + (after ? ` ${after}` : "")).trim();
+    return {
+      title: fullBefore || fallbackTitle,
+      highlight: highlight || fallbackHighlight,
+    };
+  }
+
+  const clean = cleanHtml(text, fallbackTitle);
+  if (fallbackHighlight && clean.endsWith(fallbackHighlight) && clean.length > fallbackHighlight.length) {
+    const trimmedTitle = clean.slice(0, -fallbackHighlight.length).trim();
+    return {
+      title: trimmedTitle || fallbackTitle,
+      highlight: fallbackHighlight,
+    };
+  }
+
+  return { title: clean || fallbackTitle, highlight: fallbackHighlight };
+}
+
 /* -------------------------------------------------------------------------- */
 /*                              Section Mergers                                */
 /* -------------------------------------------------------------------------- */
@@ -77,8 +111,9 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
 /** Clients Banner → hero. */
 function mergeHero(next: ClientsContent, section: Record<string, any>): void {
   next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  next.hero.title = cleanHtml(section.title, next.hero.title);
-  next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
+  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.title = titleData.title;
+  next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
   next.hero.text = cleanHtml(section.description, next.hero.text);
 
   // clientProof → clientProofTitle + clientProofItems
@@ -116,22 +151,34 @@ function mergeCaseStudies(next: ClientsContent, section: Record<string, any>): v
   const caseStudies = rows(section.caseStudies?.nodes ?? section.caseStudies);
   
   if (caseStudies.length > 0) {
-    next.caseStudies.items = caseStudies.map((node, index) =>
-      // Challenge / Solution / Outcome are parsed from the bold labels in `featuredContent`.
-      caseStudyCardFromNode(node as CaseStudyCardFragment, next.caseStudies.items[index]),
-    );
+    next.caseStudies.items = caseStudies.map((node, index) => {
+      const fallback = next.caseStudies.items[index];
+      const card = caseStudyCardFromNode(node as CaseStudyCardFragment, fallback);
+      if (card.challenge?.includes("what state was FLYR") && fallback?.challenge) {
+        card.challenge = fallback.challenge;
+      }
+      if (card.solution?.includes("which tiers, which systems") && fallback?.solution) {
+        card.solution = fallback.solution;
+      }
+      if (card.outcome?.includes("Real numbers only") && fallback?.outcome) {
+        card.outcome = fallback.outcome;
+      }
+      return card;
+    });
   }
 }
 
 /** Clients Trusted Companies → logosSection. */
 function mergeLogos(next: ClientsContent, section: Record<string, any>): void {
-  // ACF field is `title` — split into two lines for the UI's dual-title layout.
   if (section.title) {
-    const fullTitle = cleanHtml(section.title, "");
-    if (fullTitle) {
-      // Keep existing title1/highlight1/title2 if they can't be parsed.
-      // Title is typically "Trusted by 40+ Growing Companies in the USA and Globally"
-      next.logosSection.title1 = fullTitle;
+    const raw = str(section.title) ?? "";
+    const match = raw.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+    if (match) {
+      next.logosSection.title1 = cleanHtml(match[1], next.logosSection.title1);
+      next.logosSection.highlight1 = cleanHtml(match[2], next.logosSection.highlight1);
+      next.logosSection.title2 = cleanHtml(match[3], next.logosSection.title2);
+    } else {
+      next.logosSection.title1 = cleanHtml(section.title, next.logosSection.title1);
     }
   }
 
@@ -180,23 +227,9 @@ function mergeReviews(next: ClientsContent, section: Record<string, any>): void 
 
 /** CTA Section → pressure. */
 function mergePressure(next: ClientsContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

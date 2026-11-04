@@ -3,5 +3,5 @@ fragment ContactConnectedSection on PageBuilderPageBuilderContactConnectedSectio
   connectedTitle
   connectedDescription
   linkedinBox { title image { node { sourceUrl altText } } description ctaButton { title url } }
-  newsletterBox { title newsletterFormShortcode description }
+  newsletterBox { title newsletterFormId description }
 }

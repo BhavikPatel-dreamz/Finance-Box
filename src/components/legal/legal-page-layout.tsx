@@ -1,18 +1,28 @@
 import { Button } from "@/components/ui/button";
-import { ArticleHero } from "@/components/content/article-hero";
+import { HeroSection } from "@/components/hero";
+import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import type { SiteChrome } from "@/lib/wordpress/site-chrome";
 import type { LegalDocContent } from "@/content/privacy-policy";
+
+// Smooth color + underline fade for all text links on this page
+// Underline always visible, text + underline fade to green on hover
+const LINK_CLASS =
+  "font-medium text-[#121826] underline decoration-[#121826]/40 underline-offset-4 transition-colors duration-300 hover:text-[#23C55E] hover:decoration-[#23C55E]";
 
 export function LegalPageLayout({ content, chrome }: { content: LegalDocContent; chrome: SiteChrome }) {
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#16181d]">
       {/* 1. Clean Compact Hero Banner */}
-      <ArticleHero
-        chrome={chrome}
-        title={content.hero.title}
-        highlight={content.hero.highlight}
-        meta={<p>Last updated: {content.hero.effectiveDate}</p>}
+      <HeroSection
+        page="privacy-policy"
+        headerNode={<SiteHeader header={chrome.header} />}
+        overrides={{
+          variant: "legal",
+          title: content.hero.title,
+          highlight: content.hero.highlight,
+          effectiveDate: content.hero.effectiveDate,
+        }}
       />
 
       {/* 2. Clean Single-Column Reading Body */}
@@ -69,7 +79,7 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
                         href={section.link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#23C55E] hover:underline font-medium inline-flex items-center gap-1"
+                        className={`${LINK_CLASS} inline-flex items-center gap-1`}
                       >
                         {section.link.label}
                       </a>
@@ -79,10 +89,7 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
                   {section.email && (
                     <p className="pt-1">
                       <span className="text-[#6B7280]">Contact: </span>
-                      <a
-                        href={`mailto:${section.email}`}
-                        className="text-[#23C55E] hover:underline font-medium"
-                      >
+                      <a href={`mailto:${section.email}`} className={LINK_CLASS}>
                         {section.email}
                       </a>
                     </p>
@@ -99,7 +106,7 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
                 Contact:{" "}
                 <a
                   href={`mailto:${content.hero.contactEmail}`}
-                  className="text-[#23C55E] hover:underline"
+                  className="text-[#121826] underline decoration-transparent underline-offset-4 transition-colors duration-300 hover:text-[#23C55E] hover:decoration-[#23C55E]"
                 >
                   {content.hero.contactEmail}
                 </a>

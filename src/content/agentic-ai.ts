@@ -152,7 +152,7 @@ export const agenticAiContent: AgenticAiContent = {
       {
         icon: "/icons/ap-agent.svg",
         title: "AP Agent",
-        text: "monitors aging, sends nudges, proposes payment plans, updates CRM, and creates tasks for exceptions.",
+        text: "Ingests invoices, performs 2/3-way matching, flags coding discrepancies, routes for approval, and schedules payments.",
       },
       {
         icon: "/icons/billing-agent.svg",
@@ -182,7 +182,7 @@ export const agenticAiContent: AgenticAiContent = {
       {
         icon: "/icons/payrol.png",
         title: "Payroll Prep Agent",
-        text: "Creates offers, checklists, access tickets; provisions in HRIS/ITSM; books orientation; confirms completion.",
+        text: "Aggregates timesheets, validates deductions, calculates commission tiers, and generates pre-payroll audit summaries.",
       },
     ],
   },

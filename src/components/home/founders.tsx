@@ -11,6 +11,12 @@ import Section from "../ui/section";
 export function Founders({ founders }: { founders: HomeContent["founders"] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+  let title = founders.title;
+  const highlight = founders.highlight;
+  if (title && highlight && title.endsWith(highlight)) {
+    title = title.slice(0, -highlight.length).trim();
+  }
+
   return (
     <Section theme="light" spacing="both" className="founders-section">
       <Container>
@@ -22,8 +28,8 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
               {founders.eyebrow}
             </Eyebrow>
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
-              {founders.title}{" "}
-              <span className="text-[#23C55E]">{founders.highlight}</span>
+              {title}{" "}
+              {highlight && <span className="text-[#23C55E]">{highlight}</span>}
             </h2>
             <p className="text-[14px] sm:text-base font-light leading-[1.6] sm:leading-[1.65] text-[#66707c] mt-4 sm:mt-5 mb-8 sm:mb-10 max-w-md">
               {founders.text}

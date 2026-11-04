@@ -161,31 +161,42 @@ export function FooterHero({
             )}
 
             <div className="relative flex flex-col items-center">
-              <h2
-                className={twMerge(
-                  "text-[26px] sm:text-[36px] md:text-[50px] leading-[1.15] font-medium tracking-[-0.8px] text-white",
-                  activeTitleMaxWidth,
-                  titleClassName
-                )}
-              >
-                <span>{title}</span>
-                {highlight && (
-                  <>
-                    {isTwoLine ? (
-                      <br className="hidden md:inline" />
-                    ) : null}
-                    {" "}
-                    <span
-                      className={twMerge(
-                        isItalic ? "font-extrabold italic" : "font-medium",
-                        highlightClassName
-                      )}
-                    >
-                      {highlight}
-                    </span>
-                  </>
-                )}
-              </h2>
+              {(() => {
+                let displayTitle = title;
+                const displayHighlight = highlight;
+                if (typeof displayTitle === "string" && typeof displayHighlight === "string" && displayHighlight) {
+                  if (displayTitle.endsWith(displayHighlight)) {
+                    displayTitle = displayTitle.slice(0, -displayHighlight.length).trim();
+                  }
+                }
+                return (
+                  <h2
+                    className={twMerge(
+                      "text-[26px] sm:text-[36px] md:text-[50px] leading-[1.15] font-medium tracking-[-0.8px] text-white",
+                      activeTitleMaxWidth,
+                      titleClassName
+                    )}
+                  >
+                    <span>{displayTitle}</span>
+                    {displayHighlight && (
+                      <>
+                        {isTwoLine ? (
+                          <br className="hidden md:inline" />
+                        ) : null}
+                        {" "}
+                        <span
+                          className={twMerge(
+                            isItalic ? "font-extrabold italic" : "font-medium",
+                            highlightClassName
+                          )}
+                        >
+                          {displayHighlight}
+                        </span>
+                      </>
+                    )}
+                  </h2>
+                );
+              })()}
 
               {text ? (
                 <p
