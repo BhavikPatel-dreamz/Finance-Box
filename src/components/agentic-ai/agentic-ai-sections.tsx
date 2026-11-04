@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { GreenButton } from "@/components/ui/green-button";
@@ -36,7 +39,6 @@ function RiseGlow() {
 
 const ICON_CHIP_LIFT =
   "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-[#23C55E] motion-reduce:transition-none";
- 
 
 export function AgenticBanner({ hero, header }: { hero: AgenticAiContent["hero"]; header: ReactNode }) {
   // Hero Section (Header + Hero = 525px)
@@ -77,7 +79,6 @@ export function AgenticBanner({ hero, header }: { hero: AgenticAiContent["hero"]
                   ))}
                 </StaggerGroup>
 
-                {/* Updated Button Size */}
                 <Reveal immediate preset="slide-up" delay={480} distance={20}>
                   <GreenButton
                     label={hero.cta.label}
@@ -381,7 +382,48 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
 }
 
 export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["waitlist"] }) {
-  // 8. Waitlist Section
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: "",
+  });
+  
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setMessage("");
+
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.ok) {
+        setStatus("success");
+        setMessage("Successfully joined the waitlist!");
+        setFormData({ name: "", email: "", company: "", message: "" });
+      } else {
+        setStatus("error");
+        setMessage(data.message || "Something went wrong.");
+      }
+    } catch (err) {
+      setStatus("error");
+      setMessage("Network error. Please try again.");
+    }
+  };
+
   return (
     <Section theme="dark" spacing="both" className="waitlist-section">
       <Container>
@@ -409,34 +451,64 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
           </Reveal>
 
           <Reveal preset="slide-right" distance={20} className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
-            <form className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 placeholder="Name"
+                required
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Work E-mail"
+                required
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <input
                 type="text"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
                 placeholder="Company"
+                required
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 placeholder="Write your message..."
                 rows={5}
+                required
                 className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
               />
-              <div className="mt-2">
-                <GreenButton
-                  label="Submit"
-                  href="#"
-                  bgColor="#ffffff"
-                  textColor="#0B0D0C"
-                />
+              
+              <div className="mt-2 flex flex-col gap-3">
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="flex items-center justify-center gap-2 h-[50px] w-fit px-8 rounded-full bg-white text-[#0B0D0C] text-[15px] font-medium transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === "loading" ? "Submitting..." : "Submit"}
+                  {status !== "loading" && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </button>
+
+                {status === "success" && (
+                  <p className="text-sm font-medium text-green-400">{message}</p>
+                )}
+                {status === "error" && (
+                  <p className="text-sm font-medium text-red-400">{message}</p>
+                )}
               </div>
             </form>
           </Reveal>
