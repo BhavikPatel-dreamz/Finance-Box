@@ -82,6 +82,8 @@ To give marketing and editorial teams full CMS control over every detail without
 3. **Suppressed Duplicate Headers**: Standardized header rendering so when a hero banner is rendered at the top of a page, the dynamic WordPress menu is passed inside `HeroSection` as `headerNode`, eliminating double header bars.
 4. **Preserved All WordPress Endpoints & Types**: Maintained complete integrity of `src/lib/wordpress/*`, GraphQL fragments, schema codegen, preview mode, and incremental static regeneration.
 5. **Fixed People Operations Responsive Stacking**: Applied Figma commit `91e24fd`'s `order-first lg:order-none` class to alternating cards so images cleanly display above text on mobile devices without layout flips.
+6. **Hero Title & Highlight Normalization**: WordPress ACF sends headlines with embedded formatting tags (e.g. `<span>Built and Run For You</span>` or `<b>Measured</b>`). Centralized `normalizeHeroConfig` and page-level `splitHighlight` helpers extract the highlight cleanly, preventing duplicated words (e.g. *"Measured Measured"*) and restoring the Figma 3-line layout on the Home hero.
+7. **Stat Cards Value & Unit Separation**: Parsed WordPress HTML formatted values (e.g. `<span>6</span> days`) into distinct numeric values and unit strings, correctly mapping trend notes to the bottom trend row.
 
 ---
 
