@@ -48,7 +48,7 @@ export function AgenticBanner({ hero, header }: { hero: AgenticAiContent["hero"]
         style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
       />
 
-      <div className="relative z-10 flex flex-col justify-center h-full">
+      <div className="relative z-1 flex flex-col justify-center h-full">
         {header}
 
         <Container>
@@ -227,7 +227,7 @@ export function AgenticBuildYourOwn({
 
                 {/* Hover Content */}
                 {agent.greatFor && (
-                  <div className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-start bg-[#121826] p-8 opacity-0 transition-all duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="pointer-events-none absolute inset-0 z-1 flex flex-col justify-start bg-[#121826] p-8 opacity-0 transition-all duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
                     <h4 className="mb-4 translate-y-2 text-[16px] font-semibold leading-[1.2] text-white transition-transform duration-500 ease-in-out group-hover:translate-y-0">
                       Great for:
                     </h4>
@@ -295,7 +295,7 @@ export function AgenticPeopleOps({ peopleOps }: { peopleOps: AgenticAiContent["p
                 </div>
 
                 {agent.greatFor && (
-                  <div className="absolute inset-0 z-10 p-10 flex flex-col justify-start bg-white text-[#121826] shadow-2xl opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+                  <div className="absolute inset-0 z-1 p-10 flex flex-col justify-start bg-white text-[#121826] shadow-2xl opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                     <h4 className="text-[18px] sm:text-[20px] font-bold leading-[1.2] mb-4 text-[#121826]">
                       Great for:
                     </h4>
@@ -342,7 +342,7 @@ export function AgenticOpsCompliance({ opsCompliance }: { opsCompliance: Agentic
                   {/* Gradient panel behind the text: fades in and slides up on hover */}
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 bottom-0 -top-12 -z-10 translate-y-4 bg-[linear-gradient(to_top,rgba(18,24,38,0.96)_0%,rgba(18,24,38,0.82)_55%,rgba(18,24,38,0)_100%)] opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 -top-12 -z-1 translate-y-4 bg-[linear-gradient(to_top,rgba(18,24,38,0.96)_0%,rgba(18,24,38,0.82)_55%,rgba(18,24,38,0)_100%)] opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
                   />
                   <h3 className="text-[24px] font-semibold leading-[1.2] mb-3">
                     {card.title}

@@ -20,7 +20,7 @@ export function KnowledgeHubBanner({ hero, header }: { hero: KnowledgeHubContent
         style={{ backgroundImage: "url(/contact-us/contactus-hero-bg.svg)" }}
       />
 
-      <div className="relative z-10 flex flex-col justify-center h-full">
+      <div className="relative z-1 flex flex-col justify-center h-full">
         {header}
 
         <Container>

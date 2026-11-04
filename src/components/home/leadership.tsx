@@ -233,7 +233,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                     />
 
                     {/* Name and Role */}
-                    <div className="absolute bottom-0 left-0 w-full pb-6 px-4 text-center z-10 pointer-events-none transition-transform duration-500 ease-out group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
+                    <div className="absolute bottom-0 left-0 w-full pb-6 px-4 text-center z-1 pointer-events-none transition-transform duration-500 ease-out group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
                       <h3 className="text-[20px] font-medium text-white leading-tight mb-1">
                         {person.name}
                       </h3>

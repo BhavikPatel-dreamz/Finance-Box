@@ -143,7 +143,7 @@ export function TrustedBy({ trust = defaultTrust, logos, className = "" }: Trust
           <div className="flex-1 min-w-0 overflow-hidden relative lg:mt-0 mt-3">
             {/* Left Fade Gradient Mask */}
             <div
-              className="lg:block hidden pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-[80px]"
+              className="lg:block hidden pointer-events-none absolute left-0 top-0 bottom-0 z-2 w-[80px]"
               style={{
                 background:
                   "linear-gradient(90deg, #FFFFFF 59.32%, rgba(255, 255, 255, 0) 100%)",

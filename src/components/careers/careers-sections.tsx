@@ -20,7 +20,7 @@ export function CareersBanner({ hero, header }: { hero: CareersContent["hero"]; 
         aria-hidden="true"
       />
 
-      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[660px] z-10 flex items-center justify-center flex-col h-full">
+      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[660px] z-1 flex items-center justify-center flex-col h-full">
         {header}
 
         <Container>
@@ -62,10 +62,10 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
   return (
     <Section theme="light" spacing="both" className="why-work-section bg-white">
       <Container>
-        <div className="rounded-[20px] sm:rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14">
-          <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-12 xl:gap-16">
+        <div className="rounded-[10px] bg-[#F5F3F2] text-[#121826] overflow-hidden">
+          <div className="flex flex-col lg:flex-row items-stretch">
             {/* Left Column (Image) */}
-            <Reveal preset="slide-left" distance={20} className="group card-hover w-full lg:w-1/2 relative min-h-[300px] sm:min-h-[380px] lg:min-h-[460px] rounded-[16px] overflow-hidden shrink-0">
+            <Reveal preset="slide-left" distance={20} className="group card-hover w-full lg:w-1/2 relative min-h-[300px] sm:min-h-[380px] lg:min-h-[460px] xl:min-h-[624px] overflow-hidden shrink-0">
               <Image
                 src={whyWork.image}
                 alt="Why work at FIAB"
@@ -77,8 +77,8 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
             </Reveal>
 
             {/* Right Column (Text & Points) */}
-            <Reveal preset="slide-right" distance={20} className="w-full lg:w-1/2 flex flex-col justify-center">
-              <h2 className="text-[30px] sm:text-[38px] lg:text-[46px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 sm:mb-8 text-[#121826]">
+            <Reveal preset="slide-right" distance={20} className="w-full lg:w-1/2 flex flex-col justify-center px-15 py-20">
+              <h2 className="text-[30px] sm:text-[38px] lg:text-[46px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 sm:mb-10 lg:mb-20 text-[#121826]">
                 {(() => {
                   let title = whyWork.title;
                   const hl = whyWork.highlight;
@@ -131,31 +131,69 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
         </Reveal>
 
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
-          {standOut.cards.map((card, idx) => (
-            <StaggerItem
-              key={idx}
-              index={idx}
-              className="group card-hover relative rounded-[16px] overflow-hidden min-h-[460px] sm:min-h-[500px] lg:min-h-[580px] flex items-end shadow-sm"
-            >
-              <Image
-                src={card.image}
-                alt={card.title}
-                fill
-                className="object-cover image-hover-zoom"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050D1F] via-[#050D1F]/70 to-transparent pointer-events-none" />
+          {standOut.cards.map((card, idx) => {
+            const hasPoints = Boolean(card.points && card.points.length > 0);
 
-              <div className="relative z-10 p-6 sm:p-7 lg:p-8 w-full text-white">
-                <h3 className="text-[19px] sm:text-[21px] lg:text-[22px] font-semibold leading-[1.25] mb-3 text-white">
-                  {card.title}
-                </h3>
-                <p className="text-[13px] sm:text-[14px] lg:text-[15px] font-light leading-[150%] text-white/85">
-                  {card.text}
-                </p>
-              </div>
-            </StaggerItem>
-          ))}
+            return (
+              <StaggerItem
+                key={idx}
+                index={idx}
+                className="group card-hover relative rounded-[16px] overflow-hidden min-h-[460px] sm:min-h-[500px] lg:min-h-[620px] flex items-end shadow-sm cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#23C55E]"
+              >
+                <Image
+                  src={card.image}
+                  alt={card.title}
+                  fill
+                  className="object-cover image-hover-zoom"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                {/* Default bottom gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050D1F] via-[#050D1F]/70 to-transparent pointer-events-none" />
+
+                {/* Hover full-card dark overlay */}
+                <div
+                  className={`absolute inset-0 bg-[#050D1F]/75 opacity-0 transition-opacity duration-500 ease-in-out pointer-events-none motion-reduce:transition-none ${
+                    hasPoints ? "group-hover:opacity-100 group-focus-within:opacity-100" : ""
+                  }`}
+                />
+
+                {/* Default content (slides up and fades out smoothly on hover) */}
+                <div
+                  className={`relative z-10 p-6 sm:p-7 lg:p-8 w-full text-white transition-all duration-500 ease-in-out motion-reduce:transition-none ${
+                    hasPoints
+                      ? "group-hover:opacity-0 group-hover:-translate-y-2 group-hover:pointer-events-none group-focus-within:opacity-0 group-focus-within:-translate-y-2 group-focus-within:pointer-events-none"
+                      : ""
+                  }`}
+                >
+                  <h3 className="text-[19px] sm:text-[21px] lg:text-[22px] font-semibold leading-[1.25] mb-3 text-white">
+                    {card.title}
+                  </h3>
+                  <p className="text-[13px] sm:text-[14px] lg:text-[15px] font-light leading-[150%] text-white/85">
+                    {card.text}
+                  </p>
+                </div>
+
+                {/* Hover content (bullet points slide in and fade in smoothly) */}
+                {hasPoints && (
+                  <div className="absolute inset-x-0 bottom-0 z-20 p-6 sm:p-7 lg:p-8 w-full text-white opacity-0 translate-y-3 transition-all duration-500 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto motion-reduce:transition-none">
+                    <ul className="space-y-4 sm:space-y-5 lg:space-y-6">
+                      {card.points!.map((point, pIdx) => (
+                        <li key={pIdx} className="flex items-start gap-3 sm:gap-3.5">
+                          <span
+                            className="mt-[6px] h-2 w-2 shrink-0 bg-[#23C55E]"
+                            aria-hidden="true"
+                          />
+                          <span className="text-[13px] sm:text-[14px] lg:text-[15px] font-normal leading-[150%] text-white/95">
+                            {point}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </StaggerItem>
+            );
+          })}
         </StaggerGroup>
       </Container>
     </Section>

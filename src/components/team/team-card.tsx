@@ -23,7 +23,7 @@ export function TeamProfileCard({ member, linkToProfile = false }: { member: Why
           aria-hidden="true"
         />
 
-        <div className="relative z-10 w-full h-full min-h-[380px] sm:min-h-[480px] lg:min-h-full flex items-end justify-center">
+        <div className="relative z-1 w-full h-full min-h-[380px] sm:min-h-[480px] lg:min-h-full flex items-end justify-center">
           <Image
             src={member.image}
             alt={member.name}
@@ -35,7 +35,7 @@ export function TeamProfileCard({ member, linkToProfile = false }: { member: Why
         </div>
       </div>
 
-      <div className={`relative z-10 flex flex-col justify-center p-6 sm:p-8 md:p-11 w-full lg:w-1/2 text-white bg-[rgba(255,255,255,0.04)] ${isImageRight ? "lg:order-first" : ""}`}>
+      <div className={`relative z-1 flex flex-col justify-center p-6 sm:p-8 md:p-11 w-full lg:w-1/2 text-white bg-[rgba(255,255,255,0.04)] ${isImageRight ? "lg:order-first" : ""}`}>
         <div>
           <h3 className="text-[24px] sm:text-[28px] font-bold leading-[110%] tracking-[-0.8px]">
             {linkToProfile && member.url ? (

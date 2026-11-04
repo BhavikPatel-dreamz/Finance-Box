@@ -44,7 +44,7 @@ export function ClientsBanner({ hero, header }: { hero: ClientsContent["hero"]; 
         style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
       />
 
-      <div className="relative z-10">
+      <div className="relative z-1">
         {header}
 
         <Container>
@@ -164,7 +164,7 @@ export function ClientsTrustedCompanies({ logosSection }: { logosSection: Client
           })()}
         </Reveal>
 
-        <StaggerGroup staggerDelay={60} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-[#E5E7EB] border border-[#E5E7EB] rounded-[16px] sm:rounded-[20px] overflow-hidden">
+        <StaggerGroup staggerDelay={60} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-[#E5E7EB] border border-black/10 rounded-[10px] overflow-hidden">
           {logosSection.logos.map((logo, index) => {
             const isSpan2 = index === 0 || index === 3 || index === 18;
             const isLastMobile = index === logosSection.logos.length - 1;
@@ -210,7 +210,7 @@ export function ClientsTestimonials({ reviewsSection }: { reviewsSection: Client
           </Reveal>
 
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-7.5">
-            <Reveal preset="slide-left" distance={20} className="group card-hover relative w-full lg:w-[calc(50%-15px)] rounded-[10px] border border-white/12 overflow-hidden min-h-[380px] sm:min-h-[460px] lg:min-h-[740px]">
+            <Reveal preset="slide-left" distance={20} className="group card-hover relative w-full lg:w-[calc(50%-15px)] rounded-[10px] border border-black/10 overflow-hidden min-h-[380px] sm:min-h-[460px] lg:min-h-[740px]">
               <Image
                 src={reviewsSection.mainReview.image}
                 alt={reviewsSection.mainReview.author}

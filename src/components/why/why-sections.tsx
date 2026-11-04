@@ -165,7 +165,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                     return (
                       <div
                         key={`divider-${gridCol}`}
-                        className="border-l border-[#121826]/10 pointer-events-none z-[5]"
+                        className="border-l border-[#121826]/10 pointer-events-none z-1"
                         style={{
                           gridColumn: gridCol,
                           gridRow: `1 / ${totalRows + 1}`,
@@ -177,7 +177,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                 })}
 
                 <div
-                  className="bg-[#121826] rounded-[14px] pointer-events-none z-[10] -mt-7 sm:-mt-9 -mb-5 sm:-mb-7"
+                  className="bg-[#121826] rounded-[14px] pointer-events-none z-1 -mt-7 sm:-mt-9 -mb-5 sm:-mb-7"
                   style={{
                     gridColumn: featuredGridCol,
                     gridRow: `1 / ${totalRows + 1}`,
@@ -186,7 +186,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
 
                 <div
                   role="columnheader"
-                  className="relative z-[20] flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 font-semibold text-[17px] sm:text-[22px] text-[#121826] tracking-tight"
+                  className="relative z-1 flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 font-semibold text-[17px] sm:text-[22px] text-[#121826] tracking-tight"
                   style={{ gridColumn: 1, gridRow: 1 }}
                 >
                   {compare.featureLabel}
@@ -201,7 +201,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                       <div
                         key={column.label}
                         role="columnheader"
-                        className="relative z-[20] flex flex-col items-center justify-center px-3 sm:px-4 -mt-7 sm:-mt-9 border-b border-white/[0.14]"
+                        className="relative z-1 flex flex-col items-center justify-center px-3 sm:px-4 -mt-7 sm:-mt-9 border-b border-white/[0.14]"
                         style={{ gridColumn: gridCol, gridRow: 1 }}
                       >
                         {column.logo ? (
@@ -221,7 +221,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                     <div
                       key={column.label}
                       role="columnheader"
-                      className="relative z-[20] flex items-center justify-center px-2 sm:px-4 text-center font-semibold text-[14px] sm:text-[18px] lg:text-[22px] text-[#121826] leading-snug"
+                      className="relative z-1 flex items-center justify-center px-2 sm:px-4 text-center font-semibold text-[14px] sm:text-[18px] lg:text-[22px] text-[#121826] leading-snug"
                       style={{ gridColumn: gridCol, gridRow: 1 }}
                     >
                       {column.label}
@@ -236,7 +236,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                     <Fragment key={rowItem.label}>
                       <div
                         role="rowheader"
-                        className="relative z-[20] flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 text-[13.5px] sm:text-[15px] lg:text-[16px] font-medium text-[#121826] leading-snug"
+                        className="relative z-1 flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 text-[13.5px] sm:text-[15px] lg:text-[16px] font-medium text-[#121826] leading-snug"
                         style={{ gridColumn: 1, gridRow }}
                       >
                         {rowItem.label}
@@ -251,7 +251,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                           <div
                             key={column.label}
                             role="cell"
-                            className={`relative z-[20] flex items-center justify-center px-2 sm:px-4 ${isFeatured && rowIndex < compare.rows.length - 1
+                            className={`relative z-1 flex items-center justify-center px-2 sm:px-4 ${isFeatured && rowIndex < compare.rows.length - 1
                               ? "border-b border-white/[0.14]"
                               : ""
                               }`}
@@ -319,7 +319,7 @@ export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
       <Container>
         <div className="isolate overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] flex flex-col md:flex-row items-center justify-between pt-7 px-5 pb-0 sm:pt-9 sm:px-8 sm:pb-0 md:p-8 md:py-6 lg:p-0 lg:pl-10 xl:pl-16 gap-6 sm:gap-8 md:gap-6 lg:gap-8 xl:gap-16">
           {/* Text */}
-          <Reveal preset="slide-left" distance={20} className="relative z-10 w-full md:w-[50%] lg:w-[48%] xl:w-[52%] max-w-[560px] text-left lg:py-10 xl:py-14 shrink-0">
+          <Reveal preset="slide-left" distance={20} className="relative z-1 w-full md:w-[50%] lg:w-[48%] xl:w-[52%] max-w-[560px] text-left lg:py-10 xl:py-14 shrink-0">
             <h2 className="text-[28px] sm:text-[34px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[54px] font-medium leading-[1.12] lg:leading-[105%] tracking-[-0.8px] text-[#121826]">
               {talk.title}
               <br />
@@ -340,7 +340,7 @@ export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
           {/* Image */}
           <Reveal preset="slide-right" distance={20} className="relative w-full md:w-[50%] lg:w-[52%] xl:w-[48%] max-w-[340px] sm:max-w-[420px] md:max-w-none shrink-0 mx-auto md:mx-0 aspect-[599/455] self-end">
             {/* Left fade only when image sits beside the text */}
-            <div className="hidden md:block absolute inset-y-0 left-0 w-20 lg:w-32 xl:w-48 bg-gradient-to-r from-[#F5F3F2] to-transparent z-10 pointer-events-none" />
+            <div className="hidden md:block absolute inset-y-0 left-0 w-20 lg:w-32 xl:w-48 bg-gradient-to-r from-[#F5F3F2] to-transparent z-1 pointer-events-none" />
             <Image
               src={talk.image}
               alt="Coins representing business growth"
@@ -370,7 +370,7 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,24,38,0)_13.73%,rgba(18,24,38,0.662784)_52.12%,rgba(18,24,38,0.866393)_77.6%,#121826_100%)]" />
 
-            <div className="relative z-10 p-6 sm:p-8 lg:p-10 w-full">
+            <div className="relative z-1 p-6 sm:p-8 lg:p-10 w-full">
               <h3 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[110%] tracking-[-0.8px] text-white">
                 {aboutSection.title}
               </h3>
@@ -389,13 +389,13 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
 
-            <div className="relative z-10">
+            <div className="relative z-1">
               <Eyebrow variant="green">
                 {aboutSection.missionLabel}
               </Eyebrow>
             </div>
 
-            <div className="relative z-10 mt-10 sm:mt-12 lg:mt-0">
+            <div className="relative z-1 mt-10 sm:mt-12 lg:mt-0">
               <p className="text-[22px] sm:text-[30px] md:text-[36px] lg:text-[40px] font-medium leading-[125%] tracking-[-0.8px] text-white">
                 {aboutSection.missionText}
               </p>

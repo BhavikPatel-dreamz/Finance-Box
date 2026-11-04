@@ -19,7 +19,7 @@ export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]
         style={{ backgroundImage: "url(/contact-us/contactus-hero-bg.svg)" }}
       />
 
-      <div className="relative z-10 flex flex-col h-full justify-between flex-grow">
+      <div className="relative z-1 flex flex-col h-full justify-between flex-grow">
         {header}
 
         <Container className="flex-1 flex items-center justify-center">
@@ -136,7 +136,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
         <StaggerGroup staggerDelay={150} className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-4">
           {/* LinkedIn Card */}
           <StaggerItem index={0} className="card-hover relative w-full lg:w-1/2 rounded-[10px] bg-[#EDE9E6] p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px] overflow-hidden">
-            <div className="relative z-10 max-w-[70%] sm:max-w-[65%] lg:max-w-none">
+            <div className="relative z-1 max-w-[70%] sm:max-w-[65%] lg:max-w-none">
               <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4">
                 {socialSection.linkedin.title}
               </h3>
@@ -145,7 +145,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
               </p>
             </div>
 
-            <div className="relative z-10 mt-6 sm:mt-8">
+            <div className="relative z-1 mt-6 sm:mt-8">
               <GreenButton
                 label={socialSection.linkedin.buttonLabel}
                 href={socialSection.linkedin.buttonUrl}

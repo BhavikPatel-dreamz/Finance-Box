@@ -146,10 +146,19 @@ function mergeStandOut(next: CareersContent, section: Record<string, any>): void
   if (cards.length > 0) {
     next.standOut.cards = cards.map((card, index) => {
       const fallback = next.standOut.cards[index];
+      const rawHover = cleanHtml(card.hoverContent, "");
+      let parsedPoints: string[] | undefined;
+      if (rawHover) {
+        parsedPoints = rawHover
+          .split(/\r?\n|<br\s*\/?>/i)
+          .map((s) => s.replace(/^[•\-\*▪\s]+/, "").trim())
+          .filter(Boolean);
+      }
       return {
         image: media(card.backgroundImage)?.url ?? fallback?.image ?? "",
         title: cleanHtml(card.title, fallback?.title ?? ""),
         text: cleanHtml(card.content, fallback?.text ?? ""),
+        points: parsedPoints && parsedPoints.length > 0 ? parsedPoints : fallback?.points,
       };
     });
   }

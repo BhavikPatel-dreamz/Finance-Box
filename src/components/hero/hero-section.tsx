@@ -112,7 +112,7 @@ export function HeroSection({
           ))}
 
         {/* Selected Variant Render */}
-        <div className="relative z-10 flex-1 flex flex-col justify-center">
+        <div className="relative z-1 flex-1 flex flex-col justify-center">
           {renderVariant(resolvedConfig)}
         </div>
       </div>

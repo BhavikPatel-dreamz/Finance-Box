@@ -28,7 +28,7 @@ export function ArticleHero({
         aria-hidden="true"
       />
 
-      <div className="relative z-10">
+      <div className="relative z-1">
         <SiteHeader header={chrome.header} />
 
         <div className="max-w-4xl mx-auto px-6 pt-10 pb-12 sm:pt-14 sm:pb-16 text-center">

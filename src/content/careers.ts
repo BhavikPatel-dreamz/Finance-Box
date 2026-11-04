@@ -34,7 +34,7 @@ export type CareersContent = {
   };
   standOut: {
     title: string;
-    cards: { image: string; title: string; text: string }[];
+    cards: { image: string; title: string; text: string; points?: string[] }[];
   };
   benefits: {
     title: string;
@@ -84,16 +84,31 @@ export const careersContent: CareersContent = {
         image: "/careers/stand-out-1.png",
         title: "Cross-border expertise (US → India) & multi-industry depth",
         text: "Work with a team that understands both US and India compliance and the realities of scaling across time zones. We bring proven playbooks from Saas, Health Tech, Logistics Tech, Telecom, Real-Estate Tech, Robotics, and Insurance Tech to your stack.",
+        points: [
+          "Follow-the-sun delivery with clear SLAs and governance",
+          "Localized statutory compliance and audit-ready controls",
+          "V Audit-ready documentation",
+        ],
       },
       {
         image: "/careers/stand-out-2.png",
         title: "Hands-on with modern stacks",
         text: "We implement, integrate, and manage your tools so data flows and teams move faster: NetSuite, Zoho, QuickBooks, Tipalti, Airbase, Rippling, ADP, Gusto, Lever (ATS), ManageEngine, plus BI (Power BI / Tableau / Looker / Qlik).",
+        points: [
+          "Automations across P2P, O2C, R2R, payroll, and recruiting",
+          "Single source of truth with reconciled, real-time reporting",
+          "Typical outcomes: faster close, fewer manual touches, cleaner data",
+        ],
       },
       {
         image: "/careers/stand-out-3.png",
         title: "Ownership with support",
         text: "Get a dedicated pod that runs your day-to-day and drives continuous improvement—without adding headcount. You keep the strategic control; we handle the execution.",
+        points: [
+          "One accountable team (pod lead + specialists) with a quarterly roadmap",
+          "Measurable impact: time saved, $ saved, and go-live in 12 days",
+          "Proactive monitoring, issue resolution, and ongoing optimizations",
+        ],
       },
     ],
   },

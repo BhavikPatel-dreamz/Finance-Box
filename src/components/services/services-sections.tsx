@@ -21,7 +21,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/services/services-hero-bg.svg)" }}
       />
-      <div className="relative z-10">
+      <div className="relative z-1">
         {header}
         <Container>
           <div className="flex-1 grid grid-cols-1 min-[890px]:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center py-10 sm:py-14 md:py-12 lg:py-20">
@@ -426,7 +426,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   ];
 
   return (
-    <Section theme="light" spacing="both" className="services-cfo-section relative z-10 lg:-mt-[100svh]">
+    <Section theme="light" spacing="both" className="services-cfo-section relative z-1 lg:-mt-[100svh]">
       <Container>
         <div className="bg-[#EDE9E6] rounded-[10px] p-6 sm:p-10 md:px-12.5 md:py-20 text-[#121826]">
 

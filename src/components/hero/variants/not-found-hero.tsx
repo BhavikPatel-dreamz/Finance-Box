@@ -16,7 +16,7 @@ export function NotFoundHeroVariant({ config }: { config: HeroConfig }) {
         className="pointer-events-none absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-[#23C55E]/10 blur-[150px]"
       />
 
-      <Container className="relative z-10">
+      <Container className="relative z-1">
         <div className="max-w-2xl mx-auto flex flex-col items-center justify-center text-center px-4">
           {/* Giant Stylized 404 Watermark + Eyebrow */}
           <div className="relative select-none mb-1 sm:mb-2">

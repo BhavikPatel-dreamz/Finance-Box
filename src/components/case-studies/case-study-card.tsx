@@ -17,7 +17,7 @@ export function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reve
         className={`pointer-events-none absolute -bottom-[110px] ${reverse ? "-left-[110px]" : "-right-[110px]"} h-[220px] w-[220px] rounded-full bg-[#23C55E] blur-[90px] -z-10`}
       />
 
-      <div className="relative z-10 rounded-t-[16px] lg:rounded-[10px] overflow-hidden w-full lg:w-1/2 min-h-[260px] sm:min-h-[320px] lg:min-h-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto">
+      <div className="relative z-1 rounded-t-[16px] lg:rounded-[10px] overflow-hidden w-full lg:w-1/2 min-h-[260px] sm:min-h-[320px] lg:min-h-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto">
         <Image
           src={study.image}
           alt={study.title}
@@ -28,7 +28,7 @@ export function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reve
 
       {/* Padding only on the side facing the image, so the outer spacing matches the image side */}
       <div
-        className={`relative z-10 flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:py-0 lg:w-1/2 text-white ${reverse ? "lg:pl-0 lg:pr-8 xl:pr-12" : "lg:pr-0 lg:pl-8 xl:pl-12"
+        className={`relative z-1 flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:py-0 lg:w-1/2 text-white ${reverse ? "lg:pl-0 lg:pr-8 xl:pr-12" : "lg:pr-0 lg:pl-8 xl:pl-12"
           }`}
       >
         <Eyebrow variant="green-no-dash" className="mb-3 sm:mb-4">
