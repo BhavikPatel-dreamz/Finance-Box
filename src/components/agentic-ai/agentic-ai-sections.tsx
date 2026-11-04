@@ -295,7 +295,7 @@ export function AgenticPeopleOps({ peopleOps }: { peopleOps: AgenticAiContent["p
                 </div>
 
                 {agent.greatFor && (
-                  <div className="absolute inset-0 z-10 p-10 flex flex-col justify-start bg-white text-[#121826] rounded-[10px] shadow-2xl opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+                  <div className="absolute inset-0 z-10 p-10 flex flex-col justify-start bg-white text-[#121826] shadow-2xl opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
                     <h4 className="text-[18px] sm:text-[20px] font-bold leading-[1.2] mb-4 text-[#121826]">
                       Great for:
                     </h4>

@@ -24,7 +24,13 @@ type Theme = {
   choice: string;
   legend: string;
   option: string;
-  button: { bgColor: string; textColor?: string; size?: "50" };
+  button: {
+    bgColor?: string;
+    textColor?: string;
+    size?: "50" | "62" | "sm" | "lg";
+    variant?: "white" | "green" | "dark";
+    className?: string;
+  };
   actions: string;
   success: string;
   error: string;
@@ -34,6 +40,14 @@ type Theme = {
 
 const DARK_BASE =
   "w-full border bg-[#121826] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200";
+
+const COMMON_FORM_BUTTON_WHITE: Theme["button"] = {
+  variant: "white",
+  bgColor: "#ffffff",
+  textColor: "#121826",
+  size: "50",
+  className: "px-6 sm:px-7 font-semibold text-[15px] sm:text-[16px]",
+};
 
 const THEMES: Record<Appearance, Theme> = {
   waitlist: {
@@ -45,8 +59,8 @@ const THEMES: Record<Appearance, Theme> = {
     choice: "text-white/80",
     legend: "text-white/70",
     option: "bg-[#121826]",
-    button: { bgColor: "#ffffff", textColor: "#0B0D0C" },
-    actions: "mt-2 flex flex-col gap-3",
+    button: COMMON_FORM_BUTTON_WHITE,
+    actions: "mt-2 sm:mt-3 flex flex-col items-start gap-3",
     success: "text-green-400",
     error: "text-red-400",
     submitLabel: "Submit",
@@ -61,8 +75,8 @@ const THEMES: Record<Appearance, Theme> = {
     choice: "text-white/80",
     legend: "text-white/70",
     option: "bg-[#121826]",
-    button: { bgColor: "#ffffff", size: "50" },
-    actions: "mt-2 flex flex-col gap-3",
+    button: COMMON_FORM_BUTTON_WHITE,
+    actions: "mt-2 sm:mt-3 flex flex-col items-start gap-3",
     success: "text-green-400",
     error: "text-red-400",
     submitLabel: "Submit",
@@ -253,7 +267,7 @@ export function CmsForm({ form, appearance }: { form: FormDefinition; appearance
       <div key={field.name} className={wide?.has(field.name) ? "sm:col-span-2" : undefined}>
         {control}
         {error && (
-          <p id={errorId} className="text-red-500 text-xs mt-1 ml-1">
+          <p id={errorId} className="text-red-500 text-sm mt-1 ml-1">
             {error}
           </p>
         )}
