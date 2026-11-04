@@ -90,10 +90,10 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
               preset="slide-up"
               distance={24}
               delay={idx * 60}
-              className={`group card-hover relative bg-[#191F2D] rounded-[16px] overflow-hidden min-h-0 lg:min-h-[592px] flex flex-col flex-col-reverse ${card.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+              className={`group card-hover relative bg-[#191F2D] rounded-[16px] overflow-hidden flex flex-col lg:min-h-[592px] ${card.reverse ? "lg:flex-row-reverse" : "lg:flex-row"}`}
             >
               {/* Background Gradient Image */}
-              <div className="absolute inset-0">
+              <div className="absolute inset-0 overflow-hidden">
                 <Image
                   src={card.bgImage}
                   alt="Background Gradient"
@@ -103,7 +103,7 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
               </div>
 
               {/* Content Container */}
-              <div className="relative p-6 sm:p-8 md:p-10 lg:p-16 flex flex-col justify-center lg:w-1/2">
+              <div className="relative min-w-0 w-full lg:w-1/2 p-6 sm:p-8 md:p-10 xl:p-16 flex flex-col justify-center">
                 <h3 className="text-[22px] sm:text-[26px] lg:text-[30px] font-semibold leading-[1.25] lg:leading-[1.2] mb-3 sm:mb-4">
                   {card.title}
                 </h3>
@@ -115,7 +115,7 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
                   {card.bullets.map((bullet, bIdx) => (
                     <li key={bIdx} className="flex items-start gap-2.5 sm:gap-3">
                       <span className="mt-1.5 sm:mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
-                      <span className="text-[14px] sm:text-[15px] lg:text-[16px] font-medium leading-[1.35] lg:leading-[1.2] text-white/90">
+                      <span className="min-w-0 text-[14px] sm:text-[15px] lg:text-[16px] font-medium leading-[1.35] lg:leading-[1.2] text-white/90">
                         {bullet}
                       </span>
                     </li>
@@ -123,8 +123,8 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
                 </ul>
               </div>
 
-              {/* Image Container */}
-              <div className="relative w-full lg:w-1/2 aspect-[640/480] sm:aspect-[640/420] lg:aspect-auto min-h-[240px] sm:min-h-[300px] lg:min-h-full">
+              {/* Image Container: on top when stacked, beside the text from lg up */}
+              <div className="relative order-first lg:order-none w-full lg:w-1/2 aspect-[640/480] sm:aspect-[640/420] lg:aspect-auto min-h-[240px] sm:min-h-[300px] lg:min-h-0 overflow-hidden">
                 <Image
                   src={card.image}
                   alt={card.title}

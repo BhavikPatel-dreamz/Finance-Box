@@ -2,7 +2,6 @@ import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { fromSection } from "@/components/sections/from-section";
 import { HeroSection } from "@/components/hero";
-import { PeopleOperationsBanner } from "@/components/people-operations/people-operations-sections";
 import { mergeCareers } from "@/components/careers/merge";
 import { mergeAgenticAi } from "@/components/agentic-ai/merge";
 import { mergeKnowledgeHub } from "@/components/knowledge-hub/merge";
@@ -72,13 +71,21 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
           />
         );
       }
-      case "people-operations":
+      case "people-operations": {
+        const { hero } = fromSection(mergePeopleOperations, peopleOperationsContent, data);
         return (
-          <PeopleOperationsBanner
-            hero={fromSection(mergePeopleOperations, peopleOperationsContent, data).hero}
-            header={header}
+          <HeroSection
+            page="people-operations"
+            headerNode={header}
+            overrides={{
+              eyebrow: hero.eyebrow,
+              title: hero.title,
+              highlight: hero.highlight,
+              description: hero.text,
+            }}
           />
         );
+      }
       default: {
         const { hero } = fromSection(mergeKnowledgeHub, knowledgeHubContent, data);
         return (
