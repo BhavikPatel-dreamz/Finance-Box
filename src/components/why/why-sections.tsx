@@ -122,7 +122,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
     <section className="compare-section bg-white py-14 sm:py-20 lg:py-24 text-[#121826] overflow-hidden">
       <Container>
         <Reveal preset="slide-up" distance={20} className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+          <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             {compare.title}
             <span className="mt-1 block font-black text-[#23C55E] italic">{compare.highlight}</span>
           </h2>

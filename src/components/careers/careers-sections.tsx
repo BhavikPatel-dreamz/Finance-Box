@@ -244,7 +244,7 @@ export function FaqBlock({ faq }: { faq: CareersContent["faq"] }) {
       <Container>
         <div className="mx-auto w-full max-w-[880px]">
           <Reveal preset="slide-up" distance={20}>
-            <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
+            <h2 className="text-center text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
               {faq.title}
             </h2>
           </Reveal>

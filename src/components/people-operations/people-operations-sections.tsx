@@ -89,7 +89,7 @@ export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsConten
 export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperationsContent["whatWeDo"] }) {
   // 3. What We Do Section
   return (
-    <Section theme="dark" spacing="both">
+    <Section theme="dark" spacing="both" className="relative">
       <Container>
 
         <Reveal preset="slide-up" distance={20}>
@@ -98,17 +98,17 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
           </h2>
         </Reveal>
 
-        <div className="flex flex-col gap-6 sm:gap-8">
+        <div className="relative flex flex-col gap-8 sm:gap-10 lg:gap-12">
           {whatWeDo.items.map((card, idx) => (
-            <Reveal
+            <div
               key={idx}
-              preset="slide-up"
-              distance={24}
-              delay={idx * 60}
-              className={`group card-hover relative bg-[#191F2D] rounded-[16px] overflow-hidden flex flex-col lg:min-h-[592px] ${card.reverse ? "lg:flex-row-reverse" : "lg:flex-row"}`}
+              style={{ zIndex: idx + 1 }}
+              className={`group card-hover sticky top-[64px] sm:top-[80px] lg:top-[96px] xl:top-[108px] bg-[#191F2D] border border-white/8 rounded-[16px] overflow-hidden flex flex-col md:flex-row md:min-h-[460px] lg:min-h-[520px] xl:min-h-[592px] ${
+                card.reverse ? "md:flex-row-reverse" : "md:flex-row"
+              }`}
             >
               {/* Background Gradient Image */}
-              <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <Image
                   src={card.bgImage}
                   alt="Background Gradient"
@@ -118,19 +118,19 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
               </div>
 
               {/* Content Container */}
-              <div className="relative min-w-0 w-full lg:w-1/2 p-6 sm:p-8 md:p-10 xl:p-16 flex flex-col justify-center">
-                <h3 className="text-[22px] sm:text-[26px] lg:text-[30px] font-semibold leading-[1.25] lg:leading-[1.2] mb-3 sm:mb-4">
+              <div className="relative min-w-0 w-full md:w-1/2 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-16 flex flex-col justify-center">
+                <h3 className="text-[19px] sm:text-[23px] lg:text-[28px] xl:text-[30px] font-semibold leading-[1.25] lg:leading-[1.2] mb-2 sm:mb-3 lg:mb-4">
                   {card.title}
                 </h3>
-                <p className="text-[14px] sm:text-[16px] font-light leading-[150%] text-white/70 mb-6 sm:mb-8">
+                <p className="text-[13px] sm:text-[15px] lg:text-[16px] font-light leading-[150%] text-white/70 mb-3.5 sm:mb-5 lg:mb-8">
                   {card.text}
                 </p>
 
-                <ul className="space-y-2.5 sm:space-y-3">
+                <ul className="space-y-1.5 sm:space-y-2.5 xl:space-y-3">
                   {card.bullets.map((bullet, bIdx) => (
-                    <li key={bIdx} className="flex items-start gap-2.5 sm:gap-3">
-                      <span className="mt-1.5 sm:mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
-                      <span className="min-w-0 text-[14px] sm:text-[15px] lg:text-[16px] font-medium leading-[1.35] lg:leading-[1.2] text-white/90">
+                    <li key={bIdx} className="flex items-start gap-2 sm:gap-2.5 xl:gap-3">
+                      <span className="mt-1.5 sm:mt-2 h-[5px] w-[5px] sm:h-[6px] sm:w-[6px] shrink-0 bg-[#23C55E]" />
+                      <span className="min-w-0 text-[12.5px] sm:text-[14px] lg:text-[15px] xl:text-[16px] font-medium leading-[1.3] lg:leading-[1.2] text-white/90">
                         {bullet}
                       </span>
                     </li>
@@ -138,17 +138,17 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
                 </ul>
               </div>
 
-              {/* Image Container: on top when stacked, beside the text from lg up */}
-              <div className="relative order-first lg:order-none w-full lg:w-1/2 aspect-[640/480] sm:aspect-[640/420] lg:aspect-auto min-h-[240px] sm:min-h-[300px] lg:min-h-0 overflow-hidden">
+              {/* Image Container: on top when stacked on mobile (<md), beside the text from md up */}
+              <div className="relative order-first md:order-none w-full md:w-1/2 aspect-[16/9] sm:aspect-[640/360] md:aspect-auto h-[300px] sm:h-[400px] md:h-auto min-h-0 overflow-hidden">
                 <Image
                   src={card.image}
                   alt={card.title}
                   fill
                   className="object-cover image-hover-zoom"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
-            </Reveal>
+            </div>
           ))}
         </div>
 

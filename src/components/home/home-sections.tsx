@@ -37,7 +37,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
               </Reveal>
 
               <Reveal immediate preset="slide-up" delay={220} distance={32}>
-                <h1 className="text-[34px] sm:text-[50px] md:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px] max-w-[651px]">
+                <h1 className="text-[34px] sm:text-[50px] lg:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px] max-w-[651px]">
                   {isDefaultTitle ? (
                     <>
                       <span className="font-light text-white block">Your Finance</span>

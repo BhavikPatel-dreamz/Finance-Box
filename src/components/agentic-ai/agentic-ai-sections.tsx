@@ -107,7 +107,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
               <Eyebrow variant="light" className="mb-6">
                 {whatIs.eyebrow}
               </Eyebrow>
-              <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
                 {(() => {
                   let title = whatIs.title;
                   const hl = whatIs.highlight;
@@ -138,7 +138,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
           {whatIs.features.map((feature, idx) => (
             <StaggerItem key={idx} index={idx} className="group flex flex-col">
               <div>
-                <div className="relative w-full h-[420px] overflow-hidden mb-6">
+                <div className="relative w-full xl:h-[420px] h-[350px] overflow-hidden mb-6">
                   <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />
                 </div>
                 <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
@@ -161,10 +161,10 @@ export function AgenticBuildYourOwn({
   return (
     <section className="build-agentic-ai-section bg-white text-[#121826] pb-24">
       <Container>
-        <div className="rounded-[10px] bg-[#EDE9E6]/50 px-6 py-10 text-center md:p-12 lg:p-20">
+        <div className="rounded-[10px] bg-[#EDE9E6]/50 px-6 py-10 text-center md:p-7.5 xl:p-20">
 
           <Reveal preset="slide-up" distance={20}>
-            <h2 className="mb-4 text-3xl font-medium leading-[1.15] tracking-[-0.8px] text-[#121826] sm:text-4xl md:text-[54px]">
+            <h2 className="mb-4 text-3xl font-medium leading-[1.15] tracking-[-0.8px] text-[#121826] sm:text-4xl lg:text-[54px]">
               {(() => {
                 let title = buildYourOwn.title;
                 const hl = buildYourOwn.highlight;
@@ -254,7 +254,7 @@ export function AgenticPeopleOps({ peopleOps }: { peopleOps: AgenticAiContent["p
       <Container>
 
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-12.5 mb-10">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-12.5 mb-10">
             {peopleOps.title}
           </h2>
         </Reveal>
@@ -321,7 +321,7 @@ export function AgenticOpsCompliance({ opsCompliance }: { opsCompliance: Agentic
       <Container>
 
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-16 mb-8">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-16 mb-8">
             {opsCompliance.title}
           </h2>
         </Reveal>
@@ -379,10 +379,10 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
       <Container>
 
         <Reveal preset="slide-up" distance={20} className="text-center md:mb-16 mb-10">
-          <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+          <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             {provenArchitecture.title}
           </h2>
-          <h2 className="text-3xl sm:text-4xl md:text-[54px] font-black leading-[1.15] tracking-[-0.8px] text-[#23C55E] italic">
+          <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-black leading-[1.15] tracking-[-0.8px] text-[#23C55E] italic">
             {provenArchitecture.highlight}
           </h2>
         </Reveal>
@@ -436,7 +436,7 @@ export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
           <Reveal preset="slide-left" distance={20} className="max-w-md lg:pt-4">
-            <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
               {(() => {
                 let title = waitlist.title;
                 const hl = waitlist.highlight;
@@ -473,7 +473,7 @@ export function AgenticFaq({ faq }: { faq: AgenticAiContent["faq"] }) {
       <Container>
         <div className="mx-auto w-full max-w-[880px]">
           <Reveal preset="slide-up" distance={20}>
-            <h2 className="text-center text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
+            <h2 className="text-center text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
               {faq.title}
             </h2>
           </Reveal>

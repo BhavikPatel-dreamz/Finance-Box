@@ -172,7 +172,7 @@ export function FooterHero({
                 return (
                   <h2
                     className={twMerge(
-                      "text-[26px] sm:text-[36px] md:text-[50px] leading-[1.15] font-medium tracking-[-0.8px] text-white",
+                      "text-[26px] sm:text-[36px] lg:text-[50px] leading-[1.15] font-medium tracking-[-0.8px] text-white",
                       activeTitleMaxWidth,
                       titleClassName
                     )}
