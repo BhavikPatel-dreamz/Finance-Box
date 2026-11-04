@@ -199,7 +199,7 @@ export function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] 
             {depth.eyebrow}
           </Eyebrow>
 
-          <h2 className="mt-5.5 sm:mt-7.5 text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+          <h2 className="mt-5.5 sm:mt-7.5 text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             <span className="font-medium">What&apos;s</span>
             <span className="font-extrabold italic"> Inside Each Tier</span>
           </h2>
@@ -433,7 +433,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
           <Reveal preset="slide-up" distance={20}>
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
               <div>
-                <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+                <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
                   {cfo.title.split("\n")[0]}
                   <br />
                   <span className="font-extrabold italic">{cfo.title.split("\n")[1]}</span>
@@ -551,7 +551,7 @@ export function ServicesInvestors({ investors }: { investors: ServicesContent["i
                 <span className="h-px w-6 bg-[#23C55E]" />
                 {investors.eyebrow}
               </p>
-              <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.1] sm:leading-[1.05] tracking-[-0.8px] text-white">
+              <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.1] sm:leading-[1.05] tracking-[-0.8px] text-white">
                 {investors.title.split("\n")[0]}
                 <br />
                 {investors.title.split("\n")[1]}{" "}
