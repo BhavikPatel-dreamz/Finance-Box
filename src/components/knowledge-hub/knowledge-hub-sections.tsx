@@ -193,7 +193,6 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
     message: "",
   });
   
-  // Using our custom hook
   const { status, message, submitForm } = useFormSubmit();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -254,7 +253,6 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Name"
-                required
                 className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <input
@@ -263,7 +261,6 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Work E-mail"
-                required
                 className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <input
@@ -272,7 +269,6 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
                 value={formData.role}
                 onChange={handleChange}
                 placeholder="Role"
-                required
                 className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <textarea
@@ -281,21 +277,23 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
                 onChange={handleChange}
                 placeholder="Write your message..."
                 rows={5}
-                required
                 className="w-full rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
               />
               
               <div className="mt-2 flex flex-col gap-3">
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="flex items-center justify-center h-[50px] w-fit px-8 rounded-full bg-white text-[#0B0D0C] text-[15px] font-medium transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {status === "loading" ? "Submitting..." : "Submit"}
-                </button>
+                {/* 👇 Button Design wapas GreenButton jaisa kar diya hai, wrapper ke through submit ho raha hai */}
+                <div onClick={() => status !== "loading" && handleSubmit(new Event('submit') as any)}>
+                  <GreenButton
+                    label={status === "loading" ? "Submitting..." : "Submit"}
+                    href="#"
+                    bgColor="#ffffff"
+                    size="50"
+                  />
+                </div>
 
+                {/* 👇 WordPress se aane wala message show hoga */}
                 {status === "success" && (
-                  <p className="text-sm font-medium text-green-400">Subscribed successfully!</p>
+                  <p className="text-sm font-medium text-green-400">{message}</p>
                 )}
                 {status === "error" && (
                   <p className="text-sm font-medium text-red-400">{message}</p>

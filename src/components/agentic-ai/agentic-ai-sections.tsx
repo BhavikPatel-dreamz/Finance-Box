@@ -441,7 +441,6 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Name"
-                required
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <input
@@ -450,7 +449,6 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Work E-mail"
-                required
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <input
@@ -459,7 +457,6 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
                 value={formData.company}
                 onChange={handleChange}
                 placeholder="Company"
-                required
                 className="w-full h-[50px] rounded-[8px] border border-white/10 bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <textarea
@@ -468,26 +465,23 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
                 onChange={handleChange}
                 placeholder="Write your message..."
                 rows={5}
-                required
                 className="w-full rounded-[8px] border border-white/10 bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
               />
               
               <div className="mt-2 flex flex-col gap-3">
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="flex items-center justify-center gap-2 h-[50px] w-fit px-8 rounded-full bg-white text-[#0B0D0C] text-[15px] font-medium transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {status === "loading" ? "Submitting..." : "Submit"}
-                  {status !== "loading" && (
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  )}
-                </button>
+                {/* 👇 Exact GreenButton wapas laga diya hai, wrapper ke through submit ho raha hai */}
+                <div onClick={() => status !== "loading" && handleSubmit(new Event('submit') as any)}>
+                  <GreenButton
+                    label={status === "loading" ? "Submitting..." : "Submit"}
+                    href="#"
+                    bgColor="#ffffff"
+                    textColor="#0B0D0C"
+                  />
+                </div>
 
+                {/* 👇 Dynamic message from WordPress */}
                 {status === "success" && (
-                  <p className="text-sm font-medium text-green-400">Successfully joined the waitlist!</p>
+                  <p className="text-sm font-medium text-green-400">{message}</p>
                 )}
                 {status === "error" && (
                   <p className="text-sm font-medium text-red-400">{message}</p>

@@ -5,20 +5,20 @@ export async function POST(req: Request) {
     const body = await req.json();
     const WP_URL = process.env.WORDPRESS_URL?.trim().replace(/\/$/, "");
     
-    // Aapke URL ke hisaab se Automation Insights Form ID
+    // Automation Insights Form ID
     const FORM_ID = "1414"; 
 
     if (!WP_URL) throw new Error("WordPress URL not configured");
 
     const formData = new FormData();
     
-    // CF7 form ke exact field names (aapke screenshot ke mutabik)
-    formData.append("your-name", body.name);
-    formData.append("your-email", body.email);
-    formData.append("your-role", body.role);
-    formData.append("your-message", body.message);
+    // Empty fields bhi bhej rahe hain taaki CF7 validate kar sake
+    formData.append("your-name", body.name || "");
+    formData.append("your-email", body.email || "");
+    formData.append("your-role", body.role || "");
+    formData.append("your-message", body.message || "");
 
-    // CF7 Hidden Fields (Security bypass)
+    // CF7 Hidden Fields
     formData.append("_wpcf7", FORM_ID);
     formData.append("_wpcf7_version", "6.2.4.1");
     formData.append("_wpcf7_locale", "en_US");
@@ -34,12 +34,34 @@ export async function POST(req: Request) {
 
     if (data.status === "mail_sent") {
       return NextResponse.json({ ok: true, message: data.message });
-    } else {
-      console.error("CF7 Insights Error:", data);
-      return NextResponse.json({ ok: false, message: data.message || "Validation failed" }, { status: 400 });
+    } 
+    
+    // 👇 Exact CF7 Validation Error Handling
+    else {
+      let errorMessage = data.message || "Validation failed";
+      
+      if (data.invalid_fields && data.invalid_fields.length > 0) {
+        // Check if email field is invalid
+        const emailError = data.invalid_fields.find((f: any) => f.field === "your-email");
+        
+        if (emailError) {
+          errorMessage = emailError.message; 
+        } else {
+          // Fallback to the first error in the array
+          errorMessage = data.invalid_fields[0].message;
+        }
+      }
+
+      return NextResponse.json(
+        { ok: false, message: errorMessage }, 
+        { status: 400 }
+      );
     }
   } catch (error) {
     console.error("Insights API Error:", error);
-    return NextResponse.json({ ok: false, message: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { ok: false, message: "Internal server error. Please try again later." }, 
+      { status: 500 }
+    );
   }
 }

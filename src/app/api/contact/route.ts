@@ -1,17 +1,17 @@
-// Aapki file kuch aisi dikhni chahiye:
 import { NextResponse } from "next/server";
 import { contactSchema } from "@/lib/validation/contact";
 import { deliverContact } from "@/lib/forms/deliver";
-import { rateLimit } from "@/lib/forms/rate-limit"; // if exists
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     
-    // Validation (Agar aapke schema mein 'subject' hai)
+    // Zod Validation
     const parsed = contactSchema.safeParse(body);
     if (!parsed.success) {
-      return NextResponse.json({ ok: false, message: "Invalid data" }, { status: 400 });
+      // Zod v4 mein 'errors' ki jagah 'issues' use hota hai
+      const firstError = parsed.error.issues[0]?.message || "Invalid data provided.";
+      return NextResponse.json({ ok: false, message: firstError }, { status: 400 });
     }
 
     // Delivery Call
@@ -21,8 +21,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, message: result.message }, { status: result.status });
     }
 
-    return NextResponse.json({ ok: true });
+    // Success Response with WordPress Message
+    return NextResponse.json({ 
+      ok: true, 
+      message: result.message || "Thank you for your message. It has been sent." 
+    });
+
   } catch (error) {
-    return NextResponse.json({ ok: false, message: "Server error" }, { status: 500 });
+    console.error("Contact API Error:", error);
+    return NextResponse.json({ ok: false, message: "Server error. Please try again later." }, { status: 500 });
   }
 }
