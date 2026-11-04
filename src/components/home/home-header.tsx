@@ -217,7 +217,7 @@ export function HomeHeader({
                 color="green"
                 size="header"
                 text={header.cta.label}
-                href={header.cta.url}
+                href={header.cta.url} target={header.cta.target} rel={header.cta.target === "_blank" ? "noopener noreferrer" : undefined}
                 onDark={true}
                 className="w-[154px]"
               />
@@ -280,7 +280,7 @@ export function HomeHeader({
                     color="green"
                     size="header"
                     text={header.cta.label}
-                    href={header.cta.url}
+                    href={header.cta.url} target={header.cta.target} rel={header.cta.target === "_blank" ? "noopener noreferrer" : undefined}
                     onDark={true}
                     className="w-full justify-center text-center"
                     onClick={() => setMenuOpen(false)}
@@ -315,7 +315,7 @@ function DesktopItem({
   if (link.children.length === 0) {
     return (
       <Link
-        href={link.url}
+        href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
         className={`whitespace-nowrap transition-colors ${
           isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-white"
         }`}
@@ -329,7 +329,7 @@ function DesktopItem({
     <div className="relative" onMouseEnter={() => onOpen(link.label)} onMouseLeave={() => onOpen(null)}>
       <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
         <Link
-          href={link.url}
+          href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
           className={`transition-colors ${
             isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-white"
           }`}
@@ -357,7 +357,7 @@ function DesktopItem({
               return (
                 <li key={child.label}>
                   <Link
-                    href={child.url}
+                    href={child.url} target={child.target} rel={child.target === "_blank" ? "noopener noreferrer" : undefined}
                     className={`flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm transition-all duration-150 ${
                       isChildActive
                         ? "bg-[#23C55E]/15 text-[#23C55E] font-medium"
@@ -403,7 +403,7 @@ function MobileItem({
     return (
       <div className="py-1">
         <Link
-          href={link.url}
+          href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
           onClick={onNavigate}
           className={`flex items-center justify-between py-2.5 text-[16px] sm:text-[17px] font-medium transition-colors ${
             isDirectActive ? "text-[#23C55E] font-semibold" : "text-white/90 hover:text-white"
@@ -422,7 +422,7 @@ function MobileItem({
     <div className="py-1">
       <div className="flex items-center justify-between py-2.5">
         <Link
-          href={link.url}
+          href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
           onClick={onNavigate}
           className={`text-[16px] sm:text-[17px] font-medium transition-colors ${
             isParentActive ? "text-[#23C55E] font-semibold" : "text-white/90 hover:text-white"
@@ -450,7 +450,7 @@ function MobileItem({
             return (
               <li key={child.label}>
                 <Link
-                  href={child.url}
+                  href={child.url} target={child.target} rel={child.target === "_blank" ? "noopener noreferrer" : undefined}
                   onClick={onNavigate}
                   className={`flex items-center gap-2 py-2 text-[15px] transition-colors ${
                     isChildActive

@@ -6,6 +6,7 @@ import { GreenButton } from "@/components/ui/green-button";
 import { ArrowIcon } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
+import Link from "next/link";
 
 // Always returns "01", "02", ... Uses the CMS value only if it's a plain number,
 // otherwise falls back to the item's position so it auto-increments.
@@ -69,12 +70,14 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
                 )}
                 {config.secondaryCta &&
                   (config.secondaryCta.isTextLink ? (
-                    <a
+                    <Link
                       href={config.secondaryCta.url}
+                      target={config.secondaryCta.target}
+                      rel={config.secondaryCta.target === "_blank" ? "noopener noreferrer" : undefined}
                       className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1"
                     >
                       {config.secondaryCta.label} <ArrowIcon />
-                    </a>
+                    </Link>
                   ) : (
                     <GreenButton
                       label={config.secondaryCta.label}

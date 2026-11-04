@@ -6,6 +6,7 @@ export type HomeMedia = {
 export type HomeLink = {
   label: string;
   url: string;
+  target?: string;
 };
 
 export type HomeCard = {

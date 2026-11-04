@@ -36,13 +36,14 @@ function headerFromMenu(items: NavigationItem[], fallback: SiteHeaderContent): S
     .map((item) => ({
       label: item.label,
       url: href(item),
-      children: childrenOf(items, item).map((child) => ({ label: child.label, url: href(child) })),
+      target: item.target || undefined,
+      children: childrenOf(items, item).map((child) => ({ label: child.label, url: href(child), target: child.target || undefined })),
     }));
 
   return {
     logo: fallback.logo,
     links: links.length > 0 ? links : fallback.links,
-    cta: cta ? { label: cta.label, url: href(cta) } : fallback.cta,
+    cta: cta ? { label: cta.label, url: href(cta), target: cta.target || undefined } : fallback.cta,
   };
 }
 
@@ -52,7 +53,7 @@ function footerFromMenu(items: NavigationItem[], fallback: SiteFooterContent): S
     .filter((item) => !item.parentId)
     .map((column) => ({
       title: column.label,
-      links: childrenOf(items, column).map((link) => ({ label: link.label, url: href(link) })),
+      links: childrenOf(items, column).map((link) => ({ label: link.label, url: href(link), target: link.target || undefined })),
     }))
     .filter((column) => column.links.length > 0);
 

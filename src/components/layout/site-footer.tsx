@@ -69,6 +69,8 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
                         <li key={item.label} className="min-w-0">
                           <Link
                             href={item.url}
+                            target={item.target}
+                            rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
                             className={`group relative inline-flex items-center gap-2 leading-snug whitespace-nowrap hover:text-[#23C55E] transition-colors duration-200 ${
                               isSocial ? "" : "pb-1"
                             }`}
