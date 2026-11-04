@@ -136,11 +136,12 @@ function mergeHero(next: ServicesContent, section: Record<string, any>): void {
         highlight: "",
         text: "",
       };
+      const titleData = splitHighlight(card.title, fallback.title, fallback.highlight);
       return {
         number: cleanHtml(card.label, fallback.number),
         label: cleanHtml(card.label, fallback.label),
-        title: cleanHtml(card.title, fallback.title),
-        highlight: cleanHtml(card.highlight, fallback.highlight),
+        title: titleData.title,
+        highlight: cleanHtml(card.highlight, titleData.highlight),
         text: cleanHtml(card.description, fallback.text),
       } satisfies ServicesTier;
     });
@@ -268,29 +269,9 @@ function mergeInvestors(next: ServicesContent, section: Record<string, any>): vo
 
 /** CTA Section → pressure (the "Tell Us Where The Pressure Is" block). */
 function mergePressure(next: ServicesContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  
-  // Extract <b> or <strong> content
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle
-        .replace(highlight, "")
-        .replace(/\s+/g, " ")
-        .trim();
-      
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

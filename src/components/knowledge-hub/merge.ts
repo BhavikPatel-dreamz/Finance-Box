@@ -138,7 +138,9 @@ function mergeBlogs(next: KnowledgeHubContent, section: Record<string, any>): vo
 
 /** Simple CTA Section → resources. */
 function mergeResources(next: KnowledgeHubContent, section: Record<string, any>): void {
-  next.resources.title = cleanHtml(section.title, next.resources.title);
+  const titleData = splitHighlight(section.title, next.resources.title, next.resources.highlight);
+  next.resources.title = titleData.title;
+  next.resources.highlight = titleData.highlight;
   next.resources.text = cleanHtml(section.description, next.resources.text);
   next.resources.cta = link(section.ctaButton, next.resources.cta);
 }
@@ -169,30 +171,18 @@ function mergeCaseStudy(next: KnowledgeHubContent, section: Record<string, any>)
 
 /** Join Waitlist Section → newsletter. */
 function mergeNewsletter(next: KnowledgeHubContent, section: Record<string, any>): void {
-  next.newsletter.title = cleanHtml(section.title, next.newsletter.title);
+  const titleData = splitHighlight(section.title, next.newsletter.title, next.newsletter.highlight);
+  next.newsletter.title = titleData.title;
+  next.newsletter.highlight = titleData.highlight;
   next.newsletter.text = cleanHtml(section.description, next.newsletter.text);
   next.newsletter.cta = link(section.ctaButton, next.newsletter.cta);
 }
 
 /** CTA Section → pressure. */
 function mergePressure(next: KnowledgeHubContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

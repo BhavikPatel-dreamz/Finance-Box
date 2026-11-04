@@ -125,19 +125,9 @@ function mergeHero(next: CareersContent, section: Record<string, any>): void {
 
 /** Careers Why Work Section → whyWork. */
 function mergeWhyWork(next: CareersContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.whyWork.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
-    next.whyWork.title = remainder || cleanTitle;
-    next.whyWork.highlight = highlight;
-  } else {
-    next.whyWork.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.whyWork.title, next.whyWork.highlight);
+  next.whyWork.title = titleData.title;
+  next.whyWork.highlight = titleData.highlight;
   next.whyWork.image = media(section.image)?.url ?? next.whyWork.image;
 
   const points = rows(section.points);
@@ -218,23 +208,9 @@ function mergeFaq(next: CareersContent, section: Record<string, any>): void {
 
 /** CTA Section → pressure. */
 function mergePressure(next: CareersContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

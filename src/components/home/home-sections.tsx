@@ -21,7 +21,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/home/homepage-hero-bg.svg)" }}
       />
-      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:h-[771px] flex flex-col justify-between">
+      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:min-h-[771px] flex flex-col justify-between">
 
         {header}
 
@@ -37,7 +37,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
               </Reveal>
 
               <Reveal immediate preset="slide-up" delay={220} distance={32}>
-                <h1 className="text-[34px] sm:text-[50px] md:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
+                <h1 className="text-[34px] sm:text-[50px] md:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px] max-w-[651px]">
                   {isDefaultTitle ? (
                     <>
                       <span className="font-light text-white block">Your Finance</span>

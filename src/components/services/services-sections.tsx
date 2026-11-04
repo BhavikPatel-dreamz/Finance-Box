@@ -82,7 +82,23 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
                       {tier.label}
                     </p>
                     <h3 className="text-[18px] sm:text-[20px] font-semibold leading-[26px] sm:leading-[30px] text-white">
-                      {tier.title} <span className="font-semibold text-[#23C55E]">{tier.highlight}</span>
+                      {(() => {
+                        let title = tier.title;
+                        const hl = tier.highlight;
+                        if (title && hl && title.endsWith(hl)) {
+                          title = title.slice(0, -hl.length).trim();
+                        }
+                        return (
+                          <>
+                            {title}{" "}
+                            {hl && (
+                              <span className="font-semibold text-[#23C55E]">
+                                {hl}
+                              </span>
+                            )}
+                          </>
+                        );
+                      })()}
                     </h3>
                     <p className="text-[13px] sm:text-[14px] font-normal leading-[18px] sm:leading-[16px] text-white/60 mt-1">
                       {tier.text}

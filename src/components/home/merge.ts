@@ -192,7 +192,9 @@ function mergeHero(next: HomeContent, section: Record<string, any>): void {
 /** Home When Finance Matters → founders. */
 function mergeFounders(next: HomeContent, section: Record<string, any>): void {
   next.founders.eyebrow = cleanHtml(section.subTitle, next.founders.eyebrow);
-  next.founders.title = cleanHtml(section.title, next.founders.title);
+  const titleData = splitHighlight(section.title, next.founders.title, next.founders.highlight);
+  next.founders.title = titleData.title;
+  next.founders.highlight = titleData.highlight;
   next.founders.text = cleanHtml(section.description, next.founders.text);
   next.founders.cta = link(section.ctaButton, next.founders.cta);
 
@@ -308,14 +310,22 @@ function mergeLeadership(next: HomeContent, section: Record<string, any>): void 
 
   const slides = rows(section.slides);
   if (slides.length > 0) {
-    const titles = slides
-      .map((slide) => cleanHtml(slide.title, ""))
-      .filter(Boolean);
-    const descriptions = slides
-      .map((slide) => cleanHtml(slide.description, ""))
-      .filter(Boolean);
-    if (titles.length > 0) next.leadership.title = titles.join(" ");
-    if (descriptions.length > 0) next.leadership.text = descriptions.join("\n\n");
+    const titles = Array.from(
+      new Set(
+        slides
+          .map((slide) => cleanHtml(slide.title, ""))
+          .filter(Boolean),
+      ),
+    );
+    const descriptions = Array.from(
+      new Set(
+        slides
+          .map((slide) => cleanHtml(slide.description, ""))
+          .filter(Boolean),
+      ),
+    );
+    if (titles.length > 0) next.leadership.title = titles[0];
+    if (descriptions.length > 0) next.leadership.text = descriptions[0];
   }
 
   // GraphQL alias in section.tsx is `teamMembersList` (to disambiguate
@@ -336,30 +346,9 @@ function mergeLeadership(next: HomeContent, section: Record<string, any>): void 
 
 /** CTA Section → pressure (the "Tell Us Where The Pressure Is" block). */
 function mergePressure(next: HomeContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  // ACF WYSIWYG title may include <b>...</b> for the green highlight phrase.
-  const boldMatch =
-    rawTitle.match(/<b>(.*?)<\/b>/i) ||
-    rawTitle.match(/<strong>(.*?)<\/strong>/i);
-
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle
-        .replace(highlight, "")
-        .replace(/\s+/g, " ")
-        .trim();
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

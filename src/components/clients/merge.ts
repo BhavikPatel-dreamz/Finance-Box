@@ -160,13 +160,15 @@ function mergeCaseStudies(next: ClientsContent, section: Record<string, any>): v
 
 /** Clients Trusted Companies → logosSection. */
 function mergeLogos(next: ClientsContent, section: Record<string, any>): void {
-  // ACF field is `title` — split into two lines for the UI's dual-title layout.
   if (section.title) {
-    const fullTitle = cleanHtml(section.title, "");
-    if (fullTitle) {
-      // Keep existing title1/highlight1/title2 if they can't be parsed.
-      // Title is typically "Trusted by 40+ Growing Companies in the USA and Globally"
-      next.logosSection.title1 = fullTitle;
+    const raw = str(section.title) ?? "";
+    const match = raw.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+    if (match) {
+      next.logosSection.title1 = cleanHtml(match[1], next.logosSection.title1);
+      next.logosSection.highlight1 = cleanHtml(match[2], next.logosSection.highlight1);
+      next.logosSection.title2 = cleanHtml(match[3], next.logosSection.title2);
+    } else {
+      next.logosSection.title1 = cleanHtml(section.title, next.logosSection.title1);
     }
   }
 
@@ -215,23 +217,9 @@ function mergeReviews(next: ClientsContent, section: Record<string, any>): void 
 
 /** CTA Section → pressure. */
 function mergePressure(next: ClientsContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

@@ -108,8 +108,19 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
                 {whatIs.eyebrow}
               </Eyebrow>
               <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
-                {whatIs.title}
-                <span className="font-bold italic">{whatIs.highlight}</span>
+                {(() => {
+                  let title = whatIs.title;
+                  const hl = whatIs.highlight;
+                  if (title && hl && title.endsWith(hl)) {
+                    title = title.slice(0, -hl.length).trim();
+                  }
+                  return (
+                    <>
+                      {title}{" "}
+                      {hl && <span className="font-bold italic">{hl}</span>}
+                    </>
+                  );
+                })()}
               </h2>
               <p className="text-[16px] font-light leading-[160%] text-[#0B0D0C]">
                 {whatIs.text1}
@@ -151,8 +162,23 @@ export function AgenticBuildYourOwn({ buildYourOwn }: { buildYourOwn: AgenticAiC
 
           <Reveal preset="slide-up" distance={20}>
             <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-4">
-              {buildYourOwn.title}
-              <span className="text-[#23C55E] font-black italic">{buildYourOwn.highlight}</span>
+              {(() => {
+                let title = buildYourOwn.title;
+                const hl = buildYourOwn.highlight;
+                if (title && hl && title.endsWith(hl)) {
+                  title = title.slice(0, -hl.length).trim();
+                }
+                return (
+                  <>
+                    {title}{" "}
+                    {hl && (
+                      <span className="text-[#23C55E] font-black italic">
+                        {hl}
+                      </span>
+                    )}
+                  </>
+                );
+              })()}
             </h2>
             <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70 lg:max-w-[706px] mx-auto mb-10">
               {buildYourOwn.text}
@@ -363,8 +389,19 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
 
           <Reveal preset="slide-left" distance={20} className="max-w-md lg:pt-4">
             <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
-              {waitlist.title}
-              <span className="font-black italic"> {waitlist.highlight}</span>
+              {(() => {
+                let title = waitlist.title;
+                const hl = waitlist.highlight;
+                if (title && hl && title.endsWith(hl)) {
+                  title = title.slice(0, -hl.length).trim();
+                }
+                return (
+                  <>
+                    {title}{" "}
+                    {hl && <span className="font-black italic">{hl}</span>}
+                  </>
+                );
+              })()}
             </h2>
             <p className="text-[16px] font-light leading-[160%] text-white/70">
               {waitlist.text}

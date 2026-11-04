@@ -95,8 +95,23 @@ export function KnowledgeHubResources({ resources }: { resources: KnowledgeHubCo
         <Reveal preset="slide-up" distance={20} className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl md:text-[44px] lg:text-[50px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-3 sm:mb-4">
-              {resources.title}
-              <span className="text-[#23C55E] font-black italic">{resources.highlight}</span>
+              {(() => {
+                let title = resources.title;
+                const hl = resources.highlight;
+                if (title && hl && title.endsWith(hl)) {
+                  title = title.slice(0, -hl.length).trim();
+                }
+                return (
+                  <>
+                    {title}{" "}
+                    {hl && (
+                      <span className="text-[#23C55E] font-black italic">
+                        {hl}
+                      </span>
+                    )}
+                  </>
+                );
+              })()}
             </h2>
             <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70 lg:text-[#121826]/60">
               {resources.text}
@@ -180,8 +195,19 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
           {/* Left Side: Text & CTA */}
           <Reveal preset="slide-left" distance={20} className="w-full max-w-xl lg:max-w-md lg:pt-4">
             <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] lg:leading-[1.1] tracking-[-0.8px] mb-4 sm:mb-6">
-              {newsletter.title} <br className="hidden sm:inline" />
-              <span className="font-black italic">{newsletter.highlight}</span>
+              {(() => {
+                let title = newsletter.title;
+                const hl = newsletter.highlight;
+                if (title && hl && title.endsWith(hl)) {
+                  title = title.slice(0, -hl.length).trim();
+                }
+                return (
+                  <>
+                    {title} <br className="hidden sm:inline" />
+                    {hl && <span className="font-black italic">{hl}</span>}
+                  </>
+                );
+              })()}
             </h2>
             <p className="text-[14px] sm:text-[16px] font-light leading-[160%] text-white/70 mb-6 sm:mb-8">
               {newsletter.text}
