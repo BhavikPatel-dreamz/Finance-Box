@@ -228,8 +228,8 @@ export function Button({
         href={href}
         style={customStyle}
         className={baseClasses}
-        target={target}
-        rel={target === "_blank" ? (rel ?? "noopener noreferrer") : rel}
+        target={target ?? (href && /^https?:\/\//i.test(href) ? "_blank" : undefined)}
+        rel={(target ?? (href && /^https?:\/\//i.test(href) ? "_blank" : undefined)) === "_blank" ? (rel ?? "noopener noreferrer") : rel}
         onClick={onClick}
       >
         {innerContent}

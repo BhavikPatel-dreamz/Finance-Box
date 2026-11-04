@@ -6,6 +6,10 @@ import { getMenu, getSettings, type NavigationItem } from "@/lib/wordpress/conte
 export type SiteHeaderContent = HomeContent["header"];
 export type SiteFooterContent = HomeContent["footer"];
 
+function isExternalHref(url: string) {
+  return /^https?:\/\//i.test(url) && !url.startsWith("/") ;
+}
+
 export type SiteChrome = {
   header: SiteHeaderContent;
   footer: SiteFooterContent;
@@ -36,14 +40,14 @@ function headerFromMenu(items: NavigationItem[], fallback: SiteHeaderContent): S
     .map((item) => ({
       label: item.label,
       url: href(item),
-      target: item.target || undefined,
-      children: childrenOf(items, item).map((child) => ({ label: child.label, url: href(child), target: child.target || undefined })),
+      target: item.target || (isExternalHref(href(item)) ? "_blank" : undefined),
+      children: childrenOf(items, item).map((child) => ({ label: child.label, url: href(child), target: child.target || (isExternalHref(href(child)) ? "_blank" : undefined) })),
     }));
 
   return {
     logo: fallback.logo,
     links: links.length > 0 ? links : fallback.links,
-    cta: cta ? { label: cta.label, url: href(cta), target: cta.target || undefined } : fallback.cta,
+    cta: cta ? { label: cta.label, url: href(cta), target: cta.target || (isExternalHref(href(cta)) ? "_blank" : undefined) } : fallback.cta,
   };
 }
 
@@ -53,7 +57,7 @@ function footerFromMenu(items: NavigationItem[], fallback: SiteFooterContent): S
     .filter((item) => !item.parentId)
     .map((column) => ({
       title: column.label,
-      links: childrenOf(items, column).map((link) => ({ label: link.label, url: href(link), target: link.target || undefined })),
+      links: childrenOf(items, column).map((link) => ({ label: link.label, url: href(link), target: link.target || (isExternalHref(href(link)) ? "_blank" : undefined) })),
     }))
     .filter((column) => column.links.length > 0);
 
