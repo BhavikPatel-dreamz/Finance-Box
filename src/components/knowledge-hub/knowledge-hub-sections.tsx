@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { BLOG_CARD_CLASS, BlogCard } from "@/components/blog/blog-card";
 import type { ReactNode } from "react";
@@ -58,7 +61,6 @@ export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs
   return (
     <Section theme="light" spacing="both">
       <Container>
-
         <Reveal preset="slide-up" distance={20}>
           <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16">
             {blogs.title}
@@ -81,7 +83,6 @@ export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs
             textColor="#ffffff"
           />
         </Reveal>
-
       </Container>
     </Section>
   );
@@ -136,7 +137,6 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
   return (
     <Section theme="light" spacing="both">
       <Container>
-
         <Reveal preset="slide-up" distance={20}>
           <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-12 lg:mb-16">
             {caseStudy.title}
@@ -179,13 +179,54 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
             textColor="#ffffff"
           />
         </Reveal>
-
       </Container>
     </Section>
   );
 }
 
 export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHubContent["newsletter"] }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    role: "",
+    message: "",
+  });
+  
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setMessage("");
+
+    try {
+      const res = await fetch("/api/insights", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.ok) {
+        setStatus("success");
+        setMessage("Subscribed successfully!");
+        setFormData({ name: "", email: "", role: "", message: "" });
+      } else {
+        setStatus("error");
+        setMessage(data.message || "Something went wrong.");
+      }
+    } catch (err) {
+      setStatus("error");
+      setMessage("Network error. Please try again.");
+    }
+  };
+
   // 5. Newsletter Section
   return (
     <Section theme="dark" spacing="both">
@@ -223,34 +264,59 @@ export function KnowledgeHubNewsletter({ newsletter }: { newsletter: KnowledgeHu
 
           {/* Right Side: Form */}
           <Reveal preset="slide-right" distance={20} className="w-full bg-[#191F2D] rounded-[10px] p-4.5 sm:p-6 md:p-7.5 border border-white/6">
-            <form className="flex flex-col gap-3.5 sm:gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3.5 sm:gap-4">
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 placeholder="Name"
+                required
                 className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Work E-mail"
+                required
                 className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <input
                 type="text"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
                 placeholder="Role"
+                required
                 className="w-full h-[46px] sm:h-[50px] rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
               />
               <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 placeholder="Write your message..."
                 rows={5}
+                required
                 className="w-full rounded-[10px] border border-white/10 bg-[#121826] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
               />
-              <div className="mt-2">
-                <GreenButton
-                  label="Submit"
-                  href="#"
-                  bgColor="#ffffff"
-                  size="50"
-                />
+              
+              <div className="mt-2 flex flex-col gap-3">
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="flex items-center justify-center h-[50px] w-fit px-8 rounded-full bg-white text-[#0B0D0C] text-[15px] font-medium transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === "loading" ? "Submitting..." : "Submit"}
+                </button>
+
+                {status === "success" && (
+                  <p className="text-sm font-medium text-green-400">{message}</p>
+                )}
+                {status === "error" && (
+                  <p className="text-sm font-medium text-red-400">{message}</p>
+                )}
               </div>
             </form>
           </Reveal>
