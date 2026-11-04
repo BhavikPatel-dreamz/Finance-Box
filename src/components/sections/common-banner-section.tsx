@@ -2,7 +2,6 @@ import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { fromSection } from "@/components/sections/from-section";
 import { HeroSection } from "@/components/hero";
-import { KnowledgeHubBanner } from "@/components/knowledge-hub/knowledge-hub-sections";
 import { PeopleOperationsBanner } from "@/components/people-operations/people-operations-sections";
 import { mergeCareers } from "@/components/careers/merge";
 import { mergeAgenticAi } from "@/components/agentic-ai/merge";
@@ -80,10 +79,29 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
             header={header}
           />
         );
-      default:
+      default: {
+        const { hero } = fromSection(mergeKnowledgeHub, knowledgeHubContent, data);
         return (
-          <KnowledgeHubBanner hero={fromSection(mergeKnowledgeHub, knowledgeHubContent, data).hero} header={header} />
+          <HeroSection
+            page="knowledge-hub"
+            headerNode={header}
+            overrides={{
+              eyebrow: hero.eyebrow,
+              title: hero.title,
+              highlight: hero.highlight,
+              description: hero.text,
+              primaryCta: hero.cta
+                ? {
+                    label: hero.cta.label,
+                    url: hero.cta.url,
+                    color: "green",
+                    onDark: true,
+                  }
+                : undefined,
+            }}
+          />
         );
+      }
     }
   },
 });
