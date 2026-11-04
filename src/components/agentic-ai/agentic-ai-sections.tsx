@@ -400,7 +400,7 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     
-    const success = await submitForm("/api/waitlist", formData);
+    const success = await submitForm("/api/waitlist", { ...formData, formId: waitlist.formId });
     
     if (success) {
       setFormData({ name: "", email: "", company: "", message: "" });
