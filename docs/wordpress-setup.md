@@ -24,7 +24,20 @@ One shared field group **Page Builder** on pages, GraphQL field `pageBuilder`, c
 - `ServicesOperatingCadenceSection` → *Section Setting*: `up-down` or `side-by-side`. `AgenticOfficialPartnerStack` → *Logo View*: `simple` or `boxed`.
 - Agentic AI banner: list items in *Description* become the bullet points; *Tag Line* is the paragraph.
 - Fill in **alt text** on uploaded logos and images. Logos without alt text get a name derived from the file name.
-- Form shortcodes (`formShortcode`, `newsletterFormShortcode`) are not rendered: shortcodes only run inside WordPress.
+- Forms: *Form ID* on Join Waitlist sections is a Contact Form 7 form ID (defaults: 1338 Agentic AI waitlist, 1414 Knowledge Hub). See **Forms** below.
+
+## Forms (Contact Form 7)
+
+The Join Waitlist and Contact Form sections render the CF7 form in their *Form ID* field (defaults: 1338 waitlist, 1414 Knowledge Hub, 1284 Contact), with the form's own fields, and submits through `/api/forms/{id}` (`src/lib/forms/cf7.ts`). CF7 validates, stores and sends the mail.
+
+To add a field: edit the form in **Contact → Contact Forms**, add the tag (e.g. `[text* your-phone placeholder "Phone"]`), save. It appears on the site within a few minutes.
+
+- Supported: text, email, tel, url, number, date, textarea, select, checkbox, radio, acceptance. Not rendered: file uploads, quiz, captcha, hidden.
+- Use `placeholder "…"` (or a `<label>` around the tag) for the text shown in the field.
+- Install `wordpress/financebox-cf7-fields.php` in `wp-content/mu-plugins/` to give the frontend full field details: types, placeholders, dropdown/checkbox options and the submit label. Without it, the frontend reads CF7's public validation schema: fields still appear with name, required and email/number/date types, but placeholders are derived from the field name (`your-company-name` → "Company name") and select/checkbox/radio fields can lose their options (shown as text inputs).
+- With `FINANCEBOX_FRONTEND_URL` and `FINANCEBOX_REVALIDATE_SECRET` in `wp-config.php`, saving a form updates the site at once (`/api/revalidate` type `form`).
+- Required fields show `*` after their placeholder.
+- The newsletter box (`newsletterFormId`) is not dynamic yet.
 
 ## Menus (needed for WordPress-managed navigation)
 
