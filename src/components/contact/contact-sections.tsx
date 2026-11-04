@@ -54,7 +54,7 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
     message: "",
   });
   
-  const { status, message, submitForm } = useFormSubmit();
+  const { status, message, errors, submitForm } = useFormSubmit();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -127,44 +127,55 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                  className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Write your email"
-                  className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-                />
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    className={`w-full h-[48px] sm:h-[50px] rounded-[10px] border ${errors["your-name"] ? 'border-red-500' : 'border-[#747C761A]'} bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200`}
+                  />
+                  {errors["your-name"] && <p className="text-red-500 text-xs mt-1 ml-1">{errors["your-name"]}</p>}
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Write your email"
+                    className={`w-full h-[48px] sm:h-[50px] rounded-[10px] border ${errors["your-email"] ? 'border-red-500' : 'border-[#747C761A]'} bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200`}
+                  />
+                  {errors["your-email"] && <p className="text-red-500 text-xs mt-1 ml-1">{errors["your-email"]}</p>}
+                </div>
               </div>
               
-              <input
-                type="text"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                placeholder="Your company"
-                className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-              />
+              <div>
+                <input
+                  type="text"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  placeholder="Your company"
+                  className={`w-full h-[48px] sm:h-[50px] rounded-[10px] border ${errors["your-company"] ? 'border-red-500' : 'border-[#747C761A]'} bg-white px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200`}
+                />
+                {errors["your-company"] && <p className="text-red-500 text-xs mt-1 ml-1">{errors["your-company"]}</p>}
+              </div>
 
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Write your notes..."
-                rows={5}
-                className="w-full rounded-[10px] border border-[#747C761A] bg-white py-3.5 sm:py-4 px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
-              />
+              <div>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Write your notes..."
+                  rows={5}
+                  className={`w-full rounded-[10px] border ${errors["your-message"] ? 'border-red-500' : 'border-[#747C761A]'} bg-white py-3.5 sm:py-4 px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none`}
+                />
+                {errors["your-message"] && <p className="text-red-500 text-xs mt-1 ml-1">{errors["your-message"]}</p>}
+              </div>
 
               <div className="mt-2 sm:mt-4 flex flex-col justify-start items-start gap-3">
-                {/* 👇 Exact GreenButton wapas laga diya hai */}
                 <div onClick={() => status !== "loading" && handleSubmit()}>
                   <GreenButton
                     label={status === "loading" ? "Sending..." : formSection.form.submitLabel}
@@ -174,11 +185,10 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
                   />
                 </div>
 
-                {/* 👇 Yahan WordPress se aane wala message show hoga */}
                 {status === "success" && (
                   <p className="text-sm font-medium text-green-600">{message}</p>
                 )}
-                {status === "error" && (
+                {status === "error" && Object.keys(errors).length === 0 && (
                   <p className="text-sm font-medium text-red-600">{message}</p>
                 )}
               </div>
@@ -194,12 +204,13 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
 export function ContactConnected({ socialSection }: { socialSection: ContactUsContent["socialSection"] }) {
   const [email, setEmail] = useState("");
   
-  const { status, message, submitForm } = useFormSubmit();
+  const { status, message, errors, submitForm } = useFormSubmit();
 
   const handleSubscribe = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!email) return;
-
+    
+    // 👇 Yahan se `if (!email) return;` hata diya hai taaki API call ho sake
+    
     const success = await submitForm("/api/newsletter", { email });
     if (success) setEmail(""); 
   };
@@ -260,16 +271,18 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
             </div>
 
             <div className="mt-6 sm:mt-8">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={socialSection.newsletter.placeholder}
-                className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#FFFFFF0F] bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-4 transition-colors duration-200"
-              />
+              <div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={socialSection.newsletter.placeholder}
+                  className={`w-full h-[48px] sm:h-[50px] rounded-[10px] border ${errors["email-address"] ? 'border-red-500' : 'border-[#FFFFFF0F]'} bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-2 transition-colors duration-200`}
+                />
+                {errors["email-address"] && <p className="text-red-400 text-xs mt-1 ml-1">{errors["email-address"]}</p>}
+              </div>
               
-              {/* 👇 Exact GreenButton wapas laga diya hai */}
-              <div onClick={() => status !== "loading" && handleSubscribe()}>
+              <div onClick={() => status !== "loading" && handleSubscribe()} className="mt-4">
                 <GreenButton
                   label={status === "loading" ? "Subscribing..." : socialSection.newsletter.buttonLabel}
                   href="#"
@@ -278,11 +291,11 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
                 />
               </div>
 
-              {/* 👇 Yahan WordPress se aane wala message show hoga */}
+              {/* Status Messages */}
               {status === "success" && (
                 <p className="text-sm font-medium text-green-400 mt-3">{message}</p>
               )}
-              {status === "error" && (
+              {status === "error" && Object.keys(errors).length === 0 && (
                 <p className="text-sm font-medium text-red-400 mt-3">{message}</p>
               )}
             </div>

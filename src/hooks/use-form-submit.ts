@@ -5,10 +5,12 @@ type Status = "idle" | "loading" | "success" | "error";
 export function useFormSubmit() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({}); // 👈 Naya state
 
   const submitForm = async (endpoint: string, payload: Record<string, any>) => {
     setStatus("loading");
     setMessage("");
+    setErrors({}); // Reset errors on new submit
 
     try {
       const res = await fetch(endpoint, {
@@ -22,10 +24,21 @@ export function useFormSubmit() {
       if (res.ok && data.ok) {
         setStatus("success");
         setMessage(data.message || "Success!");
-        return true; // Form reset karne ke liye true return kar rahe hain
+        return true;
       } else {
         setStatus("error");
         setMessage(data.message || "Something went wrong.");
+        
+        // 👇 Agar API se invalid_fields aaye hain, toh unko map kar lo
+        if (data.invalid_fields && Array.isArray(data.invalid_fields)) {
+          const fieldErrors: Record<string, string> = {};
+          data.invalid_fields.forEach((field: any) => {
+            // e.g., "your-email" -> "Please enter an email address."
+            fieldErrors[field.field] = field.message;
+          });
+          setErrors(fieldErrors);
+        }
+        
         return false;
       }
     } catch (err) {
@@ -35,5 +48,5 @@ export function useFormSubmit() {
     }
   };
 
-  return { status, message, submitForm };
+  return { status, message, errors, submitForm };
 }
