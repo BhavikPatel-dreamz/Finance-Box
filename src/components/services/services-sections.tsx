@@ -53,7 +53,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
                     bgColor="#ffffff"
                     textColor="#07110d"
                   />
-                  <link href="#" className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1">See How an Engagement Works <ArrowIcon /></link>
+                  <Link href="#" className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1">See How an Engagement Works <ArrowIcon /></Link>
                 </div>
               </Reveal>
             </div>

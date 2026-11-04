@@ -7,6 +7,7 @@ import { getPreviewPage, getPublicPage, getSettings, type PageLoadResult } from 
 import { getSiteChrome } from "@/lib/wordpress/site-chrome";
 import { decodePreviewTarget, PREVIEW_COOKIE } from "@/lib/wordpress/preview";
 import { uriFromSlug } from "@/lib/wordpress/uri";
+import Link from "next/link";
 
 /**
  * The single template for every WordPress page: `/`, `/about`,
@@ -118,9 +119,9 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
           Preview —{" "}
           {/* A Route Handler, not a page: <Link> would prefetch it and exit preview on hover. */}
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-          <link className="underline" href={`/api/preview/exit?redirect=${encodeURIComponent(page.uri)}`}>
+          <Link className="underline" href={`/api/preview/exit?redirect=${encodeURIComponent(page.uri)}`}>
             exit
-          </link>
+          </Link>
         </p>
       ) : null}
       <SectionRenderer sections={page.sections} uri={page.uri} header={header} />

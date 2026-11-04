@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/components/hero";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -75,23 +76,23 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
 
                   {section.link && (
                     <p className="pt-1">
-                      <a
+                      <Link
                         href={section.link.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`${LINK_CLASS} inline-flex items-center gap-1`}
                       >
                         {section.link.label}
-                      </a>
+                      </Link>
                     </p>
                   )}
 
                   {section.email && (
                     <p className="pt-1">
                       <span className="text-[#6B7280]">Contact: </span>
-                      <link href={`mailto:${section.email}`} className={LINK_CLASS}>
+                      <Link href={`mailto:${section.email}`} className={LINK_CLASS}>
                         {section.email}
-                      </link>
+                      </Link>
                     </p>
                   )}
                 </div>
@@ -104,12 +105,12 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
             <div>
               <p className="text-sm font-medium text-[#121826]">
                 Contact:{" "}
-                <link
+                <Link
                   href={`mailto:${content.hero.contactEmail}`}
                   className="text-[#121826] underline decoration-transparent underline-offset-4 transition-colors duration-300 hover:text-[#23C55E] hover:decoration-[#23C55E]"
                 >
                   {content.hero.contactEmail}
-                </link>
+                </Link>
               </p>
             </div>
             <Button
