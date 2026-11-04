@@ -53,7 +53,7 @@ export function ProcessGrid({ steps, className = "" }: ProcessGridProps) {
               as="li"
               index={idx}
               className={twMerge(
-                "card-hover relative flex min-h-[200px] flex-col bg-[#191F2D] pb-8 pt-8 sm:min-h-[290px] sm:pt-9 lg:min-h-[311px] lg:pt-10",
+                "card-hover relative flex min-h-[190px] flex-col bg-[#191F2D] pb-7 pt-7 sm:min-h-[260px] sm:pt-8 md:min-h-[280px] lg:min-h-[290px] lg:pt-9 xl:min-h-[311px] xl:pt-10",
                 // Mobile (1 column)
                 !isLast && "border-b border-white/10",
                 // Tablet (2 columns)
@@ -78,11 +78,11 @@ export function ProcessGrid({ steps, className = "" }: ProcessGridProps) {
               </div>
 
               {/* Top-aligned so every title starts on the same line across columns */}
-              <div className="mt-8 px-5 sm:mt-10 sm:px-6 lg:mt-[54px]">
-                <h3 className="mb-2 text-[22px] font-semibold leading-tight text-white sm:text-[26px] lg:text-[28px]">
+              <div className="mt-6 px-4 sm:mt-8 sm:px-5 lg:mt-9 lg:px-4 xl:mt-[54px] xl:px-6">
+                <h3 className="mb-1.5 sm:mb-2 text-[20px] font-semibold leading-tight text-white sm:text-[24px] lg:text-[21px] xl:text-[26px] 2xl:text-[28px]">
                   {step.title}
                 </h3>
-                <p className="text-[14px] font-normal leading-[150%] text-white/70 sm:text-[15px] sm:leading-[160%] lg:text-[16px]">
+                <p className="text-[13.5px] font-normal leading-[150%] text-white/70 sm:text-[14.5px] sm:leading-[160%] lg:text-[13.5px] xl:text-[15px] 2xl:text-[16px]">
                   {step.text}
                 </p>
               </div>

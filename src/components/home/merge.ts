@@ -333,7 +333,7 @@ function mergeLeadership(next: HomeContent, section: Record<string, any>): void 
   // so merge still works if the alias is ever reverted.
   const teamMembers = rows(section.teamMembersList ?? section.teamMembers);
   if (teamMembers.length > 0) {
-    next.leadership.people = teamMembers.map((member, index) => {
+    const cmsPeople = teamMembers.map((member, index) => {
       const fallback = next.leadership.people[index];
       return {
         image: media(member.image) ?? fallback?.image ?? null,
@@ -341,6 +341,13 @@ function mergeLeadership(next: HomeContent, section: Record<string, any>): void 
         role: cleanHtml(member.designation, fallback?.role ?? ""),
       } satisfies HomePerson;
     });
+
+    const cmsNames = new Set(cmsPeople.map((p) => p.name.trim().toLowerCase()));
+    const remainingPeople = next.leadership.people.filter(
+      (p) => !cmsNames.has(p.name.trim().toLowerCase())
+    );
+
+    next.leadership.people = [...cmsPeople, ...remainingPeople];
   }
 }
 
