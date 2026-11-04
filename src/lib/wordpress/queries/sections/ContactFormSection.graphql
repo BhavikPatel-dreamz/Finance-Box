@@ -5,5 +5,5 @@ fragment ContactFormSection on PageBuilderPageBuilderContactFormSectionLayout {
   contactEmail
   formTitle
   formDescription
-  formShortcode
+  formId
 }

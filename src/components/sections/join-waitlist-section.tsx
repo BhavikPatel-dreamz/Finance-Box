@@ -12,9 +12,9 @@ import { knowledgeHubContent } from "@/content/knowledge-hub";
  * `JoinWaitlistSection` — text with a sign-up form. "waitlist" (Agentic AI)
  * or "newsletter" (Knowledge Hub, adds a CTA button), from `section-variants.ts`.
  *
- * Known issue: neither form submits anywhere yet, and `formShortcode`
- * (a WordPress form plugin shortcode) is not rendered, because shortcodes
- * cannot be executed outside WordPress.
+ * Known issue: neither form submits anywhere yet, and `formId`
+ * (a WordPress form plugin ID) is not used yet, because forms from that plugin
+ * cannot be rendered outside WordPress.
  */
 export const joinWaitlistSection = defineSection<JoinWaitlistSectionFragment>({
   layout: "JoinWaitlistSection",
