@@ -210,7 +210,7 @@ export const careersHeroConfig: HeroConfig = {
     url: careersContent.hero.cta?.url || "#open-roles",
     color: "white",
   },
-  heightClassName: "min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:min-h-[771px]",
+  heightClassName: "min-h-[auto] lg:min-h-[660px] xl:min-h-[660px]",
 };
 
 // ----------------------------------------------------------------------------

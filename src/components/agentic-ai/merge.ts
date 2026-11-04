@@ -158,12 +158,18 @@ function mergeBuildYourOwn(next: AgenticAiContent, section: Record<string, any>)
 
   const agents = rows(section.buildYourOwnAgentic);
   if (agents.length > 0) {
+    const seenTexts = new Set<string>();
     next.buildYourOwn.agents = agents.map((agent, index) => {
       const fallback = next.buildYourOwn.agents[index];
+      let text = cleanHtml(agent.content, fallback?.text ?? "");
+      if (seenTexts.has(text) && fallback?.text && fallback.text !== text) {
+        text = fallback.text;
+      }
+      seenTexts.add(text);
       return {
         icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
         title: cleanHtml(agent.title, fallback?.title ?? ""),
-        text: cleanHtml(agent.content, fallback?.text ?? ""),
+        text,
       } satisfies AgenticAiAgent;
     });
   }
@@ -175,12 +181,18 @@ function mergePeopleOps(next: AgenticAiContent, section: Record<string, any>): v
 
   const agents = rows(section.agents);
   if (agents.length > 0) {
+    const seenTexts = new Set<string>();
     next.peopleOps.agents = agents.map((agent, index) => {
       const fallback = next.peopleOps.agents[index];
+      let text = cleanHtml(agent.content, fallback?.text ?? "");
+      if (seenTexts.has(text) && fallback?.text && fallback.text !== text) {
+        text = fallback.text;
+      }
+      seenTexts.add(text);
       return {
         icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
         title: cleanHtml(agent.title, fallback?.title ?? ""),
-        text: cleanHtml(agent.content, fallback?.text ?? ""),
+        text,
       } satisfies AgenticAiAgent;
     });
   }

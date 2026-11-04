@@ -20,7 +20,7 @@ export function CareersBanner({ hero, header }: { hero: CareersContent["hero"]; 
         aria-hidden="true"
       />
 
-      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:min-h-[771px] z-10 flex items-center justify-center flex-col h-full">
+      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[660px] z-10 flex items-center justify-center flex-col h-full">
         {header}
 
         <Container>
