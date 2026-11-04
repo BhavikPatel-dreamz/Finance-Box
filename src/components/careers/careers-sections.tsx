@@ -159,7 +159,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
 
                 {/* Default content (slides up and fades out smoothly on hover) */}
                 <div
-                  className={`relative z-10 p-6 sm:p-7 lg:p-8 w-full text-white transition-all duration-500 ease-in-out motion-reduce:transition-none ${
+                  className={`relative z-1 p-6 sm:p-7 lg:p-8 w-full text-white transition-all duration-500 ease-in-out motion-reduce:transition-none ${
                     hasPoints
                       ? "group-hover:opacity-0 group-hover:-translate-y-2 group-hover:pointer-events-none group-focus-within:opacity-0 group-focus-within:-translate-y-2 group-focus-within:pointer-events-none"
                       : ""
@@ -175,7 +175,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
 
                 {/* Hover content (bullet points slide in and fade in smoothly) */}
                 {hasPoints && (
-                  <div className="absolute inset-x-0 bottom-0 z-20 p-6 sm:p-7 lg:p-8 w-full text-white opacity-0 translate-y-3 transition-all duration-500 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto motion-reduce:transition-none">
+                  <div className="absolute inset-x-0 bottom-0 z-1 p-6 sm:p-7 lg:p-8 w-full text-white opacity-0 translate-y-3 transition-all duration-500 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto motion-reduce:transition-none">
                     <ul className="space-y-4 sm:space-y-5 lg:space-y-6">
                       {card.points!.map((point, pIdx) => (
                         <li key={pIdx} className="flex items-start gap-3 sm:gap-3.5">
