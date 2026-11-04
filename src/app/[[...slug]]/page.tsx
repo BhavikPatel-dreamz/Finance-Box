@@ -118,9 +118,9 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
           Preview —{" "}
           {/* A Route Handler, not a page: <Link> would prefetch it and exit preview on hover. */}
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-          <a className="underline" href={`/api/preview/exit?redirect=${encodeURIComponent(page.uri)}`}>
+          <link className="underline" href={`/api/preview/exit?redirect=${encodeURIComponent(page.uri)}`}>
             exit
-          </a>
+          </link>
         </p>
       ) : null}
       <SectionRenderer sections={page.sections} uri={page.uri} header={header} />

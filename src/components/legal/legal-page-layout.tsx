@@ -89,9 +89,9 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
                   {section.email && (
                     <p className="pt-1">
                       <span className="text-[#6B7280]">Contact: </span>
-                      <a href={`mailto:${section.email}`} className={LINK_CLASS}>
+                      <link href={`mailto:${section.email}`} className={LINK_CLASS}>
                         {section.email}
-                      </a>
+                      </link>
                     </p>
                   )}
                 </div>
