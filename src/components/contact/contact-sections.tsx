@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { GreenButton } from "@/components/ui/green-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
@@ -80,9 +81,9 @@ export function ContactFormBlock({ formSection, form }: { formSection: ContactUs
                   <p className="text-[13px] sm:text-[14px] font-medium leading-[160%]">
                     {formSection.email.label}
                   </p>
-                  <a href={`mailto:${formSection.email.value}`} className="text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826] hover:underline truncate block">
+                  <Link href={`mailto:${formSection.email.value}`} className="text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826] hover:underline truncate block">
                     {formSection.email.value}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

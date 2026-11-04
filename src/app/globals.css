@@ -209,6 +209,7 @@ button, input, select, textarea {
     will-change: transform;
   }
   .group:hover .image-hover-zoom,
+  .group.is-flipped .image-hover-zoom,
   .image-hover-zoom:hover {
     transform: scale(1.03);
   }
@@ -253,6 +254,55 @@ button, input, select, textarea {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
     transform: none !important;
+  }
+}
+
+
+@keyframes hero-float {
+
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+@keyframes hero-chart-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.hero-float-a {
+  animation: hero-float 6s ease-in-out 1.6s infinite;
+}
+
+.hero-float-b {
+  animation: hero-float 7s ease-in-out 2s infinite;
+}
+
+.hero-chart-wipe {
+  clip-path: inset(0 100% 0 0);
+  animation: hero-chart-wipe 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-float-a,
+  .hero-float-b {
+    animation: none;
+  }
+
+  .hero-chart-wipe {
+    animation: none;
+    clip-path: none;
   }
 }
 

@@ -173,10 +173,10 @@ export function Eyebrow({
 
   return (
     <Component
-      className={`${dmMono.className} inline-flex items-center font-mono text-[14px] font-medium uppercase tracking-[1.5px] leading-[18px] ${className}`.trim()}
+      className={`${dmMono.className} inline-flex items-center font-mono ${hasCustomFontSize ? "" : "text-[14px] sm:text-[12px]"
+        } font-medium uppercase tracking-[1.5px] leading-[18px] ${className}`.trim()}
       style={{
         fontFamily: "var(--font-dm-mono), 'DM Mono', monospace",
-        ...(hasCustomFontSize ? {} : { fontSize: "14px" }),
         fontWeight: 500,
         textTransform: "uppercase",
         letterSpacing: "1.5px",

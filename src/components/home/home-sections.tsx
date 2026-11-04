@@ -339,7 +339,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
 
 export function HomeDecisions({ decisions }: { decisions: HomeContent["decisions"] }) {
   return (
-    <Section id="insights" theme="light" spacing="bottom" className="decisions-section px-4 sm:px-6 lg:px-8">
+    <Section id="insights" theme="light" spacing="bottom" className="decisions-section">
       <Container>
         <div className="flex flex-col lg:flex-row rounded-[10px] overflow-hidden border border-gray-200">
 

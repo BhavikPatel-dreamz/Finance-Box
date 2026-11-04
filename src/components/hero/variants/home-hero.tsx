@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import type { HeroConfig } from "../types";
 import { parseEyebrow } from "../utils";
@@ -6,9 +8,52 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { GreenButton } from "@/components/ui/green-button";
 import Container from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
+import { CashVisibilityChart } from "@/components/ui/cash-visibility-chart";
+
+function useCountUp(target: string | undefined, delay = 0, duration = 1400) {
+  const parsed = target ? parseFloat(target) : NaN;
+  const decimals = target ? (target.split(".")[1] || "").length : 0;
+  const [display, setDisplay] = useState<string | undefined>(
+    Number.isNaN(parsed) ? target : (0).toFixed(decimals)
+  );
+
+  useEffect(() => {
+    if (Number.isNaN(parsed)) {
+      setDisplay(target);
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplay(parsed.toFixed(decimals));
+      return;
+    }
+
+    let raf = 0;
+    const timeout = window.setTimeout(() => {
+      const start = performance.now();
+      const tick = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setDisplay((parsed * eased).toFixed(decimals));
+        if (progress < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }, delay);
+
+    return () => {
+      window.clearTimeout(timeout);
+      cancelAnimationFrame(raf);
+    };
+  }, [target, parsed, decimals, delay, duration]);
+
+  return display;
+}
 
 export function HomeHeroVariant({ config }: { config: HeroConfig }) {
   const eyebrowData = parseEyebrow(config.eyebrow, "green-no-dash");
+
+  const closeDisplay = useCountUp(config.closeValue, 600);
+  const runwayDisplay = useCountUp(config.runwayValue, 760, 1600);
 
   const isDefaultTitle =
     Boolean(config.title) &&
@@ -32,7 +77,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
           )}
 
           <Reveal immediate preset="slide-up" delay={220} distance={32}>
-            <h1 className="text-[34px] sm:text-[50px] lg:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
+            <h1 className="text-[34px] sm:text-[50px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
               {isDefaultTitle ? (
                 <>
                   <span className="font-light text-white block">Your Finance</span>
@@ -89,7 +134,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 preset="slide-up"
                 delay={460}
                 distance={28}
-                className="card-hover absolute -top-[95px] sm:-top-[110px] lg:-top-[125px] xl:-top-[143px] left-0 sm:-left-[20px] lg:-left-[50px] xl:-left-[118px] w-[130px] min-[360px]:w-[140px] sm:w-[170px] lg:w-[175px] xl:w-[196px] h-auto min-h-[115px] sm:h-[135px] lg:h-[140px] xl:h-[152px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between"
+                className="hero-float-a card-hover absolute -top-[95px] sm:-top-[110px] lg:-top-[125px] xl:-top-[143px] left-0 sm:-left-[20px] lg:-left-[50px] xl:-left-[118px] w-[130px] min-[360px]:w-[140px] sm:w-[170px] lg:w-[175px] xl:w-[196px] h-auto min-h-[115px] sm:h-[135px] lg:h-[140px] xl:h-[152px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between"
               >
                 <div>
                   <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-mono text-white uppercase tracking-[0.86px] leading-none">
@@ -98,8 +143,8 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 </div>
                 <div>
                   <div className="flex items-baseline gap-1 sm:gap-1.5 mb-3 sm:mb-4">
-                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-[#23C55E] leading-none">
-                      {config.closeValue}
+                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-[#23C55E] leading-none tabular-nums">
+                      {closeDisplay}
                     </span>
                     <span className="text-[11px] sm:text-[12px] font-normal text-white font-sans leading-none">
                       {config.closeUnit || "days"}
@@ -123,15 +168,15 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 preset="slide-up"
                 delay={620}
                 distance={28}
-                className="card-hover absolute -top-[115px] sm:-top-[140px] lg:-top-[165px] xl:-top-[195px] right-0 lg:right-[20px] xl:right-[87px] w-[138px] min-[360px]:w-[150px] sm:w-[180px] lg:w-[175px] xl:w-[194px] h-auto min-h-[125px] sm:h-[140px] lg:h-[138px] xl:h-[147px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between"
+                className="hero-float-b card-hover absolute -top-[115px] sm:-top-[140px] lg:-top-[165px] xl:-top-[195px] right-0 lg:right-[20px] xl:right-[87px] w-[138px] min-[360px]:w-[150px] sm:w-[180px] lg:w-[175px] xl:w-[194px] h-auto min-h-[125px] sm:h-[140px] lg:h-[138px] xl:h-[147px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between"
               >
                 <div>
                   <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-mono text-white uppercase tracking-[0.86px] leading-none mb-2 sm:mb-3">
                     {config.runwayLabel || "RUNWAY VISIBILITY"}
                   </p>
                   <div className="flex items-baseline gap-1 sm:gap-1.5">
-                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-[#23C55E] leading-none">
-                      {config.runwayValue}
+                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-[#23C55E] leading-none tabular-nums">
+                      {runwayDisplay}
                     </span>
                     <span className="text-[11px] sm:text-[12px] font-normal text-white font-sans leading-none">
                       {config.runwayUnit || "months"}
@@ -153,13 +198,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 duration={900}
                 className="relative w-full h-[200px] sm:h-[250px] md:h-[270px] xl:h-[293px]"
               >
-                <Image
-                  src={config.chartImage}
-                  alt={config.chartTitle || "Financial chart"}
-                  fill
-                  priority
-                  className="object-contain"
-                />
+                <CashVisibilityChart title={config.chartTitle || "Cash visibility"} />
               </Reveal>
             )}
           </div>
