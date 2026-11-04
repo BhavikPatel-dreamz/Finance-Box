@@ -37,14 +37,32 @@ function media(value: unknown): { url: string; alt: string } | null {
 }
 function splitHighlight(raw: unknown, fallbackTitle: string, fallbackHighlight: string) {
   const text = str(raw) ?? "";
-  const match = text.match(/(.*)<span[^>]*>([\s\S]*?)<\/span>/i);
+  if (!text) {
+    return { title: fallbackTitle, highlight: fallbackHighlight };
+  }
+
+  const match = text.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
   if (match) {
+    const before = cleanHtml(match[1], "");
+    const highlight = cleanHtml(match[2], fallbackHighlight);
+    const after = cleanHtml(match[3], "");
+    const fullBefore = (before + (after ? ` ${after}` : "")).trim();
     return {
-      title: cleanHtml(match[1], fallbackTitle),
-      highlight: cleanHtml(match[2], fallbackHighlight),
+      title: fullBefore || fallbackTitle,
+      highlight: highlight || fallbackHighlight,
     };
   }
-  return { title: cleanHtml(text, fallbackTitle), highlight: fallbackHighlight };
+
+  const clean = cleanHtml(text, fallbackTitle);
+  if (fallbackHighlight && clean.endsWith(fallbackHighlight) && clean.length > fallbackHighlight.length) {
+    const trimmedTitle = clean.slice(0, -fallbackHighlight.length).trim();
+    return {
+      title: trimmedTitle || fallbackTitle,
+      highlight: fallbackHighlight,
+    };
+  }
+
+  return { title: clean || fallbackTitle, highlight: fallbackHighlight };
 }
 function link(value: unknown, fallback: { label: string; url: string }) {
   if (!value || typeof value !== "object") return fallback;

@@ -10,8 +10,9 @@ import Section from "../ui/section";
 
 export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: ReactNode }) {
   const isDefaultTitle =
-    hero.title === "Your Finance Function," &&
-    hero.highlight === "Built and Run For You";
+    Boolean(hero.title) &&
+    hero.title.replace(/,$/, "").trim() === "Your Finance Function" &&
+    hero.highlight?.trim() === "Built and Run For You";
 
   return (
     <section id="product" className="hero-section relative overflow-hidden bg-[#121826] text-white">
@@ -20,7 +21,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/home/homepage-hero-bg.svg)" }}
       />
-      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:h-[771px] flex flex-col justify-between">
+      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:min-h-[771px] flex flex-col justify-between">
 
         {header}
 
@@ -28,7 +29,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
           <div className="relative flex-1 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 xl:gap-0 items-start pt-4 sm:pt-6 lg:pt-10 xl:pt-16">
 
             {/* Left Column */}
-            <div className="lg:col-span-7 pt-2 sm:pt-4 lg:pt-8 xl:pt-[73px]">
+            <div className="lg:col-span-7">
               <Reveal immediate preset="slide-up" delay={80} distance={18}>
                 <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-5">
                   {hero.eyebrow}
@@ -36,7 +37,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
               </Reveal>
 
               <Reveal immediate preset="slide-up" delay={220} distance={32}>
-                <h1 className="text-[34px] sm:text-[50px] md:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
+                <h1 className="text-[34px] sm:text-[50px] md:text-[54px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px] max-w-[651px]">
                   {isDefaultTitle ? (
                     <>
                       <span className="font-light text-white block">Your Finance</span>
@@ -73,7 +74,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
             </div>
 
             {/* Right Column */}
-            <div className="lg:col-span-5 relative flex flex-col items-center lg:items-end pt-28 sm:pt-36 lg:pt-[180px] xl:pt-[252px] lg:mr-0 xl:-mr-[38px]">
+            <div className="lg:col-span-5 relative flex flex-col items-center lg:items-end pt-28 sm:pt-36 lg:pt-[180px] xl:pt-[200px] lg:mr-0 xl:-mr-[38px]">
 
               <div className="relative w-full max-w-[420px] lg:max-w-[440px] xl:max-w-[519px]">
 
@@ -100,7 +101,11 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
                       </span>
                     </div>
                     <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-normal text-white leading-none">
-                      ↓ {hero.closeTrend}
+                      {hero.closeTrend
+                        ? hero.closeTrend.startsWith("↓")
+                          ? hero.closeTrend
+                          : `↓ ${hero.closeTrend}`
+                        : "↓ Down from 18"}
                     </p>
                   </div>
                 </Reveal>
@@ -161,6 +166,15 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
   );
 }
 
+function HoverLine({ className = "bg-[#23C55E]" }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`pointer-events-none absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none ${className}`}
+    />
+  );
+}
+
 export function HomeDifference({ difference }: { difference: HomeContent["difference"] }) {
   const icons = [
     "/icons/one-finace-team.png",
@@ -169,14 +183,6 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
     "/icons/cost-intelligence.png",
     "/icons/automation.png",
   ];
-  function HoverLine({ className = "bg-[#23C55E]" }: { className?: string }) {
-    return (
-      <span
-        aria-hidden="true"
-        className={`pointer-events-none absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none ${className}`}
-      />
-    );
-  }
 
   return (
     <Section theme="dark" spacing="both" className="differance-section">

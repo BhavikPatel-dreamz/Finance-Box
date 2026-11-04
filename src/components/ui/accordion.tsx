@@ -30,7 +30,7 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
               onClick={() => toggle(index)}
               aria-expanded={isOpen}
               aria-controls={panelId}
-              className="w-full flex items-center justify-between gap-4 p-6 md:p-8 text-left focus:outline-none cursor-pointer"
+              className="w-full flex items-center justify-between gap-4 py-3 px-4 md:p-8 text-left focus:outline-none cursor-pointer"
             >
               <span className="text-[18px] md:text-[25px] font-medium text-[#16181d]">
                 {item.question}
@@ -63,7 +63,7 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
                 }`}
             >
               <div className="overflow-hidden">
-                <div className="px-6 md:px-8 pb-6 md:pb-8 text-[16px] md:text-[18px] font-normal leading-[160%] text-[#16181d]/70">
+                <div className="px-4 md:px-8 pb-6 md:pb-8 text-[16px] md:text-[18px] font-normal leading-[160%] text-[#16181d]/70">
                   {item.answer}
                 </div>
               </div>

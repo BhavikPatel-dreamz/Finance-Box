@@ -138,13 +138,30 @@ export function ClientsTrustedCompanies({ logosSection }: { logosSection: Client
     <Section theme="light" spacing="both" className="trusted-clients-logo">
       <Container>
         <Reveal preset="slide-up" distance={20} className="text-center mb-12 sm:mb-14 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.2] tracking-[-0.8px] text-[#121826]">
-            {logosSection.title1}{" "}
-            <span className="text-[#23C55E] font-bold italic">{logosSection.highlight1}</span>
-          </h2>
-          <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-bold italic leading-[1.2] tracking-[-0.8px] text-[#121826]">
-            {logosSection.title2}
-          </h2>
+          {(() => {
+            let t1 = logosSection.title1;
+            const h1 = logosSection.highlight1;
+            const t2 = logosSection.title2;
+            if (t1 && h1 && t1.endsWith(h1)) {
+              t1 = t1.slice(0, -h1.length).trim();
+            }
+            if (t1 && t2 && t1.endsWith(t2)) {
+              t1 = t1.slice(0, -t2.length).trim();
+            }
+            return (
+              <>
+                <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.2] tracking-[-0.8px] text-[#121826]">
+                  {t1}{" "}
+                  {h1 && <span className="text-[#23C55E] font-bold italic">{h1}</span>}
+                </h2>
+                {t2 && (
+                  <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-bold italic leading-[1.2] tracking-[-0.8px] text-[#121826]">
+                    {t2}
+                  </h2>
+                )}
+              </>
+            );
+          })()}
         </Reveal>
 
         <StaggerGroup staggerDelay={60} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-[1px] bg-[#E5E7EB] border border-[#E5E7EB] rounded-[16px] sm:rounded-[20px] overflow-hidden">

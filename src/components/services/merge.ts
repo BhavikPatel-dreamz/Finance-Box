@@ -79,14 +79,49 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
   return typeName.endsWith(`${layoutName}Layout`);
 }
 
+function splitHighlight(
+  raw: unknown,
+  fallbackTitle: string,
+  fallbackHighlight: string,
+): { title: string; highlight: string } {
+  const text = str(raw) ?? "";
+  if (!text) {
+    return { title: fallbackTitle, highlight: fallbackHighlight };
+  }
+
+  const match = text.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+  if (match) {
+    const before = cleanHtml(match[1], "");
+    const highlight = cleanHtml(match[2], fallbackHighlight);
+    const after = cleanHtml(match[3], "");
+    const fullBefore = (before + (after ? ` ${after}` : "")).trim();
+    return {
+      title: fullBefore || fallbackTitle,
+      highlight: highlight || fallbackHighlight,
+    };
+  }
+
+  const clean = cleanHtml(text, fallbackTitle);
+  if (fallbackHighlight && clean.endsWith(fallbackHighlight) && clean.length > fallbackHighlight.length) {
+    const trimmedTitle = clean.slice(0, -fallbackHighlight.length).trim();
+    return {
+      title: trimmedTitle || fallbackTitle,
+      highlight: fallbackHighlight,
+    };
+  }
+
+  return { title: clean || fallbackTitle, highlight: fallbackHighlight };
+}
+
 /* -------------------------------------------------------------------------- */
 /*                              Section Mergers                                */
 /* -------------------------------------------------------------------------- */
 
 function mergeHero(next: ServicesContent, section: Record<string, any>): void {
   next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  next.hero.title = cleanHtml(section.title, next.hero.title);
-  next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
+  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.title = titleData.title;
+  next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
   next.hero.text = cleanHtml(section.description, next.hero.text);
   next.hero.primary = link(section.primaryCtaButton, next.hero.primary);
   next.hero.secondary = link(section.secondaryCtaButton, next.hero.secondary);
@@ -101,11 +136,12 @@ function mergeHero(next: ServicesContent, section: Record<string, any>): void {
         highlight: "",
         text: "",
       };
+      const titleData = splitHighlight(card.title, fallback.title, fallback.highlight);
       return {
         number: cleanHtml(card.label, fallback.number),
         label: cleanHtml(card.label, fallback.label),
-        title: cleanHtml(card.title, fallback.title),
-        highlight: cleanHtml(card.highlight, fallback.highlight),
+        title: titleData.title,
+        highlight: cleanHtml(card.highlight, titleData.highlight),
         text: cleanHtml(card.description, fallback.text),
       } satisfies ServicesTier;
     });
@@ -154,13 +190,27 @@ function mergeDepthAndDetails(
         fallback?.anchor ??
         `tier-${index + 1}`;
 
+      const allFallbackItems = next.details.flatMap((d) => d.items);
       const nestedServices = rows(tier.services);
       const items =
         nestedServices.length > 0
-          ? nestedServices.map((svc) => ({
-              title: cleanHtml(svc.title, ""),
-              text: cleanHtml(svc.description, ""),
-            }))
+          ? nestedServices.map((svc, sIdx) => {
+              const svcTitle = cleanHtml(svc.title, "");
+              const matchByTitle =
+                fallback?.items?.find(
+                  (fi) => fi.title.trim().toLowerCase() === svcTitle.toLowerCase()
+                ) ??
+                allFallbackItems.find(
+                  (fi) => fi.title.trim().toLowerCase() === svcTitle.toLowerCase()
+                );
+              const fallbackItem = matchByTitle ?? fallback?.items?.[sIdx];
+
+              return {
+                title: svcTitle || fallbackItem?.title || "",
+                text: cleanHtml(svc.description, fallbackItem?.text ?? ""),
+                description: fallbackItem?.description ?? "",
+              };
+            })
           : fallback?.items ?? [];
 
       return {
@@ -233,29 +283,9 @@ function mergeInvestors(next: ServicesContent, section: Record<string, any>): vo
 
 /** CTA Section → pressure (the "Tell Us Where The Pressure Is" block). */
 function mergePressure(next: ServicesContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  
-  // Extract <b> or <strong> content
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle
-        .replace(highlight, "")
-        .replace(/\s+/g, " ")
-        .trim();
-      
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import type { HomeContent } from "@/content/home";
+import { homeContent, type HomeContent } from "@/content/home";
 import Container from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
@@ -12,18 +12,7 @@ interface LeadershipProps {
   leadership: HomeContent["leadership"];
 }
 
-const fallbackPeople = [
-  {
-    image: { url: "/home/amit-mulchandani.png", alt: "Amit Mulchandani" },
-    name: "Amit Mulchandani",
-    role: "FOUNDER & CEO, FINANCE IN A BOX",
-  },
-  {
-    image: { url: "/home/Berena-Reynoso.png", alt: "Berena Reynoso" },
-    name: "Berena Reynoso",
-    role: "HEAD OF OPERATIONS",
-  },
-];
+const fallbackPeople = homeContent.leadership.people;
 
 // Per-person image scale for assets exported with extra padding
 const IMAGE_SCALE: Record<string, number> = {
@@ -38,13 +27,15 @@ export function Leadership({ leadership }: LeadershipProps) {
   const basePeople =
     leadership?.people && leadership.people.length > 0
       ? leadership.people
-      : fallbackPeople;
+      : homeContent.leadership.people;
 
-  // Repeat small lists so there are always enough real slides
-  const people =
-    basePeople.length <= 2
-      ? [...basePeople, ...basePeople, ...basePeople]
-      : basePeople;
+  // Ensure all team members from home.ts are present even if only a partial list was supplied
+  const defaultPeople = homeContent.leadership.people;
+  const existingNames = new Set(basePeople.map((p) => p.name.trim().toLowerCase()));
+  const missingPeople = defaultPeople.filter(
+    (p) => !existingNames.has(p.name.trim().toLowerCase())
+  );
+  const people = missingPeople.length > 0 ? [...basePeople, ...missingPeople] : basePeople;
 
   const total = people.length;
   const slides = [...people.slice(-CLONES), ...people, ...people.slice(0, CLONES)];

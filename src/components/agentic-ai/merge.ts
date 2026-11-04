@@ -69,6 +69,40 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
   return typeName.endsWith(`${layoutName}Layout`);
 }
 
+function splitHighlight(
+  raw: unknown,
+  fallbackTitle: string,
+  fallbackHighlight: string,
+): { title: string; highlight: string } {
+  const text = str(raw) ?? "";
+  if (!text) {
+    return { title: fallbackTitle, highlight: fallbackHighlight };
+  }
+
+  const match = text.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+  if (match) {
+    const before = cleanHtml(match[1], "");
+    const highlight = cleanHtml(match[2], fallbackHighlight);
+    const after = cleanHtml(match[3], "");
+    const fullBefore = (before + (after ? ` ${after}` : "")).trim();
+    return {
+      title: fullBefore || fallbackTitle,
+      highlight: highlight || fallbackHighlight,
+    };
+  }
+
+  const clean = cleanHtml(text, fallbackTitle);
+  if (fallbackHighlight && clean.endsWith(fallbackHighlight) && clean.length > fallbackHighlight.length) {
+    const trimmedTitle = clean.slice(0, -fallbackHighlight.length).trim();
+    return {
+      title: trimmedTitle || fallbackTitle,
+      highlight: fallbackHighlight,
+    };
+  }
+
+  return { title: clean || fallbackTitle, highlight: fallbackHighlight };
+}
+
 /* -------------------------------------------------------------------------- */
 /*                              Section Mergers                                */
 /* -------------------------------------------------------------------------- */
@@ -76,16 +110,9 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
 /** Common Banner Section → hero. */
 function mergeHero(next: AgenticAiContent, section: Record<string, any>): void {
   next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  next.hero.title = cleanHtml(section.title, next.hero.title);
-  
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  if (boldMatch && boldMatch[1]) {
-    next.hero.highlight = cleanHtml(boldMatch[1], "").trim();
-  } else {
-    next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
-  }
-
+  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.title = titleData.title;
+  next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
   next.hero.text = cleanHtml(section.description, next.hero.text);
   next.hero.cta = link(section.ctaButton, next.hero.cta);
   
@@ -104,10 +131,9 @@ function mergeHero(next: AgenticAiContent, section: Record<string, any>): void {
 /** About Agentic Section → whatIs. */
 function mergeWhatIs(next: AgenticAiContent, section: Record<string, any>): void {
   next.whatIs.eyebrow = cleanHtml(section.subTitle, next.whatIs.eyebrow);
-  next.whatIs.title = cleanHtml(section.title, next.whatIs.title);
-  
-  // ❌ highlight aur text2 ACF me nahi hain, isliye default static values rahengi.
-  
+  const titleData = splitHighlight(section.title, next.whatIs.title, next.whatIs.highlight);
+  next.whatIs.title = titleData.title;
+  next.whatIs.highlight = titleData.highlight;
   next.whatIs.text1 = cleanHtml(section.description, next.whatIs.text1);
 
   const features = rows(section.aboutAgentics);
@@ -125,17 +151,25 @@ function mergeWhatIs(next: AgenticAiContent, section: Record<string, any>): void
 
 /** Your Own Agentic Section → buildYourOwn. */
 function mergeBuildYourOwn(next: AgenticAiContent, section: Record<string, any>): void {
-  next.buildYourOwn.title = cleanHtml(section.title, next.buildYourOwn.title);
+  const titleData = splitHighlight(section.title, next.buildYourOwn.title, next.buildYourOwn.highlight);
+  next.buildYourOwn.title = titleData.title;
+  next.buildYourOwn.highlight = titleData.highlight;
   next.buildYourOwn.text = cleanHtml(section.description, next.buildYourOwn.text);
 
   const agents = rows(section.buildYourOwnAgentic);
   if (agents.length > 0) {
+    const seenTexts = new Set<string>();
     next.buildYourOwn.agents = agents.map((agent, index) => {
       const fallback = next.buildYourOwn.agents[index];
+      let text = cleanHtml(agent.content, fallback?.text ?? "");
+      if (seenTexts.has(text) && fallback?.text && fallback.text !== text) {
+        text = fallback.text;
+      }
+      seenTexts.add(text);
       return {
         icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
         title: cleanHtml(agent.title, fallback?.title ?? ""),
-        text: cleanHtml(agent.content, fallback?.text ?? ""),
+        text,
       } satisfies AgenticAiAgent;
     });
   }
@@ -147,12 +181,18 @@ function mergePeopleOps(next: AgenticAiContent, section: Record<string, any>): v
 
   const agents = rows(section.agents);
   if (agents.length > 0) {
+    const seenTexts = new Set<string>();
     next.peopleOps.agents = agents.map((agent, index) => {
       const fallback = next.peopleOps.agents[index];
+      let text = cleanHtml(agent.content, fallback?.text ?? "");
+      if (seenTexts.has(text) && fallback?.text && fallback.text !== text) {
+        text = fallback.text;
+      }
+      seenTexts.add(text);
       return {
         icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
         title: cleanHtml(agent.title, fallback?.title ?? ""),
-        text: cleanHtml(agent.content, fallback?.text ?? ""),
+        text,
       } satisfies AgenticAiAgent;
     });
   }
@@ -214,7 +254,9 @@ function mergeProvenArchitecture(next: AgenticAiContent, section: Record<string,
 
 /** Join Waitlist Section → waitlist. */
 function mergeWaitlist(next: AgenticAiContent, section: Record<string, any>): void {
-  next.waitlist.title = cleanHtml(section.title, next.waitlist.title);
+  const titleData = splitHighlight(section.title, next.waitlist.title, next.waitlist.highlight);
+  next.waitlist.title = titleData.title;
+  next.waitlist.highlight = titleData.highlight;
   next.waitlist.text = cleanHtml(section.description, next.waitlist.text);
 }
 
@@ -236,23 +278,9 @@ function mergeFaq(next: AgenticAiContent, section: Record<string, any>): void {
 
 /** CTA Section → pressure. */
 function mergePressure(next: AgenticAiContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

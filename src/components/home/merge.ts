@@ -93,6 +93,65 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
   return typeName.endsWith(`${layoutName}Layout`);
 }
 
+function splitHighlight(
+  raw: unknown,
+  fallbackTitle: string,
+  fallbackHighlight: string,
+): { title: string; highlight: string } {
+  const text = str(raw) ?? "";
+  if (!text) {
+    return { title: fallbackTitle, highlight: fallbackHighlight };
+  }
+
+  const match = text.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+  if (match) {
+    const before = cleanHtml(match[1], "");
+    const highlight = cleanHtml(match[2], fallbackHighlight);
+    const after = cleanHtml(match[3], "");
+    const fullBefore = (before + (after ? ` ${after}` : "")).trim();
+    return {
+      title: fullBefore || fallbackTitle,
+      highlight: highlight || fallbackHighlight,
+    };
+  }
+
+  const clean = cleanHtml(text, fallbackTitle);
+  if (fallbackHighlight && clean.endsWith(fallbackHighlight) && clean.length > fallbackHighlight.length) {
+    const trimmedTitle = clean.slice(0, -fallbackHighlight.length).trim();
+    return {
+      title: trimmedTitle || fallbackTitle,
+      highlight: fallbackHighlight,
+    };
+  }
+
+  return { title: clean || fallbackTitle, highlight: fallbackHighlight };
+}
+
+function parseStatValue(
+  rawVal: unknown,
+  fallbackVal: string,
+  fallbackUnit: string,
+): { value: string; unit: string } {
+  if (typeof rawVal !== "string") {
+    return { value: fallbackVal, unit: fallbackUnit };
+  }
+  const spanMatch = rawVal.match(/<span[^>]*>(.*?)<\/span>(.*)/i);
+  if (spanMatch) {
+    const val = cleanHtml(spanMatch[1], fallbackVal);
+    const unit = cleanHtml(spanMatch[2], fallbackUnit);
+    return { value: val, unit: unit || fallbackUnit };
+  }
+  const clean = cleanHtml(rawVal, "");
+  const spaceIdx = clean.indexOf(" ");
+  if (spaceIdx > 0) {
+    return {
+      value: clean.slice(0, spaceIdx).trim() || fallbackVal,
+      unit: clean.slice(spaceIdx + 1).trim() || fallbackUnit,
+    };
+  }
+  return { value: clean || fallbackVal, unit: fallbackUnit };
+}
+
 /* -------------------------------------------------------------------------- */
 /*                              Section Mergers                                */
 /* -------------------------------------------------------------------------- */
@@ -100,9 +159,10 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
 /** Home Banner Section → hero + stat cards. */
 function mergeHero(next: HomeContent, section: Record<string, any>): void {
   next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  next.hero.title = cleanHtml(section.title, next.hero.title);
+  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.title = titleData.title;
+  next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
   next.hero.text = cleanHtml(section.description, next.hero.text);
-  next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
   next.hero.primary = link(section.ctaButton, next.hero.primary);
 
   if (section.floatingCtaButton) {
@@ -114,13 +174,17 @@ function mergeHero(next: HomeContent, section: Record<string, any>): void {
     const [first, second] = statCards;
     if (first) {
       next.hero.closeLabel = cleanHtml(first.label, next.hero.closeLabel);
-      next.hero.closeValue = cleanHtml(first.value, next.hero.closeValue);
-      next.hero.closeUnit = cleanHtml(first.note, next.hero.closeUnit);
+      const parsed = parseStatValue(first.value, next.hero.closeValue, next.hero.closeUnit);
+      next.hero.closeValue = parsed.value;
+      next.hero.closeUnit = parsed.unit;
+      next.hero.closeTrend = cleanHtml(first.note, next.hero.closeTrend);
     }
     if (second) {
       next.hero.runwayLabel = cleanHtml(second.label, next.hero.runwayLabel);
-      next.hero.runwayValue = cleanHtml(second.value, next.hero.runwayValue);
-      next.hero.runwayUnit = cleanHtml(second.note, next.hero.runwayUnit);
+      const parsed = parseStatValue(second.value, next.hero.runwayValue, next.hero.runwayUnit);
+      next.hero.runwayValue = parsed.value;
+      next.hero.runwayUnit = parsed.unit;
+      next.hero.runwayTrend = cleanHtml(second.note, next.hero.runwayTrend);
     }
   }
 }
@@ -128,7 +192,9 @@ function mergeHero(next: HomeContent, section: Record<string, any>): void {
 /** Home When Finance Matters → founders. */
 function mergeFounders(next: HomeContent, section: Record<string, any>): void {
   next.founders.eyebrow = cleanHtml(section.subTitle, next.founders.eyebrow);
-  next.founders.title = cleanHtml(section.title, next.founders.title);
+  const titleData = splitHighlight(section.title, next.founders.title, next.founders.highlight);
+  next.founders.title = titleData.title;
+  next.founders.highlight = titleData.highlight;
   next.founders.text = cleanHtml(section.description, next.founders.text);
   next.founders.cta = link(section.ctaButton, next.founders.cta);
 
@@ -244,14 +310,22 @@ function mergeLeadership(next: HomeContent, section: Record<string, any>): void 
 
   const slides = rows(section.slides);
   if (slides.length > 0) {
-    const titles = slides
-      .map((slide) => cleanHtml(slide.title, ""))
-      .filter(Boolean);
-    const descriptions = slides
-      .map((slide) => cleanHtml(slide.description, ""))
-      .filter(Boolean);
-    if (titles.length > 0) next.leadership.title = titles.join(" ");
-    if (descriptions.length > 0) next.leadership.text = descriptions.join("\n\n");
+    const titles = Array.from(
+      new Set(
+        slides
+          .map((slide) => cleanHtml(slide.title, ""))
+          .filter(Boolean),
+      ),
+    );
+    const descriptions = Array.from(
+      new Set(
+        slides
+          .map((slide) => cleanHtml(slide.description, ""))
+          .filter(Boolean),
+      ),
+    );
+    if (titles.length > 0) next.leadership.title = titles[0];
+    if (descriptions.length > 0) next.leadership.text = descriptions[0];
   }
 
   // GraphQL alias in section.tsx is `teamMembersList` (to disambiguate
@@ -259,7 +333,7 @@ function mergeLeadership(next: HomeContent, section: Record<string, any>): void 
   // so merge still works if the alias is ever reverted.
   const teamMembers = rows(section.teamMembersList ?? section.teamMembers);
   if (teamMembers.length > 0) {
-    next.leadership.people = teamMembers.map((member, index) => {
+    const cmsPeople = teamMembers.map((member, index) => {
       const fallback = next.leadership.people[index];
       return {
         image: media(member.image) ?? fallback?.image ?? null,
@@ -267,35 +341,21 @@ function mergeLeadership(next: HomeContent, section: Record<string, any>): void 
         role: cleanHtml(member.designation, fallback?.role ?? ""),
       } satisfies HomePerson;
     });
+
+    const cmsNames = new Set(cmsPeople.map((p) => p.name.trim().toLowerCase()));
+    const remainingPeople = next.leadership.people.filter(
+      (p) => !cmsNames.has(p.name.trim().toLowerCase())
+    );
+
+    next.leadership.people = [...cmsPeople, ...remainingPeople];
   }
 }
 
 /** CTA Section → pressure (the "Tell Us Where The Pressure Is" block). */
 function mergePressure(next: HomeContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  // ACF WYSIWYG title may include <b>...</b> for the green highlight phrase.
-  const boldMatch =
-    rawTitle.match(/<b>(.*?)<\/b>/i) ||
-    rawTitle.match(/<strong>(.*?)<\/strong>/i);
-
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle
-        .replace(highlight, "")
-        .replace(/\s+/g, " ")
-        .trim();
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }

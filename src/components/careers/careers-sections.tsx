@@ -20,7 +20,7 @@ export function CareersBanner({ hero, header }: { hero: CareersContent["hero"]; 
         aria-hidden="true"
       />
 
-      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:h-[771px] z-10 flex items-center justify-center flex-col h-full">
+      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[660px] z-10 flex items-center justify-center flex-col h-full">
         {header}
 
         <Container>
@@ -79,8 +79,23 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
             {/* Right Column (Text & Points) */}
             <Reveal preset="slide-right" distance={20} className="w-full lg:w-1/2 flex flex-col justify-center">
               <h2 className="text-[30px] sm:text-[38px] lg:text-[46px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 sm:mb-8 text-[#121826]">
-                {whyWork.title}{" "}
-                <span className="text-[#23C55E] font-black italic">{whyWork.highlight}</span>
+                {(() => {
+                  let title = whyWork.title;
+                  const hl = whyWork.highlight;
+                  if (title && hl && title.endsWith(hl)) {
+                    title = title.slice(0, -hl.length).trim();
+                  }
+                  return (
+                    <>
+                      {title}{" "}
+                      {hl && (
+                        <span className="text-[#23C55E] font-black italic">
+                          {hl}
+                        </span>
+                      )}
+                    </>
+                  );
+                })()}
               </h2>
 
               <StaggerGroup staggerDelay={130} className="flex flex-col gap-3.5 sm:gap-4">

@@ -67,6 +67,40 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
   return typeName.endsWith(`${layoutName}Layout`);
 }
 
+function splitHighlight(
+  raw: unknown,
+  fallbackTitle: string,
+  fallbackHighlight: string,
+): { title: string; highlight: string } {
+  const text = str(raw) ?? "";
+  if (!text) {
+    return { title: fallbackTitle, highlight: fallbackHighlight };
+  }
+
+  const match = text.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
+  if (match) {
+    const before = cleanHtml(match[1], "");
+    const highlight = cleanHtml(match[2], fallbackHighlight);
+    const after = cleanHtml(match[3], "");
+    const fullBefore = (before + (after ? ` ${after}` : "")).trim();
+    return {
+      title: fullBefore || fallbackTitle,
+      highlight: highlight || fallbackHighlight,
+    };
+  }
+
+  const clean = cleanHtml(text, fallbackTitle);
+  if (fallbackHighlight && clean.endsWith(fallbackHighlight) && clean.length > fallbackHighlight.length) {
+    const trimmedTitle = clean.slice(0, -fallbackHighlight.length).trim();
+    return {
+      title: trimmedTitle || fallbackTitle,
+      highlight: fallbackHighlight,
+    };
+  }
+
+  return { title: clean || fallbackTitle, highlight: fallbackHighlight };
+}
+
 /* -------------------------------------------------------------------------- */
 /*                              Section Mergers                                */
 /* -------------------------------------------------------------------------- */
@@ -74,36 +108,26 @@ function matchesLayout(typeName: string, layoutName: string): boolean {
 /** Common Banner Section → hero. */
 function mergeHero(next: CareersContent, section: Record<string, any>): void {
   next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  next.hero.title = cleanHtml(section.title, next.hero.title);
-  
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  if (boldMatch && boldMatch[1]) {
-    next.hero.highlight = cleanHtml(boldMatch[1], "").trim();
-  } else {
-    next.hero.highlight = cleanHtml(section.highlight, next.hero.highlight);
+  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.title = titleData.title;
+  let resolvedHighlight = cleanHtml(section.highlight, titleData.highlight);
+  const resolvedHighlight2 = cleanHtml(section.highlight2, next.hero.highlight2);
+
+  if (resolvedHighlight && resolvedHighlight2 && resolvedHighlight.endsWith(resolvedHighlight2)) {
+    resolvedHighlight = resolvedHighlight.slice(0, -resolvedHighlight2.length).trim();
   }
 
-  next.hero.highlight2 = cleanHtml(section.highlight2, next.hero.highlight2);
+  next.hero.highlight = resolvedHighlight;
+  next.hero.highlight2 = resolvedHighlight2;
   next.hero.text = cleanHtml(section.description, next.hero.text);
   next.hero.cta = link(section.ctaButton, next.hero.cta);
 }
 
 /** Careers Why Work Section → whyWork. */
 function mergeWhyWork(next: CareersContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.whyWork.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
-    next.whyWork.title = remainder || cleanTitle;
-    next.whyWork.highlight = highlight;
-  } else {
-    next.whyWork.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.whyWork.title, next.whyWork.highlight);
+  next.whyWork.title = titleData.title;
+  next.whyWork.highlight = titleData.highlight;
   next.whyWork.image = media(section.image)?.url ?? next.whyWork.image;
 
   const points = rows(section.points);
@@ -184,23 +208,9 @@ function mergeFaq(next: CareersContent, section: Record<string, any>): void {
 
 /** CTA Section → pressure. */
 function mergePressure(next: CareersContent, section: Record<string, any>): void {
-  const rawTitle = str(section.title) ?? "";
-  const boldMatch = rawTitle.match(/<b>(.*?)<\/b>/i) || rawTitle.match(/<strong>(.*?)<\/strong>/i);
-  const cleanTitle = cleanHtml(section.title, next.pressure.title);
-
-  if (boldMatch && boldMatch[1]) {
-    const highlight = cleanHtml(boldMatch[1], "").trim();
-    if (highlight) {
-      const remainder = cleanTitle.replace(highlight, "").replace(/\s+/g, " ").trim();
-      next.pressure.title = remainder || cleanTitle;
-      next.pressure.emphasis = highlight;
-    } else {
-      next.pressure.title = cleanTitle;
-    }
-  } else {
-    next.pressure.title = cleanTitle;
-  }
-
+  const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
+  next.pressure.title = titleData.title;
+  next.pressure.emphasis = titleData.highlight;
   next.pressure.text = cleanHtml(section.description, next.pressure.text);
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }
