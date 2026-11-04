@@ -74,6 +74,8 @@ export type KnowledgeHubContent = {
     highlight: string;
     text: string;
     cta: KnowledgeHubLink;
+    /** Contact Form 7 form ID the form submits to (from WordPress `formId`). */
+    formId: string;
   };
   // 👇 NAYA: Pressure / CTA section
   pressure: {
@@ -157,6 +159,7 @@ export const knowledgeHubContent: KnowledgeHubContent = {
     highlight: "insights in your inbox?",
     text: "Monthly summaries of new guides, templates, and case studies. No spam.",
     cta: { label: "Join our Talent Network", url: "/careers" },
+    formId: "1414",
   },
   // 👇 NAYA: Pressure defaults
   pressure: {

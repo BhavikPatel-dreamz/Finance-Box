@@ -24,6 +24,13 @@ export const settingsTag = "settings";
 export const menusTag = "menus";
 export const schemaTag = "schema";
 export const sitemapTag = "sitemap";
+/** Every Contact Form 7 field list (see `src/lib/forms/cf7.ts`). */
+export const formsTag = "forms";
+
+/** One Contact Form 7 form's field list, e.g. `form:1338`. */
+export function formTag(id: string) {
+  return `form:${id}`;
+}
 
 /** WordPress post types served by their own routes (/blog, /case-study, /team). */
 export type ContentType = "post" | "case-study" | "team";

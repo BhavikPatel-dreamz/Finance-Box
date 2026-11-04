@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { GreenButton } from "@/components/ui/green-button";
@@ -11,7 +10,6 @@ import Section from "@/components/ui/section";
 import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { AgenticAiContent } from "@/content/agentic-ai";
-import { useFormSubmit } from "@/hooks/use-form-submit";
 
 // Needs a parent with `group relative isolate overflow-hidden`. Same motion as the button circle.
 function CardFill({ className = "bg-[#23C55E]/[0.13]" }: { className?: string }) {
@@ -382,31 +380,7 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
   );
 }
 
-export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["waitlist"] }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    message: "",
-  });
-  
-  // Using our custom hook with errors state
-  const { status, message, errors, submitForm } = useFormSubmit();
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    
-    const success = await submitForm("/api/waitlist", { ...formData, formId: waitlist.formId });
-    
-    if (success) {
-      setFormData({ name: "", email: "", company: "", message: "" });
-    }
-  };
-
+export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent["waitlist"]; form: ReactNode }) {
   return (
     <Section theme="dark" spacing="both" className="waitlist-section">
       <Container>
@@ -434,79 +408,7 @@ export function AgenticWaitlist({ waitlist }: { waitlist: AgenticAiContent["wait
           </Reveal>
 
           <Reveal preset="slide-right" distance={20} className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              
-              {/* Name Field */}
-              <div>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Name"
-                  className={`w-full h-[50px] rounded-[8px] border ${errors["your-name"] ? 'border-red-500' : 'border-white/10'} bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200`}
-                />
-                {errors["your-name"] && <p className="text-red-500 text-xs mt-1 ml-1">{errors["your-name"]}</p>}
-              </div>
-
-              {/* Email Field */}
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Work E-mail"
-                  className={`w-full h-[50px] rounded-[8px] border ${errors["your-email"] ? 'border-red-500' : 'border-white/10'} bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200`}
-                />
-                {errors["your-email"] && <p className="text-red-500 text-xs mt-1 ml-1">{errors["your-email"]}</p>}
-              </div>
-
-              {/* Company Field */}
-              <div>
-                <input
-                  type="text"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  placeholder="Company"
-                  className={`w-full h-[50px] rounded-[8px] border ${errors["your-company"] ? 'border-red-500' : 'border-white/10'} bg-[#121826] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200`}
-                />
-                {errors["your-company"] && <p className="text-red-500 text-xs mt-1 ml-1">{errors["your-company"]}</p>}
-              </div>
-
-              {/* Message Field */}
-              <div>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Write your message..."
-                  rows={5}
-                  className={`w-full rounded-[8px] border ${errors["your-message"] ? 'border-red-500' : 'border-white/10'} bg-[#121826] p-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none`}
-                />
-                {errors["your-message"] && <p className="text-red-500 text-xs mt-1 ml-1">{errors["your-message"]}</p>}
-              </div>
-              
-              <div className="mt-2 flex flex-col gap-3">
-                <div onClick={() => status !== "loading" && handleSubmit()}>
-                  <GreenButton
-                    label={status === "loading" ? "Submitting..." : "Submit"}
-                    href="#"
-                    bgColor="#ffffff"
-                    textColor="#0B0D0C"
-                  />
-                </div>
-
-                {/* Global Error/Success Message */}
-                {status === "success" && (
-                  <p className="text-sm font-medium text-green-400">{message}</p>
-                )}
-                {status === "error" && Object.keys(errors).length === 0 && (
-                  <p className="text-sm font-medium text-red-400">{message}</p>
-                )}
-              </div>
-            </form>
+            {form}
           </Reveal>
 
         </div>
