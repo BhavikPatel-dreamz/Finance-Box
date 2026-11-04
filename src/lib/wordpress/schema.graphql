@@ -4336,7 +4336,7 @@ interface PageBuilderPageBuilderContactFormSectionLayout_Fields implements PageB
   contactInformation: String
   fieldGroupName: String
   formDescription: String
-  formShortcode: String
+  formId: String
   formTitle: String
 }
 
@@ -4346,7 +4346,7 @@ type PageBuilderPageBuilderContactFormSectionLayout implements PageBuilderPageBu
   contactInformation: String
   fieldGroupName: String
   formDescription: String
-  formShortcode: String
+  formId: String
   formTitle: String
 }
 
@@ -4375,14 +4375,14 @@ type PageBuilderPageBuilderLinkedinBox implements PageBuilderPageBuilderLinkedin
 interface PageBuilderPageBuilderNewsletterBox_Fields implements AcfFieldGroup & AcfFieldGroupFields {
   description: String
   fieldGroupName: String
-  newsletterFormShortcode: String
+  newsletterFormId: String
   title: String
 }
 
 type PageBuilderPageBuilderNewsletterBox implements PageBuilderPageBuilderNewsletterBox_Fields & AcfFieldGroup & AcfFieldGroupFields {
   description: String
   fieldGroupName: String
-  newsletterFormShortcode: String
+  newsletterFormId: String
   title: String
 }
 
@@ -4602,7 +4602,7 @@ interface PageBuilderPageBuilderJoinWaitlistSectionLayout_Fields implements Page
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
-  formShortcode: String
+  formId: String
   title: String
 }
 
@@ -4610,7 +4610,7 @@ type PageBuilderPageBuilderJoinWaitlistSectionLayout implements PageBuilderPageB
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
-  formShortcode: String
+  formId: String
   title: String
 }
 
