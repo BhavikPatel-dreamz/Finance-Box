@@ -2,8 +2,6 @@ import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { fromSection } from "@/components/sections/from-section";
 import { HeroSection } from "@/components/hero";
-import { CareersBanner } from "@/components/careers/careers-sections";
-import { AgenticBanner } from "@/components/agentic-ai/agentic-ai-sections";
 import { KnowledgeHubBanner } from "@/components/knowledge-hub/knowledge-hub-sections";
 import { PeopleOperationsBanner } from "@/components/people-operations/people-operations-sections";
 import { mergeCareers } from "@/components/careers/merge";
@@ -53,9 +51,25 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
         // Editors enter the bullet points as a list in `description`; `tagLine` is the lead sentence.
         const bullets = listItems(data.description);
         return (
-          <AgenticBanner
-            hero={bullets.length > 0 ? { ...hero, bullets, text: text(data.tagLine, hero.text) } : hero}
-            header={header}
+          <HeroSection
+            page="agentic-ai"
+            headerNode={header}
+            overrides={{
+              eyebrow: hero.eyebrow,
+              title: hero.title,
+              highlight: hero.highlight,
+              description: bullets.length > 0 ? text(data.tagLine, hero.text) : hero.text,
+              bullets: bullets.length > 0 ? bullets : hero.bullets,
+              primaryCta: hero.cta
+                ? {
+                    label: hero.cta.label,
+                    url: hero.cta.url,
+                    color: "white",
+                    bgColor: "#ffffff",
+                    textColor: "#07110d",
+                  }
+                : undefined,
+            }}
           />
         );
       }
