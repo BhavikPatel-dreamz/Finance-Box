@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { GreenButton } from "@/components/ui/green-button";
@@ -6,9 +9,9 @@ import Section from "@/components/ui/section";
 import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { ContactUsContent } from "@/content/contact-us";
+import { useFormSubmit } from "@/hooks/use-form-submit";
 
 export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]; header: ReactNode }) {
-  // Hero Section (Header + Hero = 525px on Desktop)
   return (
     <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-[#121826] text-white flex flex-col">
       <div
@@ -43,8 +46,7 @@ export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]
   );
 }
 
-export function ContactFormBlock({ formSection }: { formSection: ContactUsContent["formSection"] }) {
-  // Form Section
+export function ContactFormBlock({ formSection, form }: { formSection: ContactUsContent["formSection"]; form: ReactNode }) {
   return (
     <Section theme="light" spacing="both" className="contact-form-section">
       <Container>
@@ -95,39 +97,7 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
               {formSection.subtitle}
             </p>
 
-            <form className="flex flex-col gap-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {formSection.form.fields.slice(0, 2).map((field) => (
-                  <input
-                    key={field.name}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] font-normal placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-                  />
-                ))}
-              </div>
-              {formSection.form.fields.slice(2).map((field) => (
-                <input
-                  key={field.name}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#747C761A] bg-white px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200"
-                />
-              ))}
-              <textarea
-                placeholder={formSection.form.notesPlaceholder}
-                rows={5}
-                className="w-full rounded-[10px] border border-[#747C761A] bg-white py-3.5 sm:py-4 px-4 sm:px-5 text-[14px] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200 resize-none"
-              />
-              <div className="mt-2 sm:mt-4 flex justify-start">
-                <GreenButton
-                  label={formSection.form.submitLabel}
-                  href="#"
-                  bgColor="#121826"
-                  textColor="#ffffff"
-                />
-              </div>
-            </form>
+            {form}
           </Reveal>
 
         </div>
@@ -137,7 +107,19 @@ export function ContactFormBlock({ formSection }: { formSection: ContactUsConten
 }
 
 export function ContactConnected({ socialSection }: { socialSection: ContactUsContent["socialSection"] }) {
-  // Stay Connected Section
+  const [email, setEmail] = useState("");
+  
+  const { status, message, errors, submitForm } = useFormSubmit();
+
+  const handleSubscribe = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    
+    // 👇 Yahan se `if (!email) return;` hata diya hai taaki API call ho sake
+    
+    const success = await submitForm("/api/newsletter", { email });
+    if (success) setEmail(""); 
+  };
+
   return (
     <section className="bg-white px-4 sm:px-6 pb-16 sm:pb-20 lg:pb-24 stay-connect-section">
       <Container>
@@ -152,7 +134,6 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
         </Reveal>
 
         <StaggerGroup staggerDelay={150} className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-4">
-
           {/* LinkedIn Card */}
           <StaggerItem index={0} className="card-hover relative w-full lg:w-1/2 rounded-[10px] bg-[#EDE9E6] p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px] overflow-hidden">
             <div className="relative z-10 max-w-[70%] sm:max-w-[65%] lg:max-w-none">
@@ -195,20 +176,35 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
             </div>
 
             <div className="mt-6 sm:mt-8">
-              <input
-                type="email"
-                placeholder={socialSection.newsletter.placeholder}
-                className="w-full h-[48px] sm:h-[50px] rounded-[10px] border border-[#FFFFFF0F] bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-6 sm:mb-8 lg:mb-10 transition-colors duration-200"
-              />
-              <GreenButton
-                label={socialSection.newsletter.buttonLabel}
-                href="#"
-                bgColor="#ffffff"
-                textColor="#121826"
-              />
+              <div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={socialSection.newsletter.placeholder}
+                  className={`w-full h-[48px] sm:h-[50px] rounded-[10px] border ${errors["email-address"] ? 'border-red-500' : 'border-[#FFFFFF0F]'} bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-2 transition-colors duration-200`}
+                />
+                {errors["email-address"] && <p className="text-red-400 text-xs mt-1 ml-1">{errors["email-address"]}</p>}
+              </div>
+              
+              <div onClick={() => status !== "loading" && handleSubscribe()} className="mt-4">
+                <GreenButton
+                  label={status === "loading" ? "Subscribing..." : socialSection.newsletter.buttonLabel}
+                  href="#"
+                  bgColor="#ffffff"
+                  textColor="#121826"
+                />
+              </div>
+
+              {/* Status Messages */}
+              {status === "success" && (
+                <p className="text-sm font-medium text-green-400 mt-3">{message}</p>
+              )}
+              {status === "error" && Object.keys(errors).length === 0 && (
+                <p className="text-sm font-medium text-red-400 mt-3">{message}</p>
+              )}
             </div>
           </StaggerItem>
-
         </StaggerGroup>
       </Container>
     </section>

@@ -1,5 +1,5 @@
 import { revalidatePath, revalidateTag } from "next/cache";
-import { collectionTag, itemTag, menuTag, menusTag, pageTag, pagesTag, schemaTag, settingsTag, sitemapTag, type ContentType } from "@/lib/cache/tags";
+import { collectionTag, formTag, formsTag, itemTag, menuTag, menusTag, pageTag, pagesTag, schemaTag, settingsTag, sitemapTag, type ContentType } from "@/lib/cache/tags";
 import { blogPath, caseStudyPath, isSlug, slugFromUri, teamPath } from "@/lib/wordpress/paths";
 import { safeEqual } from "@/lib/wordpress/preview";
 import { normalizeUri } from "@/lib/wordpress/uri";
@@ -9,7 +9,7 @@ import { normalizeUri } from "@/lib/wordpress/uri";
  *
  *   POST /api/revalidate
  *   Header `x-revalidate-secret: <REVALIDATE_SECRET>` (or `secret` in the body)
- *   Body: { "type": "page" | "post" | "case-study" | "team" | "menu" | "settings" | "schema" | "all",
+ *   Body: { "type": "page" | "post" | "case-study" | "team" | "menu" | "settings" | "schema" | "form" | "all",
  *           "uri": "/about/", "oldUri": "/old-about/", "slug": "my-post", "oldSlug": "old-post" }
  *
  * - page:     publish, update, delete, slug change. Expires the page's URI and
@@ -21,13 +21,14 @@ import { normalizeUri } from "@/lib/wordpress/uri";
  * - menu:     header/footer navigation.
  * - settings: site title and other global settings (header/footer).
  * - schema:   ACF field group changes (layouts added or removed).
+ * - form:     Contact Form 7 form saved. `formId` expires that form, otherwise every form.
  * - all, or no/unknown type: everything (the behaviour before typed events).
  *
  * Every call is idempotent, so WordPress may retry or send duplicates safely.
  * Expiry is immediate (`expire: 0`): the next visitor gets fresh content.
  */
 
-type Body = { secret?: unknown; type?: unknown; uri?: unknown; oldUri?: unknown; slug?: unknown; oldSlug?: unknown };
+type Body = { secret?: unknown; type?: unknown; formId?: unknown; uri?: unknown; oldUri?: unknown; slug?: unknown; oldSlug?: unknown };
 
 const IMMEDIATE = { expire: 0 } as const;
 
@@ -95,6 +96,10 @@ export async function POST(request: Request) {
   };
   const settingsEvent = () => tags.add(settingsTag);
   const schemaEvent = () => tags.add(schemaTag);
+  const formEvent = () => {
+    const id = typeof body.formId === "number" ? String(body.formId) : body.formId;
+    tags.add(typeof id === "string" && /^\d+$/.test(id) ? formTag(id) : formsTag);
+  };
 
   switch (type) {
     case "page":
@@ -117,6 +122,9 @@ export async function POST(request: Request) {
     case "options":
       settingsEvent();
       break;
+    case "form":
+      formEvent();
+      break;
     case "schema":
       schemaEvent();
       pageEvent();
@@ -127,6 +135,7 @@ export async function POST(request: Request) {
       menuEvent();
       settingsEvent();
       schemaEvent();
+      tags.add(formsTag);
   }
 
   try {

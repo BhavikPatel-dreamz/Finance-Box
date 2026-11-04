@@ -261,6 +261,8 @@ function mergeWaitlist(next: AgenticAiContent, section: Record<string, any>): vo
   next.waitlist.title = titleData.title;
   next.waitlist.highlight = titleData.highlight;
   next.waitlist.text = cleanHtml(section.description, next.waitlist.text);
+  const formId = typeof section.formId === "string" ? section.formId.trim() : "";
+  if (/^\d+$/.test(formId)) next.waitlist.formId = formId;
 }
 
 /** FAQ Section → faq. */

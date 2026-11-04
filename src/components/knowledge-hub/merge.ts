@@ -176,6 +176,8 @@ function mergeNewsletter(next: KnowledgeHubContent, section: Record<string, any>
   next.newsletter.highlight = titleData.highlight;
   next.newsletter.text = cleanHtml(section.description, next.newsletter.text);
   next.newsletter.cta = link(section.ctaButton, next.newsletter.cta);
+  const formId = typeof section.formId === "string" ? section.formId.trim() : "";
+  if (/^\d+$/.test(formId)) next.newsletter.formId = formId;
 }
 
 /** CTA Section → pressure. */

@@ -84,6 +84,8 @@ export type AgenticAiContent = {
     title: string;
     highlight: string;
     text: string;
+    /** Contact Form 7 form ID the waitlist submits to (from WordPress `formId`). */
+    formId: string;
   };
   faq: {
     title: string;
@@ -262,6 +264,7 @@ export const agenticAiContent: AgenticAiContent = {
     title: "Join the",
     highlight: "Waitlist",
     text: "Be among the first to deploy Agentic AI with FIAB specialists.",
+    formId: "1338",
   },
   faq: {
     title: "Frequently Asked Questions",

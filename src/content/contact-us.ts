@@ -12,6 +12,8 @@ export type ContactUsContent = {
     contactTitle: string;
     contactSubtitle: string;
     email: { label: string; value: string; icon: string };
+    /** Contact Form 7 form ID the form submits to (from WordPress `formId`). */
+    formId: string;
     form: {
       fields: { name: string; placeholder: string; type: string }[];
       notesPlaceholder: string;
@@ -56,6 +58,7 @@ export const contactUsContent: ContactUsContent = {
       value: "info@financeinbox.com",
       icon: "/icons/email.png",
     },
+    formId: "1284",
     form: {
       fields: [
         { name: "name", placeholder: "Your name", type: "text" },
