@@ -38,22 +38,21 @@ export async function POST(req: Request) {
     
     // 👇 Exact CF7 Validation Error Handling
     else {
-      let errorMessage = data.message || "Validation failed";
-      
+      // Agar CF7 ne specific field errors diye hain
       if (data.invalid_fields && data.invalid_fields.length > 0) {
-        // Check if email field is invalid
-        const emailError = data.invalid_fields.find((f: any) => f.field === "your-email");
-        
-        if (emailError) {
-          errorMessage = emailError.message; 
-        } else {
-          // Fallback to the first error in the array
-          errorMessage = data.invalid_fields[0].message;
-        }
+        return NextResponse.json(
+          { 
+            ok: false, 
+            message: data.message, 
+            invalid_fields: data.invalid_fields // Frontend isko use karega errors map karne ke liye
+          }, 
+          { status: 400 }
+        );
       }
 
+      // Agar koi generic error hai
       return NextResponse.json(
-        { ok: false, message: errorMessage }, 
+        { ok: false, message: data.message || "Validation failed" }, 
         { status: 400 }
       );
     }
