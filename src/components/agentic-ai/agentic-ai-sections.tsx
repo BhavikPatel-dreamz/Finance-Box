@@ -156,12 +156,12 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
 export function AgenticBuildYourOwn({ buildYourOwn }: { buildYourOwn: AgenticAiContent["buildYourOwn"] }) {
   // 3. Build your own Agentic AI Section
   return (
-    <section className="build-agentic-ai-section bg-white pb-24">
+    <section className="build-agentic-ai-section bg-white text-[#121826] pb-24">
       <Container>
         <div className="bg-[#EDE9E6]/50 rounded-[10px] px-6 py-10 md:p-12 lg:p-20 text-center">
 
           <Reveal preset="slide-up" distance={20}>
-            <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium text-[#121826] leading-[1.15] tracking-[-0.8px] mb-4">
               {(() => {
                 let title = buildYourOwn.title;
                 const hl = buildYourOwn.highlight;
@@ -333,7 +333,7 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
           <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             {provenArchitecture.title}
           </h2>
-          <h2 className="text-3xl sm:text-4xl md:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] text-[#23C55E]">
+          <h2 className="text-3xl sm:text-4xl md:text-[54px] font-black leading-[1.15] tracking-[-0.8px] text-[#23C55E] italic">
             {provenArchitecture.highlight}
           </h2>
         </Reveal>

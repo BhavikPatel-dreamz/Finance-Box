@@ -84,7 +84,7 @@ export type ServicesDetail = {
   title: string;
   text: string;
   cta: ServicesLink;
-  items: { title: string; text: string }[];
+  items: { title: string; text: string; description?: string }[];
 };
 
 export const servicesContent: ServicesContent = {
@@ -163,10 +163,26 @@ export const servicesContent: ServicesContent = {
       text: "Build an accurate, compliant finance core for the company you are becoming.",
       cta: { label: "Explore Foundation", url: "#foundation" },
       items: [
-        { title: "Accounting operations", text: "Investor-ready financials" },
-        { title: "Compliance & filings", text: "Zero compliance surprises" },
-        { title: "Payroll & people operations", text: "A people function that scales" },
-        { title: "ERP / HRIS foundations", text: "Audit-proof structure" },
+        {
+          title: "Accounting operations",
+          text: "Investor-ready financials",
+          description: "Month-end close, AP/AR, billing and collections, cash application, and GL accuracy. Clean books from day one.",
+        },
+        {
+          title: "Compliance & filings",
+          text: "Zero compliance surprises",
+          description: "1099s, Form 3921, Delaware and state filings, sales and use tax, and income tax returns, handled on schedule",
+        },
+        {
+          title: "Payroll & people operations",
+          text: "A people function that scales",
+          description: "Payroll administration, HR support, compliance calendars, and onboarding flows for growing teams.",
+        },
+        {
+          title: "ERP / HRIS foundations",
+          text: "Audit-proof structure",
+          description: "Chart of accounts, role-based access, and audit logs configured in your systems from the start.",
+        },
       ],
     },
     {
@@ -176,12 +192,36 @@ export const servicesContent: ServicesContent = {
       text: "Remove manual friction and create a reliable operating cadence.",
       cta: { label: "Explore Momentum", url: "#momentum" },
       items: [
-        { title: "Financial reporting", text: "Reporting that holds up under review" },
-        { title: "Revenue operations", text: "Clean revenue recognition" },
-        { title: "ERP & automation", text: "More output without more headcount" },
-        { title: "Risk management", text: "Diligence-ready at any time" },
-        { title: "Business operations", text: "Scale without chaos" },
-        { title: "Build Operate Transfer (BOT)", text: "Your own team, built the right way" },
+        {
+          title: "Financial reporting",
+          text: "Reporting that holds up under review",
+          description: "Technical accounting, audit readiness, SEC reporting support, and tax provision with footnotes. Board-pack ready.",
+        },
+        {
+          title: "Revenue operations",
+          text: "Clean revenue recognition",
+          description: "Quote-to-cash hygiene, billing accuracy, collections playbooks, and dispute handling.",
+        },
+        {
+          title: "ERP & automation",
+          text: "More output without more headcount",
+          description: "AI and RPA process automation, ERP implementations and integrations, and data visualization automation to reduce manual work.",
+        },
+        {
+          title: "Risk management",
+          text: "Diligence-ready at any time",
+          description: "Internal controls, SOX readiness, governance policies, and M&A due diligence preparation.",
+        },
+        {
+          title: "Business operations",
+          text: "Scale without chaos",
+          description: "Cross-functional support spanning finance, data, and people processes as the organization scales.",
+        },
+        {
+          title: "Build Operate Transfer (BOT)",
+          text: "Your own team, built the right way",
+          description: "Stand up a dedicated offshore finance team with documented SOPs, controls, and SLAs, then transfer it to you when you are ready to own it. 60 to 70% cost savings.",
+        },
       ],
     },
     {
@@ -191,11 +231,31 @@ export const servicesContent: ServicesContent = {
       text: "Turn financial data into forward-looking decisions and senior finance leadership.",
       cta: { label: "Explore Foresight", url: "#foresight" },
       items: [
-        { title: "FP&A & forecasting", text: "Board-ready every quarter" },
-        { title: "Fractional CFO", text: "CFO-level judgment at a fraction of the cost" },
-        { title: "BI dashboards & KPIs", text: "Real-time visibility" },
-        { title: "Strategy & operating model", text: "IPO and M&A ready" },
-        { title: "Cost optimization programs (DOGE Services)", text: "Lower burn, higher margins" },
+        {
+          title: "FP&A & forecasting",
+          text: "Board-ready every quarter",
+          description: "Budgeting, scenario planning, management reporting, and board packs that hold up to scrutiny.",
+        },
+        {
+          title: "Fractional CFO",
+          text: "CFO-level judgment at a fraction of the cost",
+          description: "Capital strategy, cash runway modeling, pricing, and investor relations support on demand.",
+        },
+        {
+          title: "BI dashboards & KPIs",
+          text: "Real-time visibility",
+          description: "Live dashboards pulling from your ERP, bank feeds, and billing systems. KPIs your board can act on.",
+        },
+        {
+          title: "Strategy & operating model",
+          text: "IPO and M&A ready",
+          description: "Operating model design and strategic advisory as you approach Series C, IPO readiness, or M&A.",
+        },
+        {
+          title: "Cost optimization programs (DOGE Services)",
+          text: "Lower burn, higher margins",
+          description: "Work optimization and cost-reduction programs driven by time-study analysis and automation.",
+        },
       ],
     },
   ],
@@ -272,7 +332,6 @@ export const servicesContent: ServicesContent = {
       },
     ],
   },
-  // 👇 NAYA: Pressure Section Defaults
   pressure: {
     title: "Tell Us Where",
     emphasis: "The Pressure Is",

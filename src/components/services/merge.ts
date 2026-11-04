@@ -190,13 +190,27 @@ function mergeDepthAndDetails(
         fallback?.anchor ??
         `tier-${index + 1}`;
 
+      const allFallbackItems = next.details.flatMap((d) => d.items);
       const nestedServices = rows(tier.services);
       const items =
         nestedServices.length > 0
-          ? nestedServices.map((svc) => ({
-              title: cleanHtml(svc.title, ""),
-              text: cleanHtml(svc.description, ""),
-            }))
+          ? nestedServices.map((svc, sIdx) => {
+              const svcTitle = cleanHtml(svc.title, "");
+              const matchByTitle =
+                fallback?.items?.find(
+                  (fi) => fi.title.trim().toLowerCase() === svcTitle.toLowerCase()
+                ) ??
+                allFallbackItems.find(
+                  (fi) => fi.title.trim().toLowerCase() === svcTitle.toLowerCase()
+                );
+              const fallbackItem = matchByTitle ?? fallback?.items?.[sIdx];
+
+              return {
+                title: svcTitle || fallbackItem?.title || "",
+                text: cleanHtml(svc.description, fallbackItem?.text ?? ""),
+                description: fallbackItem?.description ?? "",
+              };
+            })
           : fallback?.items ?? [];
 
       return {

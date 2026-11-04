@@ -7,6 +7,14 @@ import { ArrowIcon } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 
+// Always returns "01", "02", ... Uses the CMS value only if it's a plain number,
+// otherwise falls back to the item's position so it auto-increments.
+const formatTierNumber = (raw: unknown, idx: number) => {
+  const match = String(raw ?? "").match(/^\s*(\d+)\s*$/);
+  const n = match ? Number(match[1]) : idx + 1;
+  return String(n).padStart(2, "0");
+};
+
 export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
   const eyebrowData = parseEyebrow(config.eyebrow, "dark");
 
@@ -87,16 +95,10 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
             staggerDelay={140}
             className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-[506px] lg:justify-self-end"
           >
-            {/* Vertical Gradient Divider Line */}
+            {/* Vertical Gradient Divider Line (stretches with the list) */}
             <div
               aria-hidden="true"
-              className="hidden lg:block absolute -left-5 xl:-left-6 -top-7 w-[1.5px] h-[510px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
-              style={{
-                borderLeft: "1.5px solid transparent",
-                borderImageSource:
-                  "linear-gradient(180deg, #23C55E 0%, rgba(35, 197, 94, 0) 89.31%)",
-                borderImageSlice: 1,
-              }}
+              className="hidden lg:block absolute -left-5 xl:-left-6 -top-7 bottom-0 w-[1.5px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
             />
             {config.tiers.map((tier, idx) => (
               <StaggerItem
@@ -104,8 +106,8 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
                 index={idx}
                 className="card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
               >
-                <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E]">
-                  {tier.number}
+                <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E] tabular-nums">
+                  {formatTierNumber(tier.number, idx)}
                 </div>
                 <div className="flex flex-col">
                   <p className="text-[12px] font-mono font-medium tracking-[1.5px] text-white/70 uppercase mb-1">

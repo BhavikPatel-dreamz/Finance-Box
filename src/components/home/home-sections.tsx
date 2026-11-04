@@ -29,7 +29,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
           <div className="relative flex-1 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 xl:gap-0 items-start pt-4 sm:pt-6 lg:pt-10 xl:pt-16">
 
             {/* Left Column */}
-            <div className="lg:col-span-7 pt-2 sm:pt-4 lg:pt-8 xl:pt-[73px]">
+            <div className="lg:col-span-7">
               <Reveal immediate preset="slide-up" delay={80} distance={18}>
                 <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-5">
                   {hero.eyebrow}
@@ -74,7 +74,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
             </div>
 
             {/* Right Column */}
-            <div className="lg:col-span-5 relative flex flex-col items-center lg:items-end pt-28 sm:pt-36 lg:pt-[180px] xl:pt-[252px] lg:mr-0 xl:-mr-[38px]">
+            <div className="lg:col-span-5 relative flex flex-col items-center lg:items-end pt-28 sm:pt-36 lg:pt-[180px] xl:pt-[200px] lg:mr-0 xl:-mr-[38px]">
 
               <div className="relative w-full max-w-[420px] lg:max-w-[440px] xl:max-w-[519px]">
 
