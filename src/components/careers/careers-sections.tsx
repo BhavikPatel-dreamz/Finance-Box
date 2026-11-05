@@ -14,9 +14,9 @@ import type { CareersContent } from "@/content/careers";
 export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"] }) {
   // 2. Why work at FIAB Section
   return (
-    <Section theme="light" spacing="both" className="why-work-section bg-white py-10 sm:py-14 md:py-16 lg:py-20">
+    <Section theme="light" spacing="both" className="why-work-section bg-white text-[#121826] py-10 sm:py-14 md:py-16 lg:py-20">
       <Container>
-        <div className="rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] bg-[#F5F3F2] text-[#121826] overflow-hidden">
+        <div className="rounded-[10px] bg-[#EDE9E6]/50 text-[#121826] overflow-hidden">
           <div className="flex flex-col lg:flex-row items-stretch">
             {/* Left Column (Image) */}
             <Reveal
@@ -38,9 +38,9 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
             <Reveal
               preset="slide-right"
               distance={20}
-              className="w-full lg:w-1/2 flex flex-col justify-center p-6 sm:p-8 md:p-10 lg:p-10 xl:px-14 xl:py-16 2xl:px-15 2xl:py-20"
+              className="w-full lg:w-1/2 flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-10 xl:px-14 xl:py-16 2xl:px-15 2xl:py-18"
             >
-              <h2 className="text-[26px] xs:text-[30px] sm:text-[36px] md:text-[40px] lg:text-[44px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-5 sm:mb-8 lg:mb-8 xl:mb-12 text-[#121826]">
+              <h2 className="text-[26px] xs:text-[30px] sm:text-[36px] md:text-[40px] lg:text-[44px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-5 sm:mb-8 lg:mb-10 xl:mb-20 text-[#121826]">
                 {(() => {
                   let title = whyWork.title;
                   const hl = whyWork.highlight;
@@ -67,7 +67,7 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
                     index={idx}
                     className="card-hover bg-white rounded-[10px] sm:rounded-[12px] p-4 sm:p-5 lg:p-5 xl:p-6 border border-[#E8E6E3]/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
                   >
-                    <p className="text-[13px] sm:text-[14px] lg:text-[15px] xl:text-[16px] font-normal leading-[150%] text-[#121826]/80">
+                    <p className="text-[14px] xl:text-[16px] font-light leading-[160%] text-[#121826]/80">
                       {point}
                     </p>
                   </StaggerItem>
@@ -119,7 +119,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
                     }
                   }}
                   className={twMerge(
-                    "group card-hover relative rounded-[14px] sm:rounded-[16px] overflow-hidden min-h-[400px] sm:min-h-[460px] md:min-h-[480px] lg:min-h-[540px] xl:min-h-[620px] w-full flex items-end shadow-sm cursor-pointer outline-none select-none focus-visible:ring-2 focus-visible:ring-[#23C55E]",
+                    "group card-hover relative rounded-[10px] overflow-hidden min-h-[400px] sm:min-h-[460px] md:min-h-[480px] lg:min-h-[540px] xl:min-h-[620px] w-full flex items-end shadow-sm cursor-pointer outline-none select-none focus-visible:ring-2 focus-visible:ring-[#23C55E]",
                     isFlipped && "is-flipped"
                   )}
                 >
@@ -130,51 +130,55 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
                     className="object-cover image-hover-zoom"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />}
-                  {/* Default bottom gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050D1F] via-[#050D1F]/70 to-transparent pointer-events-none" />
 
-                  {/* Hover / Active full-card dark overlay */}
+                  {/* Single Figma gradient anchored to the bottom. On hover only its height grows,
+                      so the gradient stretches upward and the dark area rises smoothly. */}
                   <div
                     className={twMerge(
-                      "absolute inset-0 bg-[#050D1F]/80 transition-opacity duration-500 ease-in-out pointer-events-none motion-reduce:transition-none opacity-0",
-                      hasPoints && "group-hover:opacity-100 group-focus-within:opacity-100",
-                      isFlipped && "opacity-100"
+                      "absolute inset-x-0 bottom-0 h-full pointer-events-none",
+                      "bg-[linear-gradient(180deg,rgba(18,24,38,0)_23.47%,rgba(18,24,38,0.771381)_48.73%,rgba(18,24,38,0.829427)_61.13%,rgba(18,24,38,0.857097)_74.41%,#121826_93.31%)]",
+                      "transition-[height] duration-[700ms] ease-[cubic-bezier(0.45,0,0.25,1)] motion-reduce:transition-none",
+                      hasPoints && "group-hover:duration-[1000ms] group-hover:h-[300%] group-focus-within:duration-[1000ms] group-focus-within:h-[300%]",
+                      isFlipped && "duration-[1000ms] h-[300%]"
                     )}
                   />
 
-                  {/* Default content (slides up and fades out smoothly on hover/tap) */}
+                  {/* Default content: rises 60px and fades out */}
                   <div
                     className={twMerge(
-                      "relative z-10 p-5 sm:p-6 md:p-4.5 lg:p-6 xl:p-8 w-full text-white transition-all duration-500 ease-in-out motion-reduce:transition-none",
-                      hasPoints && "group-hover:opacity-0 group-hover:-translate-y-2 group-hover:pointer-events-none group-focus-within:opacity-0 group-focus-within:-translate-y-2 group-focus-within:pointer-events-none",
-                      isFlipped && "opacity-0 -translate-y-2 pointer-events-none"
+                      "relative z-10 p-5 sm:p-6 md:p-4.5 lg:p-6 xl:p-[34px] w-full text-white will-change-[opacity,transform,translate] motion-reduce:transition-none",
+                      "transition-[opacity,transform,translate] duration-[400ms] ease-[cubic-bezier(0.33,1,0.68,1)]",
+                      hasPoints && "group-hover:duration-500 group-hover:opacity-0 group-hover:-translate-y-[60px] group-hover:pointer-events-none group-focus-within:duration-500 group-focus-within:opacity-0 group-focus-within:-translate-y-[60px] group-focus-within:pointer-events-none",
+                      isFlipped && "duration-500 opacity-0 -translate-y-[60px] pointer-events-none"
                     )}
                   >
-                    <h3 className="text-[18px] sm:text-[20px] md:text-[17px] lg:text-[19px] xl:text-[22px] font-semibold leading-[1.25] mb-2 sm:mb-2.5 lg:mb-3 text-white">
+                    <h3 className="text-[18px] sm:text-[20px] md:text-[17px] lg:text-[19px] xl:text-[22px] font-semibold leading-[1.25] xl:leading-[148%] mb-2 sm:mb-2.5 lg:mb-3 xl:mb-6 text-white xl:max-w-[330px]">
                       {card.title}
                     </h3>
-                    <p className="text-[13px] sm:text-[14px] md:text-[12px] lg:text-[13.5px] xl:text-[15px] font-light leading-[150%] text-white/85">
+                    <p className="text-[13px] sm:text-[14px] md:text-[12px] lg:text-[13.5px] xl:text-[16px] font-normal leading-[140%] text-white/70 xl:max-w-[330px]">
                       {card.text}
                     </p>
                   </div>
 
-                  {/* Hover / Active content (bullet points slide in and fade in smoothly) */}
+                  {/* Hover content: slides up 90px from below and fades in, at the same time */}
                   {hasPoints && (
                     <div
                       className={twMerge(
-                        "absolute inset-x-0 bottom-0 z-20 p-5 sm:p-6 md:p-4.5 lg:p-6 xl:p-8 w-full text-white transition-all duration-500 ease-in-out pointer-events-none motion-reduce:transition-none opacity-0 translate-y-3",
-                        "group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto",
-                        isFlipped && "opacity-100 translate-y-0 pointer-events-auto"
+                        "absolute inset-x-0 bottom-0 z-20 p-5 sm:p-6 md:p-4.5 lg:p-6 xl:p-[34px] xl:pb-[44px] w-full text-white pointer-events-none opacity-0 translate-y-[90px] will-change-[opacity,transform,translate] motion-reduce:transition-none",
+                        "transition-[opacity,transform,translate] duration-[400ms] ease-[cubic-bezier(0.33,1,0.68,1)]",
+                        "group-hover:duration-500 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto",
+                        "group-focus-within:duration-500 group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:pointer-events-auto",
+                        isFlipped && "duration-500 opacity-100 translate-y-0 pointer-events-auto"
                       )}
                     >
-                      <ul className="space-y-3 sm:space-y-4 md:space-y-2.5 lg:space-y-3.5 xl:space-y-5">
+                      <ul className="space-y-3 sm:space-y-4 md:space-y-2.5 lg:space-y-3.5 xl:max-w-[284px]">
                         {card.points!.map((point, pIdx) => (
                           <li key={pIdx} className="flex items-start gap-2.5 sm:gap-3 lg:gap-3.5">
                             <span
-                              className="mt-[5px] h-[6px] w-[6px] md:h-[5px] md:w-[5px] xl:h-2 xl:w-2 xl:mt-[6px] shrink-0 bg-[#23C55E]"
+                              className="mt-[5px] xl:mt-[7px] h-[6px] w-[6px] md:h-[5px] md:w-[5px] xl:h-[6px] xl:w-[6px] shrink-0 bg-[#23C55E]"
                               aria-hidden="true"
                             />
-                            <span className="text-[13px] sm:text-[14px] md:text-[12px] lg:text-[13px] xl:text-[15px] font-normal leading-[145%] text-white/95">
+                            <span className="text-[13px] sm:text-[14px] md:text-[12px] lg:text-[13px] xl:text-[16px] font-medium leading-[130%] text-white">
                               {point}
                             </span>
                           </li>
@@ -191,7 +195,6 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
     </Section>
   );
 }
-
 export function CareersBenefits({ benefits }: { benefits: CareersContent["benefits"] }) {
   // 4. Benefits & Perks Section
   return (
