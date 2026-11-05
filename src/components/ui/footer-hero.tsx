@@ -14,6 +14,7 @@ export type FooterHeroVariant =
   | "agentic-ai"
   | "knowledge-hub"
   | "people-operations"
+  | "why-fiab"
   | "single-line"
   | "two-line"
   | "default";
@@ -40,9 +41,9 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
   },
   why: {
     layout: "two-line",
-    titleMaxWidth: "max-w-[640px]",
+    titleMaxWidth: "max-w-[606px]",
     highlightItalic: true,
-    textMaxWidth: "max-w-full",
+    textMaxWidth: "max-w-[780px]",
   },
   clients: {
     layout: "two-line",
@@ -73,6 +74,12 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
     titleMaxWidth: "max-w-[560px]",
     highlightItalic: false,
     textMaxWidth: "max-w-[628px]",
+  },
+  "why-fiab": {
+    layout: "two-line",
+    titleMaxWidth: "max-w-[606px]",
+    highlightItalic: true,
+    textMaxWidth: "max-w-[780px]",
   },
   "single-line": {
     layout: "single-line",

@@ -13,7 +13,7 @@ import { TeamProfileCard } from "@/components/team/team-card";
 export function WhyFooterCta({ cta }: { cta: WhyContent["cta"] }) {
   return (
     <FooterHero
-      variant="why"
+      variant="why-fiab"
       title={cta.title}
       highlight={cta.highlight}
       text={cta.text}
