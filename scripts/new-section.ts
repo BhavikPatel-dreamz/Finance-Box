@@ -92,14 +92,19 @@ function findType(schema: Schema, layout: string): IntrospectionType | null {
 function listLayouts(schema: Schema): string[] {
   return schema.__schema.types
     .map((t) => t.name)
-    .filter((name): name is string => Boolean(name && name.startsWith("PageBuilderPageBuilder") && name.endsWith("Layout")))
+    .filter((name): name is string => Boolean(name && name.startsWith("PageBuilderPageBuilder") && name.endsWith("Layout") && name !== "PageBuilderPageBuilder_Layout"))
     .map((name) => name.replace(/^PageBuilderPageBuilder/, "").replace(/Layout$/, ""));
 }
 
 function registeredLayouts(): string[] {
-  const src = fs.readFileSync(REGISTRY_PATH, "utf8");
-  const matches = [...src.matchAll(/layout:\s*"([^"]+)"/g)];
-  return matches.map((m) => m[1]);
+  const dir = path.join(ROOT, "src/components/sections");
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".tsx"));
+  const set = new Set<string>();
+  for (const f of files) {
+    const src = fs.readFileSync(path.join(dir, f), "utf8");
+    for (const m of src.matchAll(/layout:\s*"([^"]+)"/g)) set.add(m[1]);
+  }
+  return [...set];
 }
 
 function isImageField(typeName: string, fields: IntrospectionType["fields"]): boolean {
