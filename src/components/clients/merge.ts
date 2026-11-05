@@ -154,15 +154,6 @@ function mergeCaseStudies(next: ClientsContent, section: Record<string, any>): v
     next.caseStudies.items = caseStudies.map((node, index) => {
       const fallback = next.caseStudies.items[index];
       const card = caseStudyCardFromNode(node as CaseStudyCardFragment, fallback);
-      if (card.challenge?.includes("what state was FLYR") && fallback?.challenge) {
-        card.challenge = fallback.challenge;
-      }
-      if (card.solution?.includes("which tiers, which systems") && fallback?.solution) {
-        card.solution = fallback.solution;
-      }
-      if (card.outcome?.includes("Real numbers only") && fallback?.outcome) {
-        card.outcome = fallback.outcome;
-      }
       return card;
     });
   }

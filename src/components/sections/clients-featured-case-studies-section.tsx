@@ -9,6 +9,7 @@ import { clientsContent } from "@/content/clients";
 export const clientsFeaturedCaseStudiesSection = defineSection<ClientsFeaturedCaseStudiesSectionFragment>({
   layout: "ClientsFeaturedCaseStudiesSection",
   render: (data) => {
+    console.log("clientsFeaturedCaseStudiesSection data", data?.caseStudies?.nodes?.at(0)?.caseStudiesOptions);
     const content = fromSection(mergeClients, clientsContent, data);
     return <ClientsCaseStudies caseStudies={content.caseStudies} />;
   },

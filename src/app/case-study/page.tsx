@@ -36,7 +36,7 @@ export default async function CaseStudiesPage() {
             <div className="flex flex-col gap-3">
               {studies.map((study, index) => (
                 <Reveal key={study.id} preset="slide-up" distance={24} delay={index * 80}>
-                  <CaseStudyCard study={study} reverse={index % 2 !== 0} />
+                  <CaseStudyCard index={index} study={study} reverse={index % 2 !== 0} />
                 </Reveal>
               ))}
             </div>

@@ -8,7 +8,7 @@ import { GreenButton } from "@/components/ui/green-button";
  * outcome and a link to the full case study. Moved from the Clients page; used
  * by the Clients "Featured case studies" section and the /case-study archive.
  */
-export function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reverse: boolean }) {
+export function CaseStudyCard({ index, study, reverse }: { index: number; study: ClientCaseStudy; reverse: boolean }) {
   return (
     <div className={`relative isolate flex flex-col ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} overflow-hidden rounded-[16px] bg-[#121826] min-h-[500px] lg:p-12.5`}>
       {/* Green corner glow */}
@@ -32,10 +32,10 @@ export function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reve
           }`}
       >
         <Eyebrow variant="green-no-dash" className="mb-3 sm:mb-4">
-          {study.label}
+          Case study {index + 1}: {study.title}
         </Eyebrow>
         <h3 className="text-2xl sm:text-[26px] lg:text-[30px] font-semibold leading-[1.15] tracking-tight mb-6 sm:mb-8">
-          {study.title}
+          {study.label}
         </h3>
 
         <div className="space-y-4 sm:space-y-6 mb-8 sm:mb-10">

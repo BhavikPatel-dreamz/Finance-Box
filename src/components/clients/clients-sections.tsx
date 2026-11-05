@@ -96,6 +96,9 @@ export function ClientsBanner({ hero, header }: { hero: ClientsContent["hero"]; 
 }
 
 export function ClientsCaseStudies({ caseStudies }: { caseStudies: ClientsContent["caseStudies"] }) {
+
+  console.log("caseStudies", caseStudies);
+
   // Case Studies Section
   return (
     <Section theme="light" spacing="both" className="case-studies-section">
@@ -109,7 +112,7 @@ export function ClientsCaseStudies({ caseStudies }: { caseStudies: ClientsConten
         <div className="flex flex-col gap-3">
           {caseStudies.items.map((study, index) => (
             <Reveal key={study.id} preset="slide-up" distance={24} delay={index * 80}>
-              <CaseStudyCard study={study} reverse={index % 2 !== 0} />
+              <CaseStudyCard index={index} study={study} reverse={index % 2 !== 0} />
             </Reveal>
           ))}
         </div>
