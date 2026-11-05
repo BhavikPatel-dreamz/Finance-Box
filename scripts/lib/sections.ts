@@ -108,10 +108,11 @@ export async function loadSchema(): Promise<Schema> {
   }
   const base = (process.env.WORDPRESS_GRAPHQL_URL || "").replace(/\/?$/, "");
   const url = base.endsWith("graphql") ? base : `${base}/graphql`;
+  const q = "query IntrospectionQuery { __schema { types { name kind fields { name type { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } }";
   const res = await fetch(url, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ query: "query { __schema { types { name kind fields { name type { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } } }" }),
+    body: JSON.stringify({ query: q }),
   });
   const json = await res.json() as { data?: Schema; errors?: unknown };
   if (!json.data) throw new Error(`Introspection failed: ${JSON.stringify(json.errors)}`);
