@@ -47,7 +47,7 @@ export type AgenticAiContent = {
     highlight: string;
     text: string;
     bullets: string[];
-    cta: AgenticAiLink;
+    cta?: AgenticAiLink; // 👈 Optional kar diya
   };
   whatIs: {
     eyebrow: string;
@@ -111,7 +111,7 @@ export const agenticAiContent: AgenticAiContent = {
       "Real-time visibility: Approvals, postings, tickets, and updates happen automatically",
       "Faster go-lives: Deploy in weeks, not quarters, using prebuilt playbooks",
     ],
-    cta: { label: "Join the Waitlist", url: "/#waitlist" },
+    // 👈 cta hata diya (ab default nahi hai)
   },
   whatIs: {
     eyebrow: "WHY NOW?",
@@ -287,7 +287,6 @@ export const agenticAiContent: AgenticAiContent = {
       },
     ],
   },
-  // 👇 NAYA: Pressure defaults
   pressure: {
     title: "Ready to co-pilot your back",
     emphasis: "office with Agentic AI?",

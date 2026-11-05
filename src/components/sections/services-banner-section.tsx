@@ -49,6 +49,13 @@ export const servicesBannerSection = defineSection<ServicesBannerSectionFragment
                 textColor: "#07110d",
               }
             : undefined,
+          secondaryCta: data.secondaryCtaButton
+            ? {
+                label: text(data.secondaryCtaButton.title, ""),
+                url: text(data.secondaryCtaButton.url, ""),
+                isTextLink: true,
+              }
+            : undefined,
           tiers,
         }}
       />

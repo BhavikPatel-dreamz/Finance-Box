@@ -2,18 +2,6 @@
  * ============================================================================
  * HERO SECTIONS CENTRAL CONFIGURATION
  * ============================================================================
- * 
- * Anyone (marketing, content editors, developers) can manage and customize
- * all page hero sections directly from this TypeScript file!
- * 
- * NO NEED TO OPEN JSX / REACT CODE FILES:
- * - Change text, titles, highlights, descriptions
- * - Change button labels, URLs, variants, and visibility
- * - Change layout variants ("home" | "services" | "why" | "clients" | "careers" | "contact" | "agentic-ai" | "split" | "legal" | "not-found")
- * - Change background SVGs / images
- * - Change cards, bullets, tiers, points, and metrics
- * 
- * ============================================================================
  */
 
 import type { HeroConfig, HeroPageKey, HeroOverrides } from "@/components/hero/types";
@@ -30,7 +18,7 @@ import { privacyPolicyContent } from "@/content/privacy-policy";
 import { termsConditionsContent } from "@/content/terms-conditions";
 
 // ----------------------------------------------------------------------------
-// 1. HOME HERO CONFIG
+// 1. HOME HERO CONFIG (Has Default Data)
 // ----------------------------------------------------------------------------
 export const homeHeroConfig: HeroConfig = {
   variant: "home",
@@ -44,13 +32,6 @@ export const homeHeroConfig: HeroConfig = {
   description:
     homeContent.hero.text ||
     "Senior finance talent, modern systems, and an operating cadence designed for venture-backed and high-growth companies. From day one to exit.",
-  primaryCta: {
-    label: homeContent.hero.primary?.label || "Book an intro call",
-    url: homeContent.hero.primary?.url || "#contact",
-    color: "white",
-    bgColor: "#ffffff",
-    textColor: "#07110d",
-  },
   closeLabel: homeContent.hero.closeLabel || "MONTH-END CLOSE",
   closeValue: homeContent.hero.closeValue || "3",
   closeUnit: homeContent.hero.closeUnit || "days",
@@ -61,17 +42,11 @@ export const homeHeroConfig: HeroConfig = {
   runwayTrend: homeContent.hero.runwayTrend || "Real-time rolling model",
   chartImage: "/home/chart.png",
   chartTitle: homeContent.hero.chartTitle || "Runway trend chart",
-  floatingCta: {
-    label: homeContent.hero.call?.label || "Book a call",
-    url: homeContent.hero.call?.url || "#contact",
-    color: "green",
-    onDark: true,
-  },
   heightClassName: "min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:min-h-[771px]",
 };
 
 // ----------------------------------------------------------------------------
-// 2. SERVICES HERO CONFIG
+// 2. SERVICES HERO CONFIG (Has Default Data)
 // ----------------------------------------------------------------------------
 export const servicesHeroConfig: HeroConfig = {
   variant: "services",
@@ -85,18 +60,6 @@ export const servicesHeroConfig: HeroConfig = {
   description:
     servicesContent.hero.text ||
     "From seed-stage foundations to pre-IPO rigor, we embed senior finance professionals and modern systems into your business. No learning curves, no overhead.",
-  primaryCta: {
-    label: servicesContent.hero.primary?.label || "Schedule Consultation",
-    url: servicesContent.hero.primary?.url || "/contact-us/",
-    color: "white",
-    bgColor: "#ffffff",
-    textColor: "#07110d",
-  },
-  secondaryCta: {
-    label: "See How an Engagement Works",
-    url: "#",
-    isTextLink: true,
-  },
   tiers: servicesContent.hero.tiers?.map((t) => ({
     number: t.number,
     label: t.label,
@@ -129,7 +92,7 @@ export const servicesHeroConfig: HeroConfig = {
 };
 
 // ----------------------------------------------------------------------------
-// 3. WHY FIAB HERO CONFIG
+// 3. WHY FIAB HERO CONFIG (Has Default Data)
 // ----------------------------------------------------------------------------
 export const whyHeroConfig: HeroConfig = {
   variant: "why",
@@ -143,11 +106,6 @@ export const whyHeroConfig: HeroConfig = {
   description:
     whyContent.hero.text ||
     "Most growing companies face an impossible choice: an expensive in-house team before they're ready, or a reactive traditional accounting firm that doesn't understand venture-backed businesses. We built the third way.",
-  primaryCta: {
-    label: whyContent.hero.cta?.label || "Talk to our founders",
-    url: whyContent.hero.cta?.url || "/contact-us/",
-    color: "white",
-  },
   points: whyContent.hero.points?.map((p, idx) => ({
     number: p.number || String(idx + 1).padStart(2, "0"),
     title: p.title,
@@ -159,7 +117,7 @@ export const whyHeroConfig: HeroConfig = {
 };
 
 // ----------------------------------------------------------------------------
-// 4. CLIENTS HERO CONFIG
+// 4. CLIENTS HERO CONFIG (Has Default Data)
 // ----------------------------------------------------------------------------
 export const clientsHeroConfig: HeroConfig = {
   variant: "clients",
@@ -190,7 +148,7 @@ export const clientsHeroConfig: HeroConfig = {
 };
 
 // ----------------------------------------------------------------------------
-// 5. CAREERS HERO CONFIG
+// 5. CAREERS HERO CONFIG (WordPress Only)
 // ----------------------------------------------------------------------------
 export const careersHeroConfig: HeroConfig = {
   variant: "careers",
@@ -205,16 +163,11 @@ export const careersHeroConfig: HeroConfig = {
   description:
     careersContent.hero.text ||
     "We are reimagining how finance functions operate. Join a high-performing team of finance leaders, operators, and technologists building the future of financial operations.",
-  primaryCta: {
-    label: careersContent.hero.cta?.label || "View Open Positions",
-    url: careersContent.hero.cta?.url || "#open-roles",
-    color: "white",
-  },
   heightClassName: "min-h-[auto] lg:min-h-[660px] xl:min-h-[660px]",
 };
 
 // ----------------------------------------------------------------------------
-// 6. CONTACT US HERO CONFIG
+// 6. CONTACT US HERO CONFIG (No Button)
 // ----------------------------------------------------------------------------
 export const contactHeroConfig: HeroConfig = {
   variant: "contact",
@@ -232,7 +185,7 @@ export const contactHeroConfig: HeroConfig = {
 };
 
 // ----------------------------------------------------------------------------
-// 7. AGENTIC AI HERO CONFIG
+// 7. AGENTIC AI HERO CONFIG (WordPress Only)
 // ----------------------------------------------------------------------------
 export const agenticAiHeroConfig: HeroConfig = {
   variant: "agentic-ai",
@@ -251,18 +204,11 @@ export const agenticAiHeroConfig: HeroConfig = {
     "Real-time visibility: Approvals, postings, tickets, and updates happen automatically",
     "Faster go-lives: Deploy in weeks, not quarters, using prebuilt playbooks",
   ],
-  primaryCta: {
-    label: agenticAiContent.hero.cta?.label || "Explore Agentic AI",
-    url: agenticAiContent.hero.cta?.url || "/contact-us/",
-    color: "white",
-    bgColor: "#ffffff",
-    textColor: "#07110d",
-  },
   heightClassName: "min-h-[auto] sm:min-h-[460px] lg:min-h-[525px]",
 };
 
 // ----------------------------------------------------------------------------
-// 8. KNOWLEDGE HUB HERO CONFIG
+// 8. KNOWLEDGE HUB HERO CONFIG (WordPress Only)
 // ----------------------------------------------------------------------------
 export const knowledgeHubHeroConfig: HeroConfig = {
   variant: "split",
@@ -277,18 +223,11 @@ export const knowledgeHubHeroConfig: HeroConfig = {
   description:
     knowledgeHubContent.hero.text ||
     "Frameworks, case studies, financial models, and operational guides written by senior finance practitioners for ambitious founders.",
-  primaryCta: {
-    label: knowledgeHubContent.hero.cta?.label || "Read Latest Articles",
-    url: knowledgeHubContent.hero.cta?.url || "#articles",
-    color: "white",
-    bgColor: "#ffffff",
-    textColor: "#07110d",
-  },
   heightClassName: "min-h-[auto] sm:min-h-[460px] lg:min-h-[525px]",
 };
 
 // ----------------------------------------------------------------------------
-// 9. PEOPLE OPERATIONS HERO CONFIG
+// 9. PEOPLE OPERATIONS HERO CONFIG (WordPress Only)
 // ----------------------------------------------------------------------------
 export const peopleOperationsHeroConfig: HeroConfig = {
   variant: "split",
@@ -380,10 +319,6 @@ export const heroConfigs: Record<HeroPageKey, HeroConfig> = {
   "not-found": notFoundHeroConfig,
 };
 
-/**
- * Helper to fetch a hero config by page key with optional runtime overrides
- * (e.g., from CMS/WordPress or component props).
- */
 export function getHeroConfig(
   pageKey: HeroPageKey,
   overrides?: HeroOverrides,
@@ -391,25 +326,8 @@ export function getHeroConfig(
   const base = heroConfigs[pageKey] || homeHeroConfig;
   if (!overrides) return base;
 
-  return {
-    ...base,
-    ...overrides,
-    eyebrow: overrides.eyebrow !== undefined ? overrides.eyebrow : base.eyebrow,
-    primaryCta:
-      overrides.primaryCta !== undefined
-        ? overrides.primaryCta
-        : base.primaryCta,
-    secondaryCta:
-      overrides.secondaryCta !== undefined
-        ? overrides.secondaryCta
-        : base.secondaryCta,
-    tiers: overrides.tiers !== undefined ? overrides.tiers : base.tiers,
-    points: overrides.points !== undefined ? overrides.points : base.points,
-    stats: overrides.stats !== undefined ? overrides.stats : base.stats,
-    bullets: overrides.bullets !== undefined ? overrides.bullets : base.bullets,
-    quickLinks:
-      overrides.quickLinks !== undefined
-        ? overrides.quickLinks
-        : base.quickLinks,
-  };
+  // An explicitly passed `undefined` (e.g. WordPress has no CTA) must clear the
+  // base value, not fall back to the static default. The spread already does
+  // exactly that, so no per-field fallback is needed here.
+  return { ...base, ...overrides };
 }
