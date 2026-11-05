@@ -419,12 +419,6 @@ export function ServicesDetails({ details }: { details: ServicesContent["details
 
 // --- Component: Fractional CFO ---
 export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
-  const images = [
-    "/services/cfo-img-01.png",
-    "/services/cfo-img-02.png",
-    "/services/cfo-img-03.png",
-  ];
-
   return (
     <Section theme="light" spacing="both" className="services-cfo-section relative z-1 lg:-mt-[100svh]">
       <Container>
@@ -460,13 +454,15 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                 index={idx}
                 className="group card-hover relative w-full h-[340px] sm:h-[400px] md:h-[420px] lg:h-[430px] xl:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
               >
-                <Image
-                  src={images[idx] || card.image?.url || ""}
-                  alt={card.title}
-                  fill
-                  className="object-cover image-hover-zoom"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
+                {card.image?.url ? (
+                  <Image
+                    src={card.image.url}
+                    alt={card.title}
+                    fill
+                    className="object-cover image-hover-zoom"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                ) : null}
 
                 {/* Bottom-left cutout wrapper matching Figma geometry */}
                 <div className="absolute bottom-0 left-0 bg-[#EDE9E6] pt-2.5 pr-2.5 sm:pt-3 sm:pr-3 xl:pt-3.5 xl:pr-3.5 rounded-tr-[12px] w-[calc(100%-45px)] sm:w-[calc(100%-55px)] xl:w-[calc(100%-75px)] max-w-[315px]">

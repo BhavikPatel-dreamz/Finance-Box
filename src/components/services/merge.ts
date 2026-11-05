@@ -237,7 +237,7 @@ function mergeCfo(next: ServicesContent, section: Record<string, any>): void {
       return {
         title: cleanHtml(card.label, fallback?.title ?? ""),
         text: cleanHtml(card.description, fallback?.text ?? ""),
-        image: media(card.image) ?? fallback?.image ?? null,
+        image: media(card.image) ?? null,
       } satisfies ServicesPhotoCard;
     });
   }
@@ -275,7 +275,7 @@ function mergeInvestors(next: ServicesContent, section: Record<string, any>): vo
       return {
         title: cleanHtml(card.title, fallback?.title ?? ""),
         text: cleanHtml(card.description, fallback?.text ?? ""),
-        image: media(card.image) ?? fallback?.image ?? null,
+        image: media(card.image) ?? null,
       } satisfies ServicesPhotoCard;
     });
   }
