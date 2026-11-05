@@ -171,6 +171,32 @@ function publicPageQuery(capabilities: SchemaCapabilities) {
   `;
 }
 
+function minimalPageQuery(capabilities: SchemaCapabilities) {
+  // Fallback used when the full composed page query fails (for example after an
+  // ACF field was renamed or retyped but the frontend still requests the old
+  // field). It keeps the page shell, title and section order available instead
+  // of marking every page as "unavailable".
+  const base = `
+    ...PageCore
+    ${capabilities.hasSeo ? SEO_SELECTION : ""}
+    pageBuilder {
+      pageBuilder {
+        __typename
+      }
+    }
+  `;
+  return `
+    query PageByUri($uri: String!) {
+      nodeByUri(uri: $uri) {
+        __typename
+        ... on Page { ${base} }
+        ... on Post { slug status }
+      }
+    }
+    ${pageCoreDefinition}
+  `;
+}
+
 function previewPageQuery(capabilities: SchemaCapabilities) {
   const { selection, definitions } = pageSelection(capabilities);
   // `preview.node` is the latest unsaved revision of a published page. For a
@@ -297,7 +323,13 @@ async function readPublicPage(uri: string): Promise<PageLoadResult> {
 
   try {
     const capabilities = await getCapabilities();
-    const data = await graphqlRequest<PublicPageResponse>(publicPageQuery(capabilities), { uri });
+    let data: PublicPageResponse;
+    try {
+      data = await graphqlRequest<PublicPageResponse>(publicPageQuery(capabilities), { uri });
+    } catch (error) {
+      console.warn(`[wordpress] full page query failed for ${uri}; retrying with minimal section data: ${errorMessage(error)}`);
+      data = await graphqlRequest<PublicPageResponse>(minimalPageQuery(capabilities), { uri });
+    }
     const node = data.nodeByUri;
     // WordPress puts posts at /<slug>/; the site serves them under /blog/.
     if (node?.__typename === "Post") {

@@ -58,3 +58,22 @@ export function listItems(value: unknown): string[] {
   if (typeof value !== "string") return [];
   return [...value.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi)].map((match) => plainText(match[1])).filter(Boolean);
 }
+
+/**
+ * Defensive readers for migrated/renamed ACF fields. Use these when a field's
+ * type is in transition so a renamed or retyped field degrades to a fallback
+ * instead of throwing during render.
+ */
+export function asArray(value: unknown): unknown[] {
+  return Array.isArray(value) ? value : [];
+}
+
+export function asObject(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
+}
+
+export function asString(value: unknown, fallback = ""): string {
+  return typeof value === "string" ? value : fallback;
+}
