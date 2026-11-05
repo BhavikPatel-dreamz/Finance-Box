@@ -124,7 +124,7 @@ export function ClientsCaseStudies({ caseStudies }: { caseStudies: ClientsConten
 export function ClientsTrustedCompanies({ logosSection }: { logosSection: ClientsContent["logosSection"] }) {
   // Trusted Clients Logos Grid
   return (
-    <Section theme="light" spacing="both" className="trusted-clients-logo">
+    <Section theme="light" spacing="bottom" className="trusted-clients-logo">
       <Container>
         <Reveal preset="slide-up" distance={20} className="text-center mb-12 sm:mb-14 lg:mb-16">
           {(() => {

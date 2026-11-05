@@ -14,7 +14,7 @@ export function WhyHeroVariant({ config }: { config: HeroConfig }) {
       <div className="w-full">
         {/* Top 2-Column Heading & Intro */}
         <div className="grid items-start gap-6 sm:gap-8 pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pt-[84px] lg:pb-[60px] lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal immediate preset="slide-up" delay={100} distance={28}>
+          <Reveal className="lg:max-w-[487px]" immediate preset="slide-up" delay={100} distance={28}>
             {eyebrowData && (
               <Eyebrow
                 variant={eyebrowData.variant}
