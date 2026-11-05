@@ -1,7 +1,7 @@
 fragment CaseStudySection on PageBuilderPageBuilderCaseStudySectionLayout {
   __typename
   title
-  allCaseStudy
+  allCaseStudy { title url }
   selectCaseStudy {
     nodes {
       ... on CaseStudy { ...CaseStudyCard }
