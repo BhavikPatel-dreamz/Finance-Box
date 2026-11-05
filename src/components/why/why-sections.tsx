@@ -112,13 +112,13 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
             {compare.title}
             <span className="mt-1 block font-black text-[#23C55E] italic">{compare.highlight}</span>
           </h2>
-          <p className="mx-auto mt-4 sm:mt-6 max-w-[680px] text-sm sm:text-base leading-[1.6] text-[#66707c]">
+          <p className="mx-auto mt-4 sm:mt-5 max-w-[680px] text-sm sm:text-base leading-[1.6] text-[#66707c]">
             {compare.text}
           </p>
         </Reveal>
 
-        <Reveal preset="slide-up" delay={150} distance={24} className="table-wrapper mt-5 sm:mt-12 lg:mt-16">
-          <div className="overflow-x-auto pt-10 pb-8 sm:pt-11 sm:pb-9 -mx-4 px-4 sm:mx-0 sm:px-0 touch-scroll">
+        <Reveal preset="slide-up" delay={150} distance={24} className="table-wrapper mt-5 sm:mt-6 lg:mt-8">
+          <div className="overflow-x-auto pt-10 pb-7 sm:pt-11 sm:pb-7 -mx-4 px-4 sm:mx-0 sm:px-0 touch-scroll">
             <div className="min-w-[680px] sm:min-w-[820px] md:min-w-[960px] lg:min-w-[1096px] xl:min-w-[1280px]">
               <div
                 role="table"
@@ -225,7 +225,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                     <Fragment key={rowItem.label}>
                       <div
                         role="rowheader"
-                        className="relative z-1 flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 text-[13.5px] sm:text-[15px] lg:text-[16px] font-medium text-[#121826] leading-snug"
+                        className="relative z-1 flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 text-[14px] tracking-[0.5px] font-medium text-[#121826]/80 leading-snug"
                         style={{ gridColumn: 1, gridRow }}
                       >
                         {rowItem.label}
@@ -272,28 +272,25 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
     <Section theme="dark" spacing="both" className="how-we-work">
       <Container>
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%] mb-8 sm:mb-12">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] text-white leading-[110%] mb-8 sm:mb-10">
             {howWeWork.title}
           </h2>
         </Reveal>
-        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 gap-4 xl:gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {howWeWork.cards.map((card, index) => (
-            <StaggerItem
-              key={card.number || index}
-              index={index}
-              className="card-hover flex flex-col rounded-[20px] bg-[rgba(255,255,255,0.06)] p-6 sm:px-7 sm:py-9 lg:px-7.5 lg:py-10 border border-[rgba(255,255,255,0.07)]"
-            >
-              {/* 🚀 Fallback wapas lagaya gaya hai */}
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-[#23C55E] bg-[#121826] border border-[#23C55E]/20">
-                {card.number || String(index + 1).padStart(2, '0')}
-              </span>
+            <StaggerItem key={card.number || index} index={index} className="h-full">
+              <div className="card-hover flex h-full flex-col rounded-[20px] bg-[rgba(255,255,255,0.06)] p-6 sm:px-4 sm:py-6 xl:px-7.5 xl:py-10 border border-[rgba(255,255,255,0.07)] shadow-[0px_2px_34px_rgba(255,255,255,0)] transition-[transform,box-shadow,background-color,border-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:bg-[rgba(255,255,255,0.08)] hover:shadow-[0px_2px_34px_rgba(255,255,255,0.1)]">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-[#23C55E] bg-[#121826] border border-[#23C55E]/20">
+                  {card.number || String(index + 1).padStart(2, '0')}
+                </span>
 
-              <h3 className="mt-5 sm:mt-6 text-[20px] sm:text-[22px] font-semibold text-white leading-[140%]">
-                {card.title}
-              </h3>
-              <p className="mt-3 sm:mt-4 text-[14px] sm:text-[16px] font-normal leading-[150%] text-white/70">
-                {card.text}
-              </p>
+                <h3 className="mt-5 sm:mt-6 text-[20px] sm:text-[22px] font-semibold text-white leading-[140%]">
+                  {card.title}
+                </h3>
+                <p className="mt-3 sm:mt-4 text-[14px] sm:text-[16px] font-normal leading-[150%] text-white/70">
+                  {card.text}
+                </p>
+              </div>
             </StaggerItem>
           ))}
         </StaggerGroup>
@@ -349,7 +346,7 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
     <Section theme="light" spacing="both" className="about-grid-section">
       <Container>
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <StaggerItem index={0} className="card-hover relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[440px] sm:min-h-[500px] lg:h-[630px] lg:min-h-[630px] flex items-end">
+          <StaggerItem index={0} className="card-hover relative overflow-hidden rounded-[24px] min-h-[440px] sm:min-h-[500px] lg:h-[630px] lg:min-h-[630px] flex items-end">
             {aboutSection?.image && <Image
               src={aboutSection.image}
               alt="Team"
@@ -363,7 +360,7 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
               <h3 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[110%] tracking-[-0.8px] text-white">
                 {aboutSection.title}
               </h3>
-              <p className="mt-4 sm:mt-6 lg:mt-7 text-[15px] sm:text-[16px] font-light leading-[160%] text-white/90">
+              <p className="mt-4 sm:mt-6 lg:mt-7 text-[15px] sm:text-[16px] font-light leading-[160%] text-white/80">
                 {aboutSection.text}
               </p>
             </div>

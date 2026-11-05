@@ -115,7 +115,7 @@ export function ArrowIcon({ isHeader = false, className = "" }: { isHeader?: boo
   return (
     <span
       className={twMerge(
-        "inline-flex shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none",
+        "inline-flex shrink-0 items-center justify-center transition-transform duration-300 motion-reduce:transition-none",
         className
       )}
     >
@@ -213,7 +213,7 @@ export function Button({
       />
       <span className="whitespace-nowrap">{content}</span>
       {icon ? (
-        <span className="inline-flex shrink-0 items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transition-none">
+        <span className="inline-flex shrink-0 items-center justify-center transition-transform duration-300 motion-reduce:transition-none">
           {icon}
         </span>
       ) : showArrow ? (
