@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
 import * as L from "./lib/sections";
+import * as U from "./lib/section-field-updater";
 
 
 const ROOT = process.cwd();
@@ -116,7 +117,43 @@ async function main() {
 
   execSync("npm run schema", { stdio: "inherit" });
   execSync("npm run codegen", { stdio: "inherit" });
-  execSync("npm run typecheck", { stdio: "inherit" });
+
+  // Update component destructuring + TODOs for changed layouts.
+  for (const c of changed) {
+    const componentPath = path.join(COMPONENTS_DIR, `${L.kebabCase(c.layout)}-section.tsx`);
+    if (!fs.existsSync(componentPath)) continue;
+    const type = L.findType(schema, c.layout)!;
+    const fieldKinds: Record<string, U.FieldKind> = {};
+    for (const f of type.fields ?? []) {
+      if (f.name.startsWith("__")) continue;
+      fieldKinds[f.name] = U.classifyField(f, schema);
+    }
+    const original = fs.readFileSync(componentPath, "utf8");
+    const { next, result } = U.updateComponentDestructuring(componentPath, c.added, c.removed, fieldKinds);
+    if (result.manual) {
+      console.log(`\n${c.layout}: manual edit required (${result.manualReason}).`);
+      if (c.added.length) console.log("  fields added:", c.added.join(", "));
+    } else {
+      fs.writeFileSync(componentPath, next);
+      console.log(`\n${c.layout}: fields added [${result.fieldsAdded.join(", ") || "none"}], removed [${result.fieldsRemoved.join(", ") || "none"}], TODOs added ${result.fieldsAdded.length}.`);
+      if (result.removedStillUsed.length) {
+        for (const r of result.removedStillUsed) {
+          console.log(`  ${r} still used: lines ${result.usageLines[r].join(", ")}`);
+        }
+      }
+    }
+
+    try {
+      execSync("npm run typecheck", { stdio: "inherit" });
+    } catch (err) {
+      if (!result.manual) {
+        fs.writeFileSync(componentPath, original);
+        console.log(`\nTypecheck failed for ${c.layout}; reverted component changes.`);
+      }
+      throw err;
+    }
+  }
+
   console.log("\nSync complete.");
 }
 

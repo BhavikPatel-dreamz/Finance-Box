@@ -176,7 +176,9 @@ function kebabName(layout: string): string {
 function componentContent(layout: string, fields: string[]): string {
   const pascal = pascalCase(layout);
   const typeImport = `${pascal}SectionFragment`;
-  const destructure = fields.length ? `  const { ${fields.join(", ")} } = data;\n` : "";
+  const destructure = fields.length
+    ? `  // @section-fields (auto-updated by sync-sections, don't edit this line by hand)\n  const { ${fields.join(", ")} } = data;\n`
+    : `  // @section-fields (auto-updated by sync-sections, don't edit this line by hand)\n  const {  } = data;\n`;
   return `import { defineSection } from "@/lib/page-builder/types";
 import type { ${typeImport} } from "@/lib/wordpress/generated/graphql";
 
@@ -185,6 +187,13 @@ export const ${pascal}Section = defineSection<${typeImport}>({
   layout: "${pascal}",
   render: (data) => {
 ${destructure}    return (
+      <section>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </section>
+    );
+  },
+});
+`;
       <section>
         <pre>{JSON.stringify(data, null, 2)}</pre>
       </section>
