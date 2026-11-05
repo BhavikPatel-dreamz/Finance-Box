@@ -118,11 +118,11 @@ function splitHighlight(
 /* -------------------------------------------------------------------------- */
 
 function mergeHero(next: ServicesContent, section: Record<string, any>): void {
-  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.hero.title = titleData.title;
   next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
-  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.text = cleanHtml(section.description, "");
   next.hero.primary = link(section.primaryCtaButton, next.hero.primary);
   next.hero.secondary = link(section.secondaryCtaButton, next.hero.secondary);
 
@@ -149,9 +149,9 @@ function mergeHero(next: ServicesContent, section: Record<string, any>): void {
 }
 
 function mergeStages(next: ServicesContent, section: Record<string, any>): void {
-  next.stages.eyebrow = cleanHtml(section.subTitle, next.stages.eyebrow);
-  next.stages.title = cleanHtml(section.title, next.stages.title);
-  next.stages.text = cleanHtml(section.description, next.stages.text);
+  next.stages.eyebrow = cleanHtml(section.subTitle, "");
+  next.stages.title = cleanHtml(section.title, "");
+  next.stages.text = cleanHtml(section.description, "");
 
   const stageCards = rows(section.stageCards);
   if (stageCards.length > 0) {
@@ -168,8 +168,8 @@ function mergeDepthAndDetails(
   next: ServicesContent,
   section: Record<string, any>,
 ): void {
-  next.depth.eyebrow = cleanHtml(section.subTitle, next.depth.eyebrow);
-  next.depth.title = cleanHtml(section.title, next.depth.title);
+  next.depth.eyebrow = cleanHtml(section.subTitle, "");
+  next.depth.title = cleanHtml(section.title, "");
   next.depth.cta = link(section.ctaButton, next.depth.cta);
 
   const tiers = rows(section.tiers);
@@ -218,8 +218,8 @@ function mergeDepthAndDetails(
 }
 
 function mergeCfo(next: ServicesContent, section: Record<string, any>): void {
-  next.cfo.title = cleanHtml(section.title, next.cfo.title);
-  next.cfo.text = cleanHtml(section.description, next.cfo.text);
+  next.cfo.title = cleanHtml(section.title, "");
+  next.cfo.text = cleanHtml(section.description, "");
   next.cfo.cta = link(section.ctaButton, next.cfo.cta);
 
   const deliverables = rows(section.deliverables);
@@ -236,8 +236,8 @@ function mergeCfo(next: ServicesContent, section: Record<string, any>): void {
 }
 
 function mergeProcess(next: ServicesContent, section: Record<string, any>): void {
-  next.process.title = cleanHtml(section.title, next.process.title);
-  next.process.text = cleanHtml(section.description, next.process.text);
+  next.process.title = cleanHtml(section.title, "");
+  next.process.text = cleanHtml(section.description, "");
 
   const steps = rows(section.steps);
   if (steps.length > 0) {
@@ -253,10 +253,10 @@ function mergeProcess(next: ServicesContent, section: Record<string, any>): void
 }
 
 function mergeInvestors(next: ServicesContent, section: Record<string, any>): void {
-  next.investors.eyebrow = cleanHtml(section.subTitle, next.investors.eyebrow);
-  next.investors.title = cleanHtml(section.title, next.investors.title);
-  next.investors.highlight = cleanHtml(section.highlight, next.investors.highlight);
-  next.investors.text = cleanHtml(section.description, next.investors.text);
+  next.investors.eyebrow = cleanHtml(section.subTitle, "");
+  next.investors.title = cleanHtml(section.title, "");
+  next.investors.highlight = cleanHtml(section.highlight, "");
+  next.investors.text = cleanHtml(section.description, "");
   next.investors.primary = link(section.primaryCtaButton, next.investors.primary);
   next.investors.secondary = link(section.secondaryCtaButton, next.investors.secondary);
 
@@ -278,7 +278,7 @@ function mergePressure(next: ServicesContent, section: Record<string, any>): voi
   const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
   next.pressure.title = titleData.title;
   next.pressure.emphasis = titleData.highlight;
-  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.text = cleanHtml(section.description, "");
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }
 

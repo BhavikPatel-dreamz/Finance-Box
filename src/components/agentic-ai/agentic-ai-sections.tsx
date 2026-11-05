@@ -139,7 +139,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
             <StaggerItem key={idx} index={idx} className="group flex flex-col">
               <div>
                 <div className="relative w-full xl:h-[420px] h-[350px] overflow-hidden mb-6">
-                  <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />
+                  {feature.image && <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />}
                 </div>
                 <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
                 <p className="text-[16px] font-normal leading-[140%] text-[#121826]/80">{feature.text}</p>
@@ -207,12 +207,14 @@ export function AgenticBuildYourOwn({
                     className={`${ICON_CHIP} mb-6 border border-[#1219280D] bg-white`}
                   >
                     <div className={ICON_IMG}>
-                      <Image
-                        src={agent.icon}
-                        alt={agent.title}
-                        fill
-                        className="object-contain"
-                      />
+                      {agent.icon && (
+                        <Image
+                          src={agent.icon}
+                          alt={agent.title}
+                          fill
+                          className="object-contain"
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -287,7 +289,7 @@ export function AgenticPeopleOps({ peopleOps }: { peopleOps: AgenticAiContent["p
                 <div className="flex flex-col h-full transition-opacity duration-300 ease-in-out group-hover:opacity-0 group-hover:pointer-events-none">
                   <div className={`${ICON_CHIP_LIFT} border border-white/10 mb-8.5`}>
                     <div className={ICON_IMG}>
-                      <Image src={agent.icon} alt={agent.title} fill className="object-contain" />
+                      {agent.icon && <Image src={agent.icon} alt={agent.title} fill className="object-contain" />}
                     </div>
                   </div>
                   <h3 className="text-[22px] font-semibold leading-[1.2] mb-3 text-white">{agent.title}</h3>
@@ -330,12 +332,14 @@ export function AgenticOpsCompliance({ opsCompliance }: { opsCompliance: Agentic
           {opsCompliance.cards.map((card, idx) => (
             <StaggerItem key={idx} index={idx} >
               <div className="group card-hover relative rounded-[14px] sm:rounded-[16px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  fill
-                  className="object-cover image-hover-zoom"
-                />
+                {card.image && (
+                  <Image
+                    src={card.image}
+                    alt={card.title}
+                    fill
+                    className="object-cover image-hover-zoom"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/90 via-[#121826]/20 to-transparent" />
 
                 <div className="relative isolate p-8 w-full text-white">
@@ -395,7 +399,7 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
               className="group relative overflow-hidden bg-[#F5F3F2] rounded-[14px] sm:rounded-[16px] p-6 flex flex-col border border-[#E8E6E3]"
             >
               <div className="relative w-full h-[320px] rounded-[10px] overflow-hidden mb-6">
-                <Image src={card.image} alt={card.title} fill className="object-cover image-hover-zoom" />
+                {card.image && <Image src={card.image} alt={card.title} fill className="object-cover image-hover-zoom" />}
               </div>
 
               <div className="mb-6">

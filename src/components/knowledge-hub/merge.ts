@@ -113,17 +113,17 @@ function splitHighlight(
 
 /** Common Banner Section → hero. */
 function mergeHero(next: KnowledgeHubContent, section: Record<string, any>): void {
-  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.hero.title = titleData.title;
   next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
-  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.text = cleanHtml(section.description, "");
   next.hero.cta = link(section.ctaButton, next.hero.cta);
 }
 
 /** Our Blog Section → blogs. */
 function mergeBlogs(next: KnowledgeHubContent, section: Record<string, any>): void {
-  next.blogs.title = cleanHtml(section.title, next.blogs.title);
+  next.blogs.title = cleanHtml(section.title, "");
   next.blogs.cta = link(section.allBlogCta, next.blogs.cta);
 
   if (isPlaceholderUrl(next.blogs.cta.url)) next.blogs.cta = { ...next.blogs.cta, url: blogArchivePath() };
@@ -138,16 +138,16 @@ function mergeBlogs(next: KnowledgeHubContent, section: Record<string, any>): vo
 
 /** Simple CTA Section → resources. */
 function mergeResources(next: KnowledgeHubContent, section: Record<string, any>): void {
-  const titleData = splitHighlight(section.title, next.resources.title, next.resources.highlight);
+  const titleData = splitHighlight(section.title, "", "");
   next.resources.title = titleData.title;
   next.resources.highlight = titleData.highlight;
-  next.resources.text = cleanHtml(section.description, next.resources.text);
+  next.resources.text = cleanHtml(section.description, "");
   next.resources.cta = link(section.ctaButton, next.resources.cta);
 }
 
 /** Case Study Section → caseStudy. */
 function mergeCaseStudy(next: KnowledgeHubContent, section: Record<string, any>): void {
-  next.caseStudy.title = cleanHtml(section.title, next.caseStudy.title);
+  next.caseStudy.title = cleanHtml(section.title, "");
   
   next.caseStudy.cta = link(section.allCaseStudy, next.caseStudy.cta);
   if (isPlaceholderUrl(next.caseStudy.cta.url)) {
@@ -171,10 +171,10 @@ function mergeCaseStudy(next: KnowledgeHubContent, section: Record<string, any>)
 
 /** Join Waitlist Section → newsletter. */
 function mergeNewsletter(next: KnowledgeHubContent, section: Record<string, any>): void {
-  const titleData = splitHighlight(section.title, next.newsletter.title, next.newsletter.highlight);
+  const titleData = splitHighlight(section.title, "", "");
   next.newsletter.title = titleData.title;
   next.newsletter.highlight = titleData.highlight;
-  next.newsletter.text = cleanHtml(section.description, next.newsletter.text);
+  next.newsletter.text = cleanHtml(section.description, "");
   next.newsletter.cta = link(section.ctaButton, next.newsletter.cta);
   const formId = typeof section.formId === "string" ? section.formId.trim() : "";
   if (/^\d+$/.test(formId)) next.newsletter.formId = formId;
@@ -185,7 +185,7 @@ function mergePressure(next: KnowledgeHubContent, section: Record<string, any>):
   const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
   next.pressure.title = titleData.title;
   next.pressure.emphasis = titleData.highlight;
-  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.text = cleanHtml(section.description, "");
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }
 

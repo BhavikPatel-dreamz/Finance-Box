@@ -158,11 +158,11 @@ function parseStatValue(
 
 /** Home Banner Section → hero + stat cards. */
 function mergeHero(next: HomeContent, section: Record<string, any>): void {
-  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.hero.title = titleData.title;
   next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
-  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.text = cleanHtml(section.description, "");
   next.hero.primary = link(section.ctaButton, next.hero.primary);
 
   if (section.floatingCtaButton) {
@@ -173,29 +173,29 @@ function mergeHero(next: HomeContent, section: Record<string, any>): void {
   if (statCards.length > 0) {
     const [first, second] = statCards;
     if (first) {
-      next.hero.closeLabel = cleanHtml(first.label, next.hero.closeLabel);
+      next.hero.closeLabel = cleanHtml(first.label, "");
       const parsed = parseStatValue(first.value, next.hero.closeValue, next.hero.closeUnit);
       next.hero.closeValue = parsed.value;
       next.hero.closeUnit = parsed.unit;
-      next.hero.closeTrend = cleanHtml(first.note, next.hero.closeTrend);
+      next.hero.closeTrend = cleanHtml(first.note, "");
     }
     if (second) {
-      next.hero.runwayLabel = cleanHtml(second.label, next.hero.runwayLabel);
+      next.hero.runwayLabel = cleanHtml(second.label, "");
       const parsed = parseStatValue(second.value, next.hero.runwayValue, next.hero.runwayUnit);
       next.hero.runwayValue = parsed.value;
       next.hero.runwayUnit = parsed.unit;
-      next.hero.runwayTrend = cleanHtml(second.note, next.hero.runwayTrend);
+      next.hero.runwayTrend = cleanHtml(second.note, "");
     }
   }
 }
 
 /** Home When Finance Matters → founders. */
 function mergeFounders(next: HomeContent, section: Record<string, any>): void {
-  next.founders.eyebrow = cleanHtml(section.subTitle, next.founders.eyebrow);
-  const titleData = splitHighlight(section.title, next.founders.title, next.founders.highlight);
+  next.founders.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.founders.title = titleData.title;
   next.founders.highlight = titleData.highlight;
-  next.founders.text = cleanHtml(section.description, next.founders.text);
+  next.founders.text = cleanHtml(section.description, "");
   next.founders.cta = link(section.ctaButton, next.founders.cta);
 
   const moments = rows(section.moments);
@@ -217,7 +217,7 @@ function mergeFounders(next: HomeContent, section: Record<string, any>): void {
 
 /** Home What Makes FIAB Different → difference. */
 function mergeDifference(next: HomeContent, section: Record<string, any>): void {
-  next.difference.title = cleanHtml(section.title, next.difference.title);
+  next.difference.title = cleanHtml(section.title, "");
 
   const cards = rows(section.cards);
   if (cards.length > 0) {
@@ -234,26 +234,20 @@ function mergeDifference(next: HomeContent, section: Record<string, any>): void 
   }
 
   next.difference.statEyebrow = cleanHtml(
-    section.outcomeLabel,
-    next.difference.statEyebrow,
-  );
+    section.outcomeLabel, "");
   next.difference.statValue = cleanHtml(
-    section.outcomeValue,
-    next.difference.statValue,
-  );
+    section.outcomeValue, "");
   next.difference.statLabel = cleanHtml(
-    section.outcomeText,
-    next.difference.statLabel,
-  );
+    section.outcomeText, "");
 }
 
 /** Home Finance That Grows → growth. */
 function mergeGrowth(next: HomeContent, section: Record<string, any>): void {
-  next.growth.eyebrow = cleanHtml(section.subTitle, next.growth.eyebrow);
-  next.growth.title = cleanHtml(section.title, next.growth.title);
-  next.growth.text = cleanHtml(section.description, next.growth.text);
+  next.growth.eyebrow = cleanHtml(section.subTitle, "");
+  next.growth.title = cleanHtml(section.title, "");
+  next.growth.text = cleanHtml(section.description, "");
   next.growth.image = media(section.image) ?? next.growth.image;
-  next.growth.overlay = cleanHtml(section.imageTitle, next.growth.overlay);
+  next.growth.overlay = cleanHtml(section.imageTitle, "");
   next.growth.cta = link(section.ctaButton, next.growth.cta);
 
   const imageSteps = rows(section.imageSteps);
@@ -281,14 +275,14 @@ function mergeGrowth(next: HomeContent, section: Record<string, any>): void {
 
 /** Home Client Perspective → decisions. */
 function mergeDecisions(next: HomeContent, section: Record<string, any>): void {
-  next.decisions.quote = cleanHtml(section.quote, next.decisions.quote);
-  next.decisions.name = cleanHtml(section.name, next.decisions.name);
-  next.decisions.role = cleanHtml(section.designation, next.decisions.role);
+  next.decisions.quote = cleanHtml(section.quote, "");
+  next.decisions.name = cleanHtml(section.name, "");
+  next.decisions.role = cleanHtml(section.designation, "");
   next.decisions.portrait = media(section.image) ?? next.decisions.portrait;
 
-  next.decisions.eyebrow = cleanHtml(section.subTitle, next.decisions.eyebrow);
-  next.decisions.title = cleanHtml(section.title, next.decisions.title);
-  next.decisions.text = cleanHtml(section.description, next.decisions.text);
+  next.decisions.eyebrow = cleanHtml(section.subTitle, "");
+  next.decisions.title = cleanHtml(section.title, "");
+  next.decisions.text = cleanHtml(section.description, "");
   next.decisions.cta = link(section.ctaButton, next.decisions.cta);
 
   const metrics = rows(section.metrics);
@@ -306,7 +300,7 @@ function mergeDecisions(next: HomeContent, section: Record<string, any>): void {
 
 /** Home Leadership → leadership. */
 function mergeLeadership(next: HomeContent, section: Record<string, any>): void {
-  next.leadership.eyebrow = cleanHtml(section.subTitle, next.leadership.eyebrow);
+  next.leadership.eyebrow = cleanHtml(section.subTitle, "");
 
   const slides = rows(section.slides);
   if (slides.length > 0) {
@@ -356,14 +350,14 @@ function mergePressure(next: HomeContent, section: Record<string, any>): void {
   const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
   next.pressure.title = titleData.title;
   next.pressure.emphasis = titleData.highlight;
-  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.text = cleanHtml(section.description, "");
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }
 
 /** Agentic Official Partner Stack → partners (title + logos). */
 function mergePartners(next: HomeContent, section: Record<string, any>): void {
   if (section.title) {
-    next.partners.title = cleanHtml(section.title, next.partners.title);
+    next.partners.title = cleanHtml(section.title, "");
   }
 
   const partners = rows(section.officialPartners);

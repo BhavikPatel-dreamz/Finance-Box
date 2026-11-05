@@ -72,14 +72,14 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
               distance={20}
               className="group card-hover w-full lg:w-1/2 relative min-h-[260px] xs:min-h-[300px] sm:min-h-[380px] md:min-h-[440px] lg:min-h-[500px] xl:min-h-[624px] overflow-hidden shrink-0"
             >
-              <Image
+              {whyWork.image && <Image
                 src={whyWork.image}
                 alt="Why work at FIAB"
                 fill
                 className="object-cover image-hover-zoom"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
-              />
+              />}
             </Reveal>
 
             {/* Right Column (Text & Points) */}
@@ -171,13 +171,13 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
                     isFlipped && "is-flipped"
                   )}
                 >
-                  <Image
+                  {card.image && <Image
                     src={card.image}
                     alt={card.title}
                     fill
                     className="object-cover image-hover-zoom"
                     sizes="(max-width: 768px) 100vw, 33vw"
-                  />
+                  />}
                   {/* Default bottom gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050D1F] via-[#050D1F]/70 to-transparent pointer-events-none" />
 
@@ -271,13 +271,13 @@ export function CareersBenefits({ benefits }: { benefits: CareersContent["benefi
               >
                 <div>
                   <div className="inline-flex h-[46px] w-[46px] sm:h-[54px] sm:w-[54px] lg:h-[60px] lg:w-[60px] items-center justify-center rounded-full border border-white/10 bg-white/5 mb-4 sm:mb-5 lg:mb-6">
-                    <Image
+                    {benefit.icon && <Image
                       src={benefit.icon}
                       alt={benefit.title}
                       width={24}
                       height={24}
                       className="object-contain"
-                    />
+                    />}
                   </div>
                   <h3 className="text-[17px] sm:text-[19px] md:text-[20px] lg:text-[22px] font-semibold text-white mb-2">
                     {benefit.title}

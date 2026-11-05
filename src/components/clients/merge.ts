@@ -110,11 +110,11 @@ function splitHighlight(
 
 /** Clients Banner → hero. */
 function mergeHero(next: ClientsContent, section: Record<string, any>): void {
-  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.hero.title = titleData.title;
   next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
-  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.text = cleanHtml(section.description, "");
 
   // clientProof → clientProofTitle + clientProofItems
   if (section.clientProof) {
@@ -144,7 +144,7 @@ function mergeHero(next: ClientsContent, section: Record<string, any>): void {
 
 /** Clients Featured Case Studies → caseStudies. */
 function mergeCaseStudies(next: ClientsContent, section: Record<string, any>): void {
-  next.caseStudies.title = cleanHtml(section.title, next.caseStudies.title);
+  next.caseStudies.title = cleanHtml(section.title, "");
 
   // 🚀 FIX: `caseStudies` field returns a connection ({ nodes: [...] }).
   // Older code was reading `section.caseStudies` directly as an array.
@@ -174,11 +174,11 @@ function mergeLogos(next: ClientsContent, section: Record<string, any>): void {
     const raw = str(section.title) ?? "";
     const match = raw.match(/(.*?)<(?:span|b|strong)[^>]*>([\s\S]*?)<\/(?:span|b|strong)>(.*)/i);
     if (match) {
-      next.logosSection.title1 = cleanHtml(match[1], next.logosSection.title1);
-      next.logosSection.highlight1 = cleanHtml(match[2], next.logosSection.highlight1);
-      next.logosSection.title2 = cleanHtml(match[3], next.logosSection.title2);
+      next.logosSection.title1 = cleanHtml(match[1], "");
+      next.logosSection.highlight1 = cleanHtml(match[2], "");
+      next.logosSection.title2 = cleanHtml(match[3], "");
     } else {
-      next.logosSection.title1 = cleanHtml(section.title, next.logosSection.title1);
+      next.logosSection.title1 = cleanHtml(section.title, "");
     }
   }
 
@@ -196,15 +196,15 @@ function mergeLogos(next: ClientsContent, section: Record<string, any>): void {
 
 /** Clients Testimonials → reviewsSection. */
 function mergeReviews(next: ClientsContent, section: Record<string, any>): void {
-  next.reviewsSection.title = cleanHtml(section.title, next.reviewsSection.title);
+  next.reviewsSection.title = cleanHtml(section.title, "");
 
   // Featured review (mainReview)
   const featuredQuote = cleanHtml(section.featuredQuote, "");
   if (featuredQuote) {
     next.reviewsSection.mainReview = {
       quote: featuredQuote,
-      author: cleanHtml(section.featuredName, next.reviewsSection.mainReview.author),
-      role: cleanHtml(section.featuredDesignation, next.reviewsSection.mainReview.role),
+      author: cleanHtml(section.featuredName, ""),
+      role: cleanHtml(section.featuredDesignation, ""),
       image: media(section.featuredImage)?.url ?? next.reviewsSection.mainReview.image,
     };
   }
@@ -230,7 +230,7 @@ function mergePressure(next: ClientsContent, section: Record<string, any>): void
   const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
   next.pressure.title = titleData.title;
   next.pressure.emphasis = titleData.highlight;
-  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.text = cleanHtml(section.description, "");
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }
 

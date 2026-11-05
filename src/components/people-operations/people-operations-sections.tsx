@@ -48,13 +48,13 @@ export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsConten
       <Container>
         <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 xl:gap-20">
           <Reveal preset="slide-left" distance={20} className="group card-hover w-full max-w-[460px] mx-auto lg:max-w-none lg:w-[554px] shrink-0 relative aspect-[554/643] rounded-[14px] sm:rounded-[16px] overflow-hidden">
-            <Image
+            {intro.image && <Image
               src={intro.image}
               alt="FIAB People Operations"
               fill
               className="object-cover image-hover-zoom"
               sizes="(max-width: 1024px) 100vw, 554px"
-            />
+            />}
           </Reveal>
           <Reveal preset="slide-right" distance={20} className="w-full lg:flex-1">
             <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-medium leading-[1.25] lg:leading-[1.3] tracking-[-0.8px] mb-4 sm:mb-6">
@@ -106,16 +106,15 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
               className={`group card-hover sticky top-[64px] sm:top-[80px] lg:top-[96px] xl:top-[108px] bg-[#191F2D] border border-white/8 rounded-[16px] overflow-hidden flex flex-col md:flex-row md:min-h-[460px] lg:min-h-[520px] xl:min-h-[592px] ${card.reverse ? "md:flex-row-reverse" : "md:flex-row"
                 }`}
             >
-              {/* Background green glow (CSS only, sits behind content) */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 overflow-hidden pointer-events-none"
-                style={{
-                  background: card.reverse
-                    ? "radial-gradient(ellipse 70% 70% at 100% 100%, rgba(35,197,94,0.22) 0%, rgba(35,197,94,0) 70%)"
-                    : "radial-gradient(ellipse 70% 70% at 0% 0%, rgba(35,197,94,0.22) 0%, rgba(35,197,94,0) 70%)",
-                }}
-              />
+              {/* Background Gradient Image */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {card.bgImage && <Image
+                  src={card.bgImage}
+                  alt="Background Gradient"
+                  fill
+                  className="object-cover opacity-100"
+                />}
+              </div>
 
               {/* Content Container */}
               <div className="relative z-10 min-w-0 w-full md:w-1/2 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-16 flex flex-col justify-center">
@@ -139,14 +138,14 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
               </div>
 
               {/* Image Container: on top when stacked on mobile (<md), beside the text from md up */}
-              <div className="relative z-10 order-first md:order-none w-full md:w-1/2 aspect-[16/9] sm:aspect-[640/360] md:aspect-auto h-[300px] sm:h-[400px] md:h-auto min-h-0 overflow-hidden">
-                <Image
+              <div className="relative order-first md:order-none w-full md:w-1/2 aspect-[16/9] sm:aspect-[640/360] md:aspect-auto h-[300px] sm:h-[400px] md:h-auto min-h-0 overflow-hidden">
+                {card.image && <Image
                   src={card.image}
                   alt={card.title}
                   fill
                   className="object-cover image-hover-zoom"
                   sizes="(max-width: 768px) 100vw, 50vw"
-                />
+                />}
               </div>
             </div>
           ))}

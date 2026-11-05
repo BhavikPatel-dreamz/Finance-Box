@@ -344,13 +344,13 @@ export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
           <Reveal preset="slide-right" distance={20} className="relative w-full md:w-[50%] lg:w-[52%] xl:w-[48%] max-w-[340px] sm:max-w-[420px] md:max-w-none shrink-0 mx-auto md:mx-0 aspect-[599/455] self-end">
             {/* Left fade only when image sits beside the text */}
             <div className="hidden md:block absolute inset-y-0 left-0 w-20 lg:w-32 xl:w-48 bg-gradient-to-r from-[#F5F3F2] to-transparent z-1 pointer-events-none" />
-            <Image
+            {talk?.image && <Image
               src={talk.image}
               alt="Coins representing business growth"
               fill
               className="object-contain object-bottom md:object-right-bottom lg:object-contain"
               sizes="(max-width: 640px) 90vw, (max-width: 768px) 420px, (max-width: 1024px) 50vw, 599px"
-            />
+            />}
           </Reveal>
         </div>
       </Container>
@@ -364,13 +364,13 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
       <Container>
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <StaggerItem index={0} className="card-hover relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[440px] sm:min-h-[500px] lg:h-[630px] lg:min-h-[630px] flex items-end">
-            <Image
+            {aboutSection?.image && <Image
               src={aboutSection.image}
               alt="Team"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+            />}
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,24,38,0)_13.73%,rgba(18,24,38,0.662784)_52.12%,rgba(18,24,38,0.866393)_77.6%,#121826_100%)]" />
 
             <div className="relative z-1 p-6 sm:p-8 lg:p-10 w-full">
@@ -384,13 +384,13 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
           </StaggerItem>
 
           <StaggerItem index={1} className="card-hover relative overflow-hidden rounded-[20px] sm:rounded-[24px] min-h-[380px] sm:min-h-[480px] lg:h-[630px] lg:min-h-[630px] flex flex-col justify-between p-6 sm:p-8 lg:p-12.5 lg:pr-17.5">
-            <Image
+            {aboutSection?.bgImage && <Image
               src={aboutSection.bgImage}
               alt="Background"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+            />}
 
             <div className="relative z-1">
               <Eyebrow variant="green">

@@ -80,11 +80,11 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
     if (!typeName) continue;
 
     if (/WhyFiabBannerSectionLayout$/.test(typeName)) {
-      next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-      const { title, highlight } = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+      next.hero.eyebrow = cleanHtml(section.subTitle, "");
+      const { title, highlight } = splitHighlight(section.title, "", "");
       next.hero.title = title;
       next.hero.highlight = highlight;
-      next.hero.text = cleanHtml(section.description, next.hero.text);
+      next.hero.text = cleanHtml(section.description, "");
       next.hero.cta = link(section.ctaButton, next.hero.cta);
       const points = Array.isArray(section.highlights) ? section.highlights : [];
       if (points.length) {
@@ -97,10 +97,10 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
     }
 
     if (/WhyFiabComparisonSectionLayout$/.test(typeName)) {
-      const { title, highlight } = splitHighlight(section.title, next.compare.title, next.compare.highlight);
+      const { title, highlight } = splitHighlight(section.title, "", "");
       next.compare.title = title;
       next.compare.highlight = highlight;
-      next.compare.text = cleanHtml(section.description, next.compare.text);
+      next.compare.text = cleanHtml(section.description, "");
       next.compare.featureLabel = keep(section.featuresColumnLabel, next.compare.featureLabel);
       const fiabLogo = media(section.fiabLogo) ?? next.compare.columns[0]?.logo ?? null;
       next.compare.columns = [
@@ -119,7 +119,7 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
     }
 
     if (/WhyFiabHowWeWorkSectionLayout$/.test(typeName)) {
-      next.howWeWork.title = cleanHtml(section.title, next.howWeWork.title);
+      next.howWeWork.title = cleanHtml(section.title, "");
       const cards = Array.isArray(section.workCards) ? section.workCards : [];
       if (cards.length) {
         next.howWeWork.cards = cards.map((c: any) => ({ 
@@ -132,10 +132,10 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
     }
 
     if (/WhyFiabLetsTalkSectionLayout$/.test(typeName)) {
-      const { title, highlight } = splitHighlight(section.title, next.talk.title, next.talk.highlight);
+      const { title, highlight } = splitHighlight(section.title, "", "");
       next.talk.title = title;
       next.talk.highlight = highlight;
-      next.talk.text = cleanHtml(section.description, next.talk.text);
+      next.talk.text = cleanHtml(section.description, "");
       next.talk.image = media(section.image)?.url ?? next.talk.image;
       next.talk.cta = link(section.ctaButton, next.talk.cta);
     }
@@ -144,15 +144,15 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
       // 🚀 FIX: Background image fix kardi, kyunki WP se galat image aa rahi thi
       next.aboutSection.bgImage = "/why/bg-color.png";
       
-      next.aboutSection.title = cleanHtml(section.title, next.aboutSection.title);
-      next.aboutSection.text = cleanHtml(section.description, next.aboutSection.text);
+      next.aboutSection.title = cleanHtml(section.title, "");
+      next.aboutSection.text = cleanHtml(section.description, "");
       next.aboutSection.missionLabel = keep(section.missionSubTitle, next.aboutSection.missionLabel);
-      next.aboutSection.missionText = cleanHtml(section.missionContent, next.aboutSection.missionText);
+      next.aboutSection.missionText = cleanHtml(section.missionContent, "");
     }
 
     // 7. Team Members
     if (/TeamMembersSectionLayout$/.test(typeName)) {
-      next.team.title = cleanHtml(section.title, next.team.title);
+      next.team.title = cleanHtml(section.title, "");
       next.team.cta = link(section.ctaButton, next.team.cta);
 
       const members = (section as any).teamMembers?.nodes;
@@ -170,13 +170,13 @@ export function mergeWhy(base: WhyContent, sections: RawSection[]): WhyContent {
       const match = rawTitle.match(/(.*)<b[^>]*>([\s\S]*?)<\/b>(.*)/i);
       
       if (match) {
-        next.cta.title = cleanHtml(match[1] + (match[3] ? match[3] : ""), next.cta.title); 
-        next.cta.highlight = cleanHtml(match[2], next.cta.highlight);
+        next.cta.title = cleanHtml(match[1] + (match[3] ? match[3] : ""), ""); 
+        next.cta.highlight = cleanHtml(match[2], "");
       } else {
-        next.cta.title = cleanHtml(rawTitle, next.cta.title);
+        next.cta.title = cleanHtml(rawTitle, "");
       }
 
-      next.cta.text = cleanHtml(section.description, next.cta.text);
+      next.cta.text = cleanHtml(section.description, "");
       
       if (section.ctaButton) {
         next.cta.buttonLabel = keep((section.ctaButton as any).title, next.cta.buttonLabel);

@@ -42,17 +42,17 @@ export function mergeContactUs(
         next.hero.title = match[1].trim();
         next.hero.highlight = match[2].trim();
       } else {
-        next.hero.title = cleanHtml(section.title, next.hero.title);
+        next.hero.title = cleanHtml(section.title, "");
       }
       
-      next.hero.eyebrow = cleanHtml(section.subtitle, next.hero.eyebrow);
-      next.hero.text = cleanHtml(section.description, next.hero.text);
+      next.hero.eyebrow = cleanHtml(section.subtitle, "");
+      next.hero.text = cleanHtml(section.description, "");
     }
 
     // 2. Contact Form
     if (/ContactFormSectionLayout$/.test(typeName)) {
-      next.formSection.title = cleanHtml(section.formTitle, next.formSection.title);
-      next.formSection.subtitle = cleanHtml(section.formDescription, next.formSection.subtitle);
+      next.formSection.title = cleanHtml(section.formTitle, "");
+      next.formSection.subtitle = cleanHtml(section.formDescription, "");
       next.formSection.image = media(section.contactImage) ?? next.formSection.image;
       next.formSection.email.value = keep(section.contactEmail, next.formSection.email.value);
       const formId = typeof section.formId === "string" ? section.formId.trim() : "";
@@ -68,15 +68,15 @@ export function mergeContactUs(
         next.socialSection.title = match[1].trim();
         next.socialSection.highlight = match[2].trim();
       } else {
-        next.socialSection.title = cleanHtml(section.connectedTitle, next.socialSection.title);
+        next.socialSection.title = cleanHtml(section.connectedTitle, "");
       }
 
-      next.socialSection.subtitle = cleanHtml(section.connectedDescription, next.socialSection.subtitle);
+      next.socialSection.subtitle = cleanHtml(section.connectedDescription, "");
 
       const linkedin = section.linkedinBox as Record<string, any> | undefined;
       if (linkedin) {
-        next.socialSection.linkedin.title = cleanHtml(linkedin.title, next.socialSection.linkedin.title);
-        next.socialSection.linkedin.text = cleanHtml(linkedin.description, next.socialSection.linkedin.text);
+        next.socialSection.linkedin.title = cleanHtml(linkedin.title, "");
+        next.socialSection.linkedin.text = cleanHtml(linkedin.description, "");
         next.socialSection.linkedin.image = media(linkedin.image) ?? next.socialSection.linkedin.image;
         
         const cta = linkedin.ctaButton as Record<string, any> | undefined;
@@ -88,8 +88,8 @@ export function mergeContactUs(
 
       const newsletter = section.newsletterBox as Record<string, any> | undefined;
       if (newsletter) {
-        next.socialSection.newsletter.title = cleanHtml(newsletter.title, next.socialSection.newsletter.title);
-        next.socialSection.newsletter.text = cleanHtml(newsletter.description, next.socialSection.newsletter.text);
+        next.socialSection.newsletter.title = cleanHtml(newsletter.title, "");
+        next.socialSection.newsletter.text = cleanHtml(newsletter.description, "");
       }
     }
   }

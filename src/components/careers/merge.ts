@@ -107,11 +107,11 @@ function splitHighlight(
 
 /** Common Banner Section → hero. */
 function mergeHero(next: CareersContent, section: Record<string, any>): void {
-  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.hero.title = titleData.title;
   let resolvedHighlight = cleanHtml(section.highlight, titleData.highlight);
-  const resolvedHighlight2 = cleanHtml(section.highlight2, next.hero.highlight2);
+  const resolvedHighlight2 = cleanHtml(section.highlight2, "");
 
   if (resolvedHighlight && resolvedHighlight2 && resolvedHighlight.endsWith(resolvedHighlight2)) {
     resolvedHighlight = resolvedHighlight.slice(0, -resolvedHighlight2.length).trim();
@@ -119,13 +119,13 @@ function mergeHero(next: CareersContent, section: Record<string, any>): void {
 
   next.hero.highlight = resolvedHighlight;
   next.hero.highlight2 = resolvedHighlight2;
-  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.text = cleanHtml(section.description, "");
   next.hero.cta = link(section.ctaButton, next.hero.cta);
 }
 
 /** Careers Why Work Section → whyWork. */
 function mergeWhyWork(next: CareersContent, section: Record<string, any>): void {
-  const titleData = splitHighlight(section.title, next.whyWork.title, next.whyWork.highlight);
+  const titleData = splitHighlight(section.title, "", "");
   next.whyWork.title = titleData.title;
   next.whyWork.highlight = titleData.highlight;
   next.whyWork.image = media(section.image)?.url ?? next.whyWork.image;
@@ -140,7 +140,7 @@ function mergeWhyWork(next: CareersContent, section: Record<string, any>): void 
 
 /** Careers Stand Out Section → standOut. */
 function mergeStandOut(next: CareersContent, section: Record<string, any>): void {
-  next.standOut.title = cleanHtml(section.title, next.standOut.title);
+  next.standOut.title = cleanHtml(section.title, "");
 
   const cards = rows(section.cards);
   if (cards.length > 0) {
@@ -166,7 +166,7 @@ function mergeStandOut(next: CareersContent, section: Record<string, any>): void
 
 /** Careers Benefits Section → benefits. */
 function mergeBenefits(next: CareersContent, section: Record<string, any>): void {
-  next.benefits.title = cleanHtml(section.title, next.benefits.title);
+  next.benefits.title = cleanHtml(section.title, "");
 
   const benefits = rows(section.benefits);
   if (benefits.length > 0) {
@@ -183,8 +183,8 @@ function mergeBenefits(next: CareersContent, section: Record<string, any>): void
 
 /** 👇 NAYA: Services Operating Cadence Section → howWeHire. */
 function mergeHowWeHire(next: CareersContent, section: Record<string, any>): void {
-  next.howWeHire.title = cleanHtml(section.title, next.howWeHire.title);
-  next.howWeHire.text = cleanHtml(section.description, next.howWeHire.text);
+  next.howWeHire.title = cleanHtml(section.title, "");
+  next.howWeHire.text = cleanHtml(section.description, "");
 
   const steps = rows(section.steps);
   if (steps.length > 0) {
@@ -201,7 +201,7 @@ function mergeHowWeHire(next: CareersContent, section: Record<string, any>): voi
 
 /** FAQ Section → faq. */
 function mergeFaq(next: CareersContent, section: Record<string, any>): void {
-  next.faq.title = cleanHtml(section.title, next.faq.title);
+  next.faq.title = cleanHtml(section.title, "");
 
   const faqs = rows(section.faqs);
   if (faqs.length > 0) {
@@ -220,7 +220,7 @@ function mergePressure(next: CareersContent, section: Record<string, any>): void
   const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
   next.pressure.title = titleData.title;
   next.pressure.emphasis = titleData.highlight;
-  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.text = cleanHtml(section.description, "");
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }
 

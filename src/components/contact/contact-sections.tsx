@@ -56,12 +56,12 @@ export function ContactFormBlock({ formSection, form }: { formSection: ContactUs
           {/* Left Side: Image & Contact Info */}
           <Reveal preset="slide-left" distance={20} className="card-hover relative w-full lg:w-[476px] min-h-[420px] sm:min-h-[480px] lg:min-h-0 bg-white rounded-[10px] overflow-hidden flex flex-col justify-end transition-all duration-300">
             <div className="absolute inset-0 z-0">
-              <Image
+              {formSection?.image && <Image
                 src={formSection.image}
                 alt="Contact Information"
                 fill
                 className="object-cover"
-              />
+              />}
             </div>
             <div className="relative m-3 sm:m-4 lg:m-0 p-6 sm:p-8 bg-white border border-[#1219280D] rounded-[8px] lg:absolute lg:bottom-0 lg:left-0 lg:right-0">
               <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-medium leading-[1.1] tracking-[-0.8px] mb-2">
@@ -156,12 +156,12 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
             </div>
 
             <div className="absolute right-3 bottom-4 sm:right-6 sm:bottom-6 lg:right-11 lg:bottom-8 w-[140px] h-[105px] sm:w-[180px] sm:h-[135px] lg:w-[243px] lg:h-[177px] pointer-events-none">
-              <Image
+              {socialSection?.linkedin?.image && <Image
                 src={socialSection.linkedin.image}
                 alt="Gift"
                 fill
                 className="object-contain object-right-bottom"
-              />
+              />}
             </div>
           </StaggerItem>
 

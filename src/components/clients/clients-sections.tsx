@@ -166,13 +166,13 @@ export function ClientsTrustedCompanies({ logosSection }: { logosSection: Client
                 }`}
               >
                 <div className="relative w-[192px] max-w-full h-[67px] flex items-center justify-center">
-                  <Image
+                  {logo.image && <Image
                     src={logo.image}
                     alt={logo.name}
                     width={192}
                     height={67}
                     className="w-[192px] max-w-full h-[67px] max-h-full object-contain"
-                  />
+                  />}
                 </div>
               </StaggerItem>
             );
@@ -197,12 +197,12 @@ export function ClientsTestimonials({ reviewsSection }: { reviewsSection: Client
 
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-7.5">
             <Reveal preset="slide-left" distance={20} className="group card-hover relative w-full lg:w-[calc(50%-15px)] rounded-[10px] border border-black/10 overflow-hidden min-h-[380px] sm:min-h-[460px] lg:min-h-[740px]">
-              <Image
+              {reviewsSection?.mainReview?.image && <Image
                 src={reviewsSection.mainReview.image}
                 alt={reviewsSection.mainReview.author}
                 fill
                 className="object-cover image-hover-zoom"
-              />
+              />}
               <div className="absolute inset-0 bg-gradient-to-t from-[#121826] via-[#121826]/40 to-transparent" />
 
               <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 md:p-12">
@@ -230,12 +230,12 @@ export function ClientsTestimonials({ reviewsSection }: { reviewsSection: Client
                   <div className="flex items-center justify-between mt-4 sm:mt-6">
                     <div className="flex items-center gap-3">
                       <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden shrink-0">
-                        <Image
+                        {review.avatar && <Image
                           src={review.avatar}
                           alt={review.author}
                           fill
                           className="object-cover"
-                        />
+                        />}
                       </div>
                       <p className="text-[13px] sm:text-[14px] font-medium text-white/70">{review.author}</p>
                     </div>
@@ -280,23 +280,23 @@ export function ClientsWhereFiabWorks({ works }: { works: ClientsWhereFiabWorksC
               </div>
             </Reveal>
             <Reveal preset="slide-right" distance={20} className="group card-hover relative w-full aspect-[4/3] rounded-[16px] sm:rounded-[24px] overflow-hidden shadow-sm">
-              <Image
+              {works.image?.url && <Image
                 src={works.image.url}
                 alt={works.image.alt}
                 fill
                 className="object-cover image-hover-zoom"
-              />
+              />}
             </Reveal>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
             <Reveal preset="slide-left" distance={20} className="group card-hover relative w-full aspect-[4/3] rounded-[16px] sm:rounded-[24px] overflow-hidden order-2 lg:order-1 shadow-sm">
-              <Image
+              {works.portfolio.image?.url && <Image
                 src={works.portfolio.image.url}
                 alt={works.portfolio.image.alt}
                 fill
                 className="object-cover image-hover-zoom"
-              />
+              />}
             </Reveal>
             <Reveal preset="slide-right" distance={20} className="pr-0 lg:pl-12 order-1 lg:order-2">
               <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#16181d]">

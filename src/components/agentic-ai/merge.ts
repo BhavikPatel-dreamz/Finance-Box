@@ -109,12 +109,13 @@ function splitHighlight(
 
 /** Common Banner Section → hero. */
 function mergeHero(next: AgenticAiContent, section: Record<string, any>): void {
-  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.hero.title = titleData.title;
   next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
-  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.text = cleanHtml(section.description, "");
   next.hero.cta = link(section.ctaButton, next.hero.cta);
+  next.hero.bullets = [];
   
   // TagLine → bullets (textarea ki lines ko bullet items me convert karta hai)
   if (section.tagLine) {
@@ -130,12 +131,12 @@ function mergeHero(next: AgenticAiContent, section: Record<string, any>): void {
 
 /** About Agentic Section → whatIs. */
 function mergeWhatIs(next: AgenticAiContent, section: Record<string, any>): void {
-  next.whatIs.eyebrow = cleanHtml(section.subTitle, next.whatIs.eyebrow);
-  const titleData = splitHighlight(section.title, next.whatIs.title, next.whatIs.highlight);
+  next.whatIs.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.whatIs.title = titleData.title;
   next.whatIs.highlight = titleData.highlight;
-  next.whatIs.text1 = cleanHtml(section.tagLine, next.whatIs.text1);
-  next.whatIs.text2 = cleanHtml(section.description, next.whatIs.text2);
+  next.whatIs.text1 = cleanHtml(section.tagLine, "");
+  next.whatIs.text2 = cleanHtml(section.description, "");
 
   const features = rows(section.aboutAgentics);
   if (features.length > 0) {
@@ -152,10 +153,10 @@ function mergeWhatIs(next: AgenticAiContent, section: Record<string, any>): void
 
 /** Your Own Agentic Section → buildYourOwn. */
 function mergeBuildYourOwn(next: AgenticAiContent, section: Record<string, any>): void {
-  const titleData = splitHighlight(section.title, next.buildYourOwn.title, next.buildYourOwn.highlight);
+  const titleData = splitHighlight(section.title, "", "");
   next.buildYourOwn.title = titleData.title;
   next.buildYourOwn.highlight = titleData.highlight;
-  next.buildYourOwn.text = cleanHtml(section.description, next.buildYourOwn.text);
+  next.buildYourOwn.text = cleanHtml(section.description, "");
 
   const agents = rows(section.buildYourOwnAgentic);
   if (agents.length > 0) {
@@ -179,7 +180,7 @@ function mergeBuildYourOwn(next: AgenticAiContent, section: Record<string, any>)
 
 /** Agentic People Ops Section → peopleOps. */
 function mergePeopleOps(next: AgenticAiContent, section: Record<string, any>): void {
-  next.peopleOps.title = cleanHtml(section.title, next.peopleOps.title);
+  next.peopleOps.title = cleanHtml(section.title, "");
 
   const agents = rows(section.agents);
   if (agents.length > 0) {
@@ -203,7 +204,7 @@ function mergePeopleOps(next: AgenticAiContent, section: Record<string, any>): v
 
 /** Agentic Ops & Compliance Section → opsCompliance. */
 function mergeOpsCompliance(next: AgenticAiContent, section: Record<string, any>): void {
-  next.opsCompliance.title = cleanHtml(section.title, next.opsCompliance.title);
+  next.opsCompliance.title = cleanHtml(section.title, "");
 
   const cards = rows(section.agents);
   if (cards.length > 0) {
@@ -221,7 +222,7 @@ function mergeOpsCompliance(next: AgenticAiContent, section: Record<string, any>
 
 /** Agentic Official Partner Stack → partners. */
 function mergePartners(next: AgenticAiContent, section: Record<string, any>): void {
-  next.partners.title = cleanHtml(section.title, next.partners.title);
+  next.partners.title = cleanHtml(section.title, "");
 
   const partners = rows(section.officialPartners);
   if (partners.length > 0) {
@@ -237,8 +238,8 @@ function mergePartners(next: AgenticAiContent, section: Record<string, any>): vo
 
 /** Agentic Proven Architecture Section → provenArchitecture. */
 function mergeProvenArchitecture(next: AgenticAiContent, section: Record<string, any>): void {
-  next.provenArchitecture.title = cleanHtml(section.title, next.provenArchitecture.title);
-  next.provenArchitecture.highlight = cleanHtml(section.highlightTitle, next.provenArchitecture.highlight);
+  next.provenArchitecture.title = cleanHtml(section.title, "");
+  next.provenArchitecture.highlight = cleanHtml(section.highlightTitle, "");
 
   const cards = rows(section.architectureCards);
   if (cards.length > 0) {
@@ -257,17 +258,17 @@ function mergeProvenArchitecture(next: AgenticAiContent, section: Record<string,
 
 /** Join Waitlist Section → waitlist. */
 function mergeWaitlist(next: AgenticAiContent, section: Record<string, any>): void {
-  const titleData = splitHighlight(section.title, next.waitlist.title, next.waitlist.highlight);
+  const titleData = splitHighlight(section.title, "", "");
   next.waitlist.title = titleData.title;
   next.waitlist.highlight = titleData.highlight;
-  next.waitlist.text = cleanHtml(section.description, next.waitlist.text);
+  next.waitlist.text = cleanHtml(section.description, "");
   const formId = typeof section.formId === "string" ? section.formId.trim() : "";
   if (/^\d+$/.test(formId)) next.waitlist.formId = formId;
 }
 
 /** FAQ Section → faq. */
 function mergeFaq(next: AgenticAiContent, section: Record<string, any>): void {
-  next.faq.title = cleanHtml(section.title, next.faq.title);
+  next.faq.title = cleanHtml(section.title, "");
 
   const faqs = rows(section.faqs);
   if (faqs.length > 0) {
@@ -286,7 +287,7 @@ function mergePressure(next: AgenticAiContent, section: Record<string, any>): vo
   const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
   next.pressure.title = titleData.title;
   next.pressure.emphasis = titleData.highlight;
-  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.text = cleanHtml(section.description, "");
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }
 

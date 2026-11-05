@@ -127,25 +127,25 @@ function splitHighlight(
 
 /** Common Banner Section → hero. */
 function mergeHero(next: PeopleOperationsContent, section: Record<string, any>): void {
-  next.hero.eyebrow = cleanHtml(section.subTitle, next.hero.eyebrow);
-  const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
+  next.hero.eyebrow = cleanHtml(section.subTitle, "");
+  const titleData = splitHighlight(section.title, "", "");
   next.hero.title = titleData.title;
   next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
-  next.hero.text = cleanHtml(section.description || section.tagLine, next.hero.text);
+  next.hero.text = cleanHtml(section.description || section.tagLine, "");
 }
 
 /** People Operations Intro Section → intro. */
 function mergeIntro(next: PeopleOperationsContent, section: Record<string, any>): void {
   next.intro.image = media(section.image)?.url ?? next.intro.image;
-  const titleData = splitHighlight(section.title, next.intro.title, next.intro.highlight);
+  const titleData = splitHighlight(section.title, "", "");
   next.intro.title = titleData.title;
   next.intro.highlight = titleData.highlight;
-  next.intro.text = cleanHtml(section.description, next.intro.text);
+  next.intro.text = cleanHtml(section.description, "");
 }
 
 /** People Operations What We Do Section → whatWeDo. */
 function mergeWhatWeDo(next: PeopleOperationsContent, section: Record<string, any>): void {
-  next.whatWeDo.title = cleanHtml(section.title, next.whatWeDo.title);
+  next.whatWeDo.title = cleanHtml(section.title, "");
 
   const items = rows(section.whatWeDoItems);
   if (items.length > 0) {
@@ -167,7 +167,7 @@ function mergeWhatWeDo(next: PeopleOperationsContent, section: Record<string, an
 
 /** People Operations Where We Help Section → whereWeHelp. */
 function mergeWhereWeHelp(next: PeopleOperationsContent, section: Record<string, any>): void {
-  const titleData = splitHighlight(section.title, next.whereWeHelp.title, next.whereWeHelp.highlight);
+  const titleData = splitHighlight(section.title, "", "");
   next.whereWeHelp.title = titleData.title;
   next.whereWeHelp.highlight = titleData.highlight;
 
@@ -188,7 +188,7 @@ function mergePressure(next: PeopleOperationsContent, section: Record<string, an
   const titleData = splitHighlight(section.title, next.pressure.title, next.pressure.emphasis);
   next.pressure.title = titleData.title;
   next.pressure.emphasis = titleData.highlight;
-  next.pressure.text = cleanHtml(section.description, next.pressure.text);
+  next.pressure.text = cleanHtml(section.description, "");
   next.pressure.cta = link(section.ctaButton, next.pressure.cta);
 }
 

@@ -146,13 +146,13 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
           {caseStudy.items.map((item, idx) => (
             <StaggerItem key={item.url || idx} index={idx} className="group card-hover relative flex flex-col">
               <div className="relative w-full aspect-[414/560] max-h-[460px] sm:max-h-[500px] md:max-h-none lg:aspect-auto lg:h-[560px] rounded-[10px] sm:rounded-[12px] overflow-hidden mb-4 sm:mb-5 lg:mb-6">
-                <Image
+                {item.image && <Image
                   src={item.image}
                   alt={item.title}
                   fill
                   className="object-cover image-hover-zoom"
                   sizes="(max-width: 768px) 100vw, 33vw"
-                />
+                />}
               </div>
               <h3 className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[1.3] lg:leading-[1.2] mb-2">
                 {item.url ? (
