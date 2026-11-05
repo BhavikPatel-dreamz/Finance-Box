@@ -29,6 +29,11 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
                 <span className="text-[#23C55E]">{config.highlight}</span>
               )}
             </h1>
+            {config.tagLine && (
+              <p className="text-[16px] font-light leading-[160%] text-white/90 max-w-md mb-3">
+                {config.tagLine}
+              </p>
+            )}
             {config.description && (
               <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-md">
                 {config.description}
@@ -38,6 +43,11 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
 
           {/* Right Column (Bullets + CTA) */}
           <div className="max-w-md lg:justify-self-end">
+            {config.rightDescription && (
+              <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-md mb-6">
+                {config.rightDescription}
+              </p>
+            )}
             {config.bullets && config.bullets.length > 0 && (
               <StaggerGroup immediate staggerDelay={120} className="space-y-6 mb-10">
                 {config.bullets.map((bullet, idx) => (

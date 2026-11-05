@@ -25,8 +25,10 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
           eyebrow: hero.eyebrow,
           title: hero.title,
           highlight: hero.highlight,
-          description: text(data.tagLine) || hero.text,
+          tagLine: text(data.tagLine),
+          description: "",
           bullets: listItems(data.description),
+          rightDescription: listItems(data.description).length === 0 ? text(data.description) : "",
           primaryCta: hero.cta
             ? {
                 label: hero.cta.label,
