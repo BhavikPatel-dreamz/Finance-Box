@@ -1,45 +1,8 @@
-import type { ReactNode } from "react";
 import Image from "next/image";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { PeopleOperationsContent } from "@/content/people-operations";
-
-export function PeopleOperationsBanner({ hero, header }: { hero: PeopleOperationsContent["hero"]; header: ReactNode }) {
-  // 1. Hero Section
-  return (
-    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-[#121826] text-white">
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
-      />
-
-      <div className="relative flex flex-col h-full">
-        {header}
-
-        <div className="flex-1 flex items-center w-full max-w-[1280px] mx-auto px-4 sm:px-6 pt-6 sm:pt-8 lg:pt-0 pb-10 sm:pb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center w-full">
-            <Reveal immediate preset="slide-up" delay={80} distance={24}>
-              <Eyebrow variant="dark" className="mb-4 sm:mb-6">
-                {hero.eyebrow}
-              </Eyebrow>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6">
-                {hero.title}
-                <span className="text-[#23C55E]">{hero.highlight}</span>
-              </h1>
-            </Reveal>
-            <Reveal immediate preset="slide-up" delay={260} distance={24} className="max-w-md lg:justify-self-end">
-              <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] lg:leading-[160%] text-white/80 mb-6 sm:mb-8">
-                {hero.text}
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsContent["intro"] }) {
   // 2. Intro Section
