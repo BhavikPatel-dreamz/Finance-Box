@@ -1,10 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { AgenticOfficialPartnerStackFragment } from "@/lib/wordpress/generated/graphql";
-import { fromSection } from "@/components/sections/from-section";
 import { PartnersSection } from "@/components/ui/partners-section";
 import { AgenticPartners } from "@/components/agentic-ai/agentic-ai-sections";
-import { mergeAgenticAi } from "@/components/agentic-ai/merge";
-import { agenticAiContent } from "@/content/agentic-ai";
 import { media, text } from "@/lib/wordpress/fields";
 
 /**
@@ -16,10 +13,7 @@ import { media, text } from "@/lib/wordpress/fields";
 export const agenticOfficialPartnerStack = defineSection<AgenticOfficialPartnerStackFragment>({
   layout: "AgenticOfficialPartnerStack",
   render: (data) => {
-    if (data.logoView === "boxed") {
-      return <AgenticPartners partners={fromSection(mergeAgenticAi, agenticAiContent, data).partners} />;
-    }
-    const logos = (data.officialPartners ?? []).map((partner) => {
+    const simpleLogos = (data.officialPartners ?? []).map((partner) => {
       const image = media(partner?.logo);
       return {
         image,
@@ -27,6 +21,24 @@ export const agenticOfficialPartnerStack = defineSection<AgenticOfficialPartnerS
         caption: "",
       };
     });
-    return <PartnersSection title={text(data.title)} highlight="Partners" logos={logos} />;
+
+    if (data.logoView === "boxed") {
+      const logos = (data.officialPartners ?? []).map((partner) => {
+        const image = media(partner?.logo);
+        return {
+          name: image?.alt ?? "Partner",
+          logo: image?.url ?? "",
+        };
+      });
+      return <AgenticPartners partners={{ title: text(data.title), logos }} />;
+    }
+
+    return (
+      <PartnersSection
+        title={text(data.title)}
+        highlight="Partners"
+        logos={simpleLogos}
+      />
+    );
   },
 });
