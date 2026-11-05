@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { HomeContent } from "@/content/home";
 import { Container } from "@/components/ui/container";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -172,11 +173,12 @@ export function TrustedBy({ trust = defaultTrust, logos, className = "" }: Trust
                   className="!w-auto flex items-center"
                 >
                   <div className="flex h-[75px] w-[130px] sm:w-[160px] shrink-0 items-center justify-center">
-                    <img
+                    <Image
                       src={logo.src}
                       alt={logo.name}
+                      width={160}
+                      height={75}
                       className="h-full w-full object-contain pointer-events-none select-none"
-                      loading="lazy"
                     />
                   </div>
                 </SwiperSlide>

@@ -94,7 +94,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Re
 
 function Mark({ on }: { on: boolean }) {
   return on ? (
-    <img
+    <Image
       src="/icons/right-icon.svg"
       alt="Included"
       width={23}
@@ -102,7 +102,7 @@ function Mark({ on }: { on: boolean }) {
       className="h-[20px] w-[20px] sm:h-[23px] sm:w-[23px] inline-block object-contain"
     />
   ) : (
-    <img
+    <Image
       src="/icons/close-icon.svg"
       alt="Not included"
       width={22}
@@ -205,9 +205,12 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                         style={{ gridColumn: gridCol, gridRow: 1 }}
                       >
                         {column.logo ? (
-                          <img
+                          <Image
                             src={column.logo.url}
                             alt={column.logo.alt || column.label}
+                            width={145}
+                            height={48}
+                            sizes="(max-width: 640px) 130px, 145px"
                             className="h-9 sm:h-12 w-auto max-w-[130px] sm:max-w-[145px] object-contain drop-shadow-sm"
                           />
                         ) : (

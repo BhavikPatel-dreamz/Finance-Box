@@ -200,7 +200,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
 
           <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
             <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10">
-              <img src={icons[0]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
+              <Image src={icons[0]} alt="Icon" width={24} height={24} className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
             </div>
             <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{difference.cards[0].title}</h3>
             <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-[#121826]/70">{difference.cards[0].text}</p>
@@ -210,7 +210,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
           {difference.cards.slice(1, 3).map((card, idx) => (
             <StaggerItem key={idx} index={idx + 1} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
               <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
-                <img src={icons[idx + 1]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
+                <Image src={icons[idx + 1]} alt="Icon" width={24} height={24} className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
@@ -221,7 +221,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
           {difference.cards.slice(3, 5).map((card, idx) => (
             <StaggerItem key={idx} index={idx + 3} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
               <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
-                <img src={icons[idx + 3]} alt="Icon" className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
+                <Image src={icons[idx + 3]} alt="Icon" width={24} height={24} className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
