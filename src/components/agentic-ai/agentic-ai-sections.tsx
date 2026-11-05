@@ -53,7 +53,7 @@ export function AgenticBanner({ hero, header }: { hero: AgenticAiContent["hero"]
 
         <Container>
           <div className="flex-1 flex items-center pb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 gap-8 items-center w-full">
 
               <Reveal immediate preset="slide-up" delay={80} distance={24}>
                 <Eyebrow variant="dark" className="mb-6">
