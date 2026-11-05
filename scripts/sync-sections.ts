@@ -3,6 +3,7 @@ import path from "node:path";
 import { execSync } from "node:child_process";
 import * as L from "./lib/sections";
 
+
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
 const isDry = args.includes("--dry-run");
@@ -12,8 +13,8 @@ const COMPONENTS_DIR = path.join(ROOT, "src/components/sections");
 const QUERIES_DIR = path.join(ROOT, "src/lib/wordpress/queries/sections");
 
 async function main() {
-  console.log("WordPress URL:", process.env.WORDPRESS_GRAPHQL_URL);
   const schema = await L.loadSchema();
+  console.log("WordPress URL:", process.env.WORDPRESS_GRAPHQL_URL || process.env.WORDPRESS_URL);
   const layouts = L.listLayouts(schema);
   if (!layouts.length || layouts.length < 3) {
     console.error("Schema fetch incomplete; aborting.");

@@ -62,7 +62,7 @@ export function generateFieldFragment(field: GqlField, schema: Schema, typeName:
     return `${indent}${field.name}`;
   }
   const subFields = objType.fields ?? [];
-  if (isImageField(ftName, subFields)) {
+  if (isImageField(subFields)) {
     return `${indent}${field.name} {\n${indent}  node {\n${indent}    sourceUrl\n${indent}    altText\n${indent}    mediaDetails { width height }\n${indent}  }\n${indent}}`;
   }
   if (isLinkField(subFields)) {
