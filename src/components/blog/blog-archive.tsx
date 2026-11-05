@@ -14,13 +14,6 @@ import { getSiteChrome } from "@/lib/wordpress/site-chrome";
 
 export const POSTS_PER_PAGE = 9;
 
-/** Total archive pages for the current posts (at least 1). */
-export async function blogPageCount() {
-  const result = await getPosts();
-  const count = result.status === "ok" ? result.items.length : 0;
-  return Math.max(1, Math.ceil(count / POSTS_PER_PAGE));
-}
-
 /** `/blog/` and `/blog/page/<n>/`: every published post, newest first, as Knowledge Hub cards. */
 export async function BlogArchive({ page }: { page: number }) {
   const [chrome, result] = await Promise.all([getSiteChrome(), getPosts()]);

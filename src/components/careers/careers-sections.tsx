@@ -3,61 +3,13 @@
 import { useState, type ReactNode } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import { Button } from "@/components/ui/button";
 import { Accordion } from "../ui/accordion";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Container from "../ui/container";
 import { ProcessGrid } from "@/components/ui/process-grid";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { CareersContent } from "@/content/careers";
 
-export function CareersBanner({ hero, header }: { hero: CareersContent["hero"]; header: ReactNode }) {
-  // 1. Hero Section
-  return (
-    <section className="hero-section relative overflow-hidden bg-[#121826] text-white">
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: "url(/careers/careers-page-hero-bg.svg)" }}
-        aria-hidden="true"
-      />
-
-      <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[660px] z-10 flex items-center justify-center flex-col h-full">
-        {header}
-
-        <Container>
-          <div className="flex-1 flex items-center pb-10 sm:pb-14 md:pb-16 lg:pb-24 pt-6 sm:pt-10 md:pt-12 lg:pt-16">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center w-full">
-              <Reveal immediate preset="slide-up" delay={80} distance={24}>
-                <Eyebrow variant="dark" className="mb-4 sm:mb-6">
-                  {hero.eyebrow}
-                </Eyebrow>
-                <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
-                  Build the operating<br className="hidden sm:inline" />{" "}
-                  system <span className="text-[#23C55E]">{hero.highlight}</span><br className="hidden sm:inline" />{" "}
-                  <span className="text-[#23C55E]">{hero.highlight2}</span>
-                </h1>
-              </Reveal>
-
-              <Reveal immediate preset="slide-up" delay={260} distance={24} className="max-w-md lg:justify-self-end w-full">
-                <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-white/80 mb-6 sm:mb-8">
-                  {hero.text}
-                </p>
-                <div>
-                  <Button
-                    color="white"
-                    text={hero.cta.label}
-                    href={hero.cta.url}
-                  />
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </Container>
-      </div>
-    </section>
-  );
-}
 
 export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"] }) {
   // 2. Why work at FIAB Section

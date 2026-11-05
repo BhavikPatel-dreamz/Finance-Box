@@ -14,7 +14,10 @@
     "schema": "node scripts/fetch-schema.mjs",
     "sections:inventory": "node scripts/section-inventory.mjs",
     "sections:check": "node scripts/check-sections.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "new-section": "npx -y tsx scripts/new-section.ts",
+    "remove-section": "npx -y tsx scripts/remove-section.ts",
+    "sync-sections": "npx -y tsx scripts/sync-sections.ts"
   },
   "dependencies": {
     "@graphql-typed-document-node/core": "^3.2.0",

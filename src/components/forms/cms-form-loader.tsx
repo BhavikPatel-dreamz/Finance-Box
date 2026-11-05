@@ -34,14 +34,6 @@ export const WAITLIST_FALLBACK_FIELDS: FormField[] = [
   field("your-message", "textarea", "Write your message...", false),
 ];
 
-/** Fields of CF7 form 1414 (Knowledge Hub insights) when WordPress is unreachable. */
-export const NEWSLETTER_FALLBACK_FIELDS: FormField[] = [
-  field("your-name", "text", "Name", true),
-  field("your-email", "email", "Work E-mail", true),
-  field("your-role", "text", "Role", true),
-  field("your-message", "textarea", "Write your message...", false),
-];
-
 /** Fields of CF7 form 1284 (Contact page) when WordPress is unreachable. */
 export const CONTACT_FALLBACK_FIELDS: FormField[] = [
   field("your-name", "text", "Your name", true),

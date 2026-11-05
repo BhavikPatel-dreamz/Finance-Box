@@ -12,8 +12,6 @@ interface LeadershipProps {
   leadership: HomeContent["leadership"];
 }
 
-const fallbackPeople = homeContent.leadership.people;
-
 // Per-person image scale for assets exported with extra padding
 const IMAGE_SCALE: Record<string, number> = {
   "Neeti Chauhan": 1.3,

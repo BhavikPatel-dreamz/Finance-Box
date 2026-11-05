@@ -11,89 +11,16 @@ import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { AgenticAiContent } from "@/content/agentic-ai";
 
-// Needs a parent with `group relative isolate overflow-hidden`. Same motion as the button circle.
-function CardFill({ className = "bg-[#23C55E]/[0.13]" }: { className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`pointer-events-none absolute bottom-0 left-0 -z-10 aspect-square w-full rounded-full [transform:translate(-50%,50%)_scale(0)] transition-transform duration-[900ms] ease-in-out group-hover:[transform:translate(-50%,50%)_scale(3.5)] motion-reduce:transition-none ${className}`}
-    />
-  );
-}
 
 const ICON_CHIP =
   "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-[#23C55E] motion-reduce:transition-none";
 const ICON_IMG =
   "relative w-6 h-6 transition-[filter] duration-500 group-hover:brightness-0 group-hover:invert";
 
-// Needs a parent with `group relative isolate overflow-hidden`
-function RiseGlow() {
-  return (
-    <span
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-10 translate-y-[20%] bg-[linear-gradient(to_top,rgba(35,197,94,0.26),transparent_65%)] opacity-0 transition-[opacity,transform] duration-[600ms] ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
-    />
-  );
-}
 
 const ICON_CHIP_LIFT =
   "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-[#23C55E] motion-reduce:transition-none";
 
-export function AgenticBanner({ hero, header }: { hero: AgenticAiContent["hero"]; header: ReactNode }) {
-  // Hero Section (Header + Hero = 525px)
-  return (
-    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-[#121826] text-white">
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
-      />
-
-      <div className="relative z-1 flex flex-col justify-center h-full">
-        {header}
-
-        <Container>
-          <div className="flex-1 flex items-center pb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 gap-8 items-center w-full">
-
-              <Reveal immediate preset="slide-up" delay={80} distance={24}>
-                <Eyebrow variant="dark" className="mb-6">
-                  {hero.eyebrow}
-                </Eyebrow>
-                <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6 lg:max-w-[400px]">
-                  {hero.title}
-                  <span className="text-[#23C55E]">{hero.highlight}</span>
-                </h1>
-                <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-md">
-                  {hero.text}
-                </p>
-              </Reveal>
-
-              <div className="max-w-md lg:justify-self-end">
-                <StaggerGroup immediate staggerDelay={120} className="space-y-6 mb-10">
-                  {hero.bullets.map((bullet, idx) => (
-                    <StaggerItem key={idx} index={idx} className="flex items-start gap-4">
-                      <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
-                      <span className="text-[16px] font-light leading-[160%] text-white/80">{bullet}</span>
-                    </StaggerItem>
-                  ))}
-                </StaggerGroup>
-
-                <Reveal immediate preset="slide-up" delay={480} distance={20}>
-                  <GreenButton
-                    label={hero.cta.label}
-                    href={hero.cta.url}
-                    bgColor="#ffffff"
-                  />
-                </Reveal>
-              </div>
-
-            </div>
-          </div>
-        </Container>
-      </div>
-    </section>
-  );
-}
 
 export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] }) {
   // 2. What is Agentic AI Section
@@ -470,21 +397,3 @@ export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent
   );
 }
 
-export function AgenticFaq({ faq }: { faq: AgenticAiContent["faq"] }) {
-  // 9. Naya Section: FAQ
-  return (
-    <Section theme="faq" spacing="both" className="faq-section">
-      <Container>
-        <div className="mx-auto w-full max-w-[880px]">
-          <Reveal preset="slide-up" distance={20}>
-            <h2 className="text-center text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] md:mb-12 mb-6">
-              {faq.title}
-            </h2>
-          </Reveal>
-
-          <Accordion items={faq.items} />
-        </div>
-      </Container>
-    </Section>
-  );
-}

@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { getSectionDefinition } from "@/components/page-builder/section-registry";
 import { reportSectionProblem, SectionFallback } from "@/components/page-builder/section-fallback";
-import { resolveVariant } from "@/components/page-builder/section-variants";
+
 import { StandaloneHeader } from "@/components/layout/site-header";
 import { layoutFromTypename } from "@/lib/page-builder/layout";
 import type { SectionData } from "@/lib/page-builder/types";
@@ -28,8 +28,10 @@ export function SectionRenderer({ sections, uri, header }: { sections: SectionDa
         const definition = getSectionDefinition(layout);
 
         if (!definition) {
-          reportSectionProblem("unknown-layout", layout, uri, index);
-          return <SectionFallback key={key} problem="unknown-layout" layout={layout} />;
+          if (process.env.NODE_ENV !== "production") {
+            console.warn(`[section-renderer] No component for layout "${layout}" (page ${uri}); rendering nothing.`);
+          }
+          return null;
         }
 
         let node: ReactNode;
@@ -38,7 +40,6 @@ export function SectionRenderer({ sections, uri, header }: { sections: SectionDa
             uri,
             index,
             header: index === 0 && definition.hero ? header : null,
-            variant: resolveVariant(layout, uri),
           });
         } catch (error) {
           reportSectionProblem("render-error", layout, uri, index, error);

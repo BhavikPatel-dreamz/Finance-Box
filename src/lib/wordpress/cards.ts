@@ -82,8 +82,8 @@ export function caseStudyCardFromNode(node: CaseStudyCardFragment, fallback?: Pa
     solution: parts.solution || fallback?.solution || "",
     outcome: parts.outcome || fallback?.outcome || "",
     image:
-      node.featuredImage?.node.sourceUrl ||
       options?.frontFeatureImage?.node.sourceUrl ||
+      node.featuredImage?.node.sourceUrl ||
       fallback?.image ||
       DEFAULT_CASE_STUDY_IMAGE,
     ctaUrl: slug ? caseStudyPath(slug) : fallback?.ctaUrl || "/case-study/",

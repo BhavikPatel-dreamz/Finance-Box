@@ -15,8 +15,6 @@ export type SectionContext = {
    * background. Hero components must render it at the top of that background.
    */
   header: ReactNode;
-  /** Presentation variant resolved by `section-variants.ts`, when the layout has variants. */
-  variant: string | undefined;
 };
 
 export type SectionDefinition<TData extends { __typename: string } = SectionData> = {
