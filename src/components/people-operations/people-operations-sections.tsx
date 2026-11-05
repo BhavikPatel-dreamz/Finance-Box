@@ -103,22 +103,22 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
             <div
               key={idx}
               style={{ zIndex: idx + 1 }}
-              className={`group card-hover sticky top-[64px] sm:top-[80px] lg:top-[96px] xl:top-[108px] bg-[#191F2D] border border-white/8 rounded-[16px] overflow-hidden flex flex-col md:flex-row md:min-h-[460px] lg:min-h-[520px] xl:min-h-[592px] ${
-                card.reverse ? "md:flex-row-reverse" : "md:flex-row"
-              }`}
+              className={`group card-hover sticky top-[64px] sm:top-[80px] lg:top-[96px] xl:top-[108px] bg-[#191F2D] border border-white/8 rounded-[16px] overflow-hidden flex flex-col md:flex-row md:min-h-[460px] lg:min-h-[520px] xl:min-h-[592px] ${card.reverse ? "md:flex-row-reverse" : "md:flex-row"
+                }`}
             >
-              {/* Background Gradient Image */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <Image
-                  src={card.bgImage}
-                  alt="Background Gradient"
-                  fill
-                  className="object-cover opacity-100"
-                />
-              </div>
+              {/* Background green glow (CSS only, sits behind content) */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 overflow-hidden pointer-events-none"
+                style={{
+                  background: card.reverse
+                    ? "radial-gradient(ellipse 70% 70% at 100% 100%, rgba(35,197,94,0.22) 0%, rgba(35,197,94,0) 70%)"
+                    : "radial-gradient(ellipse 70% 70% at 0% 0%, rgba(35,197,94,0.22) 0%, rgba(35,197,94,0) 70%)",
+                }}
+              />
 
               {/* Content Container */}
-              <div className="relative min-w-0 w-full md:w-1/2 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-16 flex flex-col justify-center">
+              <div className="relative z-10 min-w-0 w-full md:w-1/2 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-16 flex flex-col justify-center">
                 <h3 className="text-[19px] sm:text-[23px] lg:text-[28px] xl:text-[30px] font-semibold leading-[1.25] lg:leading-[1.2] mb-2 sm:mb-3 lg:mb-4">
                   {card.title}
                 </h3>
@@ -139,7 +139,7 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
               </div>
 
               {/* Image Container: on top when stacked on mobile (<md), beside the text from md up */}
-              <div className="relative order-first md:order-none w-full md:w-1/2 aspect-[16/9] sm:aspect-[640/360] md:aspect-auto h-[300px] sm:h-[400px] md:h-auto min-h-0 overflow-hidden">
+              <div className="relative z-10 order-first md:order-none w-full md:w-1/2 aspect-[16/9] sm:aspect-[640/360] md:aspect-auto h-[300px] sm:h-[400px] md:h-auto min-h-0 overflow-hidden">
                 <Image
                   src={card.image}
                   alt={card.title}
