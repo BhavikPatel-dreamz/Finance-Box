@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import type { HeroConfig } from "../types";
 import { parseEyebrow } from "../utils";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -23,19 +24,34 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
                 {eyebrowData.text}
               </Eyebrow>
             )}
-            <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6 lg:max-w-[400px]">
+            <h1
+              className={twMerge(
+                "text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6 lg:max-w-[400px]",
+                config.titleMaxWidth
+              )}
+            >
               {config.title}{" "}
               {config.highlight && (
                 <span className="text-[#23C55E]">{config.highlight}</span>
               )}
             </h1>
             {config.tagLine && (
-              <p className="text-[16px] font-light leading-[160%] text-white/90 max-w-md mb-3">
+              <p
+                className={twMerge(
+                  "text-[16px] font-light leading-[160%] text-white/90 max-w-md mb-3",
+                  config.titleMaxWidth
+                )}
+              >
                 {config.tagLine}
               </p>
             )}
             {config.description && (
-              <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-md">
+              <p
+                className={twMerge(
+                  "text-[16px] font-light leading-[160%] text-white/80 max-w-md",
+                  config.titleMaxWidth
+                )}
+              >
                 {config.description}
               </p>
             )}
@@ -70,9 +86,10 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
                 <GreenButton
                   label={config.primaryCta.label}
                   href={config.primaryCta.url}
-                  bgColor={config.primaryCta.bgColor || "#ffffff"}
-                  textColor={config.primaryCta.textColor || "#07110d"}
+                  bgColor={config.primaryCta.bgColor}
+                  textColor={config.primaryCta.textColor}
                   color={config.primaryCta.color || "white"}
+                  onDark={config.primaryCta.onDark ?? true}
                   className={config.primaryCta.className}
                 />
               </Reveal>

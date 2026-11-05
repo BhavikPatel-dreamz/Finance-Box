@@ -69,6 +69,7 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
                   color={config.primaryCta.color || "white"}
                   text={config.primaryCta.label}
                   href={config.primaryCta.url}
+                  onDark={config.primaryCta.onDark ?? true}
                   className={config.primaryCta.className}
                 />
               </div>
