@@ -32,6 +32,9 @@ export function kindSnippet(name: string, kind: FieldKind): string {
 }
 
 export interface UpdateResult {
+  autoAreaMissing?: boolean;
+  autoFieldsRendered?: string[];
+  handledByJsx?: string[];
   fieldsAdded: string[];
   fieldsRemoved: string[];
   removedStillUsed: string[];
@@ -42,9 +45,12 @@ export interface UpdateResult {
 
 export function updateComponentDestructuring(
   componentPath: string,
+  allFields: string[],
   added: string[],
   removed: string[],
   fieldKinds: Record<string, FieldKind>,
+  fieldDefs: Record<string, L.GqlField>,
+  schema: L.Schema,
 ): { original: string; next: string; result: UpdateResult } {
   const original = fs.readFileSync(componentPath, "utf8");
   const lines = original.split("\n");
@@ -128,6 +134,28 @@ export function updateComponentDestructuring(
     newLines.splice(destIndex + 1, 0, ...todoLines);
   }
 
+  // Auto-render area handling.
+  const startMarker = "{/* @auto-fields:start (managed by sync-sections, don't edit inside) */}";
+  const endMarker = "{/* @auto-fields:end */}";
+  const startIndex = newLines.findIndex((l) => l.includes(startMarker));
+  const endIndex = newLines.findIndex((l) => l.includes(endMarker));
+  const hasAutoArea = startIndex >= 0 && endIndex > startIndex;
+
+  let autoAreaMissing = false;
+  const outsideLines = hasAutoArea ? newLines.slice(0, startIndex).concat(newLines.slice(endIndex + 1)) : [];
+  const outsideText = outsideLines.join("\n");
+  const usedOutside = hasAutoArea ? new Set(allFields.filter((name) => new RegExp("\\b" + name + "\\b").test(outsideText))) : new Set<string>();
+  const autoFields = hasAutoArea ? allFields.filter((name) => !usedOutside.has(name)) : [];
+  if (!hasAutoArea) {
+    autoAreaMissing = true;
+  } else {
+    const autoLines = autoFields
+      .filter((name) => fieldDefs[name])
+      .flatMap((name) => autoLinesForField(fieldDefs[name], schema, "      "));
+    const autoBlock = [startMarker, ...autoLines, endMarker].map((l) => (l === startMarker || l === endMarker) ? "      " + l : l);
+    newLines.splice(startIndex, endIndex - startIndex + 1, ...autoBlock);
+  }
+
   const next = newLines.join("\n");
   return {
     original,
@@ -137,7 +165,73 @@ export function updateComponentDestructuring(
       fieldsRemoved: unusedRemoved,
       removedStillUsed,
       usageLines,
+      autoAreaMissing,
+      autoFieldsRendered: autoFields,
+      handledByJsx: Array.from(usedOutside),
       manual: false,
     },
   };
+}
+
+export function isWysiwygName(name: string): boolean {
+  return /content|html|description|wysiwyg|body|rich/i.test(name);
+}
+
+function autoLinesForRepeater(field: L.GqlField, schema: L.Schema, indent: string): string[] {
+  const { name: ftName } = L.unwrap(field.type);
+  const objType = L.findType(schema, ftName);
+  const subFields = (objType?.fields ?? []).filter((f) => !f.name.startsWith("__"));
+  const inner: string[] = [];
+  for (const sub of subFields) {
+    inner.push(...autoLinesForFieldWithName(`item.${sub.name}`, sub, schema, indent + "      "));
+  }
+  const lines: string[] = [];
+  lines.push(`${indent}{${field.name}?.map((item, i) => (`);
+  lines.push(`${indent}  <div key={i}>`);
+  lines.push(...inner);
+  lines.push(`${indent}  </div>`);
+  lines.push(`${indent}))}`);
+  return lines;
+}
+
+function autoLinesForFieldWithName(nameExpr: string, field: L.GqlField, schema: L.Schema, indent: string): string[] {
+  // nameExpr may be "field" or "item.sub"
+  const baseName = nameExpr.split(".").pop() || nameExpr;
+  const kind = classifyField(field, schema);
+  const wysiwyg = isWysiwygName(baseName);
+  if (kind === "text") {
+    if (wysiwyg) {
+      return [`${indent}{${nameExpr} && <div dangerouslySetInnerHTML={{ __html: ${nameExpr} }} />}`];
+    }
+    return [`${indent}{${nameExpr} && <p>{${nameExpr}}</p>}`];
+  }
+  if (kind === "image") {
+    return [`${indent}{${nameExpr}?.node?.sourceUrl && <img src={${nameExpr}.node.sourceUrl} alt={${nameExpr}.node.altText ?? ""} />}`];
+  }
+  if (kind === "link") {
+    return [`${indent}{${nameExpr}?.url && <a href={${nameExpr}.url} target={${nameExpr}.target ?? undefined}>{${nameExpr}.title ?? ${nameExpr}.label}</a>}`];
+  }
+  if (kind === "true/false" as any) {
+    return [`${indent}{${nameExpr} != null && <p>{String(${nameExpr})}</p>}`];
+  }
+  if (L.unwrap(field.type).modifiers.includes("LIST")) {
+    return autoLinesForRepeater(field, schema, indent).map((l) => l.replace(new RegExp("\\b" + field.name + "\\b", "g"), nameExpr));
+  }
+  // group
+  const { name: ftName } = L.unwrap(field.type);
+  const objType = L.findType(schema, ftName);
+  const subFields = (objType?.fields ?? []).filter((f) => !f.name.startsWith("__"));
+  const lines: string[] = [];
+  lines.push(`${indent}{${nameExpr} && (`);
+  lines.push(`${indent}  <div>`);
+  for (const sub of subFields) {
+    lines.push(...autoLinesForFieldWithName(`${nameExpr}.${sub.name}`, sub, schema, indent + "    "));
+  }
+  lines.push(`${indent}  </div>`);
+  lines.push(`${indent})}`);
+  return lines;
+}
+
+export function autoLinesForField(field: L.GqlField, schema: L.Schema, indent = "    "): string[] {
+  return autoLinesForFieldWithName(field.name, field, schema, indent);
 }

@@ -30,20 +30,20 @@ async function main() {
   // detect changed fragments
   const changed: { layout: string; added: string[]; removed: string[]; usages: string[] }[] = [];
   for (const layout of common) {
-    const type = L.findType(schema, layout);
+    const type = L.findType(schema, L.layoutTypeName(layout));
     if (!type) continue;
     const newFragment = L.fragmentContent(layout, type, schema);
-    const fragmentPath = path.join(QUERIES_DIR, `${L.pascalCase(layout)}Section.graphql`);
+    const fragmentPath = path.join(QUERIES_DIR, `${L.pascalCase(layout)}.graphql`);
     if (!fs.existsSync(fragmentPath)) continue;
     const oldContent = fs.readFileSync(fragmentPath, "utf8");
     if (oldContent.trim() !== newFragment.trim()) {
-      const newFields = (type.fields ?? []).filter((f) => !f.name.startsWith("__")).map((f) => f.name);
+      const newFields = (type.fields ?? []).filter((f) => !f.name.startsWith("__") && f.name !== "fieldGroupName").map((f) => f.name);
       // old fields from old fragment simple parse
-      const oldFields = [...oldContent.matchAll(/^\s+([a-zA-Z0-9_]+)\s*$/gm)].map((m) => m[1]);
+      const oldFields = [...oldContent.matchAll(/^\s+([a-zA-Z0-9_]+)\s*$/gm)].map((m) => m[1]).filter((f) => !f.startsWith("__"));
       const added = newFields.filter((f) => !oldFields.includes(f));
       const removed = oldFields.filter((f) => !newFields.includes(f));
       // usages in component
-      const componentPath = path.join(COMPONENTS_DIR, `${L.kebabCase(layout)}-section.tsx`);
+      const componentPath = path.join(COMPONENTS_DIR, `${L.kebabCase(layout)}.tsx`);
       const usages: string[] = [];
       if (fs.existsSync(componentPath)) {
         const src = fs.readFileSync(componentPath, "utf8");
@@ -108,9 +108,9 @@ async function main() {
   }
   // Apply changed fragments
   for (const c of changed) {
-    const type = L.findType(schema, c.layout)!;
+    const type = L.findType(schema, L.layoutTypeName(c.layout))!;
     const newFragment = L.fragmentContent(c.layout, type, schema);
-    const fragmentPath = path.join(QUERIES_DIR, `${L.pascalCase(c.layout)}Section.graphql`);
+    const fragmentPath = path.join(QUERIES_DIR, `${L.pascalCase(c.layout)}.graphql`);
     fs.writeFileSync(fragmentPath, newFragment);
     console.log("Regenerated fragment:", path.relative(ROOT, fragmentPath));
   }
@@ -120,22 +120,30 @@ async function main() {
 
   // Update component destructuring + TODOs for changed layouts.
   for (const c of changed) {
-    const componentPath = path.join(COMPONENTS_DIR, `${L.kebabCase(c.layout)}-section.tsx`);
+    const componentPath = path.join(COMPONENTS_DIR, `${L.kebabCase(c.layout)}.tsx`);
     if (!fs.existsSync(componentPath)) continue;
-    const type = L.findType(schema, c.layout)!;
+    const type = L.findType(schema, L.layoutTypeName(c.layout))!;
     const fieldKinds: Record<string, U.FieldKind> = {};
     for (const f of type.fields ?? []) {
       if (f.name.startsWith("__")) continue;
       fieldKinds[f.name] = U.classifyField(f, schema);
     }
     const original = fs.readFileSync(componentPath, "utf8");
-    const { next, result } = U.updateComponentDestructuring(componentPath, c.added, c.removed, fieldKinds);
+    const fieldDefs: Record<string, L.GqlField> = {};
+    for (const f of type.fields ?? []) if (!f.name.startsWith("__")) fieldDefs[f.name] = f;
+    const currentFields = (type.fields ?? []).filter((f:any)=>!f.name.startsWith("__")).map((f:any)=>f.name);
+    const { next, result } = U.updateComponentDestructuring(componentPath, currentFields, c.added, c.removed, fieldKinds, fieldDefs, schema);
     if (result.manual) {
       console.log(`\n${c.layout}: manual edit required (${result.manualReason}).`);
       if (c.added.length) console.log("  fields added:", c.added.join(", "));
     } else {
       fs.writeFileSync(componentPath, next);
-      console.log(`\n${c.layout}: fields added [${result.fieldsAdded.join(", ") || "none"}], removed [${result.fieldsRemoved.join(", ") || "none"}], TODOs added ${result.fieldsAdded.length}.`);
+      console.log(`\n${c.layout}: fields added [${result.fieldsAdded.join(", ") || "none"}], removed [${result.fieldsRemoved.join(", ") || "none"}].`);
+      if (!result.autoAreaMissing) {
+        console.log(`  auto-rendered: ${(result.autoFieldsRendered || []).join(", ") || "(none)"}; handled by JSX: ${(result.handledByJsx || []).join(", ") || "(none)"}`);
+      } else {
+        console.log("  no auto area present (older component); add fields manually.");
+      }
       if (result.removedStillUsed.length) {
         for (const r of result.removedStillUsed) {
           console.log(`  ${r} still used: lines ${result.usageLines[r].join(", ")}`);

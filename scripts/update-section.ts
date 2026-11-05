@@ -20,15 +20,15 @@ async function main() {
   }
 
   const schema = await L.loadSchema();
-  const type = L.findType(schema, layout);
+  const type = L.findType(schema, L.layoutTypeName(layout));
   if (!type) {
     console.error(`Layout type not found: ${L.layoutTypeName(layout)}`);
     process.exit(1);
   }
 
   const newFragment = L.fragmentContent(layout, type, schema);
-  const fragmentPath = path.join(QUERIES_DIR, `${L.pascalCase(layout)}Section.graphql`);
-  const componentPath = path.join(COMPONENTS_DIR, `${L.kebabCase(layout)}-section.tsx`);
+  const fragmentPath = path.join(QUERIES_DIR, `${L.pascalCase(layout)}.graphql`);
+  const componentPath = path.join(COMPONENTS_DIR, `${L.kebabCase(layout)}.tsx`);
 
   if (!fs.existsSync(fragmentPath)) {
     console.error("Fragment does not exist; use new-section first.");
@@ -40,8 +40,8 @@ async function main() {
   }
 
   const oldContent = fs.readFileSync(fragmentPath, "utf8");
-  const newFields = (type.fields ?? []).filter((f) => !f.name.startsWith("__")).map((f) => f.name);
-  const oldFields = [...oldContent.matchAll(/^\s+([a-zA-Z0-9_]+)\s*$/gm)].map((m) => m[1]);
+  const newFields = (type.fields ?? []).filter((f) => !f.name.startsWith("__") && f.name !== "fieldGroupName").map((f) => f.name);
+  const oldFields = [...oldContent.matchAll(/^\s+([a-zA-Z0-9_]+)\s*$/gm)].map((m) => m[1]).filter((f) => !f.startsWith("__"));
   const added = newFields.filter((f) => !oldFields.includes(f));
   const removed = oldFields.filter((f) => !newFields.includes(f));
 
@@ -85,7 +85,9 @@ async function main() {
 
   // read component and apply destructuring update
   const originalComponent = fs.readFileSync(componentPath, "utf8");
-  const { next, result } = U.updateComponentDestructuring(componentPath, added, removed, fieldKinds);
+  const fieldDefs: Record<string, L.GqlField> = {};
+  for (const f of type.fields ?? []) if (!f.name.startsWith("__")) fieldDefs[f.name] = f;
+  const { next, result } = U.updateComponentDestructuring(componentPath, newFields, added, removed, fieldKinds, fieldDefs, schema);
 
   if (result.manual) {
     console.log(`\nManual edit required: ${result.manualReason}`);
@@ -95,6 +97,12 @@ async function main() {
     console.log("\nComponent updated.");
     console.log("Fields added:", result.fieldsAdded.join(", ") || "(none)");
     console.log("Fields removed:", result.fieldsRemoved.join(", ") || "(none)");
+    if (!result.autoAreaMissing) {
+      console.log("Fields auto-rendered:", (result.autoFieldsRendered || []).join(", ") || "(none)");
+      console.log("Fields now handled by my JSX:", (result.handledByJsx || []).join(", ") || "(none)");
+    } else {
+      console.log("No auto area present (older component); add fields manually.");
+    }
     if (result.removedStillUsed.length) {
       console.log("Removed fields still used, not removed from destructure:");
       for (const r of result.removedStillUsed) {

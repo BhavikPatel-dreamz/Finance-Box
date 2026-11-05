@@ -11,9 +11,9 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
     const titleParts = splitEmphasis(data.title);
     return (
       <HeroSection
-        page="knowledge-hub"
         headerNode={header}
         overrides={{
+          variant: "agentic-ai",
           eyebrow: text(data.subTitle),
           title: titleParts
             ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
