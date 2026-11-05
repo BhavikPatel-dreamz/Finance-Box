@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
+import * as U from "./lib/section-field-updater";
 
 const ROOT = path.resolve(process.cwd());
 
@@ -173,20 +174,31 @@ function kebabName(layout: string): string {
   return kebabCase(layout);
 }
 
-function componentContent(layout: string, fields: string[]): string {
+function componentContent(layout: string, fields: any[], schema: any): string {
   const pascal = pascalCase(layout);
-  const typeImport = `${pascal}SectionFragment`;
-  const destructure = fields.length ? `  const { ${fields.join(", ")} } = data;\n` : "";
+  const typeImport = `${pascal}Fragment`;
+  const fieldNames = fields.map((f: any) => f.name).filter((n: string) => !n.startsWith("__"));
+  const destructure = fieldNames.length
+    ? `  // @section-fields (auto-updated by sync-sections, don't edit this line by hand)\n  const { ${fieldNames.join(", ")} } = data;\n`
+    : `  // @section-fields (auto-updated by sync-sections, don't edit this line by hand)\n  const {  } = data;\n`;
+  const autoLines = fields
+    .filter((f: any) => !String(f.name).startsWith("__"))
+    .flatMap((f: any) => U.autoLinesForField(f, schema, "      "));
+  const autoBlock = [
+    "      {/* @auto-fields:start (managed by sync-sections, don't edit inside) */}",
+    ...autoLines,
+    "      {/* @auto-fields:end */}",
+  ].join("\n");
   return `import { defineSection } from "@/lib/page-builder/types";
 import type { ${typeImport} } from "@/lib/wordpress/generated/graphql";
 
 /** ${pascal}Section — TODO: implement. */
-export const ${pascal}Section = defineSection<${typeImport}>({
+export const ${pascal} = defineSection<${typeImport}>({
   layout: "${pascal}",
   render: (data) => {
 ${destructure}    return (
       <section>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+${autoBlock}
       </section>
     );
   },
@@ -194,11 +206,13 @@ ${destructure}    return (
 `;
 }
 
+
 async function main() {
   const args = process.argv.slice(2);
   const isList = args.includes("--list");
   const isDry = args.includes("--dry-run");
-  const layout = args.find((a) => !a.startsWith("--"));
+  const rawLayout = args.find((a) => !a.startsWith("--"));
+  const layout = rawLayout && !/Section$|Stack$/i.test(rawLayout) ? `${rawLayout}Section` : rawLayout;
 
   if (isList) {
     const schema = await loadSchema();
@@ -230,10 +244,10 @@ async function main() {
     process.exit(1);
   }
 
-  const sectionName = `${pascalCase(layout)}Section`;
+  const sectionName = `${pascalCase(layout)}`;
   const kebab = kebabName(layout);
   const fragmentPath = path.join(QUERIES_DIR, `${sectionName}.graphql`);
-  const componentPath = path.join(COMPONENTS_DIR, `${kebab}-section.tsx`);
+  const componentPath = path.join(COMPONENTS_DIR, `${kebab}.tsx`);
 
   if (fs.existsSync(fragmentPath) || fs.existsSync(componentPath)) {
     console.error("Section already exists; refusing to overwrite.");
@@ -244,7 +258,7 @@ async function main() {
   const fieldNames = fields.map((f) => f.name);
   const typeLookup = (name: string) => schema.__schema.types.find((t) => t.name === name) ?? null;
   const fragment = fragmentContent(layout, type, schema);
-  const component = componentContent(layout, fieldNames);
+  const component = componentContent(layout, fields, schema);
 
   if (isDry) {
     console.log("Dry run. Would create:");
@@ -261,15 +275,6 @@ async function main() {
   fs.writeFileSync(fragmentPath, fragment);
   fs.writeFileSync(componentPath, component);
 
-  const registry = fs.readFileSync(REGISTRY_PATH, "utf8");
-  const importLine = `import { ${sectionName.toLowerCase().replace(/section$/, "Section")} } from "@/components/sections/${kebab}-section";\n`.replace(sectionName.toLowerCase(), sectionName);
-  const betterImport = `import { ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)}Section } from "@/components/sections/${kebab}-section";\n`;
-  const importInsert = registry.indexOf("const definitions = [");
-  const updatedRegistry =
-    registry.slice(0, importInsert) +
-    betterImport +
-    registry.slice(importInsert).replace(/\n\];\s*$/, `\n  ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)}Section,\n];`);
-  fs.writeFileSync(REGISTRY_PATH, updatedRegistry);
 
   console.log("Created:");
   console.log("  ", fragmentPath);
@@ -281,9 +286,7 @@ async function main() {
   execSync("npm run schema", { stdio: "inherit" });
   execSync("npm run codegen", { stdio: "inherit" });
 
-  console.log("\nAdded to registry:");
-  console.log(`  import { ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)}Section } from "@/components/sections/${kebab}-section";`);
-  console.log(`  ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)}Section,`);
+  console.log(`  ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)},`);
   console.log("\nNext step: implement JSX in the generated component.");
 }
 

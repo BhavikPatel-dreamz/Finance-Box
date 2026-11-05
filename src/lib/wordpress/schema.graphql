@@ -4997,6 +4997,7 @@ interface PageBuilderPageBuilder_Layout {
 }
 
 interface PageBuilderPageBuilderContactBannerSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   description: String
   fieldGroupName: String
   subtitle: String
@@ -5004,6 +5005,7 @@ interface PageBuilderPageBuilderContactBannerSectionLayout_Fields implements Pag
 }
 
 type PageBuilderPageBuilderContactBannerSectionLayout implements PageBuilderPageBuilderContactBannerSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   description: String
   fieldGroupName: String
   subtitle: String
@@ -5083,6 +5085,7 @@ type PageBuilderPageBuilderContactConnectedSectionLayout implements PageBuilderP
 }
 
 interface PageBuilderPageBuilderCommonBannerSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
@@ -5092,6 +5095,7 @@ interface PageBuilderPageBuilderCommonBannerSectionLayout_Fields implements Page
 }
 
 type PageBuilderPageBuilderCommonBannerSectionLayout implements PageBuilderPageBuilderCommonBannerSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
@@ -5449,6 +5453,7 @@ type PageBuilderPageBuilderTierCards implements PageBuilderPageBuilderTierCards_
 }
 
 interface PageBuilderPageBuilderServicesBannerSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   description: String
   fieldGroupName: String
   primaryCtaButton: AcfLink
@@ -5459,6 +5464,7 @@ interface PageBuilderPageBuilderServicesBannerSectionLayout_Fields implements Pa
 }
 
 type PageBuilderPageBuilderServicesBannerSectionLayout implements PageBuilderPageBuilderServicesBannerSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   description: String
   fieldGroupName: String
   primaryCtaButton: AcfLink
@@ -5733,6 +5739,7 @@ type PageBuilderPageBuilderHighlights implements PageBuilderPageBuilderHighlight
 }
 
 interface PageBuilderPageBuilderWhyFiabBannerSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
@@ -5742,6 +5749,7 @@ interface PageBuilderPageBuilderWhyFiabBannerSectionLayout_Fields implements Pag
 }
 
 type PageBuilderPageBuilderWhyFiabBannerSectionLayout implements PageBuilderPageBuilderWhyFiabBannerSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
@@ -5901,6 +5909,7 @@ type PageBuilderPageBuilderStats implements PageBuilderPageBuilderStats_Fields &
 }
 
 interface PageBuilderPageBuilderClientsBannerSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   clientProof: String
   description: String
   fieldGroupName: String
@@ -5910,6 +5919,7 @@ interface PageBuilderPageBuilderClientsBannerSectionLayout_Fields implements Pag
 }
 
 type PageBuilderPageBuilderClientsBannerSectionLayout implements PageBuilderPageBuilderClientsBannerSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   clientProof: String
   description: String
   fieldGroupName: String
@@ -6025,6 +6035,7 @@ type PageBuilderPageBuilderStatCards implements PageBuilderPageBuilderStatCards_
 }
 
 interface PageBuilderPageBuilderHomeBannerSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
@@ -6035,6 +6046,7 @@ interface PageBuilderPageBuilderHomeBannerSectionLayout_Fields implements PageBu
 }
 
 type PageBuilderPageBuilderHomeBannerSectionLayout implements PageBuilderPageBuilderHomeBannerSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
