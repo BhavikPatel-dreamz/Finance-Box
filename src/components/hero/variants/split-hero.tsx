@@ -23,7 +23,7 @@ export function SplitHeroVariant({ config }: { config: HeroConfig }) {
                 {eyebrowData.text}
               </Eyebrow>
             )}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 lg:max-w-[400px]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 lg:max-w-[587px]">
               {config.title}{" "}
               {config.highlight && (
                 <span className="text-[#23C55E]">{config.highlight}</span>
