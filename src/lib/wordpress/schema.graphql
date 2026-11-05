@@ -5010,26 +5010,6 @@ type PageBuilderPageBuilderContactBannerSectionLayout implements PageBuilderPage
   title: String
 }
 
-interface PageBuilderPageBuilderTestSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
-  fieldGroupName: String
-  imageTest: AcfMediaItemConnectionEdge
-  linkTest: AcfLink
-  titleTest: String
-}
-
-type AcfLink {
-  target: String
-  title: String
-  url: String
-}
-
-type PageBuilderPageBuilderTestSectionLayout implements PageBuilderPageBuilderTestSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
-  fieldGroupName: String
-  imageTest: AcfMediaItemConnectionEdge
-  linkTest: AcfLink
-  titleTest: String
-}
-
 interface PageBuilderPageBuilderContactFormSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
   contactEmail: String
   contactImage: AcfMediaItemConnectionEdge
@@ -5056,6 +5036,12 @@ interface PageBuilderPageBuilderLinkedinBox_Fields implements AcfFieldGroup & Ac
   fieldGroupName: String
   image: AcfMediaItemConnectionEdge
   title: String
+}
+
+type AcfLink {
+  target: String
+  title: String
+  url: String
 }
 
 type PageBuilderPageBuilderLinkedinBox implements PageBuilderPageBuilderLinkedinBox_Fields & AcfFieldGroup & AcfFieldGroupFields {
