@@ -2,10 +2,18 @@ import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { fromSection } from "@/components/sections/from-section";
 import { HeroSection } from "@/components/hero";
+import { mergeCareers } from "@/components/careers/merge";
+import { mergeAgenticAi } from "@/components/agentic-ai/merge";
 import { mergeKnowledgeHub } from "@/components/knowledge-hub/merge";
+import { mergePeopleOperations } from "@/components/people-operations/merge";
+import { careersContent } from "@/content/careers";
+import { agenticAiContent } from "@/content/agentic-ai";
 import { knowledgeHubContent } from "@/content/knowledge-hub";
+import { peopleOperationsContent } from "@/content/people-operations";
+import type { VariantOf } from "@/components/page-builder/section-variants";
 import { listItems, text } from "@/lib/wordpress/fields";
 
+type Variant = VariantOf<"CommonBannerSection">;
 
 /**
  * `CommonBannerSection` — shared inner-page hero. Four Figma designs exist for

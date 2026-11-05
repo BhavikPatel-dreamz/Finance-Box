@@ -247,10 +247,9 @@ export const agenticAiHeroConfig: HeroConfig = {
     agenticAiContent.hero.text ||
     "Autonomous finance agents designed to automate closing, forecasting, reconciliations, and compliance at institutional precision.",
   bullets: agenticAiContent.hero.bullets || [
-    "Multi-agent financial workflows",
-    "Zero-error automated reconciliation",
-    "Predictive cash flow modeling",
-    "Enterprise-grade security & audit trails",
+    "Give your back office autonomous superpowers—safer, faster, and fully auditable",
+    "Real-time visibility: Approvals, postings, tickets, and updates happen automatically",
+    "Faster go-lives: Deploy in weeks, not quarters, using prebuilt playbooks",
   ],
   primaryCta: {
     label: agenticAiContent.hero.cta?.label || "Explore Agentic AI",
@@ -274,14 +273,16 @@ export const knowledgeHubHeroConfig: HeroConfig = {
   },
   title: knowledgeHubContent.hero.title || "Knowledge",
   highlight: knowledgeHubContent.hero.highlight || "Hub",
+  titleMaxWidth: "lg:max-w-[400px]",
   description:
     knowledgeHubContent.hero.text ||
     "Frameworks, case studies, financial models, and operational guides written by senior finance practitioners for ambitious founders.",
   primaryCta: {
     label: knowledgeHubContent.hero.cta?.label || "Read Latest Articles",
     url: knowledgeHubContent.hero.cta?.url || "#articles",
-    color: "green",
-    onDark: true,
+    color: "white",
+    bgColor: "#ffffff",
+    textColor: "#07110d",
   },
   heightClassName: "min-h-[auto] sm:min-h-[460px] lg:min-h-[525px]",
 };
@@ -291,7 +292,7 @@ export const knowledgeHubHeroConfig: HeroConfig = {
 // ----------------------------------------------------------------------------
 export const peopleOperationsHeroConfig: HeroConfig = {
   variant: "split",
-  background: "contact",
+  background: "clients",
   eyebrow: {
     text: peopleOperationsContent.hero.eyebrow || "PEOPLE & TALENT",
     variant: "dark",

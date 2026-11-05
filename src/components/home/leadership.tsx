@@ -121,7 +121,7 @@ export function Leadership({ leadership }: LeadershipProps) {
   };
 
   return (
-    <Section id="leadership" theme="dark" spacing="both" className="leadership-section overflow-hidden">
+    <Section id="leadership" theme="light" spacing="both" className="leadership-section bg-white overflow-hidden">
       <Container>
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8 sm:gap-10 lg:gap-10 xl:gap-16">
 
@@ -130,10 +130,10 @@ export function Leadership({ leadership }: LeadershipProps) {
             <Eyebrow variant="green" className="mb-4 sm:mb-5">
               {leadership.eyebrow}
             </Eyebrow>
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[50px] font-medium leading-[1.12] tracking-[-0.8px] mb-4 sm:mb-6 text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[50px] font-medium leading-[1.12] tracking-[-0.8px] mb-4 sm:mb-6 text-[#121826]">
               {leadership.title}
             </h2>
-            <div className="space-y-4 text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/80 max-w-[500px] mb-6 sm:mb-10">
+            <div className="space-y-4 text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-[#121826]/75 max-w-[500px] mb-6 sm:mb-10">
               {leadership.text.split(/\n\n+/).map((paragraph, pIdx) => (
                 <p key={pIdx}>{paragraph}</p>
               ))}
@@ -145,7 +145,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 type="button"
                 aria-label="Previous leader"
                 onClick={handlePrev}
-                className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white active:scale-95 transition-all cursor-pointer"
+                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#121826]/12 bg-white text-[#121826] hover:bg-[#121826] hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
               >
                 <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
                   <path
@@ -162,7 +162,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 type="button"
                 aria-label="Next leader"
                 onClick={handleNext}
-                className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-[#2a2f3c] text-white/70 hover:bg-[#3a4050] hover:text-white active:scale-95 transition-all cursor-pointer"
+                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#121826]/12 bg-white text-[#121826] hover:bg-[#121826] hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
               >
                 <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
                   <path

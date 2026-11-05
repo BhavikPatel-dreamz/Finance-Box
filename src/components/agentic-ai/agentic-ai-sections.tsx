@@ -161,7 +161,7 @@ export function AgenticBuildYourOwn({
   return (
     <section className="build-agentic-ai-section bg-white text-[#121826] pb-24">
       <Container>
-        <div className="rounded-[10px] bg-[#EDE9E6]/50 px-6 py-10 text-center md:p-7.5 xl:p-20">
+        <div className="rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#F5F3F2] px-6 py-10 text-center md:p-7.5 xl:p-16">
 
           <Reveal preset="slide-up" distance={20}>
             <h2 className="mb-4 text-3xl font-medium leading-[1.15] tracking-[-0.8px] text-[#121826] sm:text-4xl lg:text-[54px]">
@@ -193,7 +193,7 @@ export function AgenticBuildYourOwn({
 
           <StaggerGroup
             staggerDelay={140}
-            className="grid grid-cols-1 overflow-hidden rounded-[10px] text-left divide-y divide-[#121826]/[0.08] md:grid-cols-2 md:divide-y-0 md:divide-x lg:grid-cols-4"
+            className="grid grid-cols-1 overflow-hidden rounded-[14px] sm:rounded-[16px] text-left divide-y divide-[#121826]/[0.08] md:grid-cols-2 md:divide-y-0 md:divide-x lg:grid-cols-4 border border-[#121826]/[0.08]"
           >
             {buildYourOwn.agents.map((agent, idx) => (
               <StaggerItem
@@ -259,7 +259,7 @@ export function AgenticPeopleOps({ peopleOps }: { peopleOps: AgenticAiContent["p
           </h2>
         </Reveal>
 
-        <StaggerGroup staggerDelay={120} className="grid grid-cols-1 md:grid-cols-3 bg-[#191f2c] rounded-[10px] border border-white/5 overflow-hidden">
+        <StaggerGroup staggerDelay={120} className="grid grid-cols-1 md:grid-cols-3 bg-[#191f2c] rounded-[16px] sm:rounded-[20px] border border-white/5 overflow-hidden">
           {peopleOps.agents.map((agent, idx) => {
             const total = peopleOps.agents.length;
             const totalRows = Math.ceil(total / 3);
@@ -329,7 +329,7 @@ export function AgenticOpsCompliance({ opsCompliance }: { opsCompliance: Agentic
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {opsCompliance.cards.map((card, idx) => (
             <StaggerItem key={idx} index={idx} >
-              <div className="group card-hover relative rounded-[10px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
+              <div className="group card-hover relative rounded-[14px] sm:rounded-[16px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
                 <Image
                   src={card.image}
                   alt={card.title}
@@ -392,7 +392,7 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
             <StaggerItem
               key={idx}
               index={idx}
-              className="group relative overflow-hidden bg-[#EDE9E680] rounded-[10px] p-6 flex flex-col"
+              className="group relative overflow-hidden bg-[#F5F3F2] rounded-[14px] sm:rounded-[16px] p-6 flex flex-col border border-[#E8E6E3]"
             >
               <div className="relative w-full h-[320px] rounded-[10px] overflow-hidden mb-6">
                 <Image src={card.image} alt={card.title} fill className="object-cover image-hover-zoom" />

@@ -188,7 +188,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
           </h2>
         </Reveal>
 
-        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[9px] overflow-hidden">
+        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[14px] sm:rounded-[16px] overflow-hidden">
 
           <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
             <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10" />
@@ -253,7 +253,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
           </div>
         </Reveal>
 
-        <Reveal preset="scale-up" distance={0} className="group relative w-full h-[360px] sm:h-[440px] lg:h-[480px] xl:h-[551px] rounded-[10px] overflow-hidden mb-6 sm:mb-8">
+        <Reveal preset="scale-up" distance={0} className="group relative w-full h-[360px] sm:h-[440px] lg:h-[480px] xl:h-[551px] rounded-[16px] sm:rounded-[20px] overflow-hidden mb-6 sm:mb-8">
           <Image
             src="/home/build-together.png"
             alt="Clarity is Built Together"
@@ -283,7 +283,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
             <StaggerItem
               key={idx}
               index={idx}
-              className="group relative overflow-hidden rounded-[10px] p-6 sm:p-7 md:p-8 border border-[#FFFFFF24] flex flex-col min-h-0 md:min-h-[344px] transition-colors duration-500 hover:bg-white/[0.04]"
+              className="group relative overflow-hidden rounded-[14px] sm:rounded-[16px] p-6 sm:p-7 md:p-8 border border-[#FFFFFF24] flex flex-col min-h-0 md:min-h-[344px] transition-colors duration-500 hover:bg-white/[0.04]"
             >
               <h3 className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold leading-[1.15] mb-3 sm:mb-5">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[150%] text-white/60 mb-5 sm:mb-7 transition-colors duration-500 group-hover:text-white/80">{card.text}</p>
@@ -327,7 +327,7 @@ export function HomeDecisions({ decisions }: { decisions: HomeContent["decisions
   return (
     <Section id="insights" theme="light" spacing="bottom" className="decisions-section">
       <Container>
-        <div className="flex flex-col lg:flex-row rounded-[10px] overflow-hidden border border-gray-200">
+        <div className="flex flex-col lg:flex-row rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] overflow-hidden border border-[#E8E6E3]">
 
           <Reveal preset="slide-left" distance={20} className="group relative w-full lg:w-1/2 xl:w-[640px] min-h-[420px] sm:min-h-[500px] lg:min-h-[620px] xl:min-h-[740px] shrink-0 overflow-hidden">
             {decisions.portrait?.url ? (
@@ -355,7 +355,7 @@ export function HomeDecisions({ decisions }: { decisions: HomeContent["decisions
             </div>
           </Reveal>
 
-          <Reveal preset="slide-right" distance={20} className="w-full lg:w-1/2 xl:w-[640px] bg-[#EDE9E6] p-6 sm:p-10 lg:p-8 xl:p-16 flex flex-col justify-center">
+          <Reveal preset="slide-right" distance={20} className="w-full lg:w-1/2 xl:w-[640px] bg-[#F5F3F2] p-6 sm:p-10 lg:p-8 xl:p-16 flex flex-col justify-center">
             <Eyebrow variant="light" className="mb-4 sm:mb-6">
               {decisions.eyebrow}
             </Eyebrow>
