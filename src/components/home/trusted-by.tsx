@@ -18,25 +18,10 @@ interface TrustedByProps {
   className?: string;
 }
 
-const defaultTrust: HomeContent["trust"] = {
-  lead: "Trusted by",
-  stat: "40+",
-  detail: "growing companies in the USA and globally",
-};
-
-const defaultLogos: TrustedLogo[] = [
-  { name: "Standard Bots", src: "/home/logos/standard-bots.png" },
-  { name: "American Robotics", src: "/home/logos/american-robotics.png" },
-  { name: "Ondas", src: "/home/logos/ondas.png" },
-  { name: "Neumera Consulting", src: "/home/logos/neumera.png" },
-  { name: "Vetcelerator", src: "/home/logos/vetcelerater.png" },
-  { name: "Embolx", src: "/home/logos/embolx.png" },
-];
-
-export function TrustedBy({ trust = defaultTrust, logos, className = "" }: TrustedByProps) {
-  const partnerLogos = logos && logos.length > 0 ? logos : defaultLogos;
+export function TrustedBy({ trust, logos, className = "" }: TrustedByProps) {
   const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
   const frozenTranslateRef = useRef<number | null>(null);
+  const partnerLogos = logos && logos.length > 0 ? logos : [];
 
   // Duplicate partner logos so Swiper has plenty of slides for seamless continuous loop on any screen width
   const trackLogos = [
@@ -47,7 +32,7 @@ export function TrustedBy({ trust = defaultTrust, logos, className = "" }: Trust
   ];
 
   useEffect(() => {
-    if (!swiperInstance || !swiperInstance.el) return;
+    if (!trust || partnerLogos.length === 0 || !swiperInstance || !swiperInstance.el) return;
 
     const swiper = swiperInstance;
     const el = swiper.el;
@@ -125,6 +110,8 @@ export function TrustedBy({ trust = defaultTrust, logos, className = "" }: Trust
       el.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, [swiperInstance]);
+
+  if (!trust) return null;
 
   return (
     <section className={`trusted-by py-4.25 w-full bg-white text-[#1c2430] border-b border-[#13362A]/7 overflow-hidden ${className}`}>

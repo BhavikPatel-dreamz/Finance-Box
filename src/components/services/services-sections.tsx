@@ -117,13 +117,6 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
 
 // --- Component: Stages ---
 export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
-  const iconMap = {
-    gear: "/icons/set-the-foundation.png",
-    people: "/icons/build-momentum.png",
-    person: "/icons/lead-with-foresight.png",
-    target: "/icons/optimize-and-expand.png",
-  };
-
   return (
     <Section theme="light" spacing="both" className="find-stage-section">
       <Container>
@@ -147,8 +140,6 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
 
         <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {stages.cards.map((card, idx) => {
-            const iconSrc = iconMap[card.icon] || "/icons/set-the-foundation.png";
-
             return (
               <StaggerItem
                 key={idx}
@@ -164,15 +155,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
                       {card.label}
                     </p>
                   </div>
-                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]">
-                    <Image
-                      src={iconSrc}
-                      alt={card.title}
-                      width={22}
-                      height={22}
-                      className="object-contain group-hover:invert transition-colors duration-300"
-                    />
-                  </div>
+                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]" />
                 </div>
 
 

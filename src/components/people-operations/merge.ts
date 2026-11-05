@@ -131,7 +131,7 @@ function mergeHero(next: PeopleOperationsContent, section: Record<string, any>):
   const titleData = splitHighlight(section.title, next.hero.title, next.hero.highlight);
   next.hero.title = titleData.title;
   next.hero.highlight = cleanHtml(section.highlight, titleData.highlight);
-  next.hero.text = cleanHtml(section.description, next.hero.text);
+  next.hero.text = cleanHtml(section.description || section.tagLine, next.hero.text);
 }
 
 /** People Operations Intro Section → intro. */
@@ -151,15 +151,15 @@ function mergeWhatWeDo(next: PeopleOperationsContent, section: Record<string, an
   if (items.length > 0) {
     next.whatWeDo.items = items.map((item, index) => {
       const fallback = next.whatWeDo.items[index];
-      const points = typeof item.points === "string" ? extractListItems(item.points) : fallback?.bullets ?? [];
+      const points = typeof item.points === "string" ? extractListItems(item.points) : [];
 
       return {
-        title: cleanHtml(item.title, fallback?.title ?? ""),
-        text: cleanHtml(item.description, fallback?.text ?? ""),
+        title: cleanHtml(item.title, ""),
+        text: cleanHtml(item.description, ""),
         bullets: points,
-        image: media(item.image)?.url ?? fallback?.image ?? "",
-        bgImage: fallback?.bgImage ?? "/people-operations/right-side-image.png",
-        reverse: fallback?.reverse ?? false,
+        image: media(item.image)?.url ?? "",
+        bgImage: media(item.image)?.url ?? "",
+        reverse: false,
       };
     });
   }
@@ -209,6 +209,7 @@ export function mergePeopleOperations(
 
     if (matchesLayout(typeName, "CommonBannerSection")) {
       mergeHero(next, data);
+      
       continue;
     }
 
@@ -237,5 +238,6 @@ export function mergePeopleOperations(
 }
 
 export function mergePeopleOperationsContent(sections: RawSection[]): PeopleOperationsContent {
+  
   return mergePeopleOperations(peopleOperationsContent, sections);
 }

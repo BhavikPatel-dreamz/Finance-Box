@@ -142,9 +142,9 @@ function mergeWhatIs(next: AgenticAiContent, section: Record<string, any>): void
     next.whatIs.features = features.map((f, index) => {
       const fallback = next.whatIs.features[index];
       return {
-        image: media(f.image)?.url ?? fallback?.image ?? "",
-        title: cleanHtml(f.title, fallback?.title ?? ""),
-        text: cleanHtml(f.content, fallback?.text ?? ""),
+        image: media(f.image)?.url ?? "",
+        title: cleanHtml(f.title, ""),
+        text: cleanHtml(f.content, ""),
       } satisfies AgenticAiFeature;
     });
   }
@@ -162,16 +162,16 @@ function mergeBuildYourOwn(next: AgenticAiContent, section: Record<string, any>)
     const seenTexts = new Set<string>();
     next.buildYourOwn.agents = agents.map((agent, index) => {
       const fallback = next.buildYourOwn.agents[index];
-      let text = cleanHtml(agent.content, fallback?.text ?? "");
+      let text = cleanHtml(agent.content, "");
       if (seenTexts.has(text) && fallback?.text && fallback.text !== text) {
         text = fallback.text;
       }
       seenTexts.add(text);
       return {
-        icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
-        title: cleanHtml(agent.title, fallback?.title ?? ""),
+        icon: media(agent.icon)?.url ?? "",
+        title: cleanHtml(agent.title, ""),
         text,
-        greatFor: cleanHtml(agent.greatFor, fallback?.greatFor ?? ""),
+        greatFor: cleanHtml(agent.greatFor, ""),
       } satisfies AgenticAiAgent;
     });
   }
@@ -186,16 +186,16 @@ function mergePeopleOps(next: AgenticAiContent, section: Record<string, any>): v
     const seenTexts = new Set<string>();
     next.peopleOps.agents = agents.map((agent, index) => {
       const fallback = next.peopleOps.agents[index];
-      let text = cleanHtml(agent.content, fallback?.text ?? "");
+      let text = cleanHtml(agent.content, "");
       if (seenTexts.has(text) && fallback?.text && fallback.text !== text) {
         text = fallback.text;
       }
       seenTexts.add(text);
       return {
-        icon: media(agent.icon)?.url ?? fallback?.icon ?? "",
-        title: cleanHtml(agent.title, fallback?.title ?? ""),
+        icon: media(agent.icon)?.url ?? "",
+        title: cleanHtml(agent.title, ""),
         text,
-        greatFor: cleanHtml(agent.greatFor, fallback?.greatFor ?? ""),
+        greatFor: cleanHtml(agent.greatFor, ""),
       } satisfies AgenticAiAgent;
     });
   }
@@ -211,9 +211,9 @@ function mergeOpsCompliance(next: AgenticAiContent, section: Record<string, any>
       const fallback = next.opsCompliance.cards[index];
       return {
         // ACF me field ka naam `icon` hai, `backgroundImage` nahi.
-        image: media(card.icon)?.url ?? fallback?.image ?? "",
-        title: cleanHtml(card.title, fallback?.title ?? ""),
-        text: cleanHtml(card.content, fallback?.text ?? ""),
+        image: media(card.icon)?.url ?? "",
+        title: cleanHtml(card.title, ""),
+        text: cleanHtml(card.content, ""),
       };
     });
   }
@@ -245,11 +245,11 @@ function mergeProvenArchitecture(next: AgenticAiContent, section: Record<string,
     next.provenArchitecture.cards = cards.map((card, index) => {
       const fallback = next.provenArchitecture.cards[index];
       return {
-        image: media(card.image)?.url ?? fallback?.image ?? "",
-        title: cleanHtml(card.title, fallback?.title ?? ""),
-        text: cleanHtml(card.content, fallback?.text ?? ""),
+        image: media(card.image)?.url ?? "",
+        title: cleanHtml(card.title, ""),
+        text: cleanHtml(card.content, ""),
         // Bullets ACF me hain hi nahi, isliye fallback static bullets hi rahenge.
-        bullets: fallback?.bullets ?? [],
+        bullets: [],
       } satisfies AgenticAiArchitectureCard;
     });
   }
@@ -274,8 +274,8 @@ function mergeFaq(next: AgenticAiContent, section: Record<string, any>): void {
     next.faq.items = faqs.map((faq, index) => {
       const fallback = next.faq.items[index];
       return {
-        question: cleanHtml(faq.question, fallback?.question ?? ""),
-        answer: cleanHtml(faq.answer, fallback?.answer ?? ""),
+        question: cleanHtml(faq.question, ""),
+        answer: cleanHtml(faq.answer, ""),
       } satisfies AgenticAiFaq;
     });
   }

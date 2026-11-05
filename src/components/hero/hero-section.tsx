@@ -76,15 +76,18 @@ export function HeroSection({
   // 4. Resolve default section ID
   const sectionId = id || (isHome ? "product" : "hero");
 
+  console.log("HeroSection Rendered with config:", resolvedConfig,rawConfig);
+
   return (
     <section
       id={sectionId}
       className={twMerge(
-        "hero-section relative overflow-hidden bg-[#121826] text-white flex flex-col",
+        "bhavik5 hero-section relative overflow-hidden bg-[#121826] text-white flex flex-col",
         resolvedConfig.sectionClassName,
         className,
       )}
     >
+      
       {/* Background Vector Graphic / Ambient Texture */}
       {bgImage && (
         <div

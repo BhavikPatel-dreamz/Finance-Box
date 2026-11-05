@@ -176,14 +176,6 @@ function HoverLine({ className = "bg-[#23C55E]" }: { className?: string }) {
 }
 
 export function HomeDifference({ difference }: { difference: HomeContent["difference"] }) {
-  const icons = [
-    "/icons/one-finace-team.png",
-    "/icons/build-for-growing.png",
-    "/icons/scale-with-company.png",
-    "/icons/cost-intelligence.png",
-    "/icons/automation.png",
-  ];
-
   return (
     <Section theme="dark" spacing="both" className="differance-section">
       <Container>
@@ -199,9 +191,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
         <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[9px] overflow-hidden">
 
           <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
-            <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10">
-              <Image src={icons[0]} alt="Icon" width={24} height={24} className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
-            </div>
+            <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10" />
             <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{difference.cards[0].title}</h3>
             <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-[#121826]/70">{difference.cards[0].text}</p>
             <HoverLine />
@@ -209,9 +199,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
 
           {difference.cards.slice(1, 3).map((card, idx) => (
             <StaggerItem key={idx} index={idx + 1} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
-              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
-                <Image src={icons[idx + 1]} alt="Icon" width={24} height={24} className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
-              </div>
+              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10" />
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
               <HoverLine />
@@ -220,9 +208,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
 
           {difference.cards.slice(3, 5).map((card, idx) => (
             <StaggerItem key={idx} index={idx + 3} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
-              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
-                <Image src={icons[idx + 3]} alt="Icon" width={24} height={24} className="h-5 w-5 sm:h-6 sm:w-6 object-contain transition-transform duration-500 motion-reduce:transition-none" />
-              </div>
+              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10" />
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
               <HoverLine />
@@ -344,12 +330,14 @@ export function HomeDecisions({ decisions }: { decisions: HomeContent["decisions
         <div className="flex flex-col lg:flex-row rounded-[10px] overflow-hidden border border-gray-200">
 
           <Reveal preset="slide-left" distance={20} className="group relative w-full lg:w-1/2 xl:w-[640px] min-h-[420px] sm:min-h-[500px] lg:min-h-[620px] xl:min-h-[740px] shrink-0 overflow-hidden">
-            <Image
-              src="/home/founder-ceo.png"
-              alt={decisions.name}
-              fill
-              className="object-cover image-hover-zoom"
-            />
+            {decisions.portrait?.url ? (
+              <Image
+                src={decisions.portrait.url}
+                alt={decisions.name}
+                fill
+                className="object-cover image-hover-zoom"
+              />
+            ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0C] via-[#0B0D0C]/50 to-transparent" />
 
             <div className="absolute top-5 right-5 sm:top-8 sm:right-8 bg-white rounded-[7px] px-2.5 py-1.5 sm:py-2 text-[12px] sm:text-[14px] font-medium tracking-[1px] uppercase text-[#121826]">
