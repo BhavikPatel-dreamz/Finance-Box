@@ -101,7 +101,7 @@ export function ClientsCaseStudies({ caseStudies }: { caseStudies: ClientsConten
     <Section theme="light" spacing="both" className="case-studies-section">
       <Container>
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[40px] font-medium tracking-tight mb-8 sm:mb-10 lg:mb-12">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-tight mb-8 sm:mb-10 lg:mb-12">
             {caseStudies.title}
           </h2>
         </Reveal>
