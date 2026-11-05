@@ -317,9 +317,8 @@ function DesktopItem({
     return (
       <Link
         href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
-        className={`whitespace-nowrap transition-colors ${
-          isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-white"
-        }`}
+        className={`whitespace-nowrap transition-colors ${isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-[#23C55E]"
+          }`}
       >
         {link.label}
       </Link>
@@ -327,21 +326,19 @@ function DesktopItem({
   }
 
   return (
-    <div className="relative" onMouseEnter={() => onOpen(link.label)} onMouseLeave={() => onOpen(null)}>
+    <div className="group relative" onMouseEnter={() => onOpen(link.label)} onMouseLeave={() => onOpen(null)}>
       <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
         <Link
           href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
-          className={`transition-colors ${
-            isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-white"
-          }`}
+          className={`transition-colors ${isActive ? "text-[#23C55E] font-medium" : "text-white/85 group-hover:text-[#23C55E]"
+            }`}
         >
           {link.label}
         </Link>
         <button
           type="button"
-          className={`transition-colors ${
-            isActive ? "text-[#23C55E]" : "text-white/85 hover:text-white"
-          }`}
+          className={`transition-colors ${isActive ? "text-[#23C55E]" : "text-white/85 group-hover:text-[#23C55E]"
+            }`}
           aria-expanded={open}
           aria-haspopup="true"
           aria-label={`${link.label} menu`}
@@ -359,11 +356,10 @@ function DesktopItem({
                 <li key={child.label}>
                   <Link
                     href={child.url} target={child.target} rel={child.target === "_blank" ? "noopener noreferrer" : undefined}
-                    className={`flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm transition-all duration-150 ${
-                      isChildActive
+                    className={`flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm transition-all duration-150 ${isChildActive
                         ? "bg-[#23C55E]/15 text-[#23C55E] font-medium"
                         : "text-white/80 hover:bg-white/[0.08] hover:text-white font-normal"
-                    }`}
+                      }`}
                     onClick={() => onOpen(null)}
                   >
                     <span>{child.label}</span>
@@ -476,15 +472,18 @@ function MobileItem({
 function Chevron({ open }: { open: boolean }) {
   return (
     <svg
-      viewBox="0 0 16 16"
-      className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
       aria-hidden="true"
+      className={`inline-block transition-transform duration-300 ease-out ${open ? "[transform:rotateX(180deg)]" : "[transform:rotateX(0deg)]"
+        }`}
     >
       <path
-        d="M4 6.5 8 10.5 12 6.5"
-        fill="none"
+        d="M2.5 4.5L6 8l3.5-3.5"
         stroke="currentColor"
-        strokeWidth="1.7"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

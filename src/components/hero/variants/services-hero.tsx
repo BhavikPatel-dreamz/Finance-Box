@@ -63,8 +63,9 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
                     label={config.primaryCta.label}
                     href={config.primaryCta.url}
                     color={config.primaryCta.color || "white"}
-                    bgColor={config.primaryCta.bgColor || "#ffffff"}
-                    textColor={config.primaryCta.textColor || "#07110d"}
+                    bgColor={config.primaryCta.bgColor}
+                    textColor={config.primaryCta.textColor}
+                    onDark={config.primaryCta.onDark ?? true}
                     className={config.primaryCta.className}
                   />
                 )}

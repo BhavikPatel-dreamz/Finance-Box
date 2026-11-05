@@ -59,6 +59,7 @@ export function CaseStudyCard({ study, reverse }: { study: ClientCaseStudy; reve
             href={study.ctaUrl}
             onDark={true}
             size="50"
+            className="text-[16px] md:text-[16px] lg:text-[16px]"
           />
         </div>
       </div>

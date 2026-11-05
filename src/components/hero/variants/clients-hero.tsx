@@ -11,12 +11,13 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
   return (
     <Container>
       {/* Centered Heading */}
-      <div className="pt-10 md:pt-12 xl:pt-24 pb-10 sm:pb-12 xl:pb-20 flex flex-col items-center text-center">
+      <div className="pt-10 md:pt-12 xl:pt-24 pb-10 sm:pb-12 xl:pb-15 flex flex-col items-center text-center">
         {eyebrowData && (
           <Reveal immediate preset="slide-up" delay={80} distance={18}>
             <Eyebrow
-              variant={eyebrowData.variant}
-              className={eyebrowData.className || "mb-6"}
+              className={eyebrowData.className || "mb-5"}
+              variant="green"
+              noDash
             >
               {eyebrowData.text}
             </Eyebrow>
@@ -34,7 +35,7 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
 
         {config.description && (
           <Reveal immediate preset="slide-up" delay={380} distance={24}>
-            <p className="mt-4 sm:mt-6 lg:mt-8 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[1.65] text-white/80 max-w-2xl">
+            <p className="mt-4 sm:mt-5 lg:mt-4 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[1.65] text-white/80 max-w-172.5">
               {config.description}
             </p>
           </Reveal>
@@ -64,7 +65,7 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
                   {config.clientProofItems.map((item, idx) => (
                     <li
                       key={idx}
-                      className="text-[17px] sm:text-[18px] lg:text-[20px] font-semibold leading-[130%]"
+                      className="text-[16px] sm:text-[18px] lg:text-[20px] font-semibold leading-[130%] text-white"
                     >
                       {item}
                     </li>
