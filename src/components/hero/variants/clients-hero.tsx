@@ -11,7 +11,7 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
   return (
     <Container>
       {/* Centered Heading */}
-      <div className="pt-10 md:pt-12 xl:pt-24 pb-10 sm:pb-12 xl:pb-20 flex flex-col items-center text-center">
+      <div className="pt-10 md:pt-12 xl:pt-24 pb-10 sm:pb-12 xl:pb-15 flex flex-col items-center text-center">
         {eyebrowData && (
           <Reveal immediate preset="slide-up" delay={80} distance={18}>
             <Eyebrow
