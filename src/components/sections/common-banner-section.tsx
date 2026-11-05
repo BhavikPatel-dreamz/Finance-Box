@@ -24,95 +24,29 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
   layout: "CommonBannerSection",
   hero: true,
   render: (data, { header, variant }) => {
-    switch ((variant ?? "knowledge-hub") as Variant) {
-      case "careers": {
-        const { hero } = fromSection(mergeCareers, careersContent, data);
-        return (
-          <HeroSection
-            page="careers"
-            headerNode={header}
-            overrides={{
-              eyebrow: hero.eyebrow,
-              title: hero.title,
-              highlight: hero.highlight,
-              highlight2: hero.highlight2,
-              description: text(data.description) || hero.text,
-              primaryCta: hero.cta
-                ? { label: hero.cta.label, url: hero.cta.url, color: "white" }
-                : undefined,
-            }}
-          />
-        );
-      }
-      case "agentic-ai": {
-        const { hero } = fromSection(mergeAgenticAi, agenticAiContent, data);
-        // Editors enter the bullet points as a list in `description`; `tagLine` is the lead sentence.
-        const rawBullets = listItems(data.description);
-        const descriptionText = text(data.tagLine) || hero.text;
-        const bullets = rawBullets.length > 0 ? rawBullets : (hero.bullets ?? []);
-        return (
-          <HeroSection
-            page="agentic-ai"
-            headerNode={header}
-            overrides={{
-              eyebrow: hero.eyebrow,
-              title: hero.title,
-              highlight: hero.highlight,
-              description: descriptionText,
-              bullets,
-              primaryCta: hero.cta
-                ? {
-                    label: hero.cta.label,
-                    url: hero.cta.url,
-                    color: "white",
-                    bgColor: "#ffffff",
-                    textColor: "#07110d",
-                  }
-                : undefined,
-            }}
-          />
-        );
-      }
-      case "people-operations": {
-        const { hero } = fromSection(mergePeopleOperations, peopleOperationsContent, data);
-        return (
-          <HeroSection
-            page="people-operations"
-            headerNode={header}
-            overrides={{
-              eyebrow: hero.eyebrow,
-              title: hero.title,
-              highlight: hero.highlight,
-              description: text(data.description) || hero.text,
-            }}
-          />
-        );
-      }
-      default: {
-        const { hero } = fromSection(mergeKnowledgeHub, knowledgeHubContent, data);
-        return (
-          <HeroSection
-            page="knowledge-hub"
-            headerNode={header}
-            overrides={{
-              eyebrow: hero.eyebrow,
-              title: hero.title,
-              highlight: hero.highlight,
-              titleMaxWidth: "lg:max-w-[400px]",
-              description: text(data.description) || hero.text,
-              primaryCta: hero.cta
-                ? {
-                    label: hero.cta.label,
-                    url: hero.cta.url,
-                    color: "white",
-                    bgColor: "#ffffff",
-                    textColor: "#07110d",
-                  }
-                : undefined,
-            }}
-          />
-        );
-      }
-    }
+    const { hero } = fromSection(mergeKnowledgeHub, knowledgeHubContent, data);
+    return (
+      <HeroSection
+        page="agentic-ai"
+        headerNode={header}
+        overrides={{
+          eyebrow: hero.eyebrow,
+          title: hero.title,
+          highlight: hero.highlight,
+          tagLine: text(data.tagLine),
+          description: "",
+          bullets: listItems(data.description),
+          rightDescription: listItems(data.description).length === 0 ? text(data.description) : "",
+          primaryCta: hero.cta
+            ? {
+                label: hero.cta.label,
+                url: hero.cta.url,
+                color: "green",
+                onDark: true,
+              }
+            : undefined,
+        }}
+      />
+    );
   },
 });

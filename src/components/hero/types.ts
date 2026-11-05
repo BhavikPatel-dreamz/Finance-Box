@@ -113,6 +113,11 @@ export interface HeroConfig {
   /** Subtitle / descriptive paragraph */
   description?: string;
 
+  /** Optional short tag line shown directly under the title */
+  tagLine?: string;
+  /** Optional description shown in the right column (fallback when no bullets) */
+  rightDescription?: string;
+
   /** Primary call-to-action button */
   primaryCta?: HeroButtonConfig;
 
