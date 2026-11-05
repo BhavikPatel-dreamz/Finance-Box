@@ -1,12 +1,8 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { ServicesOperatingCadenceSectionFragment } from "@/lib/wordpress/generated/graphql";
-import { fromSection } from "@/components/sections/from-section";
 import { ServicesProcess } from "@/components/services/services-sections";
 import { CareersHowWeHire } from "@/components/careers/careers-sections";
-import { mergeServices } from "@/components/services/merge";
-import { mergeCareers } from "@/components/careers/merge";
-import { servicesContent } from "@/content/services";
-import { careersContent } from "@/content/careers";
+import { text } from "@/lib/wordpress/fields";
 
 /**
  * `ServicesOperatingCadenceSection` — numbered process steps.
@@ -18,9 +14,33 @@ import { careersContent } from "@/content/careers";
 export const servicesOperatingCadenceSection = defineSection<ServicesOperatingCadenceSectionFragment>({
   layout: "ServicesOperatingCadenceSection",
   render: (data) => {
+    const steps = (data.steps ?? []).map((step, index) => ({
+      number:
+        step?.number != null
+          ? String(step.number).padStart(2, "0")
+          : String(index + 1).padStart(2, "0"),
+      title: text(step?.title),
+      text: text(step?.description),
+    }));
     if (data.sectionSetting === "side-by-side") {
-      return <CareersHowWeHire howWeHire={fromSection(mergeCareers, careersContent, data).howWeHire} />;
+      return (
+        <CareersHowWeHire
+          howWeHire={{
+            title: text(data.title),
+            text: text(data.description),
+            steps,
+          }}
+        />
+      );
     }
-    return <ServicesProcess process={fromSection(mergeServices, servicesContent, data).process} />;
+    return (
+      <ServicesProcess
+        process={{
+          title: text(data.title),
+          text: text(data.description),
+          steps,
+        }}
+      />
+    );
   },
 });

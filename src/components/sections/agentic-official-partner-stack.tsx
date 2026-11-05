@@ -3,10 +3,9 @@ import type { AgenticOfficialPartnerStackFragment } from "@/lib/wordpress/genera
 import { fromSection } from "@/components/sections/from-section";
 import { PartnersSection } from "@/components/ui/partners-section";
 import { AgenticPartners } from "@/components/agentic-ai/agentic-ai-sections";
-import { mergeHome } from "@/components/home/merge";
 import { mergeAgenticAi } from "@/components/agentic-ai/merge";
-import { homeContent } from "@/content/home";
 import { agenticAiContent } from "@/content/agentic-ai";
+import { media, text } from "@/lib/wordpress/fields";
 
 /**
  * `AgenticOfficialPartnerStack` — scrolling partner logos.
@@ -20,7 +19,14 @@ export const agenticOfficialPartnerStack = defineSection<AgenticOfficialPartnerS
     if (data.logoView === "boxed") {
       return <AgenticPartners partners={fromSection(mergeAgenticAi, agenticAiContent, data).partners} />;
     }
-    const { partners } = fromSection(mergeHome, homeContent, data);
-    return <PartnersSection title={partners.title} highlight="Partners" logos={partners.logos} />;
+    const logos = (data.officialPartners ?? []).map((partner) => {
+      const image = media(partner?.logo);
+      return {
+        image,
+        name: image?.alt ?? "Partner",
+        caption: "",
+      };
+    });
+    return <PartnersSection title={text(data.title)} highlight="Partners" logos={logos} />;
   },
 });
