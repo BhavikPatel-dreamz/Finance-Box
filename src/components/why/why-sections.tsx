@@ -2,26 +2,12 @@ import type { ReactNode } from "react";
 import { Fragment } from "react";
 import Image from "next/image";
 import { type WhyContent } from "@/content/why-fiab";
-import { FooterHero } from "@/components/ui/footer-hero";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Container } from "@/components/ui/container";
 import Section from "@/components/ui/section";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import { TeamProfileCard } from "@/components/team/team-card";
-
-export function WhyFooterCta({ cta }: { cta: WhyContent["cta"] }) {
-  return (
-    <FooterHero
-      variant="why"
-      title={cta.title}
-      highlight={cta.highlight}
-      text={cta.text}
-      buttonLabel={cta.buttonLabel}
-      buttonUrl={cta.buttonUrl}
-    />
-  );
-}
 
 export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: ReactNode }) {
   return (
