@@ -7,7 +7,7 @@ import { link, splitEmphasis, text } from "@/lib/wordpress/fields";
 export const servicesBannerSection = defineSection<ServicesBannerSectionFragment>({
   layout: "ServicesBannerSection",
   hero: true,
-  render: (data, { header }) => {
+  render: (data) => {
     const tierTitleParts = (raw: string | null) => {
       const value = text(raw, "");
       const parts = splitEmphasis(value);
@@ -32,7 +32,6 @@ export const servicesBannerSection = defineSection<ServicesBannerSectionFragment
     return (
       <HeroSection
         page="services"
-        headerNode={header}
         overrides={{
           eyebrow: text(data.subTitle, ""),
           title: heroTitleParts

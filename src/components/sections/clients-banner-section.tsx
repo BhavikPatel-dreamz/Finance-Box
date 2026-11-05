@@ -7,7 +7,7 @@ import { splitEmphasis, text } from "@/lib/wordpress/fields";
 export const clientsBannerSection = defineSection<ClientsBannerSectionFragment>({
   layout: "ClientsBannerSection",
   hero: true,
-  render: (data, { header }) => {
+  render: (data) => {
     const titleParts = splitEmphasis(data.title);
     const proof = text(data.clientProof, "");
     const clientProofItems = proof
@@ -16,7 +16,6 @@ export const clientsBannerSection = defineSection<ClientsBannerSectionFragment>(
     return (
       <HeroSection
         page="clients"
-        headerNode={header}
         overrides={{
           eyebrow: text(data.subTitle),
           title: titleParts ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim() : text(data.title),

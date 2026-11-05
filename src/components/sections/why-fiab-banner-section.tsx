@@ -8,7 +8,7 @@ import type { WhyContent } from "@/content/why-fiab";
 export const whyFiabBannerSection = defineSection<WhyFiabBannerSectionFragment>({
   layout: "WhyFiabBannerSection",
   hero: true,
-  render: (data, { header }) => {
+  render: (data) => {
     const parts = splitEmphasis(data.title);
     const title = parts ? [parts.before, parts.after].filter(Boolean).join(" ").trim() : text(data.title, "");
     const highlight = parts ? parts.emphasis : "";
@@ -21,7 +21,6 @@ export const whyFiabBannerSection = defineSection<WhyFiabBannerSectionFragment>(
     return (
       <HeroSection
         page="why"
-        headerNode={header}
         overrides={{
           eyebrow: text(data.subTitle, ""),
           title: title || "",

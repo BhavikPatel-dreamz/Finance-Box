@@ -9,12 +9,8 @@ export type SectionContext = {
   uri: string;
   /** Position of this section on the page (0-based). */
   index: number;
-  /**
-   * The shared site header. Set only for the first section when its
-   * definition is a `hero`, because the fixed header overlays the hero's
-   * background. Hero components must render it at the top of that background.
-   */
-  header: ReactNode;
+  /** Optional header (deprecated, site header is rendered at the root layout). */
+  header?: ReactNode;
 };
 
 export type SectionDefinition<TData extends { __typename: string } = SectionData> = {

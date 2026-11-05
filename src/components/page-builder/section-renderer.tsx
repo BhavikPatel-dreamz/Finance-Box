@@ -2,7 +2,6 @@ import { Fragment, type ReactNode } from "react";
 import { getSectionDefinition } from "@/components/page-builder/section-registry";
 import { reportSectionProblem, SectionFallback } from "@/components/page-builder/section-fallback";
 
-import { StandaloneHeader } from "@/components/layout/site-header";
 import { layoutFromTypename } from "@/lib/page-builder/layout";
 import type { SectionData } from "@/lib/page-builder/types";
 
@@ -12,16 +11,18 @@ import type { SectionData } from "@/lib/page-builder/types";
  * - Each row is matched to a registered definition by exact layout name.
  * - Unregistered layouts and rows whose mapping throws are skipped (with a
  *   development-only notice), so one bad section never breaks the page.
- * - The shared header is handed to the first section when it is a hero;
- *   otherwise it is rendered on a dark band above the sections.
+ * - Header is provided globally in RootLayout. If the first section is not
+ *   a hero, a top dark spacer ensures the non-hero section doesn't slip under the header.
  */
-export function SectionRenderer({ sections, uri, header }: { sections: SectionData[]; uri: string; header: ReactNode }) {
+export function SectionRenderer({ sections, uri }: { sections: SectionData[]; uri: string }) {
   const firstLayout = sections.length > 0 ? layoutFromTypename(sections[0].__typename) : null;
   const firstIsHero = firstLayout ? getSectionDefinition(firstLayout)?.hero === true : false;
 
   return (
     <>
-      {firstIsHero ? null : <StandaloneHeader>{header}</StandaloneHeader>}
+      {firstIsHero ? null : (
+        <div className="h-[81px] sm:h-[97px] lg:h-[112px] bg-[#121826]" aria-hidden="true" />
+      )}
       {sections.map((data, index) => {
         const layout = layoutFromTypename(data.__typename) ?? String(data.__typename);
         const key = `${index}-${layout}`;
@@ -39,14 +40,11 @@ export function SectionRenderer({ sections, uri, header }: { sections: SectionDa
           node = definition.render(data, {
             uri,
             index,
-            header: index === 0 && definition.hero ? header : null,
           });
         } catch (error) {
           reportSectionProblem("render-error", layout, uri, index, error);
           return (
             <Fragment key={key}>
-              {/* A failed leading hero must not take the site header with it. */}
-              {index === 0 && definition.hero ? <StandaloneHeader>{header}</StandaloneHeader> : null}
               <SectionFallback problem="render-error" layout={layout} />
             </Fragment>
           );

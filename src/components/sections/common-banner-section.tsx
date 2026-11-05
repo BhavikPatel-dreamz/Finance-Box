@@ -7,11 +7,10 @@ import { listItems, splitEmphasis, text } from "@/lib/wordpress/fields";
 export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
   layout: "CommonBannerSection",
   hero: true,
-  render: (data, { header }) => {
+  render: (data) => {
     const titleParts = splitEmphasis(data.title);
     return (
       <HeroSection
-        headerNode={header}
         overrides={{
           variant: "agentic-ai",
           eyebrow: text(data.subTitle),

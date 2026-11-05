@@ -23,7 +23,7 @@ function parseStatValue(raw: unknown): { value: string; unit: string } {
 export const homeBannerSection = defineSection<HomeBannerSectionFragment>({
   layout: "HomeBannerSection",
   hero: true,
-  render: (data, { header }) => {
+  render: (data) => {
     const titleParts = splitEmphasis(data.title);
     const [first, second] = data.statCards ?? [];
     const close = parseStatValue(first?.value);
@@ -39,7 +39,6 @@ export const homeBannerSection = defineSection<HomeBannerSectionFragment>({
     return (
       <HeroSection
         page="home"
-        headerNode={header}
         overrides={{
           eyebrow: text(data.subTitle),
           title: titleParts ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim() : text(data.title),
