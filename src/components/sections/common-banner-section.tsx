@@ -31,7 +31,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
           eyebrow: hero.eyebrow,
           title: hero.title,
           highlight: hero.highlight,
-          titleMaxWidth: variant === "people-operations" ? "lg:max-w-[587px]" : undefined,
+          titleMaxWidth:  "lg:max-w-[587px]",
           tagLine: text(data.tagLine),
           description: "",
           bullets: listItems(data.description),
