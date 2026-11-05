@@ -76,8 +76,6 @@ export function HeroSection({
   // 4. Resolve default section ID
   const sectionId = id || (isHome ? "product" : "hero");
 
-  console.log("HeroSection Rendered with config:", resolvedConfig,rawConfig);
-
   return (
     <section
       id={sectionId}

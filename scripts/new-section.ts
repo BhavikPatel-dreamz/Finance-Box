@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { execSync } from "node:child_process";
 
 const ROOT = path.resolve(process.cwd());
 
@@ -181,7 +182,7 @@ import type { ${typeImport} } from "@/lib/wordpress/generated/graphql";
 
 /** ${pascal}Section — TODO: implement. */
 export const ${pascal}Section = defineSection<${typeImport}>({
-  layout: "${layout}",
+  layout: "${pascal}",
   render: (data) => {
 ${destructure}    return (
       <section>
@@ -262,12 +263,12 @@ async function main() {
 
   const registry = fs.readFileSync(REGISTRY_PATH, "utf8");
   const importLine = `import { ${sectionName.toLowerCase().replace(/section$/, "Section")} } from "@/components/sections/${kebab}-section";\n`.replace(sectionName.toLowerCase(), sectionName);
-  const betterImport = `import { ${sectionName} } from "@/components/sections/${kebab}-section";\n`;
+  const betterImport = `import { ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)}Section } from "@/components/sections/${kebab}-section";\n`;
   const importInsert = registry.indexOf("const definitions = [");
   const updatedRegistry =
     registry.slice(0, importInsert) +
     betterImport +
-    registry.slice(importInsert).replace(/\n\];\s*$/, `\n  ${sectionName},\n];`);
+    registry.slice(importInsert).replace(/\n\];\s*$/, `\n  ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)}Section,\n];`);
   fs.writeFileSync(REGISTRY_PATH, updatedRegistry);
 
   console.log("Created:");
@@ -276,7 +277,14 @@ async function main() {
   console.log("Updated:", REGISTRY_PATH);
   console.log("\nFields found:");
   for (const f of fields) console.log("  -", f.name, unwrap(f.type).name);
-  console.log("\nRun `npm run codegen` if it didn't run, then implement the component.");
+  console.log("Schema + codegen...");
+  execSync("npm run schema", { stdio: "inherit" });
+  execSync("npm run codegen", { stdio: "inherit" });
+
+  console.log("\nAdded to registry:");
+  console.log(`  import { ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)}Section } from "@/components/sections/${kebab}-section";`);
+  console.log(`  ${sectionName.charAt(0).toLowerCase()}${sectionName.slice(1)}Section,`);
+  console.log("\nNext step: implement JSX in the generated component.");
 }
 
 main().catch((err) => {

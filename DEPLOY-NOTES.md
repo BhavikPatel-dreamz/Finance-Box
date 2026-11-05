@@ -41,3 +41,8 @@ Commit hash before this refactor batch: 6986fc00ecc796163f783e9ff115822f2287bca7
 Use this to recover removed URI-variant designs if they are later added back as
 dedicated ACF layouts:
   git show 6986fc00ecc796163f783e9ff115822f2287bca7:src/components/sections/<file>.tsx
+
+## How to remove a section
+1. npm run remove-section <layout_name>
+2. Deploy
+3. Then delete the layout in ACF
