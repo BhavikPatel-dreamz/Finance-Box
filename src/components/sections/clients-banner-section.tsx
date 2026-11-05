@@ -1,28 +1,33 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { ClientsBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
-import { fromSection } from "@/components/sections/from-section";
 import { HeroSection } from "@/components/hero";
-import { mergeClients } from "@/components/clients/merge";
-import { clientsContent } from "@/content/clients";
+import { splitEmphasis, text } from "@/lib/wordpress/fields";
 
 /** `ClientsBannerSection` — Clients hero with proof and stats. */
 export const clientsBannerSection = defineSection<ClientsBannerSectionFragment>({
   layout: "ClientsBannerSection",
   hero: true,
   render: (data, { header }) => {
-    const content = fromSection(mergeClients, clientsContent, data);
+    const titleParts = splitEmphasis(data.title);
+    const proof = text(data.clientProof, "");
+    const clientProofItems = proof
+      ? proof.split(/\n+/).map((line) => line.replace(/^[-•*]\s*/, "").trim()).filter(Boolean)
+      : [];
     return (
       <HeroSection
         page="clients"
         headerNode={header}
         overrides={{
-          eyebrow: content.hero.eyebrow,
-          title: content.hero.title,
-          highlight: content.hero.highlight,
-          description: content.hero.text,
-          clientProofTitle: content.hero.clientProofTitle,
-          clientProofItems: content.hero.clientProofItems,
-          stats: content.hero.stats,
+          eyebrow: text(data.subTitle),
+          title: titleParts ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim() : text(data.title),
+          highlight: titleParts ? titleParts.emphasis : "",
+          description: text(data.description),
+          clientProofTitle: proof ? "CLIENT PROOF" : "",
+          clientProofItems,
+          stats: (data.stats ?? []).map((stat) => ({
+            value: text(stat?.number),
+            label: text(stat?.label),
+          })),
         }}
       />
     );

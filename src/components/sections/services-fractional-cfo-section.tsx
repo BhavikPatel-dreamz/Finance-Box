@@ -1,15 +1,26 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { ServicesFractionalCfoSectionFragment } from "@/lib/wordpress/generated/graphql";
-import { fromSection } from "@/components/sections/from-section";
 import { ServicesCfo } from "@/components/services/services-sections";
-import { mergeServices } from "@/components/services/merge";
-import { servicesContent } from "@/content/services";
+import { link, media, text } from "@/lib/wordpress/fields";
 
 /** `ServicesFractionalCfoSection` — Fractional CFO deliverables. */
 export const servicesFractionalCfoSection = defineSection<ServicesFractionalCfoSectionFragment>({
   layout: "ServicesFractionalCfoSection",
   render: (data) => {
-    const content = fromSection(mergeServices, servicesContent, data);
-    return <ServicesCfo cfo={content.cfo} />;
+    const cards = (data.deliverables ?? []).map((card) => ({
+      title: text(card?.label),
+      text: text(card?.description),
+      image: media(card?.image),
+    }));
+    return (
+      <ServicesCfo
+        cfo={{
+          title: text(data.title),
+          text: text(data.description),
+          cta: link(data.ctaButton, { label: "", url: "" }),
+          cards,
+        }}
+      />
+    );
   },
 });

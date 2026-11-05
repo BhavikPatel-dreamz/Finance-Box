@@ -1,15 +1,32 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { ClientsTrustedCompaniesSectionFragment } from "@/lib/wordpress/generated/graphql";
-import { fromSection } from "@/components/sections/from-section";
 import { ClientsTrustedCompanies } from "@/components/clients/clients-sections";
-import { mergeClients } from "@/components/clients/merge";
-import { clientsContent } from "@/content/clients";
+import { media, splitEmphasis, text } from "@/lib/wordpress/fields";
 
 /** `ClientsTrustedCompaniesSection` — Client logo grid. */
 export const clientsTrustedCompaniesSection = defineSection<ClientsTrustedCompaniesSectionFragment>({
   layout: "ClientsTrustedCompaniesSection",
   render: (data) => {
-    const content = fromSection(mergeClients, clientsContent, data);
-    return <ClientsTrustedCompanies logosSection={content.logosSection} />;
+    const titleParts = splitEmphasis(data.title);
+    const title1 = titleParts ? titleParts.before : text(data.title);
+    const highlight1 = titleParts ? titleParts.emphasis : "";
+    const title2 = titleParts ? titleParts.after : "";
+    const logos = (data.logos ?? []).map((item) => {
+      const image = media(item?.logo);
+      return {
+        name: image?.alt ?? "Client",
+        image: image?.url ?? "",
+      };
+    });
+    return (
+      <ClientsTrustedCompanies
+        logosSection={{
+          title1: text(title1),
+          highlight1: text(highlight1),
+          title2: text(title2),
+          logos,
+        }}
+      />
+    );
   },
 });
