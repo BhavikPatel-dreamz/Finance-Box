@@ -299,6 +299,7 @@ export const peopleOperationsHeroConfig: HeroConfig = {
   },
   title: peopleOperationsContent.hero.title || "People Operations",
   highlight: peopleOperationsContent.hero.highlight || "& HR Advisory",
+  titleMaxWidth: "lg:max-w-[587px]",
   description:
     peopleOperationsContent.hero.text ||
     "Modern HR, payroll, benefits, and equity administration designed to support scaling teams without the administrative friction.",

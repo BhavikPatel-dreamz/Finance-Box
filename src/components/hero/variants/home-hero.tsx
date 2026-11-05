@@ -115,7 +115,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                   color={config.primaryCta.color || "white"}
                   bgColor={config.primaryCta.bgColor}
                   textColor={config.primaryCta.textColor}
-                  onDark={config.primaryCta.onDark}
+                  onDark={config.primaryCta.onDark ?? true}
                   target={config.primaryCta.target}
                   className={config.primaryCta.className}
                 />

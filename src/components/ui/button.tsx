@@ -97,7 +97,7 @@ const variantStyles: Record<ButtonVariant, { base: string; fill: string }> = {
     fill: "bg-[#121826]",
   },
   "green-on-dark": {
-    base: "bg-[#23C55E] text-[#121826]",
+    base: "bg-[#23C55E] text-[#121826] hover:text-[#121826]",
     fill: "bg-white",
   },
   dark: {
@@ -105,7 +105,7 @@ const variantStyles: Record<ButtonVariant, { base: string; fill: string }> = {
     fill: "bg-[#23C55E]",
   },
   white: {
-    base: "bg-white text-[#121826] shadow-sm",
+    base: "bg-white text-[#121826] shadow-sm hover:text-[#121826]",
     fill: "bg-[#23C55E]",
   },
 };

@@ -162,13 +162,67 @@ button, input, select, textarea {
 }
 
 /* Green button hover effect inside dark sections: bg color white, text color #121826 (only for actual green buttons, not white buttons) */
+/* In dark sections, green buttons expand with a white circular background and dark text on hover */
 :is(
+  .hero-section,
   .services-details,
   .footer-cta-section,
   .team-section,
   .how-we-work,
   [class*="bg-[#121826]"],
   [class*="bg-[#07110d]"],
+  [class*="bg-[#07090f]"],
+  [class*="bg-[#050D1F]"],
+  [class*="bg-[#050d1f]"],
+  [class*="bg-[#191F2D]"],
+  [class*="bg-[#191f2c]"],
+  [class*="bg-[#091024]"],
+  [class*="bg-[#182030]"],
+  .dark,
+  [data-theme="dark"]
+) :is(
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"])
+) > span[aria-hidden="true"] {
+  background-color: #ffffff !important;
+}
+
+:is(
+  .hero-section,
+  .services-details,
+  .footer-cta-section,
+  .team-section,
+  .how-we-work,
+  [class*="bg-[#121826]"],
+  [class*="bg-[#07110d]"],
+  [class*="bg-[#07090f]"],
+  [class*="bg-[#050D1F]"],
+  [class*="bg-[#050d1f]"],
+  [class*="bg-[#191F2D]"],
+  [class*="bg-[#191f2c]"],
+  [class*="bg-[#091024]"],
+  [class*="bg-[#182030]"],
+  .dark,
+  [data-theme="dark"]
+) :is(
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover
+) {
+  background-color: #ffffff !important;
+  color: #121826 !important;
+}
+
+:is(
+  .hero-section,
+  .services-details,
+  .footer-cta-section,
+  .team-section,
+  .how-we-work,
+  [class*="bg-[#121826]"],
+  [class*="bg-[#07110d]"],
+  [class*="bg-[#07090f]"],
+  [class*="bg-[#050D1F]"],
+  [class*="bg-[#050d1f]"],
   [class*="bg-[#191F2D]"],
   [class*="bg-[#191f2c]"],
   [class*="bg-[#091024]"],
@@ -183,12 +237,16 @@ button, input, select, textarea {
 }
 
 :is(
+  .hero-section,
   .services-details,
   .footer-cta-section,
   .team-section,
   .how-we-work,
   [class*="bg-[#121826]"],
   [class*="bg-[#07110d]"],
+  [class*="bg-[#07090f]"],
+  [class*="bg-[#050D1F]"],
+  [class*="bg-[#050d1f]"],
   [class*="bg-[#191F2D]"],
   [class*="bg-[#191f2c]"],
   [class*="bg-[#091024]"],
