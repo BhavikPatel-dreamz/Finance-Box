@@ -44,7 +44,7 @@ const variantStyles: Record<PartnersVariant, { track: string; item: string }> = 
   },
   bordered: {
     track: "gap-6 pr-6",
-    item: "w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] lg:w-[220px] lg:h-[220px] rounded-[10px] border border-[#121826]/6 bg-white p-6 sm:p-8",
+    item: "w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-[10px] border border-[#121826]/6 bg-white p-6 sm:p-8",
   },
 };
 
@@ -123,8 +123,9 @@ function LogoTrack({
                   src={url}
                   alt={alt}
                   fill
-                  sizes="100vw"
-                  className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-300 hover:scale-105"
+                  sizes="(max-width: 768px) 160px, 256px"
+                  unoptimized={/\.svg($|\?)/i.test(url)}
+                  className="w-full h-full object-contain p-6 pointer-events-none select-none transition-transform duration-300 hover:scale-105"
                 />
               ) : (
                 <span className="text-xl font-bold">{item.name}</span>
