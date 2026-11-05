@@ -1,15 +1,23 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { AgenticOpsComplianceSectionFragment } from "@/lib/wordpress/generated/graphql";
-import { fromSection } from "@/components/sections/from-section";
 import { AgenticOpsCompliance } from "@/components/agentic-ai/agentic-ai-sections";
-import { mergeAgenticAi } from "@/components/agentic-ai/merge";
-import { agenticAiContent } from "@/content/agentic-ai";
+import { media, text } from "@/lib/wordpress/fields";
 
 /** `AgenticOpsComplianceSection` — Ops and compliance image cards. */
 export const agenticOpsComplianceSection = defineSection<AgenticOpsComplianceSectionFragment>({
   layout: "AgenticOpsComplianceSection",
   render: (data) => {
-    const content = fromSection(mergeAgenticAi, agenticAiContent, data);
-    return <AgenticOpsCompliance opsCompliance={content.opsCompliance} />;
+    return (
+      <AgenticOpsCompliance
+        opsCompliance={{
+          title: text(data.title),
+          cards: (data.agents ?? []).map((card) => ({
+            image: media(card?.icon)?.url ?? "",
+            title: text(card?.title),
+            text: text(card?.content),
+          })),
+        }}
+      />
+    );
   },
 });

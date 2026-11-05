@@ -1,15 +1,28 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { OurBlogSectionFragment } from "@/lib/wordpress/generated/graphql";
-import { fromSection } from "@/components/sections/from-section";
+import type { PostCardFragment } from "@/lib/wordpress/generated/graphql";
 import { KnowledgeHubBlogs } from "@/components/knowledge-hub/knowledge-hub-sections";
-import { mergeKnowledgeHub } from "@/components/knowledge-hub/merge";
-import { knowledgeHubContent } from "@/content/knowledge-hub";
+import { blogCardFromPost } from "@/lib/wordpress/cards";
+import { blogArchivePath, isPlaceholderUrl } from "@/lib/wordpress/paths";
+import { link, text } from "@/lib/wordpress/fields";
 
 /** `OurBlogSection` — Selected blog posts. */
 export const ourBlogSection = defineSection<OurBlogSectionFragment>({
   layout: "OurBlogSection",
   render: (data) => {
-    const content = fromSection(mergeKnowledgeHub, knowledgeHubContent, data);
-    return <KnowledgeHubBlogs blogs={content.blogs} />;
+    const cta = link(data.allBlogCta, { label: "", url: "" });
+    if (isPlaceholderUrl(cta.url)) cta.url = blogArchivePath();
+
+    return (
+      <KnowledgeHubBlogs
+        blogs={{
+          title: text(data.title),
+          items: (data.selectBlog?.nodes ?? []).map((post) =>
+            blogCardFromPost(post as PostCardFragment),
+          ),
+          cta,
+        }}
+      />
+    );
   },
 });

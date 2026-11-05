@@ -1,15 +1,24 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { SimpleCtaSectionFragment } from "@/lib/wordpress/generated/graphql";
-import { fromSection } from "@/components/sections/from-section";
 import { KnowledgeHubResources } from "@/components/knowledge-hub/knowledge-hub-sections";
-import { mergeKnowledgeHub } from "@/components/knowledge-hub/merge";
-import { knowledgeHubContent } from "@/content/knowledge-hub";
+import { link, splitEmphasis, text } from "@/lib/wordpress/fields";
 
 /** `SimpleCtaSection` — Inline call-to-action band. */
 export const simpleCtaSection = defineSection<SimpleCtaSectionFragment>({
   layout: "SimpleCtaSection",
   render: (data) => {
-    const content = fromSection(mergeKnowledgeHub, knowledgeHubContent, data);
-    return <KnowledgeHubResources resources={content.resources} />;
+    const titleParts = splitEmphasis(data.title);
+    return (
+      <KnowledgeHubResources
+        resources={{
+          title: titleParts
+            ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
+            : text(data.title),
+          highlight: titleParts ? titleParts.emphasis : "",
+          text: text(data.description),
+          cta: link(data.ctaButton, { label: "", url: "" }),
+        }}
+      />
+    );
   },
 });
