@@ -145,7 +145,7 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-6 md:gap-4 lg:gap-5">
           {caseStudy.items.map((item, idx) => (
             <StaggerItem key={item.url || idx} index={idx} className="group card-hover relative flex flex-col">
-              <div className="relative w-full aspect-[414/560] max-h-[460px] sm:max-h-[500px] md:max-h-none lg:aspect-auto lg:h-[560px] rounded-[6px] sm:rounded-[8px] lg:rounded-[5px] overflow-hidden mb-4 sm:mb-5 lg:mb-6">
+              <div className="relative w-full aspect-[414/560] max-h-[460px] sm:max-h-[500px] md:max-h-none lg:aspect-auto lg:h-[560px] rounded-[10px] sm:rounded-[12px] overflow-hidden mb-4 sm:mb-5 lg:mb-6">
                 <Image
                   src={item.image}
                   alt={item.title}

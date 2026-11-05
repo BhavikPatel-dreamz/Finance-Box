@@ -49,9 +49,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
         // Editors enter the bullet points as a list in `description`; `tagLine` is the lead sentence.
         const rawBullets = listItems(data.description);
         const descriptionText = rawBullets.length > 0 ? text(data.tagLine, hero.text) : hero.text;
-        const normalizedLead = (descriptionText || "").trim().toLowerCase();
-        const bullets = (rawBullets.length > 0 ? rawBullets : (hero.bullets ?? []))
-          .filter((b) => b.trim().toLowerCase() !== normalizedLead);
+        const bullets = rawBullets.length > 0 ? rawBullets : (hero.bullets ?? []);
         return (
           <HeroSection
             page="agentic-ai"
@@ -100,13 +98,15 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
               eyebrow: hero.eyebrow,
               title: hero.title,
               highlight: hero.highlight,
+              titleMaxWidth: "lg:max-w-[400px]",
               description: hero.text,
               primaryCta: hero.cta
                 ? {
                     label: hero.cta.label,
                     url: hero.cta.url,
-                    color: "green",
-                    onDark: true,
+                    color: "white",
+                    bgColor: "#ffffff",
+                    textColor: "#07110d",
                   }
                 : undefined,
             }}

@@ -137,7 +137,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
               <div
                 role="table"
                 aria-label="Features Comparison"
-                className="why-compare-table relative rounded-[10px] bg-[#EDE9E6] grid items-stretch"
+                className="why-compare-table relative rounded-[14px] sm:rounded-[18px] lg:rounded-[20px] bg-[#F5F3F2] grid items-stretch"
                 style={{
                   gridTemplateColumns: `var(--col-first, minmax(240px, 1.4fr)) var(--col-featured, minmax(200px, 1.15fr)) repeat(${Math.max(1, compare.columns.length - 1)}, var(--col-other, minmax(160px, 1fr)))`,
                   gridTemplateRows: `var(--header-row-height, 96px) repeat(${compare.rows.length}, 68px)`,

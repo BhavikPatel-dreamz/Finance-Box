@@ -428,7 +428,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   return (
     <Section theme="light" spacing="both" className="services-cfo-section relative z-1 lg:-mt-[100svh]">
       <Container>
-        <div className="bg-[#EDE9E6] rounded-[10px] p-6 sm:p-10 md:px-12.5 md:py-20 text-[#121826]">
+        <div className="bg-[#F5F3F2] rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] p-6 sm:p-10 md:px-12.5 md:py-20 text-[#121826]">
 
           <Reveal preset="slide-up" distance={20}>
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
@@ -458,7 +458,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
               <StaggerItem
                 key={idx}
                 index={idx}
-                className="group card-hover relative w-full h-[340px] sm:h-[400px] md:h-[420px] lg:h-[430px] xl:h-[490px] rounded-[12px] overflow-hidden bg-[#EDE9E6]"
+                className="group card-hover relative w-full h-[340px] sm:h-[400px] md:h-[420px] lg:h-[430px] xl:h-[490px] rounded-[14px] sm:rounded-[16px] overflow-hidden bg-[#F5F3F2]"
               >
                 <Image
                   src={images[idx] || card.image?.url || ""}
@@ -469,7 +469,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                 />
 
                 {/* Bottom-left cutout wrapper matching Figma geometry */}
-                <div className="absolute bottom-0 left-0 bg-[#EDE9E6] pt-2.5 pr-2.5 sm:pt-3 sm:pr-3 xl:pt-3.5 xl:pr-3.5 rounded-tr-[12px] w-[calc(100%-45px)] sm:w-[calc(100%-55px)] xl:w-[calc(100%-75px)] max-w-[315px]">
+                <div className="absolute bottom-0 left-0 bg-[#F5F3F2] pt-2.5 pr-2.5 sm:pt-3 sm:pr-3 xl:pt-3.5 xl:pr-3.5 rounded-tr-[12px] w-[calc(100%-45px)] sm:w-[calc(100%-55px)] xl:w-[calc(100%-75px)] max-w-[315px]">
                   {/* Top-left corner radius for upper photo */}
                   <svg
                     width="12"
@@ -479,7 +479,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                     className="absolute left-0 bottom-full pointer-events-none"
                     aria-hidden="true"
                   >
-                    <path d="M 0 0 A 20 20 0 0 0 20 20 H 0 V 0 Z" fill="#EDE9E6" />
+                    <path d="M 0 0 A 20 20 0 0 0 20 20 H 0 V 0 Z" fill="#F5F3F2" />
                   </svg>
 
                   {/* Bottom-left corner radius for right photo strip */}
@@ -491,7 +491,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                     className="absolute left-full bottom-0 pointer-events-none"
                     aria-hidden="true"
                   >
-                    <path d="M 0 0 A 20 20 0 0 0 20 20 H 0 V 0 Z" fill="#EDE9E6" />
+                    <path d="M 0 0 A 20 20 0 0 0 20 20 H 0 V 0 Z" fill="#F5F3F2" />
                   </svg>
 
                   {/* Dark Box */}

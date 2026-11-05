@@ -315,20 +315,42 @@ export function CareersHowWeHire({ howWeHire }: { howWeHire: CareersContent["how
   );
 }
 
-export function FaqBlock({ faq }: { faq: CareersContent["faq"] }) {
-  // 9. Naya Section: FAQ
-  return (
-    <Section theme="faq" spacing="both" className="faq-section py-12 sm:py-16 lg:py-20">
-      <Container>
-        <div className="mx-auto w-full max-w-[880px]">
-          <Reveal preset="slide-up" distance={20}>
-            <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[48px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6 sm:mb-8 md:mb-12">
-              {faq.title}
-            </h2>
-          </Reveal>
+export function FaqBlock({
+  faq,
+  variant = "light",
+}: {
+  faq: CareersContent["faq"];
+  variant?: "light" | "dark";
+}) {
+  if (variant === "dark") {
+    return (
+      <Section theme="light" spacing="both" className="faq-section bg-white py-12 sm:py-16 lg:py-20">
+        <Container>
+          <div className="rounded-[20px] sm:rounded-[24px] bg-[#121826] text-white p-6 sm:p-10 lg:p-14 xl:p-16">
+            <Reveal preset="slide-up" distance={20}>
+              <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[48px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12 text-white">
+                {faq.title}
+              </h2>
+            </Reveal>
+            <div className="mx-auto w-full max-w-[940px]">
+              <Accordion items={faq.items} theme="dark" />
+            </div>
+          </div>
+        </Container>
+      </Section>
+    );
+  }
 
-          <Accordion items={faq.items} />
-        </div>
+  return (
+    <Section theme="cream" spacing="both" className="faq-section bg-[#F6F5F3] py-12 sm:py-16 lg:py-20">
+      <Container size="narrow">
+        <Reveal preset="slide-up" distance={20}>
+          <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[48px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6 sm:mb-8 md:mb-12 text-[#121826]">
+            {faq.title}
+          </h2>
+        </Reveal>
+
+        <Accordion items={faq.items} theme="light" />
       </Container>
     </Section>
   );

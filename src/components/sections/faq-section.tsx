@@ -5,11 +5,12 @@ import { FaqBlock } from "@/components/careers/careers-sections";
 import { mergeCareers } from "@/components/careers/merge";
 import { careersContent } from "@/content/careers";
 
-/** `FaqSection` — FAQ accordion. */
+/** `FaqSection` — FAQ accordion (adapts dark container for Homepage, cream for Careers). */
 export const faqSection = defineSection<FaqSectionFragment>({
   layout: "FaqSection",
-  render: (data) => {
+  render: (data, { uri }) => {
     const content = fromSection(mergeCareers, careersContent, data);
-    return <FaqBlock faq={content.faq} />;
+    const isHome = uri === "/" || uri === "";
+    return <FaqBlock faq={content.faq} variant={isHome ? "dark" : "light"} />;
   },
 });

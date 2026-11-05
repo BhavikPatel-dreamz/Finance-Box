@@ -107,6 +107,9 @@ export interface HeroConfig {
   /** Secondary highlight line (useful for multi-line hero titles like careers) */
   highlight2?: string;
 
+  /** Optional max width class for title wrapping (e.g. "max-w-[430px]") */
+  titleMaxWidth?: string;
+
   /** Subtitle / descriptive paragraph */
   description?: string;
 
