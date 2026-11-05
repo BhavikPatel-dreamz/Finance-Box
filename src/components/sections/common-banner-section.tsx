@@ -34,7 +34,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
             ? {
                 label: hero.cta.label,
                 url: hero.cta.url,
-                color: "green",
+                color: "white",
                 onDark: true,
               }
             : undefined,
