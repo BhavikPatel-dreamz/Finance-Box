@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { Fragment } from "react";
 import Image from "next/image";
 import { type WhyContent } from "@/content/why-fiab";
-import { FooterHero } from "@/components/ui/footer-hero";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Container } from "@/components/ui/container";
