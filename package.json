@@ -17,7 +17,8 @@
     "typecheck": "tsc --noEmit",
     "new-section": "npx -y tsx scripts/new-section.ts",
     "remove-section": "npx -y tsx scripts/remove-section.ts",
-    "sync-sections": "npx -y tsx scripts/sync-sections.ts"
+    "sync-sections": "npx -y tsx scripts/sync-sections.ts",
+    "update-section": "npx -y tsx scripts/update-section.ts"
   },
   "dependencies": {
     "@graphql-typed-document-node/core": "^3.2.0",
