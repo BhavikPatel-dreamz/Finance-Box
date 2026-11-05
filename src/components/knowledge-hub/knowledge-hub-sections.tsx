@@ -5,55 +5,10 @@ import { BLOG_CARD_CLASS, BlogCard } from "@/components/blog/blog-card";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { GreenButton } from "@/components/ui/green-button";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import Container from "../ui/container";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import type { KnowledgeHubContent } from "@/content/knowledge-hub";
-
-export function KnowledgeHubBanner({ hero, header }: { hero: KnowledgeHubContent["hero"]; header: ReactNode }) {
-  // 1. Hero Section
-  return (
-    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-[#121826] text-white">
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: "url(/contact-us/contactus-hero-bg.svg)" }}
-      />
-
-      <div className="relative z-1 flex flex-col justify-center h-full">
-        {header}
-
-        <Container>
-          <div className="flex-1 flex items-center pt-6 sm:pt-8 lg:pt-0 pb-10 sm:pb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center w-full">
-              <Reveal immediate preset="slide-up" delay={80} distance={24}>
-                <Eyebrow variant="dark" className="mb-4 sm:mb-6">
-                  {hero.eyebrow}
-                </Eyebrow>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 lg:max-w-[400px]">
-                  {hero.title}
-                  <span className="text-[#23C55E]">{hero.highlight}</span>
-                </h1>
-              </Reveal>
-              <Reveal immediate preset="slide-up" delay={260} distance={24} className="max-w-md lg:justify-self-end">
-                <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] lg:leading-[160%] text-white/80 mb-6 sm:mb-8">
-                  {hero.text}
-                </p>
-                <div>
-                  <GreenButton
-                    label={hero.cta.label}
-                    href={hero.cta.url}
-                    bgColor="#ffffff"
-                  />
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </Container>
-      </div>
-    </section>
-  );
-}
 
 export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs"] }) {
   // 2. Our Blogs Section
