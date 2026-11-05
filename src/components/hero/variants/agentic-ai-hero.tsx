@@ -13,7 +13,7 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
   return (
     <Container>
       <div className="flex-1 flex items-center pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 gap-8 items-center w-full">
           {/* Left Column */}
           <Reveal immediate preset="slide-up" delay={80} distance={24}>
             {eyebrowData && (
@@ -38,7 +38,7 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
             {config.tagLine && (
               <p
                 className={twMerge(
-                  "text-[16px] font-light leading-[160%] text-white/90 max-w-md mb-3",
+                  "text-[16px] font-light leading-[160%] text-white/90 max-w-md mb-3 last:mb-0",
                   config.titleMaxWidth
                 )}
               >
@@ -48,7 +48,7 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
             {config.description && (
               <p
                 className={twMerge(
-                  "text-[16px] font-light leading-[160%] text-white/80 max-w-md",
+                  "text-[16px] font-light leading-[160%] text-white/80 max-w-md last:mb-0",
                   config.titleMaxWidth
                 )}
               >
