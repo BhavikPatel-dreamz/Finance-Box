@@ -4257,6 +4257,686 @@ type WritingSettings implements Node {
   useSmilies: Boolean
 }
 
+type RootMutation {
+  createCaseStudy(input: CreateCaseStudyInput!): CreateCaseStudyPayload
+  createCategory(input: CreateCategoryInput!): CreateCategoryPayload
+  createComment(input: CreateCommentInput!): CreateCommentPayload
+  createMediaItem(input: CreateMediaItemInput!): CreateMediaItemPayload
+  createPage(input: CreatePageInput!): CreatePagePayload
+  createPost(input: CreatePostInput!): CreatePostPayload
+  createPostFormat(input: CreatePostFormatInput!): CreatePostFormatPayload
+  createTag(input: CreateTagInput!): CreateTagPayload
+  createTeam(input: CreateTeamInput!): CreateTeamPayload
+  createUser(input: CreateUserInput!): CreateUserPayload
+  deleteCaseStudy(input: DeleteCaseStudyInput!): DeleteCaseStudyPayload
+  deleteCategory(input: DeleteCategoryInput!): DeleteCategoryPayload
+  deleteComment(input: DeleteCommentInput!): DeleteCommentPayload
+  deleteMediaItem(input: DeleteMediaItemInput!): DeleteMediaItemPayload
+  deletePage(input: DeletePageInput!): DeletePagePayload
+  deletePost(input: DeletePostInput!): DeletePostPayload
+  deletePostFormat(input: DeletePostFormatInput!): DeletePostFormatPayload
+  deleteTag(input: DeleteTagInput!): DeleteTagPayload
+  deleteTeam(input: DeleteTeamInput!): DeleteTeamPayload
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload
+  increaseCount(count: Int): Int
+  registerUser(input: RegisterUserInput!): RegisterUserPayload
+  resetUserPassword(input: ResetUserPasswordInput!): ResetUserPasswordPayload
+  restoreComment(input: RestoreCommentInput!): RestoreCommentPayload
+  sendPasswordResetEmail(input: SendPasswordResetEmailInput!): SendPasswordResetEmailPayload
+  updateCaseStudy(input: UpdateCaseStudyInput!): UpdateCaseStudyPayload
+  updateCategory(input: UpdateCategoryInput!): UpdateCategoryPayload
+  updateComment(input: UpdateCommentInput!): UpdateCommentPayload
+  updateMediaItem(input: UpdateMediaItemInput!): UpdateMediaItemPayload
+  updatePage(input: UpdatePageInput!): UpdatePagePayload
+  updatePost(input: UpdatePostInput!): UpdatePostPayload
+  updatePostFormat(input: UpdatePostFormatInput!): UpdatePostFormatPayload
+  updateSettings(input: UpdateSettingsInput!): UpdateSettingsPayload
+  updateTag(input: UpdateTagInput!): UpdateTagPayload
+  updateTeam(input: UpdateTeamInput!): UpdateTeamPayload
+  updateUser(input: UpdateUserInput!): UpdateUserPayload
+}
+
+input CreateCaseStudyInput {
+  clientMutationId: String
+  content: String
+  date: String
+  excerpt: String
+  menuOrder: Int
+  password: String
+  slug: String
+  status: PostStatusEnum
+  title: String
+}
+
+type CreateCaseStudyPayload {
+  caseStudy: CaseStudy
+  clientMutationId: String
+}
+
+input CreateCategoryInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  name: String!
+  parentDatabaseId: Int
+  parentId: ID
+  slug: String
+}
+
+type CreateCategoryPayload {
+  category: Category
+  clientMutationId: String
+}
+
+input CreateCommentInput {
+  author: String
+  authorEmail: String
+  authorUrl: String
+  clientMutationId: String
+  commentOn: Int
+  content: String
+  date: String
+  parent: ID
+  status: CommentStatusEnum
+  type: String
+}
+
+type CreateCommentPayload {
+  clientMutationId: String
+  comment: Comment
+  success: Boolean
+}
+
+input CreateMediaItemInput {
+  altText: String
+  authorId: ID
+  caption: String
+  clientMutationId: String
+  commentStatus: String
+  date: String
+  dateGmt: String
+  description: String
+  filePath: String
+  fileType: MimeTypeEnum
+  parentId: ID
+  pingStatus: String
+  slug: String
+  status: MediaItemStatusEnum
+  title: String
+}
+
+enum MediaItemStatusEnum {
+  AUTO_DRAFT
+  INHERIT
+  PRIVATE
+  TRASH
+}
+
+type CreateMediaItemPayload {
+  clientMutationId: String
+  mediaItem: MediaItem
+}
+
+input CreatePageInput {
+  authorId: ID
+  clientMutationId: String
+  commentStatus: String
+  content: String
+  date: String
+  menuOrder: Int
+  parentId: ID
+  password: String
+  slug: String
+  status: PostStatusEnum
+  title: String
+}
+
+type CreatePagePayload {
+  clientMutationId: String
+  page: Page
+}
+
+input CreatePostInput {
+  authorId: ID
+  categories: PostCategoriesInput
+  clientMutationId: String
+  commentStatus: String
+  content: String
+  date: String
+  excerpt: String
+  menuOrder: Int
+  password: String
+  pingStatus: String
+  pinged: [String]
+  postFormats: PostPostFormatsInput
+  slug: String
+  status: PostStatusEnum
+  tags: PostTagsInput
+  title: String
+  toPing: [String]
+}
+
+input PostCategoriesInput {
+  append: Boolean
+  nodes: [PostCategoriesNodeInput]
+}
+
+input PostCategoriesNodeInput {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+input PostPostFormatsInput {
+  append: Boolean
+  nodes: [PostPostFormatsNodeInput]
+}
+
+input PostPostFormatsNodeInput {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+input PostTagsInput {
+  append: Boolean
+  nodes: [PostTagsNodeInput]
+}
+
+input PostTagsNodeInput {
+  description: String
+  id: ID
+  name: String
+  slug: String
+}
+
+type CreatePostPayload {
+  clientMutationId: String
+  post: Post
+}
+
+input CreatePostFormatInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  name: String!
+  slug: String
+}
+
+type CreatePostFormatPayload {
+  clientMutationId: String
+  postFormat: PostFormat
+}
+
+input CreateTagInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  name: String!
+  slug: String
+}
+
+type CreateTagPayload {
+  clientMutationId: String
+  tag: Tag
+}
+
+input CreateTeamInput {
+  clientMutationId: String
+  content: String
+  date: String
+  excerpt: String
+  menuOrder: Int
+  password: String
+  slug: String
+  status: PostStatusEnum
+  title: String
+}
+
+type CreateTeamPayload {
+  clientMutationId: String
+  team: Team
+}
+
+input CreateUserInput {
+  aim: String
+  clientMutationId: String
+  description: String
+  displayName: String
+  email: String
+  firstName: String
+  jabber: String
+  lastName: String
+  locale: String
+  nicename: String
+  nickname: String
+  password: String
+  registered: String
+  richEditing: String
+  roles: [String]
+  username: String!
+  websiteUrl: String
+  yim: String
+}
+
+type CreateUserPayload {
+  clientMutationId: String
+  user: User
+}
+
+input DeleteCaseStudyInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+  ignoreEditLock: Boolean
+}
+
+type DeleteCaseStudyPayload {
+  caseStudy: CaseStudy
+  clientMutationId: String
+  deletedId: ID
+}
+
+input DeleteCategoryInput {
+  clientMutationId: String
+  id: ID!
+}
+
+type DeleteCategoryPayload {
+  category: Category
+  clientMutationId: String
+  deletedId: ID
+}
+
+input DeleteCommentInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+}
+
+type DeleteCommentPayload {
+  clientMutationId: String
+  comment: Comment
+  deletedId: ID
+}
+
+input DeleteMediaItemInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+}
+
+type DeleteMediaItemPayload {
+  clientMutationId: String
+  deletedId: ID
+  mediaItem: MediaItem
+}
+
+input DeletePageInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+  ignoreEditLock: Boolean
+}
+
+type DeletePagePayload {
+  clientMutationId: String
+  deletedId: ID
+  page: Page
+}
+
+input DeletePostInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+  ignoreEditLock: Boolean
+}
+
+type DeletePostPayload {
+  clientMutationId: String
+  deletedId: ID
+  post: Post
+}
+
+input DeletePostFormatInput {
+  clientMutationId: String
+  id: ID!
+}
+
+type DeletePostFormatPayload {
+  clientMutationId: String
+  deletedId: ID
+  postFormat: PostFormat
+}
+
+input DeleteTagInput {
+  clientMutationId: String
+  id: ID!
+}
+
+type DeleteTagPayload {
+  clientMutationId: String
+  deletedId: ID
+  tag: Tag
+}
+
+input DeleteTeamInput {
+  clientMutationId: String
+  forceDelete: Boolean
+  id: ID!
+  ignoreEditLock: Boolean
+}
+
+type DeleteTeamPayload {
+  clientMutationId: String
+  deletedId: ID
+  team: Team
+}
+
+input DeleteUserInput {
+  clientMutationId: String
+  id: ID!
+  reassignId: ID
+}
+
+type DeleteUserPayload {
+  clientMutationId: String
+  deletedId: ID
+  user: User
+}
+
+input RegisterUserInput {
+  aim: String
+  clientMutationId: String
+  description: String
+  displayName: String
+  email: String
+  firstName: String
+  jabber: String
+  lastName: String
+  locale: String
+  nicename: String
+  nickname: String
+  password: String
+  registered: String
+  richEditing: String
+  username: String!
+  websiteUrl: String
+  yim: String
+}
+
+type RegisterUserPayload {
+  clientMutationId: String
+  user: User
+}
+
+input ResetUserPasswordInput {
+  clientMutationId: String
+  key: String
+  login: String
+  password: String
+}
+
+type ResetUserPasswordPayload {
+  clientMutationId: String
+  user: User
+}
+
+input RestoreCommentInput {
+  clientMutationId: String
+  id: ID!
+}
+
+type RestoreCommentPayload {
+  clientMutationId: String
+  comment: Comment
+  restoredId: ID
+}
+
+input SendPasswordResetEmailInput {
+  clientMutationId: String
+  username: String!
+}
+
+type SendPasswordResetEmailPayload {
+  clientMutationId: String
+  success: Boolean
+  user: User @deprecated(reason: "This field will be removed in a future version of WPGraphQL")
+}
+
+input UpdateCaseStudyInput {
+  clientMutationId: String
+  content: String
+  date: String
+  excerpt: String
+  id: ID!
+  ignoreEditLock: Boolean
+  menuOrder: Int
+  password: String
+  slug: String
+  status: PostStatusEnum
+  title: String
+}
+
+type UpdateCaseStudyPayload {
+  caseStudy: CaseStudy
+  clientMutationId: String
+}
+
+input UpdateCategoryInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  id: ID!
+  name: String
+  parentDatabaseId: Int
+  parentId: ID
+  slug: String
+}
+
+type UpdateCategoryPayload {
+  category: Category
+  clientMutationId: String
+}
+
+input UpdateCommentInput {
+  author: String
+  authorEmail: String
+  authorUrl: String
+  clientMutationId: String
+  commentOn: Int
+  content: String
+  date: String
+  id: ID!
+  parent: ID
+  status: CommentStatusEnum
+  type: String
+}
+
+type UpdateCommentPayload {
+  clientMutationId: String
+  comment: Comment
+  success: Boolean
+}
+
+input UpdateMediaItemInput {
+  altText: String
+  authorId: ID
+  caption: String
+  clientMutationId: String
+  commentStatus: String
+  date: String
+  dateGmt: String
+  description: String
+  filePath: String
+  fileType: MimeTypeEnum
+  id: ID!
+  parentId: ID
+  pingStatus: String
+  slug: String
+  status: MediaItemStatusEnum
+  title: String
+}
+
+type UpdateMediaItemPayload {
+  clientMutationId: String
+  mediaItem: MediaItem
+}
+
+input UpdatePageInput {
+  authorId: ID
+  clientMutationId: String
+  commentStatus: String
+  content: String
+  date: String
+  id: ID!
+  ignoreEditLock: Boolean
+  menuOrder: Int
+  parentId: ID
+  password: String
+  slug: String
+  status: PostStatusEnum
+  title: String
+}
+
+type UpdatePagePayload {
+  clientMutationId: String
+  page: Page
+}
+
+input UpdatePostInput {
+  authorId: ID
+  categories: PostCategoriesInput
+  clientMutationId: String
+  commentStatus: String
+  content: String
+  date: String
+  excerpt: String
+  id: ID!
+  ignoreEditLock: Boolean
+  menuOrder: Int
+  password: String
+  pingStatus: String
+  pinged: [String]
+  postFormats: PostPostFormatsInput
+  slug: String
+  status: PostStatusEnum
+  tags: PostTagsInput
+  title: String
+  toPing: [String]
+}
+
+type UpdatePostPayload {
+  clientMutationId: String
+  post: Post
+}
+
+input UpdatePostFormatInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  id: ID!
+  name: String
+  slug: String
+}
+
+type UpdatePostFormatPayload {
+  clientMutationId: String
+  postFormat: PostFormat
+}
+
+input UpdateSettingsInput {
+  clientMutationId: String
+  discussionSettingsDefaultCommentStatus: String
+  discussionSettingsDefaultPingStatus: String
+  generalSettingsDateFormat: String
+  generalSettingsDescription: String
+  generalSettingsEmail: String
+  generalSettingsLanguage: String
+  generalSettingsStartOfWeek: Int
+  generalSettingsTimeFormat: String
+  generalSettingsTimezone: String
+  generalSettingsTitle: String
+  readingSettingsPageForPosts: Int
+  readingSettingsPageOnFront: Int
+  readingSettingsPostsPerPage: Int
+  readingSettingsShowOnFront: String
+  writingSettingsDefaultCategory: Int
+  writingSettingsDefaultPostFormat: String
+  writingSettingsUseSmilies: Boolean
+}
+
+type UpdateSettingsPayload {
+  allSettings: Settings
+  clientMutationId: String
+  discussionSettings: DiscussionSettings
+  generalSettings: GeneralSettings
+  permalinkSettings: PermalinkSettings
+  readingSettings: ReadingSettings
+  writingSettings: WritingSettings
+}
+
+input UpdateTagInput {
+  aliasOf: String
+  clientMutationId: String
+  description: String
+  id: ID!
+  name: String
+  slug: String
+}
+
+type UpdateTagPayload {
+  clientMutationId: String
+  tag: Tag
+}
+
+input UpdateTeamInput {
+  clientMutationId: String
+  content: String
+  date: String
+  excerpt: String
+  id: ID!
+  ignoreEditLock: Boolean
+  menuOrder: Int
+  password: String
+  slug: String
+  status: PostStatusEnum
+  title: String
+}
+
+type UpdateTeamPayload {
+  clientMutationId: String
+  team: Team
+}
+
+input UpdateUserInput {
+  aim: String
+  clientMutationId: String
+  description: String
+  displayName: String
+  email: String
+  firstName: String
+  id: ID!
+  jabber: String
+  lastName: String
+  locale: String
+  nicename: String
+  nickname: String
+  password: String
+  registered: String
+  richEditing: String
+  roles: [String]
+  websiteUrl: String
+  yim: String
+}
+
+type UpdateUserPayload {
+  clientMutationId: String
+  user: User
+}
+
 interface Node {
   id: ID!
 }
@@ -4741,14 +5421,14 @@ type PageBuilderPageBuilderSimpleCtaSectionLayout implements PageBuilderPageBuil
 }
 
 interface PageBuilderPageBuilderCaseStudySectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
-  allCaseStudy: String
+  allCaseStudy: AcfLink
   fieldGroupName: String
   selectCaseStudy(first: Int, last: Int, after: String, before: String): AcfContentNodeConnection
   title: String
 }
 
 type PageBuilderPageBuilderCaseStudySectionLayout implements PageBuilderPageBuilderCaseStudySectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
-  allCaseStudy: String
+  allCaseStudy: AcfLink
   fieldGroupName: String
   selectCaseStudy(first: Int, last: Int, after: String, before: String): AcfContentNodeConnection
   title: String
@@ -5533,684 +6213,4 @@ interface WithAcfPageBuilder {
 interface PageBuilder_Fields implements AcfFieldGroup & AcfFieldGroupFields {
   fieldGroupName: String
   pageBuilder: [PageBuilderPageBuilder_Layout]
-}
-
-type RootMutation {
-  createCaseStudy(input: CreateCaseStudyInput!): CreateCaseStudyPayload
-  createCategory(input: CreateCategoryInput!): CreateCategoryPayload
-  createComment(input: CreateCommentInput!): CreateCommentPayload
-  createMediaItem(input: CreateMediaItemInput!): CreateMediaItemPayload
-  createPage(input: CreatePageInput!): CreatePagePayload
-  createPost(input: CreatePostInput!): CreatePostPayload
-  createPostFormat(input: CreatePostFormatInput!): CreatePostFormatPayload
-  createTag(input: CreateTagInput!): CreateTagPayload
-  createTeam(input: CreateTeamInput!): CreateTeamPayload
-  createUser(input: CreateUserInput!): CreateUserPayload
-  deleteCaseStudy(input: DeleteCaseStudyInput!): DeleteCaseStudyPayload
-  deleteCategory(input: DeleteCategoryInput!): DeleteCategoryPayload
-  deleteComment(input: DeleteCommentInput!): DeleteCommentPayload
-  deleteMediaItem(input: DeleteMediaItemInput!): DeleteMediaItemPayload
-  deletePage(input: DeletePageInput!): DeletePagePayload
-  deletePost(input: DeletePostInput!): DeletePostPayload
-  deletePostFormat(input: DeletePostFormatInput!): DeletePostFormatPayload
-  deleteTag(input: DeleteTagInput!): DeleteTagPayload
-  deleteTeam(input: DeleteTeamInput!): DeleteTeamPayload
-  deleteUser(input: DeleteUserInput!): DeleteUserPayload
-  increaseCount(count: Int): Int
-  registerUser(input: RegisterUserInput!): RegisterUserPayload
-  resetUserPassword(input: ResetUserPasswordInput!): ResetUserPasswordPayload
-  restoreComment(input: RestoreCommentInput!): RestoreCommentPayload
-  sendPasswordResetEmail(input: SendPasswordResetEmailInput!): SendPasswordResetEmailPayload
-  updateCaseStudy(input: UpdateCaseStudyInput!): UpdateCaseStudyPayload
-  updateCategory(input: UpdateCategoryInput!): UpdateCategoryPayload
-  updateComment(input: UpdateCommentInput!): UpdateCommentPayload
-  updateMediaItem(input: UpdateMediaItemInput!): UpdateMediaItemPayload
-  updatePage(input: UpdatePageInput!): UpdatePagePayload
-  updatePost(input: UpdatePostInput!): UpdatePostPayload
-  updatePostFormat(input: UpdatePostFormatInput!): UpdatePostFormatPayload
-  updateSettings(input: UpdateSettingsInput!): UpdateSettingsPayload
-  updateTag(input: UpdateTagInput!): UpdateTagPayload
-  updateTeam(input: UpdateTeamInput!): UpdateTeamPayload
-  updateUser(input: UpdateUserInput!): UpdateUserPayload
-}
-
-input CreateCaseStudyInput {
-  clientMutationId: String
-  content: String
-  date: String
-  excerpt: String
-  menuOrder: Int
-  password: String
-  slug: String
-  status: PostStatusEnum
-  title: String
-}
-
-type CreateCaseStudyPayload {
-  caseStudy: CaseStudy
-  clientMutationId: String
-}
-
-input CreateCategoryInput {
-  aliasOf: String
-  clientMutationId: String
-  description: String
-  name: String!
-  parentDatabaseId: Int
-  parentId: ID
-  slug: String
-}
-
-type CreateCategoryPayload {
-  category: Category
-  clientMutationId: String
-}
-
-input CreateCommentInput {
-  author: String
-  authorEmail: String
-  authorUrl: String
-  clientMutationId: String
-  commentOn: Int
-  content: String
-  date: String
-  parent: ID
-  status: CommentStatusEnum
-  type: String
-}
-
-type CreateCommentPayload {
-  clientMutationId: String
-  comment: Comment
-  success: Boolean
-}
-
-input CreateMediaItemInput {
-  altText: String
-  authorId: ID
-  caption: String
-  clientMutationId: String
-  commentStatus: String
-  date: String
-  dateGmt: String
-  description: String
-  filePath: String
-  fileType: MimeTypeEnum
-  parentId: ID
-  pingStatus: String
-  slug: String
-  status: MediaItemStatusEnum
-  title: String
-}
-
-enum MediaItemStatusEnum {
-  AUTO_DRAFT
-  INHERIT
-  PRIVATE
-  TRASH
-}
-
-type CreateMediaItemPayload {
-  clientMutationId: String
-  mediaItem: MediaItem
-}
-
-input CreatePageInput {
-  authorId: ID
-  clientMutationId: String
-  commentStatus: String
-  content: String
-  date: String
-  menuOrder: Int
-  parentId: ID
-  password: String
-  slug: String
-  status: PostStatusEnum
-  title: String
-}
-
-type CreatePagePayload {
-  clientMutationId: String
-  page: Page
-}
-
-input CreatePostInput {
-  authorId: ID
-  categories: PostCategoriesInput
-  clientMutationId: String
-  commentStatus: String
-  content: String
-  date: String
-  excerpt: String
-  menuOrder: Int
-  password: String
-  pingStatus: String
-  pinged: [String]
-  postFormats: PostPostFormatsInput
-  slug: String
-  status: PostStatusEnum
-  tags: PostTagsInput
-  title: String
-  toPing: [String]
-}
-
-input PostCategoriesInput {
-  append: Boolean
-  nodes: [PostCategoriesNodeInput]
-}
-
-input PostCategoriesNodeInput {
-  description: String
-  id: ID
-  name: String
-  slug: String
-}
-
-input PostPostFormatsInput {
-  append: Boolean
-  nodes: [PostPostFormatsNodeInput]
-}
-
-input PostPostFormatsNodeInput {
-  description: String
-  id: ID
-  name: String
-  slug: String
-}
-
-input PostTagsInput {
-  append: Boolean
-  nodes: [PostTagsNodeInput]
-}
-
-input PostTagsNodeInput {
-  description: String
-  id: ID
-  name: String
-  slug: String
-}
-
-type CreatePostPayload {
-  clientMutationId: String
-  post: Post
-}
-
-input CreatePostFormatInput {
-  aliasOf: String
-  clientMutationId: String
-  description: String
-  name: String!
-  slug: String
-}
-
-type CreatePostFormatPayload {
-  clientMutationId: String
-  postFormat: PostFormat
-}
-
-input CreateTagInput {
-  aliasOf: String
-  clientMutationId: String
-  description: String
-  name: String!
-  slug: String
-}
-
-type CreateTagPayload {
-  clientMutationId: String
-  tag: Tag
-}
-
-input CreateTeamInput {
-  clientMutationId: String
-  content: String
-  date: String
-  excerpt: String
-  menuOrder: Int
-  password: String
-  slug: String
-  status: PostStatusEnum
-  title: String
-}
-
-type CreateTeamPayload {
-  clientMutationId: String
-  team: Team
-}
-
-input CreateUserInput {
-  aim: String
-  clientMutationId: String
-  description: String
-  displayName: String
-  email: String
-  firstName: String
-  jabber: String
-  lastName: String
-  locale: String
-  nicename: String
-  nickname: String
-  password: String
-  registered: String
-  richEditing: String
-  roles: [String]
-  username: String!
-  websiteUrl: String
-  yim: String
-}
-
-type CreateUserPayload {
-  clientMutationId: String
-  user: User
-}
-
-input DeleteCaseStudyInput {
-  clientMutationId: String
-  forceDelete: Boolean
-  id: ID!
-  ignoreEditLock: Boolean
-}
-
-type DeleteCaseStudyPayload {
-  caseStudy: CaseStudy
-  clientMutationId: String
-  deletedId: ID
-}
-
-input DeleteCategoryInput {
-  clientMutationId: String
-  id: ID!
-}
-
-type DeleteCategoryPayload {
-  category: Category
-  clientMutationId: String
-  deletedId: ID
-}
-
-input DeleteCommentInput {
-  clientMutationId: String
-  forceDelete: Boolean
-  id: ID!
-}
-
-type DeleteCommentPayload {
-  clientMutationId: String
-  comment: Comment
-  deletedId: ID
-}
-
-input DeleteMediaItemInput {
-  clientMutationId: String
-  forceDelete: Boolean
-  id: ID!
-}
-
-type DeleteMediaItemPayload {
-  clientMutationId: String
-  deletedId: ID
-  mediaItem: MediaItem
-}
-
-input DeletePageInput {
-  clientMutationId: String
-  forceDelete: Boolean
-  id: ID!
-  ignoreEditLock: Boolean
-}
-
-type DeletePagePayload {
-  clientMutationId: String
-  deletedId: ID
-  page: Page
-}
-
-input DeletePostInput {
-  clientMutationId: String
-  forceDelete: Boolean
-  id: ID!
-  ignoreEditLock: Boolean
-}
-
-type DeletePostPayload {
-  clientMutationId: String
-  deletedId: ID
-  post: Post
-}
-
-input DeletePostFormatInput {
-  clientMutationId: String
-  id: ID!
-}
-
-type DeletePostFormatPayload {
-  clientMutationId: String
-  deletedId: ID
-  postFormat: PostFormat
-}
-
-input DeleteTagInput {
-  clientMutationId: String
-  id: ID!
-}
-
-type DeleteTagPayload {
-  clientMutationId: String
-  deletedId: ID
-  tag: Tag
-}
-
-input DeleteTeamInput {
-  clientMutationId: String
-  forceDelete: Boolean
-  id: ID!
-  ignoreEditLock: Boolean
-}
-
-type DeleteTeamPayload {
-  clientMutationId: String
-  deletedId: ID
-  team: Team
-}
-
-input DeleteUserInput {
-  clientMutationId: String
-  id: ID!
-  reassignId: ID
-}
-
-type DeleteUserPayload {
-  clientMutationId: String
-  deletedId: ID
-  user: User
-}
-
-input RegisterUserInput {
-  aim: String
-  clientMutationId: String
-  description: String
-  displayName: String
-  email: String
-  firstName: String
-  jabber: String
-  lastName: String
-  locale: String
-  nicename: String
-  nickname: String
-  password: String
-  registered: String
-  richEditing: String
-  username: String!
-  websiteUrl: String
-  yim: String
-}
-
-type RegisterUserPayload {
-  clientMutationId: String
-  user: User
-}
-
-input ResetUserPasswordInput {
-  clientMutationId: String
-  key: String
-  login: String
-  password: String
-}
-
-type ResetUserPasswordPayload {
-  clientMutationId: String
-  user: User
-}
-
-input RestoreCommentInput {
-  clientMutationId: String
-  id: ID!
-}
-
-type RestoreCommentPayload {
-  clientMutationId: String
-  comment: Comment
-  restoredId: ID
-}
-
-input SendPasswordResetEmailInput {
-  clientMutationId: String
-  username: String!
-}
-
-type SendPasswordResetEmailPayload {
-  clientMutationId: String
-  success: Boolean
-  user: User @deprecated(reason: "This field will be removed in a future version of WPGraphQL")
-}
-
-input UpdateCaseStudyInput {
-  clientMutationId: String
-  content: String
-  date: String
-  excerpt: String
-  id: ID!
-  ignoreEditLock: Boolean
-  menuOrder: Int
-  password: String
-  slug: String
-  status: PostStatusEnum
-  title: String
-}
-
-type UpdateCaseStudyPayload {
-  caseStudy: CaseStudy
-  clientMutationId: String
-}
-
-input UpdateCategoryInput {
-  aliasOf: String
-  clientMutationId: String
-  description: String
-  id: ID!
-  name: String
-  parentDatabaseId: Int
-  parentId: ID
-  slug: String
-}
-
-type UpdateCategoryPayload {
-  category: Category
-  clientMutationId: String
-}
-
-input UpdateCommentInput {
-  author: String
-  authorEmail: String
-  authorUrl: String
-  clientMutationId: String
-  commentOn: Int
-  content: String
-  date: String
-  id: ID!
-  parent: ID
-  status: CommentStatusEnum
-  type: String
-}
-
-type UpdateCommentPayload {
-  clientMutationId: String
-  comment: Comment
-  success: Boolean
-}
-
-input UpdateMediaItemInput {
-  altText: String
-  authorId: ID
-  caption: String
-  clientMutationId: String
-  commentStatus: String
-  date: String
-  dateGmt: String
-  description: String
-  filePath: String
-  fileType: MimeTypeEnum
-  id: ID!
-  parentId: ID
-  pingStatus: String
-  slug: String
-  status: MediaItemStatusEnum
-  title: String
-}
-
-type UpdateMediaItemPayload {
-  clientMutationId: String
-  mediaItem: MediaItem
-}
-
-input UpdatePageInput {
-  authorId: ID
-  clientMutationId: String
-  commentStatus: String
-  content: String
-  date: String
-  id: ID!
-  ignoreEditLock: Boolean
-  menuOrder: Int
-  parentId: ID
-  password: String
-  slug: String
-  status: PostStatusEnum
-  title: String
-}
-
-type UpdatePagePayload {
-  clientMutationId: String
-  page: Page
-}
-
-input UpdatePostInput {
-  authorId: ID
-  categories: PostCategoriesInput
-  clientMutationId: String
-  commentStatus: String
-  content: String
-  date: String
-  excerpt: String
-  id: ID!
-  ignoreEditLock: Boolean
-  menuOrder: Int
-  password: String
-  pingStatus: String
-  pinged: [String]
-  postFormats: PostPostFormatsInput
-  slug: String
-  status: PostStatusEnum
-  tags: PostTagsInput
-  title: String
-  toPing: [String]
-}
-
-type UpdatePostPayload {
-  clientMutationId: String
-  post: Post
-}
-
-input UpdatePostFormatInput {
-  aliasOf: String
-  clientMutationId: String
-  description: String
-  id: ID!
-  name: String
-  slug: String
-}
-
-type UpdatePostFormatPayload {
-  clientMutationId: String
-  postFormat: PostFormat
-}
-
-input UpdateSettingsInput {
-  clientMutationId: String
-  discussionSettingsDefaultCommentStatus: String
-  discussionSettingsDefaultPingStatus: String
-  generalSettingsDateFormat: String
-  generalSettingsDescription: String
-  generalSettingsEmail: String
-  generalSettingsLanguage: String
-  generalSettingsStartOfWeek: Int
-  generalSettingsTimeFormat: String
-  generalSettingsTimezone: String
-  generalSettingsTitle: String
-  readingSettingsPageForPosts: Int
-  readingSettingsPageOnFront: Int
-  readingSettingsPostsPerPage: Int
-  readingSettingsShowOnFront: String
-  writingSettingsDefaultCategory: Int
-  writingSettingsDefaultPostFormat: String
-  writingSettingsUseSmilies: Boolean
-}
-
-type UpdateSettingsPayload {
-  allSettings: Settings
-  clientMutationId: String
-  discussionSettings: DiscussionSettings
-  generalSettings: GeneralSettings
-  permalinkSettings: PermalinkSettings
-  readingSettings: ReadingSettings
-  writingSettings: WritingSettings
-}
-
-input UpdateTagInput {
-  aliasOf: String
-  clientMutationId: String
-  description: String
-  id: ID!
-  name: String
-  slug: String
-}
-
-type UpdateTagPayload {
-  clientMutationId: String
-  tag: Tag
-}
-
-input UpdateTeamInput {
-  clientMutationId: String
-  content: String
-  date: String
-  excerpt: String
-  id: ID!
-  ignoreEditLock: Boolean
-  menuOrder: Int
-  password: String
-  slug: String
-  status: PostStatusEnum
-  title: String
-}
-
-type UpdateTeamPayload {
-  clientMutationId: String
-  team: Team
-}
-
-input UpdateUserInput {
-  aim: String
-  clientMutationId: String
-  description: String
-  displayName: String
-  email: String
-  firstName: String
-  id: ID!
-  jabber: String
-  lastName: String
-  locale: String
-  nicename: String
-  nickname: String
-  password: String
-  registered: String
-  richEditing: String
-  roles: [String]
-  websiteUrl: String
-  yim: String
-}
-
-type UpdateUserPayload {
-  clientMutationId: String
-  user: User
 }

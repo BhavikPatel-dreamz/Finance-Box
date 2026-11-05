@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { SiteFooterContent } from "@/lib/wordpress/site-chrome";
 import { Container } from "@/components/ui/container";
 
@@ -11,16 +12,19 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
           {/* Brand Info Column */}
           <div className="flex flex-col items-start max-w-sm lg:max-w-none">
             <Link href="/" aria-label="Finance in a Box" className="inline-block">
-              <img
+              <Image
                 src={footer.logo.url}
                 alt={footer.logo.alt}
+                width={182}
+                height={48}
+                sizes="182px"
                 className="max-w-[182px] w-full object-contain"
               />
             </Link>
             <p className="mt-4 sm:mt-5 lg:mt-6 max-w-[17rem] text-[13px] sm:text-[14px] xl:text-[15px] font-light leading-[155%] text-white/75">
               {footer.text}
             </p>
-            <a
+            <Link
               href={`mailto:${footer.email}`}
               className="mt-6 sm:mt-8 lg:mt-7 xl:mt-8 inline-flex items-center gap-2.5 sm:gap-3 text-[14px] sm:text-[15px] xl:text-base font-medium text-white hover:text-[#23C55E] transition-colors duration-300 group"
             >
@@ -39,7 +43,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
                 />
               </svg>
               <span className="truncate">{footer.email}</span>
-            </a>
+            </Link>
           </div>
 
           {/* Navigation Columns */}

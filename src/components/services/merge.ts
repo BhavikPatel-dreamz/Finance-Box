@@ -66,7 +66,7 @@ function rows(value: unknown): Record<string, any>[] {
   return Array.isArray(value) ? (value as Record<string, any>[]) : [];
 }
 
-function mapStageIcon(card: Record<string, any>): ServicesStage["icon"] {
+export function mapStageIcon(card: Record<string, any>): ServicesStage["icon"] {
   const title = (str(card.title) ?? "").toLowerCase();
   if (title.includes("foundation") || title.includes("set")) return "gear";
   if (title.includes("momentum") || title.includes("build")) return "people";
@@ -155,20 +155,12 @@ function mergeStages(next: ServicesContent, section: Record<string, any>): void 
 
   const stageCards = rows(section.stageCards);
   if (stageCards.length > 0) {
-    next.stages.cards = stageCards.map((card, index) => {
-      const fallback = next.stages.cards[index] ?? {
-        title: "",
-        label: "",
-        text: "",
-        icon: "gear" as const,
-      };
-      return {
-        title: cleanHtml(card.title, fallback.title),
-        label: cleanHtml(card.stageLabel, fallback.label),
-        text: cleanHtml(card.description, fallback.text),
-        icon: mapStageIcon(card),
-      } satisfies ServicesStage;
-    });
+    next.stages.cards = stageCards.map((card) => ({
+      title: cleanHtml(card.title, ""),
+      label: cleanHtml(card.stageLabel, ""),
+      text: cleanHtml(card.description, ""),
+      icon: mapStageIcon(card),
+    })) satisfies ServicesStage[];
   }
 }
 
@@ -237,7 +229,7 @@ function mergeCfo(next: ServicesContent, section: Record<string, any>): void {
       return {
         title: cleanHtml(card.label, fallback?.title ?? ""),
         text: cleanHtml(card.description, fallback?.text ?? ""),
-        image: media(card.image) ?? fallback?.image ?? null,
+        image: media(card.image) ?? null,
       } satisfies ServicesPhotoCard;
     });
   }
@@ -275,7 +267,7 @@ function mergeInvestors(next: ServicesContent, section: Record<string, any>): vo
       return {
         title: cleanHtml(card.title, fallback?.title ?? ""),
         text: cleanHtml(card.description, fallback?.text ?? ""),
-        image: media(card.image) ?? fallback?.image ?? null,
+        image: media(card.image) ?? null,
       } satisfies ServicesPhotoCard;
     });
   }

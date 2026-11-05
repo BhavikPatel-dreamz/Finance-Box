@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { HomeContent } from "@/content/home";
@@ -192,7 +193,7 @@ export function HomeHeader({
         <div ref={barRef}>
           <Container size="header" className="relative flex items-center justify-between gap-6 py-5 sm:py-6 lg:py-7">
             <Link href={logoHref} className="shrink-0 outline-0">
-              <img src={header.logo.url} alt={header.logo.alt} className="h-10 sm:h-12 lg:h-13.75 w-auto object-contain" />
+              <Image src={header.logo.url} alt={header.logo.alt} width={140} height={40} sizes="(max-width: 1024px) 120px, 160px" className="h-10 sm:h-12 lg:h-13.75 w-auto object-contain" />
             </Link>
             <nav
               ref={navRef}

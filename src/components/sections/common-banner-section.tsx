@@ -36,7 +36,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
               title: hero.title,
               highlight: hero.highlight,
               highlight2: hero.highlight2,
-              description: hero.text,
+              description: text(data.description) || hero.text,
               primaryCta: hero.cta
                 ? { label: hero.cta.label, url: hero.cta.url, color: "white" }
                 : undefined,
@@ -48,7 +48,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
         const { hero } = fromSection(mergeAgenticAi, agenticAiContent, data);
         // Editors enter the bullet points as a list in `description`; `tagLine` is the lead sentence.
         const rawBullets = listItems(data.description);
-        const descriptionText = rawBullets.length > 0 ? text(data.tagLine, hero.text) : hero.text;
+        const descriptionText = text(data.tagLine) || hero.text;
         const bullets = rawBullets.length > 0 ? rawBullets : (hero.bullets ?? []);
         return (
           <HeroSection
@@ -83,7 +83,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
               eyebrow: hero.eyebrow,
               title: hero.title,
               highlight: hero.highlight,
-              description: hero.text,
+              description: text(data.description) || hero.text,
             }}
           />
         );
@@ -99,7 +99,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
               title: hero.title,
               highlight: hero.highlight,
               titleMaxWidth: "lg:max-w-[400px]",
-              description: hero.text,
+              description: text(data.description) || hero.text,
               primaryCta: hero.cta
                 ? {
                     label: hero.cta.label,

@@ -115,7 +115,7 @@ async function readCapabilities(): Promise<SchemaCapabilities> {
 
 async function cachedCapabilities() {
   "use cache";
-  cacheLife("hours");
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
   cacheTag(schemaTag);
   return readCapabilities();
 }
@@ -346,7 +346,7 @@ async function readPublicPage(uri: string): Promise<PageLoadResult> {
 
 async function cachedPublicPage(uri: string) {
   "use cache";
-  cacheLife("hours");
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
   cacheTag(pageTag(uri), pagesTag);
   return readPublicPage(uri);
 }
@@ -415,7 +415,7 @@ async function readSettings(): Promise<SiteSettings> {
 
 async function cachedSettings() {
   "use cache";
-  cacheLife("hours");
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
   cacheTag(settingsTag);
   return readSettings();
 }
@@ -451,7 +451,7 @@ async function readMenu(location: MenuLocation): Promise<NavigationItem[]> {
 
 async function cachedMenu(location: MenuLocation) {
   "use cache";
-  cacheLife("hours");
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
   cacheTag(menusTag, menuTag(location));
   return readMenu(location);
 }
@@ -489,7 +489,7 @@ async function readPublicPageUris(): Promise<string[]> {
 
 async function cachedPublicPageUris() {
   "use cache";
-  cacheLife("hours");
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
   cacheTag(sitemapTag, pagesTag);
   return readPublicPageUris();
 }

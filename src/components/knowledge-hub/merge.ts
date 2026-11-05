@@ -149,10 +149,10 @@ function mergeResources(next: KnowledgeHubContent, section: Record<string, any>)
 function mergeCaseStudy(next: KnowledgeHubContent, section: Record<string, any>): void {
   next.caseStudy.title = cleanHtml(section.title, next.caseStudy.title);
   
-  next.caseStudy.cta = {
-    label: cleanHtml(section.allCaseStudy, next.caseStudy.cta.label),
-    url: isPlaceholderUrl(next.caseStudy.cta.url) ? CASE_STUDY_BASE : next.caseStudy.cta.url,
-  };
+  next.caseStudy.cta = link(section.allCaseStudy, next.caseStudy.cta);
+  if (isPlaceholderUrl(next.caseStudy.cta.url)) {
+    next.caseStudy.cta.url = CASE_STUDY_BASE;
+  }
 
   const caseStudies = rows(section.selectCaseStudy?.nodes ?? section.selectCaseStudy);
   if (caseStudies.length > 0) {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { HomeContent } from "@/content/home";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import Image from "next/image";
 
 export function Leadership({ leadership }: { leadership: HomeContent["leadership"] }) {
   const people = leadership.people;
@@ -36,7 +37,7 @@ export function Leadership({ leadership }: { leadership: HomeContent["leadership
             <li key={person.name}>
               <article className="relative flex min-h-[380px] flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#1a4a34] via-[#123026] to-[#0c1218]">
                 {person.image ? (
-                  <img src={person.image.url} alt={person.image.alt || person.name} className="absolute inset-0 h-full w-full object-cover" />
+                  <Image src={person.image.url} alt={person.image.alt || person.name} fill sizes="(max-width: 1024px) 100vw, 50vw" className="absolute inset-0 h-full w-full object-cover" />
                 ) : null}
                 <div className="relative bg-gradient-to-t from-black/75 via-black/30 to-transparent px-5 pt-20 pb-6 text-center">
                   <h3 className="text-lg font-semibold">{person.name}</h3>

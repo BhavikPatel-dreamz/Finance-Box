@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Container from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
 
@@ -118,9 +119,11 @@ function LogoTrack({
           >
             <div className={`relative flex items-center justify-center ${styles.item}`}>
               {url ? (
-                <img
+                <Image
                   src={url}
                   alt={alt}
+                  fill
+                  sizes="100vw"
                   className="w-full h-full object-contain pointer-events-none select-none transition-transform duration-300 hover:scale-105"
                 />
               ) : (

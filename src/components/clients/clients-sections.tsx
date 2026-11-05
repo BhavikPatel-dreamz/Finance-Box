@@ -21,20 +21,6 @@ export type ClientsWhereFiabWorksContent = {
   };
 };
 
-/** Design defaults; every value is replaced by the WordPress field when it is filled. */
-export const clientsWhereFiabWorksDefaults: ClientsWhereFiabWorksContent = {
-  title: "Where FIAB Works",
-  text: "Technology and SaaS, e-commerce and retail, professional services, manufacturing and supply chain, robotics, healthcare technology, and logistics, across the US and internationally.",
-  industries: ["Technology & SaaS", "Professional Services", "Healthcare", "E-commerce", "Startups & Scale-ups"],
-  image: { url: "/clients/FIABworks.png", alt: "FIAB Works" },
-  portfolio: {
-    title: "Introducing FIAB to a Portfolio Company?",
-    text: "There is a dedicated page covering how an engagement starts, what your founders will experience, and the results other portfolio companies have seen.",
-    image: { url: "/clients/IntroducingFIAB.png", alt: "Introducing FIAB" },
-    cta: { label: "For VCs & Advisors", url: "/vc-advisors" },
-  },
-};
-
 export function ClientsBanner({ hero, header }: { hero: ClientsContent["hero"]; header: ReactNode }) {
   // Hero Section
   return (

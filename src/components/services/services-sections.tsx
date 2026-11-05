@@ -117,13 +117,6 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
 
 // --- Component: Stages ---
 export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }) {
-  const iconMap = {
-    gear: "/icons/set-the-foundation.png",
-    people: "/icons/build-momentum.png",
-    person: "/icons/lead-with-foresight.png",
-    target: "/icons/optimize-and-expand.png",
-  };
-
   return (
     <Section theme="light" spacing="both" className="find-stage-section">
       <Container>
@@ -147,8 +140,6 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
 
         <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {stages.cards.map((card, idx) => {
-            const iconSrc = iconMap[card.icon] || "/icons/set-the-foundation.png";
-
             return (
               <StaggerItem
                 key={idx}
@@ -164,15 +155,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
                       {card.label}
                     </p>
                   </div>
-                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]">
-                    <Image
-                      src={iconSrc}
-                      alt={card.title}
-                      width={22}
-                      height={22}
-                      className="object-contain group-hover:invert transition-colors duration-300"
-                    />
-                  </div>
+                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]" />
                 </div>
 
 
@@ -419,12 +402,6 @@ export function ServicesDetails({ details }: { details: ServicesContent["details
 
 // --- Component: Fractional CFO ---
 export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
-  const images = [
-    "/services/cfo-img-01.png",
-    "/services/cfo-img-02.png",
-    "/services/cfo-img-03.png",
-  ];
-
   return (
     <Section theme="light" spacing="both" className="services-cfo-section relative z-1 lg:-mt-[100svh]">
       <Container>
@@ -460,13 +437,15 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                 index={idx}
                 className="group card-hover relative w-full h-[340px] sm:h-[400px] md:h-[420px] lg:h-[430px] xl:h-[490px] rounded-[14px] sm:rounded-[16px] overflow-hidden bg-[#F5F3F2]"
               >
-                <Image
-                  src={images[idx] || card.image?.url || ""}
-                  alt={card.title}
-                  fill
-                  className="object-cover image-hover-zoom"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
+                {card.image?.url ? (
+                  <Image
+                    src={card.image.url}
+                    alt={card.title}
+                    fill
+                    className="object-cover image-hover-zoom"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                ) : null}
 
                 {/* Bottom-left cutout wrapper matching Figma geometry */}
                 <div className="absolute bottom-0 left-0 bg-[#F5F3F2] pt-2.5 pr-2.5 sm:pt-3 sm:pr-3 xl:pt-3.5 xl:pr-3.5 rounded-tr-[12px] w-[calc(100%-45px)] sm:w-[calc(100%-55px)] xl:w-[calc(100%-75px)] max-w-[315px]">

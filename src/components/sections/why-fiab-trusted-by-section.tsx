@@ -1,7 +1,6 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { WhyFiabTrustedBySectionFragment } from "@/lib/wordpress/generated/graphql";
 import { TrustedBy, type TrustedLogo } from "@/components/home/trusted-by";
-import { homeContent } from "@/content/home";
 import { media, nameFromFileUrl, splitEmphasis, text } from "@/lib/wordpress/fields";
 
 /**
@@ -12,9 +11,11 @@ export const whyFiabTrustedBySection = defineSection<WhyFiabTrustedBySectionFrag
   layout: "WhyFiabTrustedBySection",
   render: (data) => {
     const parts = splitEmphasis(data.title);
+    const titleText = text(data.title);
+    if (!titleText && !parts) return null;
     const trust = parts
       ? { lead: parts.before, stat: parts.emphasis, detail: parts.after }
-      : { ...homeContent.trust, lead: text(data.title, homeContent.trust.lead) };
+      : { lead: titleText, stat: "", detail: "" };
 
     const logos = (data.logos ?? []).flatMap((row, index): TrustedLogo[] => {
       const image = media(row?.logo);
