@@ -46,17 +46,21 @@ export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsConten
   return (
     <Section theme="light" spacing="both">
       <Container>
-        <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 xl:gap-20">
-          <Reveal preset="slide-left" distance={20} className="group card-hover w-full max-w-[460px] mx-auto lg:max-w-none lg:w-[554px] shrink-0 relative aspect-[554/643] rounded-[14px] sm:rounded-[16px] overflow-hidden">
+        <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 lg:gap-12 xl:gap-20">
+          <Reveal
+            preset="slide-left"
+            distance={20}
+            className="group card-hover w-full max-w-[460px] sm:max-w-[520px] mx-auto lg:mx-0 lg:max-w-[554px] lg:w-[45%] xl:w-[554px] shrink-0 relative aspect-[554/643] rounded-[14px] sm:rounded-[16px] overflow-hidden"
+          >
             {intro.image && <Image
               src={intro.image}
               alt="FIAB People Operations"
               fill
               className="object-cover image-hover-zoom"
-              sizes="(max-width: 1024px) 100vw, 554px"
+              sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 45vw, 554px"
             />}
           </Reveal>
-          <Reveal preset="slide-right" distance={20} className="w-full lg:flex-1">
+          <Reveal preset="slide-right" distance={20} className="w-full min-w-0 lg:flex-1">
             <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-medium leading-[1.25] lg:leading-[1.3] tracking-[-0.8px] mb-4 sm:mb-6">
               {(() => {
                 let title = intro.title;
