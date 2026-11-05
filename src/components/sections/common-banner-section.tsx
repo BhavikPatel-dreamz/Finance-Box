@@ -10,10 +10,8 @@ import { careersContent } from "@/content/careers";
 import { agenticAiContent } from "@/content/agentic-ai";
 import { knowledgeHubContent } from "@/content/knowledge-hub";
 import { peopleOperationsContent } from "@/content/people-operations";
-import type { VariantOf } from "@/components/page-builder/section-variants";
 import { listItems, text } from "@/lib/wordpress/fields";
 
-type Variant = VariantOf<"CommonBannerSection">;
 
 /**
  * `CommonBannerSection` — shared inner-page hero. Four Figma designs exist for
@@ -23,7 +21,7 @@ type Variant = VariantOf<"CommonBannerSection">;
 export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
   layout: "CommonBannerSection",
   hero: true,
-  render: (data, { header, variant }) => {
+  render: (data, { header }) => {
     const { hero } = fromSection(mergeKnowledgeHub, knowledgeHubContent, data);
     return (
       <HeroSection
