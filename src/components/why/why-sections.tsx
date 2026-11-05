@@ -9,19 +9,6 @@ import Section from "@/components/ui/section";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 import { TeamProfileCard } from "@/components/team/team-card";
 
-export function WhyFooterCta({ cta }: { cta: WhyContent["cta"] }) {
-  return (
-    <FooterHero
-      variant="why-fiab"
-      title={cta.title}
-      highlight={cta.highlight}
-      text={cta.text}
-      buttonLabel={cta.buttonLabel}
-      buttonUrl={cta.buttonUrl}
-    />
-  );
-}
-
 export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: ReactNode }) {
   return (
     <section className="hero-section relative overflow-hidden bg-[#121826] text-white">
