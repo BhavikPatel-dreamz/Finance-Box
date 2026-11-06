@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import Link from "next/link";
 import type { WhyTeamMember } from "@/content/why-fiab";
 
@@ -24,8 +25,9 @@ export function TeamProfileCard({ member, linkToProfile = false }: { member: Why
         />
 
         <div className="relative z-1 w-full h-full min-h-[380px] sm:min-h-[480px] lg:min-h-full flex items-end justify-center">
-          <Image
+          <SafeImage
             src={member.image}
+            fallbackSrc="/why/why-team-member-1.png"
             alt={member.name}
             fill
             className="object-contain object-bottom"

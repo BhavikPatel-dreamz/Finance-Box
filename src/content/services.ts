@@ -267,17 +267,17 @@ export const servicesContent: ServicesContent = {
       {
         title: "Strategic",
         text: "Fundraising preparation, investor reporting, board decks, KPI design, forecasting, runway planning.",
-        image: { url: "/services/cfo-strategic.jpg", alt: "Notebook, charts, and a phone on a wooden desk" },
+        image: { url: "/services/cfo-dilivers-1.png", alt: "Notebook, charts, and a phone on a wooden desk" },
       },
       {
         title: "Operational",
         text: "Budgeting, spend controls, hiring models, pricing analysis, AP/AR workflows, financial systems.",
-        image: { url: "/services/cfo-operational.jpg", alt: "Two people reviewing printed charts at a table" },
+        image: { url: "/services/cfo-dilivers-2.png", alt: "Two people reviewing printed charts at a table" },
       },
       {
         title: "Leadership",
         text: "Turning numbers into decisions, helping founders prioritize, reducing financial uncertainty, creating accountability.",
-        image: { url: "/services/cfo-leadership.jpg", alt: "People reviewing reports with a calculator and sticky notes" },
+        image: { url: "/services/cfo-dilivers-3.png", alt: "People reviewing reports with a calculator and sticky notes" },
       },
     ],
   },
