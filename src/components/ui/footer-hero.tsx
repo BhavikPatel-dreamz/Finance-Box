@@ -47,7 +47,7 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
   },
   clients: {
     layout: "two-line",
-    titleMaxWidth: "max-w-[580px]",
+    titleMaxWidth: "max-w-[640px]",
     highlightItalic: true,
     textMaxWidth: "max-w-full",
   },
@@ -153,7 +153,7 @@ export function FooterHero({
       <Container>
         <Reveal preset="slide-up" distance={24}>
           {/* Container exactly 1280px on desktop matching Figma */}
-          <div className="relative overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#121826] flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-16 min-h-[320px] lg:min-h-[342px] w-full">
+          <div className="relative overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#121826] flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-10 min-h-[320px] lg:min-h-[342px] w-full">
 
             {bgImage && (
               <div className="absolute inset-0 z-0">
@@ -188,9 +188,13 @@ export function FooterHero({
                     {displayHighlight && (
                       <>
                         {isTwoLine ? (
-                          <br className="hidden md:inline" />
-                        ) : null}
-                        {" "}
+                          <>
+                            <br className="hidden md:inline" />
+                            <span className="md:hidden"> </span>
+                          </>
+                        ) : (
+                          " "
+                        )}
                         <span
                           className={twMerge(
                             isItalic ? "font-extrabold italic" : "font-medium",
@@ -208,7 +212,7 @@ export function FooterHero({
               {text ? (
                 <p
                   className={twMerge(
-                    "mx-auto mt-4 sm:mt-6 text-[14px] sm:text-[16px] font-normal leading-[160%] text-white/70",
+                    "mx-auto mt-4 sm:mt-5 lg:mt-5 text-[14px] sm:text-[16px] font-normal leading-[160%] text-white/70",
                     activeTextMaxWidth,
                     textClassName
                   )}
@@ -217,7 +221,7 @@ export function FooterHero({
                 </p>
               ) : null}
 
-              <div className="mt-6 sm:mt-8 lg:mt-10 flex justify-center">
+              <div className="mt-6 sm:mt-7 lg:mt-8 flex justify-center">
                 <GreenButton
                   label={buttonLabel}
                   href={buttonUrl}
