@@ -4,6 +4,7 @@ import { GreenButton } from "@/components/ui/green-button";
 import { type ServicesContent } from "@/content/services";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import Link from "next/link";
 import Container from "../ui/container";
 import { ArrowIcon } from "../ui/button";
@@ -400,6 +401,12 @@ export function ServicesDetails({ details }: { details: ServicesContent["details
   );
 }
 
+const CFO_FALLBACK_IMAGES = [
+  "/services/cfo-dilivers-1.png",
+  "/services/cfo-dilivers-2.png",
+  "/services/cfo-dilivers-3.png",
+];
+
 // --- Component: Fractional CFO ---
 export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   return (
@@ -437,15 +444,14 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                 index={idx}
                 className="group card-hover relative w-full h-[340px] sm:h-[400px] md:h-[420px] lg:h-[430px] xl:h-[490px] rounded-[14px] sm:rounded-[16px] overflow-hidden bg-[#F5F3F2]"
               >
-                {card.image?.url ? (
-                  <Image
-                    src={card.image.url}
-                    alt={card.title}
-                    fill
-                    className="object-cover image-hover-zoom"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                ) : null}
+                <SafeImage
+                  src={card.image?.url || CFO_FALLBACK_IMAGES[idx] || "/media/placeholder.svg"}
+                  fallbackSrc={CFO_FALLBACK_IMAGES[idx] || "/media/placeholder.svg"}
+                  alt={card.title}
+                  fill
+                  className="object-cover image-hover-zoom"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
 
                 {/* Bottom-left cutout wrapper matching Figma geometry */}
                 <div className="absolute bottom-0 left-0 bg-[#F5F3F2] pt-2.5 pr-2.5 sm:pt-3 sm:pr-3 xl:pt-3.5 xl:pr-3.5 rounded-tr-[12px] w-[calc(100%-45px)] sm:w-[calc(100%-55px)] xl:w-[calc(100%-75px)] max-w-[315px]">

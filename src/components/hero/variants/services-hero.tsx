@@ -102,7 +102,7 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
             {/* Vertical Gradient Divider Line (stretches with the list) */}
             <div
               aria-hidden="true"
-              className="hidden lg:block absolute -left-5 xl:-left-6 -top-7 bottom-0 w-[1.5px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
+              className="hidden lg:block absolute -left-5 xl:-left-6 top-0 bottom-0 w-[1.5px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
             />
             {config.tiers.map((tier, idx) => (
               <StaggerItem

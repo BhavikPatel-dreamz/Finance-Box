@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import type { HeroConfig } from "../types";
 import { parseEyebrow } from "../utils";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -14,7 +15,7 @@ export function SplitHeroVariant({ config }: { config: HeroConfig }) {
       <div className="flex-1 flex items-center pt-6 sm:pt-8 lg:pt-0 pb-10 sm:pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center w-full">
           {/* Left Column */}
-          <Reveal immediate preset="slide-up" delay={80} distance={24}>
+          <Reveal immediate preset="slide-up" delay={80} distance={24} className={twMerge("w-full", config.titleMaxWidth)}>
             {eyebrowData && (
               <Eyebrow
                 variant={eyebrowData.variant}
@@ -23,7 +24,10 @@ export function SplitHeroVariant({ config }: { config: HeroConfig }) {
                 {eyebrowData.text}
               </Eyebrow>
             )}
-            <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 ${config.titleMaxWidth || (config.highlight?.includes("playbooks") ? "lg:max-w-[400px]" : "lg:max-w-[587px]")}`}>
+            <h1 className={twMerge(
+              "text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6",
+              config.titleMaxWidth || (config.highlight?.includes("playbooks") ? "lg:max-w-[400px]" : "lg:max-w-[590px]")
+            )}>
               {config.title}{" "}
               {config.highlight && (
                 <span className="text-[#23C55E]">{config.highlight}</span>

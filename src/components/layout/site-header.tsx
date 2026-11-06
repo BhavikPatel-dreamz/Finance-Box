@@ -6,8 +6,16 @@ import type { SiteHeaderContent } from "@/lib/wordpress/site-chrome";
  * in-flow placeholder of the same height, so the header sits on top of
  * whatever background contains it (the hero section, or `StandaloneHeader`).
  */
-export function SiteHeader({ header }: { header: SiteHeaderContent }) {
-  return <HomeHeader header={header} surface="plain" logoHref="/" />;
+export function SiteHeader({
+  header,
+  placeholder = true,
+  surface = "plain",
+}: {
+  header: SiteHeaderContent;
+  placeholder?: boolean;
+  surface?: "grid" | "plain";
+}) {
+  return <HomeHeader header={header} surface={surface} logoHref="/" placeholder={placeholder} />;
 }
 
 /** Dark band for pages whose first section is not a hero (or that have no sections). */

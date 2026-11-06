@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import type { ClientCaseStudy } from "@/content/clients";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { GreenButton } from "@/components/ui/green-button";
@@ -18,8 +19,9 @@ export function CaseStudyCard({ index, study, reverse }: { index: number; study:
       />
 
       <div className="relative z-1 rounded-t-[16px] lg:rounded-[10px] overflow-hidden w-full lg:w-1/2 min-h-[260px] sm:min-h-[320px] lg:min-h-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto">
-        <Image
+        <SafeImage
           src={study.image}
+          fallbackSrc="/clients/case-study-1.png"
           alt={study.title}
           fill
           className="object-cover"

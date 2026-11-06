@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/components/hero";
-import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import type { SiteChrome } from "@/lib/wordpress/site-chrome";
 import type { LegalDocContent } from "@/content/privacy-policy";
@@ -17,7 +16,6 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
       {/* 1. Clean Compact Hero Banner */}
       <HeroSection
         page="privacy-policy"
-        headerNode={<SiteHeader header={chrome.header} />}
         overrides={{
           variant: "legal",
           title: content.hero.title,

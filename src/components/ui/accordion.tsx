@@ -30,10 +30,10 @@ export function Accordion({ items, theme = "light" }: AccordionProps) {
         return (
           <div
             key={index}
-            className={`rounded-[14px] sm:rounded-[16px] overflow-hidden transition-colors duration-300 ${
+            className={`rounded-[10px] overflow-hidden transition-colors duration-300 ${
               isDark
-                ? "bg-[#182030] border border-white/10 hover:border-white/20"
-                : "bg-white border border-[#E8E6E3] hover:border-[#121826]/20 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
+              ? "bg-[#121826]"
+                : "bg-white"
             }`}
           >
             <button

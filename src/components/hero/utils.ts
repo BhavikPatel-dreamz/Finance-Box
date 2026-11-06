@@ -4,6 +4,7 @@ import type { HeroBackgroundKey, HeroEyebrowConfig } from "./types";
 const BACKGROUND_MAP: Record<string, string> = {
   home: "url(/home/homepage-hero-bg.svg)",
   services: "url(/services/services-hero-bg.svg)",
+  knowledgehub: "url(/knowledge-hub/knowledgehub-hero-bg.svg)",
   why: "url(/why/why-bg-img.svg)",
   clients: "url(/clients/client-hero-bg.svg)",
   careers: "url(/careers/careers-page-hero-bg.svg)",

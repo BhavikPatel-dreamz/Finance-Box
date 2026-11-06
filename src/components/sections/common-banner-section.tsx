@@ -7,12 +7,12 @@ import { listItems, media, splitEmphasis, text } from "@/lib/wordpress/fields";
 export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
   layout: "CommonBannerSection",
   hero: true,
-  render: (data, { header }) => {
+  render: (data, context) => {
     const titleParts = splitEmphasis(data.title);
     const backgroundImage = media(data.backgroundImage)?.url;
     return (
       <HeroSection
-        headerNode={header}
+        page={page}
         overrides={{
           variant: "agentic-ai",
           // Use the WordPress "Background Image" when set; otherwise keep the
@@ -23,17 +23,17 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
             ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
             : text(data.title),
           highlight: titleParts ? titleParts.emphasis : "",
-          titleMaxWidth: "lg:max-w-[587px]",
+          titleMaxWidth,
           tagLine: text(data.tagLine),
-          description: "",
+          description: page === "careers" ? text(data.description) : "",
           bullets: listItems(data.description),
           rightDescription:
-            listItems(data.description).length === 0 ? text(data.description) : "",
+            page !== "careers" && listItems(data.description).length === 0 ? text(data.description) : "",
           primaryCta: data.ctaButton
             ? {
                 label: text(data.ctaButton.title),
                 url: text(data.ctaButton.url),
-                color: "green",
+                color: "white",
                 onDark: true,
               }
             : undefined,

@@ -2,9 +2,7 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 import type { HeroConfig, HeroOverrides, HeroPageKey } from "./types";
 import { getHeroConfig } from "@/config/hero.config";
-import { resolveHeroBackground, formatSiteHeader, normalizeHeroConfig } from "./utils";
-import { homeContent, type HomeContent } from "@/content/home";
-import { HomeHeader } from "@/components/home/home-header";
+import { resolveHeroBackground, normalizeHeroConfig } from "./utils";
 
 // Variants
 import { HomeHeroVariant } from "./variants/home-hero";
@@ -29,15 +27,6 @@ export interface HeroSectionProps {
   /** Optional runtime overrides (e.g. dynamic text from CMS/WordPress or local state) */
   overrides?: HeroOverrides;
 
-  /** Optional custom header data (falls back to homeContent.header) */
-  header?: HomeContent["header"];
-
-  /** Optional direct header ReactNode (e.g. from SectionRenderer with WordPress chrome) */
-  headerNode?: React.ReactNode;
-
-  /** Whether to render the navigation header (default: true) */
-  showHeader?: boolean;
-
   /** Additional classes for the hero section wrapper */
   className?: string;
 
@@ -49,9 +38,6 @@ export function HeroSection({
   page = "home",
   config,
   overrides,
-  header,
-  headerNode,
-  showHeader = true,
   className,
   id,
 }: HeroSectionProps) {
@@ -64,16 +50,8 @@ export function HeroSection({
   // 2. Resolve background image styling
   const bgImage = resolveHeroBackground(resolvedConfig.background);
 
-  // 3. Resolve Header data
+  // 3. Resolve default section ID
   const isHome = page === "home" || resolvedConfig.variant === "home";
-  const shouldRenderHeader =
-    showHeader && resolvedConfig.showHeader !== false;
-  const headerData = formatSiteHeader(
-    resolvedConfig.header || header || homeContent.header,
-    isHome,
-  );
-
-  // 4. Resolve default section ID
   const sectionId = id || (isHome ? "product" : "hero");
 
   return (
@@ -98,20 +76,10 @@ export function HeroSection({
       {/* Main Container / Content Flow */}
       <div
         className={twMerge(
-          "relative z-10 flex flex-col justify-between w-full h-full",
+          "relative z-10 flex flex-col justify-between w-full h-full pt-[81px] sm:pt-[97px] lg:pt-[112px]",
           resolvedConfig.heightClassName,
         )}
       >
-        {/* Top Site Navigation Header */}
-        {shouldRenderHeader &&
-          (headerNode ?? (
-            <HomeHeader
-              header={headerData}
-              surface={resolvedConfig.headerSurface || "plain"}
-              logoHref="/"
-            />
-          ))}
-
         {/* Selected Variant Render */}
         <div className="relative z-1 flex-1 flex flex-col justify-center">
           {renderVariant(resolvedConfig)}

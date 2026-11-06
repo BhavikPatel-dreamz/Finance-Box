@@ -7,7 +7,7 @@ import { media, splitEmphasis, text } from "@/lib/wordpress/fields";
 export const clientsBannerSection = defineSection<ClientsBannerSectionFragment>({
   layout: "ClientsBannerSection",
   hero: true,
-  render: (data, { header }) => {
+  render: (data) => {
     const titleParts = splitEmphasis(data.title);
     const backgroundImage = media(data.backgroundImage)?.url;
     const proof = text(data.clientProof, "");
@@ -17,7 +17,6 @@ export const clientsBannerSection = defineSection<ClientsBannerSectionFragment>(
     return (
       <HeroSection
         page="clients"
-        headerNode={header}
         overrides={{
           ...(backgroundImage ? { background: backgroundImage } : {}),
           eyebrow: text(data.subTitle),

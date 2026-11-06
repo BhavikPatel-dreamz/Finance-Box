@@ -97,6 +97,7 @@ export const servicesHeroConfig: HeroConfig = {
 export const whyHeroConfig: HeroConfig = {
   variant: "why",
   background: "why",
+  titleMaxWidth: "lg:max-w-[590px]",
   eyebrow: {
     text: whyContent.hero.eyebrow || "THE FIAB DIFFERENCE",
     variant: "dark",
@@ -153,6 +154,7 @@ export const clientsHeroConfig: HeroConfig = {
 export const careersHeroConfig: HeroConfig = {
   variant: "careers",
   background: "careers",
+  titleMaxWidth: "lg:max-w-[400px]",
   eyebrow: {
     text: careersContent.hero.eyebrow || "JOIN THE TEAM",
     variant: "dark",
@@ -190,6 +192,7 @@ export const contactHeroConfig: HeroConfig = {
 export const agenticAiHeroConfig: HeroConfig = {
   variant: "agentic-ai",
   background: "clients",
+  titleMaxWidth: "lg:max-w-[400px]",
   eyebrow: {
     text: agenticAiContent.hero.eyebrow || "INTELLIGENT FINANCE",
     variant: "dark",
@@ -212,7 +215,7 @@ export const agenticAiHeroConfig: HeroConfig = {
 // ----------------------------------------------------------------------------
 export const knowledgeHubHeroConfig: HeroConfig = {
   variant: "split",
-  background: "contact",
+  background: "knowledgehub",
   eyebrow: {
     text: knowledgeHubContent.hero.eyebrow || "RESOURCES & INSIGHTS",
     variant: "dark",
@@ -238,7 +241,7 @@ export const peopleOperationsHeroConfig: HeroConfig = {
   },
   title: peopleOperationsContent.hero.title || "People Operations",
   highlight: peopleOperationsContent.hero.highlight || "& HR Advisory",
-  titleMaxWidth: "lg:max-w-[587px]",
+  titleMaxWidth: "lg:max-w-[590px]",
   description:
     peopleOperationsContent.hero.text ||
     "Modern HR, payroll, benefits, and equity administration designed to support scaling teams without the administrative friction.",

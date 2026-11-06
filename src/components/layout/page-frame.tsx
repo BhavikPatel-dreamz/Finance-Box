@@ -1,14 +1,12 @@
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader, StandaloneHeader } from "@/components/layout/site-header";
 import Container from "@/components/ui/container";
 import Section from "@/components/ui/section";
 import type { SiteChrome } from "@/lib/wordpress/site-chrome";
 
 /**
- * Shared page shell: neutral surface, page content, shared footer. The header
- * is rendered by the content (the section renderer or `withHeader`), because
- * it has to sit inside the first section's background.
+ * Shared page shell: neutral surface, page content, shared footer.
+ * The header is rendered once globally at root layout.
  */
 export function PageFrame({ chrome, children }: { chrome: SiteChrome; children: ReactNode }) {
   return (
@@ -19,15 +17,11 @@ export function PageFrame({ chrome, children }: { chrome: SiteChrome; children: 
   );
 }
 
-export function siteHeaderNode(chrome: SiteChrome) {
-  return <SiteHeader header={chrome.header} />;
-}
-
-/** Simple page body: header band, then a title and optional message. */
+/** Simple page body: header offset band, then a title and optional message. */
 export function MessagePage({ chrome, title, body }: { chrome: SiteChrome; title: string; body?: string }) {
   return (
     <PageFrame chrome={chrome}>
-      <StandaloneHeader>{siteHeaderNode(chrome)}</StandaloneHeader>
+      <div className="h-[81px] sm:h-[97px] lg:h-[112px] bg-[#121826]" aria-hidden="true" />
       <Section theme="light" spacing="both">
         <Container>
           <h1 className="text-3xl font-medium tracking-tight sm:text-4xl lg:text-[54px]">{title}</h1>

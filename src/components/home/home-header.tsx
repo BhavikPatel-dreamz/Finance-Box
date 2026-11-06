@@ -51,10 +51,12 @@ export function HomeHeader({
   header,
   surface = "grid",
   logoHref = "#top",
+  placeholder = true,
 }: {
   header: HomeContent["header"];
   surface?: "grid" | "plain";
   logoHref?: string;
+  placeholder?: boolean;
 }) {
   const pathname = usePathname() || "";
   const [currentHash, setCurrentHash] = useState("");
@@ -169,11 +171,13 @@ export function HomeHeader({
   return (
     <>
       {/* Placeholder to preserve document flow height when header is fixed */}
-      <div
-        style={{ height: headerHeight ? `${headerHeight}px` : undefined }}
-        className={headerHeight === undefined ? "h-[81px] sm:h-[97px] lg:h-[112px]" : ""}
-        aria-hidden="true"
-      />
+      {placeholder ? (
+        <div
+          style={{ height: headerHeight ? `${headerHeight}px` : undefined }}
+          className={headerHeight === undefined ? "h-[81px] sm:h-[97px] lg:h-[112px]" : ""}
+          aria-hidden="true"
+        />
+      ) : null}
 
       <header
         className={`fixed top-0 left-0 right-0 z-99 border-b transition-all duration-300 ease-in-out ${
