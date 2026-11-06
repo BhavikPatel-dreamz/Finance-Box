@@ -6114,15 +6114,29 @@ type PageBuilderPageBuilderImageSteps implements PageBuilderPageBuilderImageStep
   label: String
 }
 
+interface PageBuilderPageBuilderGrowthTiers_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  points: String
+  title: String
+}
+
+type PageBuilderPageBuilderGrowthTiers implements PageBuilderPageBuilderGrowthTiers_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  points: String
+  title: String
+}
+
 interface PageBuilderPageBuilderHomeFinanceThatGrowsSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
+  growthTiers: [PageBuilderPageBuilderGrowthTiers]
   image: AcfMediaItemConnectionEdge
   imageSteps: [PageBuilderPageBuilderImageSteps]
   imageTitle: String
   subTitle: String
-  tiers: [PageBuilderPageBuilderTiers]
   title: String
 }
 
@@ -6130,11 +6144,11 @@ type PageBuilderPageBuilderHomeFinanceThatGrowsSectionLayout implements PageBuil
   ctaButton: AcfLink
   description: String
   fieldGroupName: String
+  growthTiers: [PageBuilderPageBuilderGrowthTiers]
   image: AcfMediaItemConnectionEdge
   imageSteps: [PageBuilderPageBuilderImageSteps]
   imageTitle: String
   subTitle: String
-  tiers: [PageBuilderPageBuilderTiers]
   title: String
 }
 
