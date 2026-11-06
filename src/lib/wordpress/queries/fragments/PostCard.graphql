@@ -11,4 +11,5 @@ fragment PostCard on Post {
   featuredImage { node { sourceUrl altText } }
   author { node { name avatar { url } } }
   categories(first: 5) { nodes { name slug } }
+  tags(first: 20) { nodes { name slug } }
 }

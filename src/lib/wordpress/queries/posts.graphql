@@ -2,7 +2,6 @@ query PostBySlug($slug: ID!) {
   post(id: $slug, idType: SLUG) {
     ...PostCard
     status
-    tags(first: 20) { nodes { name } }
   }
 }
 

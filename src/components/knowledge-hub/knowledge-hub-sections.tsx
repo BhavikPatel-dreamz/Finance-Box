@@ -113,9 +113,17 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
                 {item.url ? (
                   <Link href={item.url} className="after:absolute after:inset-0 after:content-[''] hover:text-[#23C55E] transition-colors duration-300">
                     {item.title}
+                    {item.tagLine && (
+                      <span className="font-normal text-[#121826]/60"> - {item.tagLine}</span>
+                    )}
                   </Link>
                 ) : (
-                  item.title
+                  <>
+                    {item.title}
+                    {item.tagLine && (
+                      <span className="font-normal text-[#121826]/60"> - {item.tagLine}</span>
+                    )}
+                  </>
                 )}
               </h3>
               <p className="text-[13px] sm:text-[14px] font-normal leading-[160%] text-[#121826]/70">

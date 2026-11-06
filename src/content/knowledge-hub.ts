@@ -25,6 +25,8 @@ export type KnowledgeHubCaseStudy = {
   items: {
     image: string;
     title: string;
+    /** ACF "Tag Line" shown after the title. */
+    tagLine?: string;
     text: string;
     /** Case study page, when the item comes from WordPress. */
     url?: string;
