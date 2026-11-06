@@ -213,7 +213,7 @@ export function CareersBenefits({ benefits }: { benefits: CareersContent["benefi
                 key={idx}
                 index={idx}
                 className={twMerge(
-                  "card-hover p-6 sm:p-7 md:p-8 lg:p-9 xl:p-10 flex flex-col justify-between min-h-[170px] sm:min-h-[190px] md:min-h-[210px] lg:min-h-[234px]",
+                  "card-hover p-6 sm:p-7 md:p-8 lg:p-9 xl:p-10 flex flex-col justify-between min-h-[170px] sm:min-h-[190px] md:min-h-[210px] lg:min-h-[234px] bg-[#191F2D]",
                   // Mobile (1 col)
                   idx < 5 ? "border-b border-white/10" : "",
                   // Tablet (2 cols)

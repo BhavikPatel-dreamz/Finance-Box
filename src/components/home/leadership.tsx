@@ -121,7 +121,7 @@ export function Leadership({ leadership }: LeadershipProps) {
   return (
     <Section id="leadership" theme="dark" spacing="both" className="leadership-section text-white overflow-hidden">
       <Container>
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-8 sm:gap-10 lg:gap-10 xl:gap-16">
+        <div className="w-full flex flex-col lg:flex-row items-start justify-between gap-8 sm:gap-10 lg:gap-10 xl:gap-16">
 
           {/* Left Column: Heading, Copy, Slider Navigation */}
           <Reveal preset="slide-up" distance={20} className="w-full lg:w-[420px] xl:w-[500px] 2xl:w-[530px] shrink-0">
@@ -191,7 +191,7 @@ export function Leadership({ leadership }: LeadershipProps) {
 
           {/* Right Column: Sliding Leader Cards Viewport */}
           <div
-            className="w-full lg:flex-1 xl:w-[664px] min-w-0 overflow-hidden relative shrink-0"
+            className="w-full lg:flex-1 xl:flex-none xl:w-[664px] min-w-0 overflow-hidden relative shrink-0 lg:ml-auto"
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}

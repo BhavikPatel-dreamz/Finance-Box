@@ -122,7 +122,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
   };
 
   return (
-    <section className="bg-white text-[#121826] px-4 sm:px-6 pb-16 sm:pb-20 lg:pb-24 stay-connect-section">
+    <section className="bg-white text-[#121826] pb-16 sm:pb-20 lg:pb-24 stay-connect-section">
       <Container>
         <Reveal preset="slide-up" distance={20} className="text-center mb-10 sm:mb-12 lg:mb-16">
           <h2 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">

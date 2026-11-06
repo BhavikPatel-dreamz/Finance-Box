@@ -41,7 +41,7 @@ export function Accordion({ items, theme = "light" }: AccordionProps) {
               onClick={() => toggle(index)}
               aria-expanded={isOpen}
               aria-controls={panelId}
-              className="w-full flex items-center justify-between gap-4 py-4 px-5 sm:p-6 md:p-8 text-left focus:outline-none cursor-pointer select-none"
+              className="w-full flex items-center justify-between gap-4 py-4 px-5 sm:p-6 md:p-6 text-left focus:outline-none cursor-pointer select-none"
             >
               <span
                 className={`text-[17px] sm:text-[20px] md:text-[22px] lg:text-[24px] font-medium leading-[1.25] tracking-tight ${
@@ -87,7 +87,7 @@ export function Accordion({ items, theme = "light" }: AccordionProps) {
             >
               <div className="overflow-hidden">
                 <div
-                  className={`px-5 sm:px-6 md:px-8 pb-5 sm:pb-6 md:pb-8 text-[15px] sm:text-[16px] md:text-[17px] font-light leading-[160%] ${
+                  className={`px-5 sm:px-6 md:px-6 pb-5 sm:pb-6 md:pb-8 text-[15px] sm:text-[16px] md:text-[17px] font-light leading-[160%] ${
                     isDark ? "text-white/75" : "text-[#121826]/75"
                   }`}
                 >

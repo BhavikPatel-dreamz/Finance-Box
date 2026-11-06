@@ -34,7 +34,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
               </Reveal>
 
               <Reveal immediate preset="slide-up" delay={220} distance={32}>
-                <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.15] lg:leading-[1.12] font-medium tracking-tight text-white">
+                <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl xl:text-[54px] leading-[1.15] lg:leading-[1.12] font-medium tracking-tight text-white">
                   {hero.title}
                   <span className="whitespace-pre-line text-[#23C55E]"> {hero.highlight}</span>
                 </h1>
@@ -149,7 +149,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
               <Eyebrow variant="light">
                 {stages.eyebrow}
               </Eyebrow>
-              <h2 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-[46px] lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+              <h2 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-[44px] lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
                 {stages.title.split("Company")[0]}
                 <br />
                 <span className="font-black italic">Company Today?</span>
@@ -451,7 +451,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
           <Reveal preset="slide-up" distance={20}>
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
               <div>
-                <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+                <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:max-w-[500px]">
                   {cfo.title.split("\n")[0]}
                   <br />
                   <span className="font-extrabold italic">{cfo.title.split("\n")[1]}</span>
@@ -541,7 +541,7 @@ export function ServicesProcess({ process }: { process: ServicesContent["process
 
         {/* Header */}
         <Reveal preset="slide-up" distance={20} className="flex flex-col items-center text-center mb-8 sm:mb-12.5">
-          <h2 className="text-3xl sm:text-4xl md:text-[50px] font-medium leading-[1.15] sm:leading-[1.1] tracking-[-0.8px] mb-3 sm:mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] sm:leading-[1.1] tracking-[-0.8px] mb-3 sm:mb-4">
             {process.title}
           </h2>
           <p className="text-[14px] sm:text-[16px] font-light leading-[160%] text-white/70 max-w-[680px] px-2">
