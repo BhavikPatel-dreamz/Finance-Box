@@ -40,6 +40,10 @@ async function main() {
   }
 
   const oldContent = fs.readFileSync(fragmentPath, "utf8");
+  if (oldContent.includes("...")) {
+    console.error("This section contains fragment/inline spreads; update its fragment and component manually to avoid relation expansion.");
+    process.exit(1);
+  }
   const newFields = (type.fields ?? []).filter((f) => !f.name.startsWith("__") && f.name !== "fieldGroupName").map((f) => f.name);
   const oldFields = [...oldContent.matchAll(/^\s+([a-zA-Z0-9_]+)\s*$/gm)].map((m) => m[1]).filter((f) => !f.startsWith("__"));
   const added = newFields.filter((f) => !oldFields.includes(f));

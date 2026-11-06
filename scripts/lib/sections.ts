@@ -62,7 +62,18 @@ export function generateFieldFragment(field: GqlField, schema: Schema, typeName:
     return `${indent}${field.name}`;
   }
   const subFields = objType.fields ?? [];
-  if (isImageField(subFields)) {
+  const nodeField = subFields.find((f) => f.name === "node");
+  let isImage = false;
+  if (nodeField) {
+    const { name: nodeTypeName } = unwrap(nodeField.type);
+    const nodeType = typeName(nodeTypeName);
+    const nodeNames = (nodeType?.fields ?? []).map((f) => f.name);
+    isImage = nodeNames.includes("sourceUrl") || nodeNames.includes("altText") || nodeNames.includes("mediaDetails");
+  } else {
+    const subNames = subFields.map((f) => f.name);
+    isImage = subNames.includes("sourceUrl") || subNames.includes("altText") || subNames.includes("mediaDetails");
+  }
+  if (isImage) {
     return `${indent}${field.name} {\n${indent}  node {\n${indent}    sourceUrl\n${indent}    altText\n${indent}    mediaDetails { width height }\n${indent}  }\n${indent}}`;
   }
   if (isLinkField(subFields)) {
@@ -74,7 +85,8 @@ export function generateFieldFragment(field: GqlField, schema: Schema, typeName:
     .map((f) => generateFieldFragment(f, schema, typeName, depth + 1))
     .filter(Boolean)
     .join("\n");
-  const body = inner ? `\n${inner}\n${indent}` : "";
+  if (!inner) return "";
+  const body = `\n${inner}\n${indent}`;
   return `${indent}${field.name} {${body}}`;
 }
 
@@ -85,7 +97,7 @@ export function fragmentContent(layout: string, type: IntrospectionType, schema:
     .map((f) => generateFieldFragment(f, schema, typeName, 1))
     .filter(Boolean)
     .join("\n");
-  return `fragment ${pascalCase(layout)}Section on ${type.name} {
+  return `fragment ${pascalCase(layout)} on ${type.name} {
   __typename
 ${fieldLines}
 }
