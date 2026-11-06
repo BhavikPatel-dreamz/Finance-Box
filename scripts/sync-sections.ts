@@ -36,6 +36,10 @@ async function main() {
     const fragmentPath = path.join(QUERIES_DIR, `${L.pascalCase(layout)}.graphql`);
     if (!fs.existsSync(fragmentPath)) continue;
     const oldContent = fs.readFileSync(fragmentPath, "utf8");
+    if (oldContent.includes("...")) {
+      console.log("  ~", layout, "(skipped: contains fragment/inline spread; update manually)");
+      continue;
+    }
     if (oldContent.trim() !== newFragment.trim()) {
       const newFields = (type.fields ?? []).filter((f) => !f.name.startsWith("__") && f.name !== "fieldGroupName").map((f) => f.name);
       // old fields from old fragment simple parse
