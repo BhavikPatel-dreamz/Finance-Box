@@ -86,6 +86,8 @@ export type AgenticAiContent = {
     text: string;
     /** Contact Form 7 form ID the waitlist submits to (from WordPress `formId`). */
     formId: string;
+    /** Optional CTA shown under the description (from WordPress `ctaButton`). */
+    cta?: AgenticAiLink;
   };
   faq: {
     title: string;
