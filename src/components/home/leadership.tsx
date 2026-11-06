@@ -22,10 +22,7 @@ const DURATION = 600; // ms
 const GAP = 24; // px, matches gap-6
 
 export function Leadership({ leadership }: LeadershipProps) {
-  const basePeople =
-    leadership?.people && leadership.people.length > 0
-      ? leadership.people
-      : homeContent.leadership.people;
+  const basePeople =    leadership?.people;
 
   // Ensure all team members from home.ts are present even if only a partial list was supplied
   const defaultPeople = homeContent.leadership.people;
@@ -33,7 +30,7 @@ export function Leadership({ leadership }: LeadershipProps) {
   const missingPeople = defaultPeople.filter(
     (p) => !existingNames.has(p.name.trim().toLowerCase())
   );
-  const people = missingPeople.length > 0 ? [...basePeople, ...missingPeople] : basePeople;
+  const people = missingPeople.length > 0 ? [...basePeople] : basePeople;
 
   const total = people.length;
   const slides = [...people.slice(-CLONES), ...people, ...people.slice(0, CLONES)];
