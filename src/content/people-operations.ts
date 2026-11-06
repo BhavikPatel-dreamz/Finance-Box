@@ -4,6 +4,7 @@ export type PeopleOperationsContent = {
     title: string;
     highlight: string;
     text: string;
+    cta?: { label: string; url: string };
   };
   intro: {
     image: string;
@@ -32,7 +33,7 @@ export type PeopleOperationsContent = {
     title: string;
     emphasis: string;
     text: string;
-    cta: { label: string; url: string };
+    cta?: { label: string; url: string };
   };
 };
 

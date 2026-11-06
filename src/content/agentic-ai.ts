@@ -47,7 +47,7 @@ export type AgenticAiContent = {
     highlight: string;
     text: string;
     bullets: string[];
-    cta: AgenticAiLink;
+    cta?: AgenticAiLink; // 👈 Optional kar diya
   };
   whatIs: {
     eyebrow: string;
@@ -86,6 +86,8 @@ export type AgenticAiContent = {
     text: string;
     /** Contact Form 7 form ID the waitlist submits to (from WordPress `formId`). */
     formId: string;
+    /** Optional CTA shown under the description (from WordPress `ctaButton`). */
+    cta?: AgenticAiLink;
   };
   faq: {
     title: string;
@@ -111,7 +113,7 @@ export const agenticAiContent: AgenticAiContent = {
       "Real-time visibility: Approvals, postings, tickets, and updates happen automatically",
       "Faster go-lives: Deploy in weeks, not quarters, using prebuilt playbooks",
     ],
-    cta: { label: "Join the Waitlist", url: "/#waitlist" },
+    // 👈 cta hata diya (ab default nahi hai)
   },
   whatIs: {
     eyebrow: "WHY NOW?",
@@ -287,7 +289,6 @@ export const agenticAiContent: AgenticAiContent = {
       },
     ],
   },
-  // 👇 NAYA: Pressure defaults
   pressure: {
     title: "Ready to co-pilot your back",
     emphasis: "office with Agentic AI?",
