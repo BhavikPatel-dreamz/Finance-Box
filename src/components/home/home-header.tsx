@@ -42,19 +42,20 @@ function isUrlActive(
 
 function headerSurface(surface: "grid" | "plain", isSticky: boolean, menuOpen: boolean) {
   if (menuOpen) return "border-white/10 bg-[#07110d]";
-  if (surface === "plain" && !isSticky) return "border-transparent bg-transparent";
-  if (surface === "plain") return "border-white/10 bg-[#07110d]/98 backdrop-blur-md shadow-xl";
-  return "border-white/5 bg-[#07110d] shadow-lg";
+  if (!isSticky) return "border-transparent bg-transparent";
+  return "border-white/10 bg-[#07110d]/98 backdrop-blur-md shadow-xl";
 }
 
 export function HomeHeader({
   header,
-  surface = "grid",
+  surface = "plain",
   logoHref = "#top",
+  placeholder = true,
 }: {
   header: HomeContent["header"];
   surface?: "grid" | "plain";
   logoHref?: string;
+  placeholder?: boolean;
 }) {
   const pathname = usePathname() || "";
   const [currentHash, setCurrentHash] = useState("");
@@ -169,27 +170,19 @@ export function HomeHeader({
   return (
     <>
       {/* Placeholder to preserve document flow height when header is fixed */}
-      <div
-        style={{ height: headerHeight ? `${headerHeight}px` : undefined }}
-        className={headerHeight === undefined ? "h-[81px] sm:h-[97px] lg:h-[112px]" : ""}
-        aria-hidden="true"
-      />
+      {placeholder ? (
+        <div
+          style={{ height: headerHeight ? `${headerHeight}px` : undefined }}
+          className={headerHeight === undefined ? "h-[81px] sm:h-[97px] lg:h-[112px]" : ""}
+          aria-hidden="true"
+        />
+      ) : null}
 
       <header
         className={`fixed top-0 left-0 right-0 z-99 border-b transition-all duration-300 ease-in-out ${
           isHeaderVisible ? "translate-y-0" : "-translate-y-full"
         } ${headerSurface(surface, isHeaderSticky, menuOpen)}`}
       >
-        {surface === "grid" ? (
-          <div
-            className="pointer-events-none absolute inset-0 opacity-60"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(40,92,62,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(40,92,62,0.35) 1px, transparent 1px)",
-              backgroundSize: "56px 56px",
-            }}
-          />
-        ) : null}
         <div ref={barRef}>
           <Container size="header" className="relative flex items-center justify-between gap-6 py-5 sm:py-6 lg:py-7">
             <Link href={logoHref} className="shrink-0 outline-0">

@@ -12,7 +12,7 @@ export type ServicesStage = {
   title: string;
   label: string;
   text: string;
-  icon: "gear" | "people" | "person" | "target";
+  icon: string;
 };
 
 export type ServicesContent = {
@@ -128,25 +128,25 @@ export const servicesContent: ServicesContent = {
         title: "Set the foundation",
         label: "Typically pre-seed or newly established companies",
         text: "Get audit-ready books, clean structure, and compliance handled before it becomes technical debt.",
-        icon: "gear",
+        icon: "/icons/set-the-foundation.svg",
       },
       {
         title: "Build momentum",
         label: "Typically seed stage or growing businesses",
         text: "Automate the back office, tighten revenue operations, and give your board the reporting they expect.",
-        icon: "people",
+        icon: "/icons/build-momentum.svg",
       },
       {
         title: "Lead with foresight",
         label: "Typically Series A/B or established companies without a full-time CFO",
         text: "Strategic finance leadership, board-grade dashboards, and capital strategy, without hiring a full-time CFO.",
-        icon: "person",
+        icon: "/icons/lead-with-foresight.svg",
       },
       {
         title: "Optimize and expand",
         label: "Growth-stage and mid-size companies",
         text: "Cost reduction, offshore team buildout, and operating model design as you scale toward profitability, Series C, IPO readiness, or M&A.",
-        icon: "target",
+        icon: "/icons/optimize-and-expand.svg",
       },
     ],
   },
@@ -267,17 +267,17 @@ export const servicesContent: ServicesContent = {
       {
         title: "Strategic",
         text: "Fundraising preparation, investor reporting, board decks, KPI design, forecasting, runway planning.",
-        image: { url: "/services/cfo-strategic.jpg", alt: "Notebook, charts, and a phone on a wooden desk" },
+        image: { url: "/services/cfo-dilivers-1.png", alt: "Notebook, charts, and a phone on a wooden desk" },
       },
       {
         title: "Operational",
         text: "Budgeting, spend controls, hiring models, pricing analysis, AP/AR workflows, financial systems.",
-        image: { url: "/services/cfo-operational.jpg", alt: "Two people reviewing printed charts at a table" },
+        image: { url: "/services/cfo-dilivers-2.png", alt: "Two people reviewing printed charts at a table" },
       },
       {
         title: "Leadership",
         text: "Turning numbers into decisions, helping founders prioritize, reducing financial uncertainty, creating accountability.",
-        image: { url: "/services/cfo-leadership.jpg", alt: "People reviewing reports with a calculator and sticky notes" },
+        image: { url: "/services/cfo-dilivers-3.png", alt: "People reviewing reports with a calculator and sticky notes" },
       },
     ],
   },

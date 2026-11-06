@@ -1,4 +1,5 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import type { HeroConfig } from "../types";
 import { parseEyebrow } from "../utils";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -14,7 +15,7 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
       <div className="flex-1 flex items-center pb-10 sm:pb-14 md:pb-16 lg:pb-24 pt-6 sm:pt-10 md:pt-12 lg:pt-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center w-full">
           {/* Left Column */}
-          <Reveal immediate preset="slide-up" delay={80} distance={24}>
+          <Reveal immediate preset="slide-up" delay={80} distance={24} className={twMerge("w-full", config.titleMaxWidth || "lg:max-w-[400px]")}>
             {eyebrowData && (
               <Eyebrow
                 variant={eyebrowData.variant}
@@ -23,7 +24,10 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
                 {eyebrowData.text}
               </Eyebrow>
             )}
-            <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
+            <h1 className={twMerge(
+              "text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white",
+              config.titleMaxWidth || "lg:max-w-[400px]"
+            )}>
               {config.title.includes("\n") ? (
                 config.title.split("\n").map((line, idx) => (
                   <React.Fragment key={idx}>

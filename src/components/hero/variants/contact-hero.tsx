@@ -15,7 +15,7 @@ export function ContactHeroVariant({ config }: { config: HeroConfig }) {
         {eyebrowData && (
           <Reveal immediate preset="slide-up" delay={80} distance={18}>
             <Eyebrow
-              variant={eyebrowData.variant}
+              variant="white-no-dash"
               className={eyebrowData.className || "mb-4 sm:mb-6 lg:mb-8"}
             >
               {eyebrowData.text}
@@ -34,7 +34,7 @@ export function ContactHeroVariant({ config }: { config: HeroConfig }) {
 
         {config.description && (
           <Reveal immediate preset="slide-up" delay={380} distance={24}>
-            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-white/80 max-w-2xl px-2">
+            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-white/80 max-w-[800px] px-2">
               {config.description}
             </p>
           </Reveal>

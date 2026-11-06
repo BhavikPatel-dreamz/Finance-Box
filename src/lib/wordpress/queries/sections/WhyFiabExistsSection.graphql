@@ -2,6 +2,13 @@ fragment WhyFiabExistsSection on PageBuilderPageBuilderWhyFiabExistsSectionLayou
   __typename
   title
   description
+  backgroundImage {
+    node {
+      sourceUrl
+      altText
+    }
+  }
   missionSubTitle
   missionContent
 }
+

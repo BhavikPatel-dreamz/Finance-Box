@@ -1,4 +1,4 @@
-import { plainText } from "@/lib/wordpress/text";
+import { decodeEntities, plainText } from "@/lib/wordpress/text";
 import { siteHref } from "@/lib/wordpress/links";
 
 /**
@@ -11,6 +11,26 @@ import { siteHref } from "@/lib/wordpress/links";
 export function text(value: unknown, fallback = ""): string {
   if (typeof value !== "string") return fallback;
   return plainText(value) || fallback;
+}
+
+/**
+ * Reads an ACF WYSIWYG or multiline text field, converting `</p>` and `<br>`
+ * to newlines while stripping remaining HTML tags and decoding entities.
+ * Paragraphs are separated by double newlines (`\n\n`).
+ */
+export function multilineText(value: unknown, fallback = ""): string {
+  if (typeof value !== "string" || !value.trim()) return fallback;
+  return decodeEntities(
+    value
+      .replace(/<\/p>/gi, "\n\n")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<[^>]*>/g, " ")
+  )
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n[ \t]+/g, "\n")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim() || fallback;
 }
 
 export type CmsLink = { label: string; url: string };

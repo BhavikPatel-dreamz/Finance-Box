@@ -115,12 +115,12 @@ export const careersContent: CareersContent = {
   benefits: {
     title: "Benefits & Perks",
     items: [
-      { icon: "/icons/health-insurance.png", title: "Health Insurance", text: "Company-sponsored medical coverage" },
-      { icon: "/icons/paid-time-off.png", title: "Paid Time Off", text: "Guaranteed Annual Paid Leave" },
-      { icon: "/icons/remote-first.png", title: "Remote-First", text: "Work from anywhere" },
-      { icon: "/icons/learn-grow.png", title: "Learn & Grow", text: "Training access for continuous learning" },
-      { icon: "/icons/Recognition.png", title: "Recognition", text: "Bonusly points and shout-outs" },
-      { icon: "/icons/tools.png", title: "Tools", text: "Company Laptop Provided" },
+      { icon: "/icons/health-insurance.svg", title: "Health Insurance", text: "Company-sponsored medical coverage" },
+      { icon: "/icons/paid-time-off.svg", title: "Paid Time Off", text: "Guaranteed Annual Paid Leave" },
+      { icon: "/icons/remote-first.svg", title: "Remote-First", text: "Work from anywhere" },
+      { icon: "/icons/learn-grow.svg", title: "Learn & Grow", text: "Training access for continuous learning" },
+      { icon: "/icons/Recognition.svg", title: "Recognition", text: "Bonusly points and shout-outs" },
+      { icon: "/icons/tools.svg", title: "Tools", text: "Company Laptop Provided" },
     ],
   },
   howWeHire: {

@@ -119,7 +119,7 @@ export function Leadership({ leadership }: LeadershipProps) {
   };
 
   return (
-    <Section id="leadership" theme="light" spacing="both" className="leadership-section bg-white overflow-hidden">
+    <Section id="leadership" theme="dark" spacing="both" className="leadership-section text-white overflow-hidden">
       <Container>
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8 sm:gap-10 lg:gap-10 xl:gap-16">
 
@@ -128,13 +128,26 @@ export function Leadership({ leadership }: LeadershipProps) {
             <Eyebrow variant="green" className="mb-4 sm:mb-5">
               {leadership.eyebrow}
             </Eyebrow>
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[50px] font-medium leading-[1.12] tracking-[-0.8px] mb-4 sm:mb-6 text-[#121826]">
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[50px] font-medium leading-[1.12] tracking-[-0.8px] mb-4 sm:mb-6 text-white">
               {leadership.title}
             </h2>
-            <div className="space-y-4 text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-[#121826]/75 max-w-[500px] mb-6 sm:mb-10">
-              {leadership.text.split(/\n\n+/).map((paragraph, pIdx) => (
-                <p key={pIdx}>{paragraph}</p>
-              ))}
+            <div className="space-y-4 text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/80 max-w-[500px] mb-6 sm:mb-10">
+              {(() => {
+                const raw = leadership?.text ?? "";
+                if (raw.includes("<p>") || raw.includes("</p>")) {
+                  const fromTags = [...raw.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
+                    .map((m) => m[1].replace(/<[^>]*>/g, "").trim())
+                    .filter(Boolean);
+                  if (fromTags.length > 0) {
+                    return fromTags.map((paragraph, pIdx) => <p key={pIdx}>{paragraph}</p>);
+                  }
+                }
+                return raw
+                  .split(/\n\n+/)
+                  .map((p) => p.trim())
+                  .filter(Boolean)
+                  .map((paragraph, pIdx) => <p key={pIdx}>{paragraph}</p>);
+              })()}
             </div>
 
             {/* Slider Navigation Buttons */}
@@ -143,7 +156,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 type="button"
                 aria-label="Previous leader"
                 onClick={handlePrev}
-                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#121826]/12 bg-white text-[#121826] hover:bg-[#121826] hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
+                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#121826]/12 bg-white/10 text-white hover:bg-white/30 hover:text-white transition-all cursor-pointer shadow-sm"
               >
                 <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
                   <path
@@ -160,7 +173,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 type="button"
                 aria-label="Next leader"
                 onClick={handleNext}
-                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#121826]/12 bg-white text-[#121826] hover:bg-[#121826] hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
+                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#121826]/12 bg-white/10 text-white hover:bg-white/30 hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
               >
                 <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
                   <path

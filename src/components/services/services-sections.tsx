@@ -4,6 +4,7 @@ import { GreenButton } from "@/components/ui/green-button";
 import { type ServicesContent } from "@/content/services";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import Link from "next/link";
 import Container from "../ui/container";
 import { ArrowIcon } from "../ui/button";
@@ -58,22 +59,25 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
               </Reveal>
             </div>
 
-            <StaggerGroup immediate staggerDelay={140} className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-2xl min-[890px]:max-w-[506px] lg:justify-self-end">
+            <div className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-2xl min-[890px]:max-w-[506px] lg:justify-self-end">
               {/* Vertical Gradient Divider Line matching Figma specs */}
               <div
                 aria-hidden="true"
-                className="hidden lg:block absolute -left-5 xl:-left-6 -top-7 w-[1.5px] h-[510px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
+                className="tier-line-animate hidden lg:block absolute -left-5 xl:-left-6 -top-7 w-[1.5px] h-[510px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
                 style={{
                   borderLeft: "1.5px solid transparent",
                   borderImageSource: "linear-gradient(180deg, #23C55E 0%, rgba(35, 197, 94, 0) 89.31%)",
                   borderImageSlice: 1,
+                  animationDelay: "150ms",
                 }}
               />
               {hero.tiers.map((tier, idx) => (
-                <StaggerItem
+                <div
                   key={idx}
-                  index={idx}
-                  className="card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                  className="tier-card-animate card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                  style={{
+                    animationDelay: `${260 + idx * 180}ms`,
+                  }}
                 >
                   <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E]">
                     {tier.number}
@@ -105,14 +109,33 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
                       {tier.text}
                     </p>
                   </div>
-                </StaggerItem>
+                </div>
               ))}
-            </StaggerGroup>
+            </div>
           </div>
         </Container>
       </div>
     </section>
   );
+}
+
+const STAGE_FALLBACK_ICONS = [
+  "/icons/set-the-foundation.svg",
+  "/icons/build-momentum.svg",
+  "/icons/lead-with-foresight.svg",
+  "/icons/optimize-and-expand.svg",
+];
+
+function resolveStageIcon(icon?: string | null, title?: string | null, idx = 0): string {
+  if (icon && (icon.startsWith("/") || icon.startsWith("http://") || icon.startsWith("https://"))) {
+    return icon;
+  }
+  const t = `${icon ?? ""} ${title ?? ""}`.toLowerCase();
+  if (t.includes("foundation") || t.includes("set") || t.includes("gear")) return "/icons/set-the-foundation.svg";
+  if (t.includes("momentum") || t.includes("build") || t.includes("people")) return "/icons/build-momentum.svg";
+  if (t.includes("foresight") || t.includes("lead") || t.includes("person")) return "/icons/lead-with-foresight.svg";
+  if (t.includes("optimize") || t.includes("expand") || t.includes("target")) return "/icons/optimize-and-expand.svg";
+  return STAGE_FALLBACK_ICONS[idx % STAGE_FALLBACK_ICONS.length];
 }
 
 // --- Component: Stages ---
@@ -140,6 +163,8 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
 
         <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {stages.cards.map((card, idx) => {
+            const defaultIcon = STAGE_FALLBACK_ICONS[idx % STAGE_FALLBACK_ICONS.length];
+            const iconSrc = resolveStageIcon(card.icon, card.title, idx);
             return (
               <StaggerItem
                 key={idx}
@@ -155,10 +180,20 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
                       {card.label}
                     </p>
                   </div>
-                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]" />
+                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]">
+                    {iconSrc && (
+                      <SafeImage
+                        src={iconSrc}
+                        fallbackSrc={defaultIcon}
+                        alt={card.title}
+                        width={24}
+                        height={24}
+                        unoptimized
+                        className="w-5 h-5 sm:w-6 sm:h-6 object-contain transition-all duration-300 group-hover:brightness-0"
+                      />
+                    )}
+                  </div>
                 </div>
-
-
 
                 <p className="text-[15px] sm:text-[16px] lg:text-[18px] font-normal leading-[150%] text-white/70">
                   {card.text}
@@ -400,6 +435,12 @@ export function ServicesDetails({ details }: { details: ServicesContent["details
   );
 }
 
+const CFO_FALLBACK_IMAGES = [
+  "/services/cfo-dilivers-1.png",
+  "/services/cfo-dilivers-2.png",
+  "/services/cfo-dilivers-3.png",
+];
+
 // --- Component: Fractional CFO ---
 export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   return (
@@ -437,15 +478,14 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                 index={idx}
                 className="group card-hover relative w-full h-[340px] sm:h-[400px] md:h-[420px] lg:h-[430px] xl:h-[490px] rounded-[14px] sm:rounded-[16px] overflow-hidden bg-[#F5F3F2]"
               >
-                {card.image?.url ? (
-                  <Image
-                    src={card.image.url}
-                    alt={card.title}
-                    fill
-                    className="object-cover image-hover-zoom"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                ) : null}
+                <SafeImage
+                  src={card.image?.url || CFO_FALLBACK_IMAGES[idx] || "/media/placeholder.svg"}
+                  fallbackSrc={CFO_FALLBACK_IMAGES[idx] || "/media/placeholder.svg"}
+                  alt={card.title}
+                  fill
+                  className="object-cover image-hover-zoom"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
 
                 {/* Bottom-left cutout wrapper matching Figma geometry */}
                 <div className="absolute bottom-0 left-0 bg-[#F5F3F2] pt-2.5 pr-2.5 sm:pt-3 sm:pr-3 xl:pt-3.5 xl:pr-3.5 rounded-tr-[12px] w-[calc(100%-45px)] sm:w-[calc(100%-55px)] xl:w-[calc(100%-75px)] max-w-[315px]">
@@ -524,7 +564,7 @@ export function ServicesInvestors({ investors }: { investors: ServicesContent["i
       <Container>
         {/* Header Area - Contained */}
         <Reveal preset="slide-up" distance={20} className="mx-auto w-full mb-10 sm:mb-14 lg:mb-16">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 sm:gap-10 lg:gap-16">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-0 sm:gap-10 lg:gap-16">
             <div className="max-w-2xl">
               <p className="inline-flex items-center gap-3 text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-5 sm:mb-6">
                 <span className="h-px w-6 bg-[#23C55E]" />

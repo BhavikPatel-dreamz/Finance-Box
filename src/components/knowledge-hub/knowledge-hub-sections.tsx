@@ -114,14 +114,14 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
                   <Link href={item.url} className="after:absolute after:inset-0 after:content-[''] hover:text-[#23C55E] transition-colors duration-300">
                     {item.title}
                     {item.tagLine && (
-                      <span className="font-normal text-[#121826]/60"> - {item.tagLine}</span>
+                      <span className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[1.3] lg:leading-[1.2] mb-2"> - {item.tagLine}</span>
                     )}
                   </Link>
                 ) : (
                   <>
                     {item.title}
                     {item.tagLine && (
-                      <span className="font-normal text-[#121826]/60"> - {item.tagLine}</span>
+                        <span className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[1.3] lg:leading-[1.2] mb-2"> - {item.tagLine}</span>
                     )}
                   </>
                 )}

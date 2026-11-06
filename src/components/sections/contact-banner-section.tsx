@@ -8,7 +8,7 @@ import type { ContactUsContent } from "@/content/contact-us";
 export const contactBannerSection = defineSection<ContactBannerSectionFragment>({
   layout: "ContactBannerSection",
   hero: true,
-  render: (data, { header }) => {
+  render: (data) => {
     const parts = splitEmphasis(data.title);
     const title = parts ? [parts.before, parts.after].filter(Boolean).join(" ").trim() : text(data.title, "");
     const highlight = parts ? parts.emphasis : "";
@@ -16,7 +16,6 @@ export const contactBannerSection = defineSection<ContactBannerSectionFragment>(
     return (
       <HeroSection
         page="contact"
-        headerNode={header}
         overrides={{
           ...(backgroundImage ? { background: backgroundImage } : {}),
           eyebrow: text(data.subtitle, ""),

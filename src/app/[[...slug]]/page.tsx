@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { cookies, draftMode } from "next/headers";
 import { notFound, permanentRedirect } from "next/navigation";
 import { SectionRenderer } from "@/components/page-builder/section-renderer";
-import { MessagePage, PageFrame, siteHeaderNode } from "@/components/layout/page-frame";
+import { MessagePage, PageFrame } from "@/components/layout/page-frame";
 import { getPreviewPage, getPublicPage, getSettings, type PageLoadResult } from "@/lib/wordpress/content";
 import { getSiteChrome } from "@/lib/wordpress/site-chrome";
 import { decodePreviewTarget, PREVIEW_COOKIE } from "@/lib/wordpress/preview";
@@ -94,7 +94,6 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
   }
 
   const { page } = loaded.result;
-  const header = siteHeaderNode(chrome);
 
   if (page.sections.length === 0) {
     return (
@@ -124,7 +123,7 @@ export default async function WordPressPage({ params }: PageProps<"/[[...slug]]"
           </Link>
         </p>
       ) : null}
-      <SectionRenderer sections={page.sections} uri={page.uri} header={header} />
+      <SectionRenderer sections={page.sections} uri={page.uri} />
       {settings?.source === "wordpress" ? (
         <script
           type="application/ld+json"

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import Link from "next/link";
 import type { KnowledgeHubBlog } from "@/content/knowledge-hub";
 
@@ -14,8 +15,9 @@ export const BLOG_CARD_CLASS =
 export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
   return (
     <>
-      <Image
+      <SafeImage
         src={blog.image}
+        fallbackSrc="/knowledge-hub/blog1.png"
         alt={blog.title}
         fill
         className="object-cover image-hover-zoom"
@@ -47,7 +49,7 @@ export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
         </div>
         <div className="flex items-center gap-3">
           <div className="relative w-[34px] h-[34px] sm:w-[38px] sm:h-[38px] rounded-full overflow-hidden border border-white/10 shrink-0">
-            <Image src={blog.author.avatar} alt={blog.author.name} fill className="object-cover" sizes="38px" />
+            <SafeImage src={blog.author.avatar} fallbackSrc="/knowledge-hub/guruprasad.png" alt={blog.author.name} fill className="object-cover" sizes="38px" />
           </div>
           <span className="text-[13px] sm:text-[14px] font-medium text-white/80">{blog.author.name}</span>
         </div>

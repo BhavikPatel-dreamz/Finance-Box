@@ -10,7 +10,7 @@ export type HomeLink = {
 };
 
 export type HomeCard = {
-  icon: HomeMedia | null;
+  icon: HomeMedia | string | null;
   title: string;
   text: string;
 };
@@ -226,31 +226,31 @@ export const homeContent: HomeContent = {
     title: "What Makes FIAB Different",
     cards: [
       {
-        icon: null,
+        icon: "/icons/one-finace-team.svg",
         tone: "light",
         title: "One finance team, every function",
         text: "Strategy and execution come from the same team. Your forecast, close, payroll, and compliance stay connected rather than split across vendors.",
       },
       {
-        icon: null,
+        icon: "/icons/build-for-growing.svg",
         tone: "dark",
         title: "Built for growing companies",
         text: "From funded startups to mid-size businesses, we work in the tools and reporting rhythms your stage demands, and we have sat through the fundraises, board meetings, and audits you are heading into.",
       },
       {
-        icon: null,
+        icon: "/icons/scale-with-company.svg",
         tone: "dark",
         title: "Scales with the company",
         text: "Coverage adjusts with your stage on a subscription model. Building the same capability in-house means a VP of Finance plus a controller plus support, which typically costs three times more.",
       },
       {
-        icon: null,
+        icon: "/icons/cost-intelligence.svg",
         tone: "dark",
         title: "Cost intelligence as a practice",
         text: "Every month we look for where you are losing money, from vendor spend to process waste, and bring it to you before you ask. (reduced monthly burn by 40% within 90 days)",
       },
       {
-        icon: null,
+        icon: "/icons/automation.svg",
         tone: "dark",
         title: "Automation and AI-powered FinOps Platform",
         text: "Workflow automation already runs through our engagements, speeding up reporting, close, and routine operations. FinOps, our AI product for finance operations, is in development, and FIAB clients will be the first to get access when it launches. Senior operators stay behind every decision either way.",

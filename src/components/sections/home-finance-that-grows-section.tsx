@@ -1,7 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { HomeFinanceThatGrowsSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { HomeGrowth } from "@/components/home/home-sections";
-import { link, media, text } from "@/lib/wordpress/fields";
+import { link, listItems, media, text } from "@/lib/wordpress/fields";
 
 /** `HomeFinanceThatGrowsSection` — Growth image with tier cards. */
 export const homeFinanceThatGrowsSection = defineSection<HomeFinanceThatGrowsSectionFragment>({
@@ -20,10 +20,11 @@ export const homeFinanceThatGrowsSection = defineSection<HomeFinanceThatGrowsSec
         icon: null,
         title: text(tier?.title),
         text: text(tier?.description),
-        items: [],
+        items: listItems(tier?.points),
       })),
       cta: link(data.ctaButton, { label: "", url: "" }),
     };
     return <HomeGrowth growth={growth as never} />;
   },
 });
+

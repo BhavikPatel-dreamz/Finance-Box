@@ -3,5 +3,15 @@ fragment ServicesFindYourStageSection on PageBuilderPageBuilderServicesFindYourS
   subTitle
   title
   description
-  stageCards { title stageLabel description }
+  stageCards {
+    title
+    stageLabel
+    description
+    icon {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
 }
