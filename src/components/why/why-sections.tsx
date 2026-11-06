@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Fragment } from "react";
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import { type WhyContent } from "@/content/why-fiab";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -20,7 +21,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Re
         {header}
         <Container>
           <div className="w-full">
-            <div className="grid items-start gap-6 sm:gap-8 pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pt-[84px] lg:pb-[60px] lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="grid items-start gap-6 sm:gap-8 pt-6 pb-8 sm:pt-16 sm:pb-10 lg:pt-[84px] lg:pb-[60px] lg:grid-cols-[1.1fr_0.9fr]">
               <Reveal immediate preset="slide-up" delay={100} distance={28}>
                 <Eyebrow variant="dark">
                   {hero.eyebrow}
@@ -347,13 +348,16 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
       <Container>
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <StaggerItem index={0} className="card-hover relative overflow-hidden rounded-[24px] min-h-[440px] sm:min-h-[500px] lg:h-[630px] lg:min-h-[630px] flex items-end">
-            {aboutSection?.image && <Image
-              src={aboutSection.image}
-              alt="Team"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />}
+            {aboutSection?.image && (
+              <SafeImage
+                src={aboutSection.image}
+                fallbackSrc="/why/two-person.png"
+                alt={aboutSection.title || "Team"}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            )}
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,24,38,0)_13.73%,rgba(18,24,38,0.662784)_52.12%,rgba(18,24,38,0.866393)_77.6%,#121826_100%)]" />
 
             <div className="relative z-1 p-6 sm:p-8 lg:p-10 w-full">
