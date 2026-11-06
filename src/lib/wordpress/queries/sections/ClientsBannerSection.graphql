@@ -5,4 +5,5 @@ fragment ClientsBannerSection on PageBuilderPageBuilderClientsBannerSectionLayou
   description
   clientProof
   stats { number label }
+  backgroundImage { node { sourceUrl altText } }
 }

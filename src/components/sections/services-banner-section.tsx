@@ -1,7 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { ServicesBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { HeroSection } from "@/components/hero";
-import { link, splitEmphasis, text } from "@/lib/wordpress/fields";
+import { link, media, splitEmphasis, text } from "@/lib/wordpress/fields";
 
 /** `ServicesBannerSection` — Services hero with tier cards. */
 export const servicesBannerSection = defineSection<ServicesBannerSectionFragment>({
@@ -29,10 +29,12 @@ export const servicesBannerSection = defineSection<ServicesBannerSectionFragment
     });
 
     const heroTitleParts = splitEmphasis(data.title);
+    const backgroundImage = media(data.backgroundImage)?.url;
     return (
       <HeroSection
         page="services"
         overrides={{
+          ...(backgroundImage ? { background: backgroundImage } : {}),
           eyebrow: text(data.subTitle, ""),
           title: heroTitleParts
             ? [heroTitleParts.before, heroTitleParts.after].filter(Boolean).join(" ").trim()

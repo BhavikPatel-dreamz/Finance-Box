@@ -37,6 +37,12 @@ export function primaryCategory(post: Pick<PostCardFragment, "categories">) {
   return names.find((name) => !GENERIC_CATEGORIES.has(name.toLowerCase())) ?? names[0] ?? "Blog";
 }
 
+/** First tag of a post. Knowledge Hub cards show it instead of the category. */
+export function primaryTag(post: Pick<PostCardFragment, "tags">, fallback = "") {
+  const names = (post.tags?.nodes ?? []).map((tag) => plainText(tag.name)).filter(Boolean);
+  return names[0] ?? fallback;
+}
+
 export function blogCardFromPost(post: PostCardFragment, fallback?: Partial<BlogCard>): BlogCard {
   const slug = post.slug ?? slugFromUri(post.uri);
   const author = post.author?.node;

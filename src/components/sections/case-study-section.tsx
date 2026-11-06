@@ -16,8 +16,11 @@ export const caseStudySection = defineSection<CaseStudySectionFragment>({
     const items = (data.selectCaseStudy?.nodes ?? []).map((post) => {
       const card = caseStudyCardFromNode(post as CaseStudyCardFragment);
       return {
-        image: card.image,
+        // Knowledge Hub cards use the post's default Featured Image, not the
+        // "Front Feature Image" ACF field used on the case study detail page.
+        image: post.featuredImage?.node.sourceUrl || card.image,
         title: text(post.title),
+        tagLine: card.label,
         text: text(post.excerpt),
         url: card.ctaUrl,
       };

@@ -6,4 +6,5 @@ fragment ServicesBannerSection on PageBuilderPageBuilderServicesBannerSectionLay
   primaryCtaButton { title url }
   secondaryCtaButton { title url }
   tierCards { label title description }
+  backgroundImage { node { sourceUrl altText } }
 }

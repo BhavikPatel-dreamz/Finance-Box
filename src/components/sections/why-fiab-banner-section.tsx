@@ -12,6 +12,7 @@ export const whyFiabBannerSection = defineSection<WhyFiabBannerSectionFragment>(
     const parts = splitEmphasis(data.title);
     const title = parts ? [parts.before, parts.after].filter(Boolean).join(" ").trim() : text(data.title, "");
     const highlight = parts ? parts.emphasis : "";
+    const backgroundImage = media(data.backgroundImage)?.url;
     const points = Array.isArray(data.highlights)
       ? data.highlights.map((p: any) => ({
           number: p?.number != null ? String(p.number).padStart(2, "0") : "",
@@ -22,7 +23,7 @@ export const whyFiabBannerSection = defineSection<WhyFiabBannerSectionFragment>(
       <HeroSection
         page="why"
         overrides={{
-          titleMaxWidth: "lg:max-w-[590px]",
+          ...(backgroundImage ? { background: backgroundImage } : {}),
           eyebrow: text(data.subTitle, ""),
           title: title || "",
           highlight: highlight || "",

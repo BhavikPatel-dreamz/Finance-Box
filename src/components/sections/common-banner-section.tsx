@@ -2,16 +2,6 @@ import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { HeroSection } from "@/components/hero";
 import { listItems, media, splitEmphasis, text } from "@/lib/wordpress/fields";
-import { slugFromUri } from "@/lib/wordpress/paths";
-import type { HeroPageKey } from "@/components/hero/types";
-
-function resolvePageKey(uri?: string): HeroPageKey {
-  const slug = slugFromUri(uri);
-  if (slug === "careers") return "careers";
-  if (slug === "agentic-ai") return "agentic-ai";
-  if (slug === "people-operations") return "people-operations";
-  return "knowledge-hub";
-}
 
 /** `CommonBannerSection` — shared inner-page hero. */
 export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
@@ -19,16 +9,15 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
   hero: true,
   render: (data, context) => {
     const titleParts = splitEmphasis(data.title);
-    const page = resolvePageKey(context?.uri);
-    const bgImage = media(data.backgroundImage)?.url;
-    const titleMaxWidth = page === "people-operations" ? "lg:max-w-[590px]" : "lg:max-w-[480px]";
-
+    const backgroundImage = media(data.backgroundImage)?.url;
     return (
       <HeroSection
         page={page}
         overrides={{
-          variant: page === "careers" ? "careers" : "agentic-ai",
-          background: bgImage || undefined,
+          variant: "agentic-ai",
+          // Use the WordPress "Background Image" when set; otherwise keep the
+          // hero's existing default background.
+          ...(backgroundImage ? { background: backgroundImage } : {}),
           eyebrow: text(data.subTitle),
           title: titleParts
             ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
