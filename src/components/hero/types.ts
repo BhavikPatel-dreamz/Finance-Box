@@ -37,6 +37,7 @@ export type HeroBackgroundKey =
   | "clients"
   | "careers"
   | "contact"
+  | "knowledgehub"
   | "none"
   | (string & {});
 

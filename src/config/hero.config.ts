@@ -266,7 +266,7 @@ export const agenticAiHeroConfig: HeroConfig = {
 // ----------------------------------------------------------------------------
 export const knowledgeHubHeroConfig: HeroConfig = {
   variant: "split",
-  background: "contact",
+  background: "knowledgehub",
   eyebrow: {
     text: knowledgeHubContent.hero.eyebrow || "RESOURCES & INSIGHTS",
     variant: "dark",
