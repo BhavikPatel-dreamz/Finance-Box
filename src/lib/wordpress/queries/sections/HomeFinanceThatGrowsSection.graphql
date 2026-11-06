@@ -6,6 +6,6 @@ fragment HomeFinanceThatGrowsSection on PageBuilderPageBuilderHomeFinanceThatGro
   image { node { sourceUrl altText } }
   imageTitle
   imageSteps { label }
-  tiers { title description }
+  growthTiers { title description }
   ctaButton { title url }
 }

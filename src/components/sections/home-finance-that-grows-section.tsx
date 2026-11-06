@@ -16,7 +16,7 @@ export const homeFinanceThatGrowsSection = defineSection<HomeFinanceThatGrowsSec
       image,
       overlay: text(data.imageTitle),
       stages: (data.imageSteps ?? []).map((row) => text(row?.label)).filter(Boolean),
-      cards: (data.tiers ?? []).map((tier) => ({
+      cards: (data.growthTiers ?? []).map((tier) => ({
         icon: null,
         title: text(tier?.title),
         text: text(tier?.description),
