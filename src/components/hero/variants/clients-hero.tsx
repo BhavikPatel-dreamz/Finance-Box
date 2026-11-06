@@ -62,14 +62,35 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
                   </Eyebrow>
                 )}
                 <ul className="space-y-1 sm:space-y-1.5">
-                  {config.clientProofItems.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="text-[16px] sm:text-[18px] lg:text-[20px] font-semibold leading-[130%] text-white"
-                    >
-                      {item}
-                    </li>
-                  ))}
+                  {(() => {
+                    let items = config.clientProofItems;
+                    if (
+                      items.length === 1 &&
+                      items[0].trim().toLowerCase() === "client proof" &&
+                      config.stats &&
+                      config.stats.length > 0
+                    ) {
+                      items = config.stats
+                        .map((s) => {
+                          const val = (s.value || "").trim();
+                          const lbl = (s.label || "").trim();
+                          if (!val && !lbl) return "";
+                          if (!val) return lbl;
+                          if (!lbl) return val;
+                          const formattedLabel = lbl.charAt(0).toLowerCase() + lbl.slice(1);
+                          return `${val} ${formattedLabel}`;
+                        })
+                        .filter(Boolean);
+                    }
+                    return items.map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="text-[16px] sm:text-[18px] lg:text-[20px] font-semibold leading-[130%] text-white"
+                      >
+                        {item}
+                      </li>
+                    ));
+                  })()}
                 </ul>
               </div>
             )}
