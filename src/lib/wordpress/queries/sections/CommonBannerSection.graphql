@@ -5,4 +5,5 @@ fragment CommonBannerSection on PageBuilderPageBuilderCommonBannerSectionLayout 
   description
   tagLine
   ctaButton { title url }
+  backgroundImage { node { sourceUrl altText } }
 }

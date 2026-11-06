@@ -1,7 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { HeroSection } from "@/components/hero";
-import { listItems, splitEmphasis, text } from "@/lib/wordpress/fields";
+import { listItems, media, splitEmphasis, text } from "@/lib/wordpress/fields";
 
 /** `CommonBannerSection` — shared inner-page hero. */
 export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
@@ -9,11 +9,15 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
   hero: true,
   render: (data, { header }) => {
     const titleParts = splitEmphasis(data.title);
+    const backgroundImage = media(data.backgroundImage)?.url;
     return (
       <HeroSection
         headerNode={header}
         overrides={{
           variant: "agentic-ai",
+          // Use the WordPress "Background Image" when set; otherwise keep the
+          // hero's existing default background.
+          ...(backgroundImage ? { background: backgroundImage } : {}),
           eyebrow: text(data.subTitle),
           title: titleParts
             ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()

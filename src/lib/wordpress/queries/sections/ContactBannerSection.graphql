@@ -3,4 +3,5 @@ fragment ContactBannerSection on PageBuilderPageBuilderContactBannerSectionLayou
   subtitle
   title
   description
+  backgroundImage { node { sourceUrl altText } }
 }
