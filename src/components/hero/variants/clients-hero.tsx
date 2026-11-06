@@ -61,7 +61,7 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
                     {config.clientProofTitle}
                   </Eyebrow>
                 )}
-                <ul className="space-y-1 sm:space-y-1.5">
+                <ul>
                   {(() => {
                     let items = config.clientProofItems;
                     if (
