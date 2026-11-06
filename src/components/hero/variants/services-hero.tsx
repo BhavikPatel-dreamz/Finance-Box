@@ -94,21 +94,22 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
 
         {/* Right Column (Tiers) */}
         {config.tiers && config.tiers.length > 0 && (
-          <StaggerGroup
-            immediate
-            staggerDelay={140}
+          <div
             className="relative w-full flex flex-col gap-3.5 sm:gap-4 max-w-[506px] lg:justify-self-end"
           >
             {/* Vertical Gradient Divider Line (stretches with the list) */}
             <div
               aria-hidden="true"
-              className="hidden lg:block absolute -left-5 xl:-left-6 top-0 bottom-0 w-[1.5px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
+              className="tier-line-animate hidden lg:block absolute -left-5 xl:-left-6 top-0 bottom-0 w-[1.5px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
+              style={{ animationDelay: "150ms" }}
             />
             {config.tiers.map((tier, idx) => (
-              <StaggerItem
+              <div
                 key={idx}
-                index={idx}
-                className="card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                className="tier-card-animate card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                style={{
+                  animationDelay: `${260 + idx * 180}ms`,
+                }}
               >
                 <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E] tabular-nums">
                   {formatTierNumber(tier.number, idx)}
@@ -140,9 +141,9 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
                     {tier.text}
                   </p>
                 </div>
-              </StaggerItem>
+              </div>
             ))}
-          </StaggerGroup>
+          </div>
         )}
       </div>
     </Container>
