@@ -1,8 +1,18 @@
 fragment HomeWhatMakesFiabDifferentSection on PageBuilderPageBuilderHomeWhatMakesFiabDifferentSectionLayout {
   __typename
   title
-  cards { title content }
+  cards {
+    title
+    content
+    backgroundImage {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
   outcomeLabel
   outcomeValue
   outcomeText
 }
+

@@ -102,6 +102,7 @@ function LogoTrack({
   hidden?: boolean;
 }) {
   const styles = variantStyles[variant];
+  const isBordered = variant === "bordered";
 
   return (
     <ul
@@ -125,7 +126,8 @@ function LogoTrack({
                   fill
                   sizes="(max-width: 768px) 160px, 256px"
                   unoptimized={/\.svg($|\?)/i.test(url)}
-                  className="w-full h-full object-contain p-6 pointer-events-none select-none transition-transform duration-300 hover:scale-105"
+                  className={`w-full h-full object-contain pointer-events-none select-none transition-transform duration-300 hover:scale-105 ${isBordered ? "p-6 md:p-10" : ""
+                    }`}
                 />
               ) : (
                 <span className="text-xl font-bold">{item.name}</span>

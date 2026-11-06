@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 import type { HomeContent } from "@/content/home";
 import { GreenButton } from "@/components/ui/green-button";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -175,7 +176,30 @@ function HoverLine({ className = "bg-[#23C55E]" }: { className?: string }) {
   );
 }
 
+const DEFAULT_DIFFERENCE_ICONS = [
+  "/icons/one-finace-team.svg",
+  "/icons/build-for-growing.svg",
+  "/icons/scale-with-company.svg",
+  "/icons/cost-intelligence.svg",
+  "/icons/automation.svg",
+];
+
+function resolveDifferenceIcon(icon?: { url: string } | string | null, title?: string | null, idx = 0): string {
+  if (typeof icon === "string" && icon) return icon;
+  if (icon && typeof icon === "object" && "url" in icon && icon.url) return icon.url;
+  const t = (title ?? "").toLowerCase();
+  if (t.includes("finance team") || t.includes("function") || t.includes("one")) return "/icons/one-finace-team.svg";
+  if (t.includes("growing") || t.includes("built")) return "/icons/build-for-growing.svg";
+  if (t.includes("scale") || t.includes("company")) return "/icons/scale-with-company.svg";
+  if (t.includes("cost") || t.includes("intelligence")) return "/icons/cost-intelligence.svg";
+  if (t.includes("automation") || t.includes("finops") || t.includes("platform") || t.includes("ai")) return "/icons/automation.svg";
+  return DEFAULT_DIFFERENCE_ICONS[idx % DEFAULT_DIFFERENCE_ICONS.length];
+}
+
 export function HomeDifference({ difference }: { difference: HomeContent["difference"] }) {
+  const card0 = difference.cards[0];
+  const icon0 = resolveDifferenceIcon(card0?.icon, card0?.title, 0);
+
   return (
     <Section theme="dark" spacing="both" className="differance-section">
       <Container>
@@ -190,30 +214,76 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
 
         <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[14px] sm:rounded-[16px] overflow-hidden">
 
-          <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
-            <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10" />
-            <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{difference.cards[0].title}</h3>
-            <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-[#121826]/70">{difference.cards[0].text}</p>
-            <HoverLine />
-          </StaggerItem>
-
-          {difference.cards.slice(1, 3).map((card, idx) => (
-            <StaggerItem key={idx} index={idx + 1} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
-              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10" />
-              <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
-              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
+          {card0 && (
+            <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10">
+                {icon0 && (
+                  <SafeImage
+                    src={icon0}
+                    fallbackSrc={DEFAULT_DIFFERENCE_ICONS[0]}
+                    alt={card0.title}
+                    width={24}
+                    height={24}
+                    unoptimized
+                    className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                  />
+                )}
+              </div>
+              <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card0.title}</h3>
+              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-[#121826]/70">{card0.text}</p>
               <HoverLine />
             </StaggerItem>
-          ))}
+          )}
 
-          {difference.cards.slice(3, 5).map((card, idx) => (
-            <StaggerItem key={idx} index={idx + 3} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
-              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10" />
-              <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
-              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
-              <HoverLine />
-            </StaggerItem>
-          ))}
+          {difference.cards.slice(1, 3).map((card, idx) => {
+            const cardIdx = idx + 1;
+            const iconSrc = resolveDifferenceIcon(card.icon, card.title, cardIdx);
+            return (
+              <StaggerItem key={idx} index={cardIdx} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+                <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
+                  {iconSrc && (
+                    <SafeImage
+                      src={iconSrc}
+                      fallbackSrc={DEFAULT_DIFFERENCE_ICONS[cardIdx]}
+                      alt={card.title}
+                      width={24}
+                      height={24}
+                      unoptimized
+                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                    />
+                  )}
+                </div>
+                <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
+                <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
+                <HoverLine />
+              </StaggerItem>
+            );
+          })}
+
+          {difference.cards.slice(3, 5).map((card, idx) => {
+            const cardIdx = idx + 3;
+            const iconSrc = resolveDifferenceIcon(card.icon, card.title, cardIdx);
+            return (
+              <StaggerItem key={idx} index={cardIdx} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
+                <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
+                  {iconSrc && (
+                    <SafeImage
+                      src={iconSrc}
+                      fallbackSrc={DEFAULT_DIFFERENCE_ICONS[cardIdx]}
+                      alt={card.title}
+                      width={24}
+                      height={24}
+                      unoptimized
+                      className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                    />
+                  )}
+                </div>
+                <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card.title}</h3>
+                <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-white/70 transition-colors duration-500 group-hover:text-white/90">{card.text}</p>
+                <HoverLine />
+              </StaggerItem>
+            );
+          })}
 
           <StaggerItem index={5} className="card-hover group relative overflow-hidden bg-[#23C55E] transition-colors duration-500 hover:bg-[#1FAF53] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[383px] md:border-t border-white/10 text-white">
             <p className="text-[14px] sm:text-[16px] md:text-[20px] font-mono font-medium tracking-wide uppercase">
