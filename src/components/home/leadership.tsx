@@ -129,9 +129,22 @@ export function Leadership({ leadership }: LeadershipProps) {
               {leadership.title}
             </h2>
             <div className="space-y-4 text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/80 max-w-[500px] mb-6 sm:mb-10">
-              {leadership.text.split(/\n\n+/).map((paragraph, pIdx) => (
-                <p key={pIdx}>{paragraph}</p>
-              ))}
+              {(() => {
+                const raw = leadership?.text ?? "";
+                if (raw.includes("<p>") || raw.includes("</p>")) {
+                  const fromTags = [...raw.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
+                    .map((m) => m[1].replace(/<[^>]*>/g, "").trim())
+                    .filter(Boolean);
+                  if (fromTags.length > 0) {
+                    return fromTags.map((paragraph, pIdx) => <p key={pIdx}>{paragraph}</p>);
+                  }
+                }
+                return raw
+                  .split(/\n\n+/)
+                  .map((p) => p.trim())
+                  .filter(Boolean)
+                  .map((paragraph, pIdx) => <p key={pIdx}>{paragraph}</p>);
+              })()}
             </div>
 
             {/* Slider Navigation Buttons */}
