@@ -21,6 +21,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
     const titleParts = splitEmphasis(data.title);
     const page = resolvePageKey(context?.uri);
     const bgImage = media(data.backgroundImage)?.url;
+    const titleMaxWidth = page === "people-operations" ? "lg:max-w-[590px]" : "lg:max-w-[480px]";
 
     return (
       <HeroSection
@@ -33,7 +34,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
             ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
             : text(data.title),
           highlight: titleParts ? titleParts.emphasis : "",
-          titleMaxWidth: "lg:max-w-[587px]",
+          titleMaxWidth,
           tagLine: text(data.tagLine),
           description: page === "careers" ? text(data.description) : "",
           bullets: listItems(data.description),

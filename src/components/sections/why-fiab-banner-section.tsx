@@ -22,6 +22,7 @@ export const whyFiabBannerSection = defineSection<WhyFiabBannerSectionFragment>(
       <HeroSection
         page="why"
         overrides={{
+          titleMaxWidth: "lg:max-w-[590px]",
           eyebrow: text(data.subTitle, ""),
           title: title || "",
           highlight: highlight || "",

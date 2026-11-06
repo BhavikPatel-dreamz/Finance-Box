@@ -15,7 +15,7 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
       <div className="flex-1 flex items-center pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 gap-8 items-center w-full">
           {/* Left Column */}
-          <Reveal immediate preset="slide-up" delay={80} distance={24}>
+          <Reveal immediate preset="slide-up" delay={80} distance={24} className={twMerge("w-full", config.titleMaxWidth || "lg:max-w-[400px]")}>
             {eyebrowData && (
               <Eyebrow
                 variant={eyebrowData.variant}
@@ -26,8 +26,8 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
             )}
             <h1
               className={twMerge(
-                "text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6 lg:max-w-[400px]",
-                config.titleMaxWidth
+                "text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6",
+                config.titleMaxWidth || "lg:max-w-[400px]"
               )}
             >
               {config.title}{" "}
