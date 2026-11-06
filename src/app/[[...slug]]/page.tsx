@@ -1,70 +1,64 @@
-import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
-import { notFound } from "next/navigation";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
-import { PageShell, StatusMessage } from "@/components/layout/page-shell";
-import { HomePage } from "@/components/home/home-page";
-import { ServicesPage } from "@/components/services/services-page";
-import { WhyPage } from "@/components/why/why-page";
-import { homeContent } from "@/content/home";
-import { servicesContent } from "@/content/services";
-import { whyContent } from "@/content/why-fiab";
-import { getMenu, getPreviewPage, getPublicPage, getSettings } from "@/lib/wordpress/content";
+import { cookies, draftMode } from "next/headers";
+import { notFound, permanentRedirect } from "next/navigation";
+import { SectionRenderer } from "@/components/page-builder/section-renderer";
+import { MessagePage, PageFrame } from "@/components/layout/page-frame";
+import { getPreviewPage, getPublicPage, getSettings, type PageLoadResult } from "@/lib/wordpress/content";
+import { getSiteChrome } from "@/lib/wordpress/site-chrome";
+import { decodePreviewTarget, PREVIEW_COOKIE } from "@/lib/wordpress/preview";
 import { uriFromSlug } from "@/lib/wordpress/uri";
+import Link from "next/link";
 
+/**
+ * The single template for every WordPress page: `/`, `/about`,
+ * `/services/web-development`, …
+ *
+ * 1. Resolve the route to a WordPress URI (reserved and malformed paths 404).
+ * 2. Load the published page, or the draft when Draft Mode is on.
+ * 3. Render the shared header, the page-builder sections in WordPress order,
+ *    and the shared footer.
+ */
+
+// Navigations into this route wait on WordPress data; do not validate them as instant.
 export const instant = false;
 
-async function loadPage(slug: string[] | undefined) {
+type Loaded = { uri: string; result: PageLoadResult; preview: boolean };
+
+async function loadPage(slug: string[] | undefined): Promise<Loaded | null> {
   const uri = uriFromSlug(slug);
-  if (!uri) return { uri: null, result: { status: "not-found" as const } };
+  if (!uri) return null;
+
   const { isEnabled } = await draftMode();
-  const result = isEnabled ? await getPreviewPage(uri) : await getPublicPage(uri);
-  return { uri, result, preview: isEnabled };
+  if (isEnabled) {
+    const target = decodePreviewTarget((await cookies()).get(PREVIEW_COOKIE)?.value);
+    if (target && target.path === uri) {
+      return { uri, result: await getPreviewPage(target.id), preview: true };
+    }
+  }
+
+  return { uri, result: await getPublicPage(uri), preview: isEnabled };
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps<"/[[...slug]]">): Promise<Metadata> {
+const NOINDEX = { index: false, follow: false } as const;
+
+export async function generateMetadata({ params }: PageProps<"/[[...slug]]">): Promise<Metadata> {
   const { slug } = await params;
   const loaded = await loadPage(slug);
 
-  if (loaded.uri === "/") {
-    return {
-      title: `${homeContent.hero.title} ${homeContent.hero.highlight}`,
-      description: homeContent.hero.text,
-    };
-  }
+  if (!loaded || loaded.result.status === "not-found") return { title: "Page not found", robots: NOINDEX };
+  if (loaded.result.status !== "ok") return { robots: NOINDEX };
 
-  if (loaded.uri === "/services/") {
-    return {
-      title: `${servicesContent.hero.title} ${servicesContent.hero.highlight}`,
-      description: servicesContent.hero.text,
-    };
-  }
+  const { page } = loaded.result;
+  const { seo } = page;
+  const noindex = loaded.preview || seo.noindex;
 
-  if (loaded.uri === "/why-fiab/") {
-    return {
-      title: `${whyContent.hero.title} ${whyContent.hero.highlight.replace(/\n/g, " ")}`,
-      description: whyContent.hero.text,
-    };
-  }
-
-  if (loaded.result.status !== "ok") {
-    return {
-      title: loaded.result.status === "not-found" ? "Not found" : "Financebox",
-      robots: { index: false, follow: false },
-    };
-  }
-
-  const { seo } = loaded.result.page;
   return {
     title: seo.title,
     description: seo.description || undefined,
-    alternates: { canonical: seo.canonical },
-    robots: loaded.preview ? { index: false, follow: false } : { index: true, follow: true },
+    alternates: noindex ? undefined : { canonical: seo.canonical },
+    robots: noindex ? NOINDEX : { index: true, follow: true },
     openGraph: {
+      type: "website",
       title: seo.openGraphTitle,
       description: seo.openGraphDescription || undefined,
       url: seo.canonical,
@@ -73,65 +67,69 @@ export async function generateMetadata({
   };
 }
 
-async function CmsChrome({ children }: { children: ReactNode }) {
-  const [settings, menu, footerMenu] = await Promise.all([
-    getSettings(),
-    getMenu("PRIMARY"),
-    getMenu("FOOTER"),
-  ]);
-
-  return (
-    <>
-      <SiteHeader settings={settings} menu={menu} />
-      {children}
-      <SiteFooter settings={settings} menu={footerMenu} />
-    </>
-  );
+function websiteJsonLd(name: string, url: string) {
+  // Escape "<" so a WordPress value can never close the script element.
+  return JSON.stringify({ "@context": "https://schema.org", "@type": "WebSite", name, url }).replace(/</g, "\\u003c");
 }
 
 export default async function WordPressPage({ params }: PageProps<"/[[...slug]]">) {
   const { slug } = await params;
-  const loaded = await loadPage(slug);
-  if (loaded.uri === "/") {
-    const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
-    return <HomePage sections={sections} />;
-  }
-  if (loaded.uri === "/services/") {
-    const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
-    return <ServicesPage sections={sections} />;
-  }
-  if (loaded.uri === "/why-fiab/") {
-    const sections = loaded.result.status === "ok" ? loaded.result.page.sections : [];
-    return <WhyPage sections={sections} />;
-  }
-  if (!loaded.uri || loaded.result.status === "not-found") notFound();
+  const [loaded, chrome] = await Promise.all([loadPage(slug), getSiteChrome()]);
+
+  if (!loaded || loaded.result.status === "not-found") notFound();
+  if (loaded.result.status === "redirect") permanentRedirect(loaded.result.to);
 
   if (loaded.result.status === "unconfigured") {
     return (
-      <CmsChrome>
-        <StatusMessage
-          title="Financebox"
-          body="The WordPress GraphQL endpoint is not configured yet. Pages and sections will render here after it is connected."
-        />
-      </CmsChrome>
+      <MessagePage
+        chrome={chrome}
+        title="Financebox"
+        body="The WordPress GraphQL endpoint is not configured yet. Set WORDPRESS_GRAPHQL_URL to render pages."
+      />
     );
   }
 
   if (loaded.result.status === "unavailable") {
+    return <MessagePage chrome={chrome} title="Financebox" body="The content service is unavailable. Please try again shortly." />;
+  }
+
+  const { page } = loaded.result;
+
+  if (page.sections.length === 0) {
     return (
-      <CmsChrome>
-        <StatusMessage
-          title="Financebox"
-          body="The content service is unavailable. Please try again shortly."
-        />
-      </CmsChrome>
+      <MessagePage
+        chrome={chrome}
+        title={page.title}
+        body={
+          process.env.NODE_ENV === "production"
+            ? undefined
+            : "This WordPress page has no Page Builder sections yet. Add sections in WordPress to build it."
+        }
+      />
     );
   }
 
-  const settings = await getSettings();
+  const settings = page.isFrontPage ? await getSettings() : null;
+
   return (
-    <CmsChrome>
-      <PageShell page={loaded.result.page} settings={settings} />
-    </CmsChrome>
+    <PageFrame chrome={chrome}>
+      {loaded.preview ? (
+        <p role="status" className="fixed bottom-4 left-4 z-[100] rounded-full bg-amber-400 px-4 py-2 text-sm font-medium text-black shadow-lg">
+          Preview —{" "}
+          {/* A Route Handler, not a page: <Link> would prefetch it and exit preview on hover. */}
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <Link className="underline" href={`/api/preview/exit?redirect=${encodeURIComponent(page.uri)}`}>
+            exit
+          </Link>
+        </p>
+      ) : null}
+      <SectionRenderer sections={page.sections} uri={page.uri} />
+      {settings?.source === "wordpress" ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: websiteJsonLd(settings.name, page.seo.canonical) }}
+        />
+      ) : null}
+    </PageFrame>
   );
 }

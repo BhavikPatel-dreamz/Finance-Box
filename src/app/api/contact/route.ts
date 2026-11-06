@@ -1,40 +1,49 @@
-import { deliverContact } from "@/lib/forms/deliver";
-import { rateLimit } from "@/lib/forms/rate-limit";
-import { validateContact } from "@/lib/validation/contact";
+import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  const limit = rateLimit(forwarded || "local");
-  if (!limit.allowed) {
-    return Response.json(
-      { ok: false, message: "Too many messages. Try again later." },
-      { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } },
-    );
-  }
-
-  let payload: unknown;
+export async function POST(req: Request) {
   try {
-    payload = await request.json();
-  } catch {
-    return Response.json({ ok: false, message: "Invalid request." }, { status: 400 });
-  }
+    const body = await req.json();
+    const WP_URL = process.env.WORDPRESS_URL?.trim().replace(/\/$/, "");
+    
+    const FORM_ID = "1284"; 
 
-  const parsed = validateContact(payload);
-  if (!parsed.success) {
-    return Response.json(
-      { ok: false, message: "Check the form and try again.", errors: parsed.errors },
-      { status: 400 },
-    );
-  }
+    if (!WP_URL) throw new Error("WordPress URL not configured");
 
-  if (parsed.data.companyWebsite.trim()) {
-    return Response.json({ ok: true });
-  }
+    const formData = new FormData();
+    
+    formData.append("your-name", body.name || "");
+    formData.append("your-email", body.email || "");
+    formData.append("your-company", body.subject || body.company || ""); 
+    formData.append("your-message", body.message || "");
 
-  const result = await deliverContact(parsed.data);
-  if (!result.ok) {
-    return Response.json({ ok: false, message: result.message }, { status: result.status });
-  }
+    formData.append("_wpcf7", FORM_ID);
+    formData.append("_wpcf7_version", "6.2.4.1");
+    formData.append("_wpcf7_locale", "en_US");
+    formData.append("_wpcf7_unit_tag", `wpcf7-f${FORM_ID}-p1284-o1`);
+    formData.append("_wpcf7_container_post", "1284");
 
-  return Response.json({ ok: true });
+    const response = await fetch(`${WP_URL}/wp-json/contact-form-7/v1/contact-forms/${FORM_ID}/feedback`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.status === "mail_sent") {
+      return NextResponse.json({ ok: true, message: data.message });
+    } else {
+      if (data.invalid_fields && data.invalid_fields.length > 0) {
+        return NextResponse.json({ 
+          ok: false, 
+          message: data.message, 
+          invalid_fields: data.invalid_fields 
+        }, { status: 400 });
+      }
+
+      return NextResponse.json({ ok: false, message: data.message || "Validation failed" }, { status: 400 });
+    }
+  } catch (error) {
+    console.error("Contact API Error:", error);
+    return NextResponse.json({ ok: false, message: "Server error" }, { status: 500 });
+  }
 }

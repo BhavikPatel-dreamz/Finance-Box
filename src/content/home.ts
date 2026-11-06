@@ -6,10 +6,11 @@ export type HomeMedia = {
 export type HomeLink = {
   label: string;
   url: string;
+  target?: string;
 };
 
 export type HomeCard = {
-  icon: HomeMedia | null;
+  icon: HomeMedia | string | null;
   title: string;
   text: string;
 };
@@ -135,37 +136,38 @@ export const homeContent: HomeContent = {
           { label: "Foundation", url: "/services/#foundation" },
           { label: "Momentum", url: "/services/#momentum" },
           { label: "Foresight", url: "/services/#foresight" },
-          { label: "Partner With Us", url: "#contact" },
-          { label: "People Operations", url: "#product" },
+          { label: "Partner With Us", url: "/contact-us/" },
+          { label: "People Operations", url: "/people-operations/" },
         ],
       },
       {
         label: "Clients",
-        url: "#insights",
+        url: "/clients/",
         children: [
-          { label: "Client stories", url: "#insights" },
-          { label: "Technology partners", url: "#partners" },
+          { label: "Client stories", url: "/clients/" },
+          { label: "Technology partners", url: "/clients/#partners" },
         ],
       },
       {
         label: "About Us",
-        url: "#about",
+        url: "/#about",
         children: [
           { label: "Why FIAB", url: "/why-fiab/" },
-          { label: "Team", url: "#team" },
-          { label: "Careers", url: "#contact" },
+          { label: "Team", url: "/team/" },
+          { label: "Careers", url: "/careers/" },
+          { label: "Knowledge Hub", url: "/knowledge-hub/" },
         ],
       },
-      { label: "Agentic AI", url: "#product", children: [] },
+      { label: "Agentic AI", url: "/agentic-ai/", children: [] },
     ],
-    cta: { label: "Contact Us", url: "#contact" },
+    cta: { label: "Contact Us", url: "/contact-us/" },
   },
   hero: {
     eyebrow: "Embedded finance for founder-led companies",
     title: "Your Finance Function,",
     highlight: "Built and Run For You",
     text: "Finance in a Box works as your embedded finance team. One engagement covers CFO strategy, accounting, payroll, compliance, and the systems that connect them, with coverage that grows as you do.",
-    primary: { label: "Book a Discovery Call", url: "#contact" },
+    primary: { label: "Book a Discovery Call", url: "/contact-us/" },
     closeLabel: "Month-end close",
     closeValue: "6",
     closeUnit: "days",
@@ -176,7 +178,7 @@ export const homeContent: HomeContent = {
     runwayTrend: "+3.2 this quarter",
     chartTitle: "Cash visibility",
     chartRange: "12 month view",
-    call: { label: "Book a Call", url: "#contact" },
+    call: { label: "Book a Call", url: "/contact-us/" },
   },
   trust: {
     lead: "Trusted by",
@@ -224,31 +226,31 @@ export const homeContent: HomeContent = {
     title: "What Makes FIAB Different",
     cards: [
       {
-        icon: null,
+        icon: "/icons/one-finace-team.svg",
         tone: "light",
         title: "One finance team, every function",
         text: "Strategy and execution come from the same team. Your forecast, close, payroll, and compliance stay connected rather than split across vendors.",
       },
       {
-        icon: null,
+        icon: "/icons/build-for-growing.svg",
         tone: "dark",
         title: "Built for growing companies",
         text: "From funded startups to mid-size businesses, we work in the tools and reporting rhythms your stage demands, and we have sat through the fundraises, board meetings, and audits you are heading into.",
       },
       {
-        icon: null,
+        icon: "/icons/scale-with-company.svg",
         tone: "dark",
         title: "Scales with the company",
         text: "Coverage adjusts with your stage on a subscription model. Building the same capability in-house means a VP of Finance plus a controller plus support, which typically costs three times more.",
       },
       {
-        icon: null,
+        icon: "/icons/cost-intelligence.svg",
         tone: "dark",
         title: "Cost intelligence as a practice",
         text: "Every month we look for where you are losing money, from vendor spend to process waste, and bring it to you before you ask. (reduced monthly burn by 40% within 90 days)",
       },
       {
-        icon: null,
+        icon: "/icons/automation.svg",
         tone: "dark",
         title: "Automation and AI-powered FinOps Platform",
         text: "Workflow automation already runs through our engagements, speeding up reporting, close, and routine operations. FinOps, our AI product for finance operations, is in development, and FIAB clients will be the first to get access when it launches. Senior operators stay behind every decision either way.",
@@ -290,13 +292,13 @@ export const homeContent: HomeContent = {
   partners: {
     title: "Our Technology Partners",
     logos: [
-      { image: null, name: "keka", caption: "Human Resources Management Systems" },
-      { image: null, name: "Quonto", caption: "Software Development" },
-      { image: null, name: "Power BI", caption: "Executive analytics" },
-      { image: null, name: "Suite", caption: "Integrated SMB suite" },
-      { image: null, name: "Oracle NetSuite", caption: "Enterprise Resource Planning Software" },
-      { image: null, name: "Recruity", caption: "Software Development" },
-      { image: null, name: "Salesforce", caption: "AI Customer Relationship" },
+      { image: { url: "/home/logos/keka.png", alt: "Keka" }, name: "keka", caption: "Human Resources Management Systems" },
+      { image: { url: "/home/logos/gusto.png", alt: "Gusto" }, name: "Gusto", caption: "Software Development" },
+      { image: { url: "/home/logos/power-bi.png", alt: "Power BI" }, name: "Power BI", caption: "Executive analytics" },
+      { image: { url: "/home/logos/zoho.png", alt: "Zoho" }, name: "Zoho", caption: "Integrated SMB suite" },
+      { image: { url: "/home/logos/oracle.png", alt: "Oracle NetSuite" }, name: "Oracle NetSuite", caption: "Enterprise Resource Planning Software" },
+      { image: { url: "/home/logos/recurly.png", alt: "Recurly" }, name: "Recurly", caption: "Software Development" },
+      { image: { url: "/home/logos/salesforce.png", alt: "Salesforce" }, name: "Salesforce", caption: "AI Customer Relationship" },
     ],
   },
   decisions: {
@@ -304,7 +306,7 @@ export const homeContent: HomeContent = {
     quote: "They offer more customized services than the bigger firms, which is great when you're in the early stage and figuring things out.",
     name: "Curran Hughes",
     role: "Founder & CEO, Renegade Plastics",
-    portrait: null,
+    portrait: { url: "/home/founder-ceo.png", alt: "Curran Hughes" },
     eyebrow: "What clients say",
     title: "Built for Better Business Decisions.",
     text: "FIAB steps in at the moments when finance becomes too complex or too important to manage casually.",
@@ -326,17 +328,23 @@ export const homeContent: HomeContent = {
     eyebrow: "Experience meets action",
     title: "Finance Leadership Without the Overhead.",
     text: "Finance in a Box was founded by Amit Mulchandani to give growing businesses direct access to senior finance operators, practical systems expertise and decision-ready insight.\n\nOur teams combine hands-on execution with the judgment to know what matters next.",
-    cta: { label: "Book a call", url: "#contact" },
+    cta: { label: "Book a call", url: "/contact-us/" },
     people: [
-      { image: null, name: "Amit Mulchandani", role: "Founder & CEO, Finance in a Box" },
-      { image: null, name: "Berena Reynoso", role: "Head of Operations" },
+      { image: { url: "/home/amit-mulchandani.png", alt: "Amit Mulchandani" }, name: "Amit Mulchandani", role: "FOUNDER & CEO, FINANCE IN A BOX" },
+      { image: { url: "/home/Berena-Reynoso.png", alt: "Berena Reynoso" }, name: "Berena Reynoso", role: "HEAD OF OPERATIONS" },
+      { image: { url: "/home/Galina-Puzankova.png", alt: "Galina Puzankova" }, name: "Galina Puzankova", role: "VICE PRESIDENT, DELIVERY" },
+      { image: { url: "/home/Aswathy-Vijayakumar.png", alt: "Aswathy Vijayakumar" }, name: "Aswathy Vijayakumar", role: "DIRECTOR FP&A" },
+      { image: { url: "/home/Neeti-Chauhan.png", alt: "Neeti Chauhan" }, name: "Neeti Chauhan", role: "FINANCE CONTROLLER" },
+      { image: { url: "/home/Jitheesh.png", alt: "Jitheesh" }, name: "Jitheesh", role: "HEAD OF OTC REVOPS" },
+      { image: { url: "/home/Denise-Uniacke.png", alt: "Denise Uniacke" }, name: "Denise Uniacke", role: "BUSINESS DEVELOPMENT & CLIENT SUCCESS MANAGER" },
+      { image: { url: "/home/Siddharth-Nagrath.png", alt: "Siddharth Nagrath" }, name: "Siddharth Nagrath", role: "TRAINING MANAGER - L&D OPERATIONS" },
     ],
   },
   pressure: {
     title: "Tell Us Where The Pressure Is",
     emphasis: "The Pressure Is",
     text: "A 30-minute discovery call is enough to map where your finance function is leaking time or cash, and what to fix first.",
-    cta: { label: "Join the Talent Network", url: "#contact" },
+    cta: { label: "Join the Talent Network", url: "/contact-us/" },
   },
   footer: {
     logo,
@@ -347,35 +355,35 @@ export const homeContent: HomeContent = {
         title: "Company",
         links: [
           { label: "Why FIAB", url: "/why-fiab/" },
-          { label: "Team", url: "#about" },
-          { label: "Careers", url: "#contact" },
-          { label: "Contact", url: "#contact" },
+          { label: "Team", url: "/team/" },
+          { label: "Careers", url: "/careers/" },
+          { label: "Contact", url: "/contact-us/" },
         ],
       },
       {
         title: "Services",
         links: [
-          { label: "Foundation", url: "#product" },
-          { label: "Momentum", url: "#product" },
-          { label: "Foresight", url: "#product" },
-          { label: "Partner With Us", url: "#contact" },
-          { label: "People Operations", url: "#product" },
+          { label: "Foundation", url: "/services/#foundation" },
+          { label: "Momentum", url: "/services/#momentum" },
+          { label: "Foresight", url: "/services/#foresight" },
+          { label: "Partner With Us", url: "/contact-us/" },
+          { label: "People Operations", url: "/people-operations/" },
         ],
       },
       {
         title: "Explore",
         links: [
-          { label: "Clients", url: "#insights" },
-          { label: "Agentic AI", url: "#product" },
-          { label: "Knowledge Hub", url: "#insights" },
-          { label: "For VCs & Advisors", url: "#contact" },
+          { label: "Clients", url: "/clients/" },
+          { label: "Agentic AI", url: "/agentic-ai/" },
+          { label: "Knowledge Hub", url: "/knowledge-hub/" },
+          { label: "For VCs & Advisors", url: "/contact-us/" },
         ],
       },
       {
         title: "Support",
         links: [
-          { label: "Privacy Policy", url: "/privacy-policy" },
-          { label: "Terms & Conditions", url: "/privacy-policy" },
+          { label: "Privacy Policy", url: "/privacy-policy/" },
+          { label: "Terms & Conditions", url: "/terms-conditions/" },
         ],
       },
       {

@@ -12,7 +12,7 @@ export type ServicesStage = {
   title: string;
   label: string;
   text: string;
-  icon: "gear" | "people" | "person" | "target";
+  icon: string;
 };
 
 export type ServicesContent = {
@@ -57,6 +57,13 @@ export type ServicesContent = {
     secondary: ServicesLink;
     cards: ServicesPhotoCard[];
   };
+  // 👇 NAYA: Pressure / CTA Section
+  pressure: {
+    title: string;
+    emphasis: string;
+    text: string;
+    cta: ServicesLink;
+  };
 };
 
 export type ServicesPhotoCard = {
@@ -77,7 +84,7 @@ export type ServicesDetail = {
   title: string;
   text: string;
   cta: ServicesLink;
-  items: { title: string; text: string }[];
+  items: { title: string; text: string; description?: string }[];
 };
 
 export const servicesContent: ServicesContent = {
@@ -121,25 +128,25 @@ export const servicesContent: ServicesContent = {
         title: "Set the foundation",
         label: "Typically pre-seed or newly established companies",
         text: "Get audit-ready books, clean structure, and compliance handled before it becomes technical debt.",
-        icon: "gear",
+        icon: "/icons/set-the-foundation.svg",
       },
       {
         title: "Build momentum",
         label: "Typically seed stage or growing businesses",
         text: "Automate the back office, tighten revenue operations, and give your board the reporting they expect.",
-        icon: "people",
+        icon: "/icons/build-momentum.svg",
       },
       {
         title: "Lead with foresight",
         label: "Typically Series A/B or established companies without a full-time CFO",
         text: "Strategic finance leadership, board-grade dashboards, and capital strategy, without hiring a full-time CFO.",
-        icon: "person",
+        icon: "/icons/lead-with-foresight.svg",
       },
       {
         title: "Optimize and expand",
         label: "Growth-stage and mid-size companies",
         text: "Cost reduction, offshore team buildout, and operating model design as you scale toward profitability, Series C, IPO readiness, or M&A.",
-        icon: "target",
+        icon: "/icons/optimize-and-expand.svg",
       },
     ],
   },
@@ -156,10 +163,26 @@ export const servicesContent: ServicesContent = {
       text: "Build an accurate, compliant finance core for the company you are becoming.",
       cta: { label: "Explore Foundation", url: "#foundation" },
       items: [
-        { title: "Accounting operations", text: "Investor-ready financials" },
-        { title: "Compliance & filings", text: "Zero compliance surprises" },
-        { title: "Payroll & people operations", text: "A people function that scales" },
-        { title: "ERP / HRIS foundations", text: "Audit-proof structure" },
+        {
+          title: "Accounting operations",
+          text: "Investor-ready financials",
+          description: "Month-end close, AP/AR, billing and collections, cash application, and GL accuracy. Clean books from day one.",
+        },
+        {
+          title: "Compliance & filings",
+          text: "Zero compliance surprises",
+          description: "1099s, Form 3921, Delaware and state filings, sales and use tax, and income tax returns, handled on schedule",
+        },
+        {
+          title: "Payroll & people operations",
+          text: "A people function that scales",
+          description: "Payroll administration, HR support, compliance calendars, and onboarding flows for growing teams.",
+        },
+        {
+          title: "ERP / HRIS foundations",
+          text: "Audit-proof structure",
+          description: "Chart of accounts, role-based access, and audit logs configured in your systems from the start.",
+        },
       ],
     },
     {
@@ -169,12 +192,36 @@ export const servicesContent: ServicesContent = {
       text: "Remove manual friction and create a reliable operating cadence.",
       cta: { label: "Explore Momentum", url: "#momentum" },
       items: [
-        { title: "Financial reporting", text: "Reporting that holds up under review" },
-        { title: "Revenue operations", text: "Clean revenue recognition" },
-        { title: "ERP & automation", text: "More output without more headcount" },
-        { title: "Risk management", text: "Diligence-ready at any time" },
-        { title: "Business operations", text: "Scale without chaos" },
-        { title: "Build Operate Transfer (BOT)", text: "Your own team, built the right way" },
+        {
+          title: "Financial reporting",
+          text: "Reporting that holds up under review",
+          description: "Technical accounting, audit readiness, SEC reporting support, and tax provision with footnotes. Board-pack ready.",
+        },
+        {
+          title: "Revenue operations",
+          text: "Clean revenue recognition",
+          description: "Quote-to-cash hygiene, billing accuracy, collections playbooks, and dispute handling.",
+        },
+        {
+          title: "ERP & automation",
+          text: "More output without more headcount",
+          description: "AI and RPA process automation, ERP implementations and integrations, and data visualization automation to reduce manual work.",
+        },
+        {
+          title: "Risk management",
+          text: "Diligence-ready at any time",
+          description: "Internal controls, SOX readiness, governance policies, and M&A due diligence preparation.",
+        },
+        {
+          title: "Business operations",
+          text: "Scale without chaos",
+          description: "Cross-functional support spanning finance, data, and people processes as the organization scales.",
+        },
+        {
+          title: "Build Operate Transfer (BOT)",
+          text: "Your own team, built the right way",
+          description: "Stand up a dedicated offshore finance team with documented SOPs, controls, and SLAs, then transfer it to you when you are ready to own it. 60 to 70% cost savings.",
+        },
       ],
     },
     {
@@ -184,11 +231,31 @@ export const servicesContent: ServicesContent = {
       text: "Turn financial data into forward-looking decisions and senior finance leadership.",
       cta: { label: "Explore Foresight", url: "#foresight" },
       items: [
-        { title: "FP&A & forecasting", text: "Board-ready every quarter" },
-        { title: "Fractional CFO", text: "CFO-level judgment at a fraction of the cost" },
-        { title: "BI dashboards & KPIs", text: "Real-time visibility" },
-        { title: "Strategy & operating model", text: "IPO and M&A ready" },
-        { title: "Cost optimization programs (DOGE Services)", text: "Lower burn, higher margins" },
+        {
+          title: "FP&A & forecasting",
+          text: "Board-ready every quarter",
+          description: "Budgeting, scenario planning, management reporting, and board packs that hold up to scrutiny.",
+        },
+        {
+          title: "Fractional CFO",
+          text: "CFO-level judgment at a fraction of the cost",
+          description: "Capital strategy, cash runway modeling, pricing, and investor relations support on demand.",
+        },
+        {
+          title: "BI dashboards & KPIs",
+          text: "Real-time visibility",
+          description: "Live dashboards pulling from your ERP, bank feeds, and billing systems. KPIs your board can act on.",
+        },
+        {
+          title: "Strategy & operating model",
+          text: "IPO and M&A ready",
+          description: "Operating model design and strategic advisory as you approach Series C, IPO readiness, or M&A.",
+        },
+        {
+          title: "Cost optimization programs (DOGE Services)",
+          text: "Lower burn, higher margins",
+          description: "Work optimization and cost-reduction programs driven by time-study analysis and automation.",
+        },
       ],
     },
   ],
@@ -200,17 +267,17 @@ export const servicesContent: ServicesContent = {
       {
         title: "Strategic",
         text: "Fundraising preparation, investor reporting, board decks, KPI design, forecasting, runway planning.",
-        image: { url: "/services/cfo-strategic.jpg", alt: "Notebook, charts, and a phone on a wooden desk" },
+        image: { url: "/services/cfo-dilivers-1.png", alt: "Notebook, charts, and a phone on a wooden desk" },
       },
       {
         title: "Operational",
         text: "Budgeting, spend controls, hiring models, pricing analysis, AP/AR workflows, financial systems.",
-        image: { url: "/services/cfo-operational.jpg", alt: "Two people reviewing printed charts at a table" },
+        image: { url: "/services/cfo-dilivers-2.png", alt: "Two people reviewing printed charts at a table" },
       },
       {
         title: "Leadership",
         text: "Turning numbers into decisions, helping founders prioritize, reducing financial uncertainty, creating accountability.",
-        image: { url: "/services/cfo-leadership.jpg", alt: "People reviewing reports with a calculator and sticky notes" },
+        image: { url: "/services/cfo-dilivers-3.png", alt: "People reviewing reports with a calculator and sticky notes" },
       },
     ],
   },
@@ -236,18 +303,39 @@ export const servicesContent: ServicesContent = {
       {
         title: "Fast deployment",
         text: "Discovery in days and go-live in about two weeks, with onboarding kept light.",
-        image: { url: "/services/investor-deployment.jpg", alt: "A founder thinking beside a whiteboard of notes" },
+        image: { url: "/services/scroll/portfolio-1.png", alt: "Fast deployment" },
       },
       {
         title: "Modular by stage",
         text: "Add or swap coverage as the portfolio company scales, with no renegotiation of the engagement.",
-        image: { url: "/services/investor-modular.jpg", alt: "A laptop, charts, and notes on a round table" },
+        image: { url: "/services/scroll/portfolio-2.png", alt: "Modular by stage" },
       },
       {
         title: "Shared dashboards",
         text: "KPIs and SLAs tracked in dashboards that you and your founders both access.",
-        image: { url: "/services/investor-dashboards.jpg", alt: "Two people reviewing papers and a laptop" },
+        image: { url: "/services/scroll/portfolio-3.png", alt: "Shared dashboards" },
+      },
+      {
+        title: "Predictable cost",
+        text: "A flat monthly fee with no surprise billings or scope creep as your companies grow.",
+        image: { url: "/services/scroll/portfolio-4.png", alt: "Predictable cost" },
+      },
+      {
+        title: "Zero compliance debt",
+        text: "Audit-ready books, clean tax records, and proactive reporting from day one.",
+        image: { url: "/services/scroll/portfolio-5.png", alt: "Zero compliance debt" },
+      },
+      {
+        title: "Strategic leadership",
+        text: "Fractional CFO guidance for runway planning, fundraising, and board governance.",
+        image: { url: "/services/scroll/portfolio-6.png", alt: "Strategic leadership" },
       },
     ],
+  },
+  pressure: {
+    title: "Tell Us Where",
+    emphasis: "The Pressure Is",
+    text: "A 30-minute discovery call is enough to map where your finance function is leaking time or cash, and what to fix first.",
+    cta: { label: "Join the Talent Network", url: "/contact-us" },
   },
 };

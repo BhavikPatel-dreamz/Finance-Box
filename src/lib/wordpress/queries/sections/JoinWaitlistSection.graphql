@@ -1,0 +1,7 @@
+fragment JoinWaitlistSection on PageBuilderPageBuilderJoinWaitlistSectionLayout {
+  __typename
+  title
+  description
+  formId
+  ctaButton { title url }
+}

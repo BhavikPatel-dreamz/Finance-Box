@@ -1,0 +1,14 @@
+# Case study as shown on cards (Clients, Knowledge Hub, /case-study archive) and the detail header.
+fragment CaseStudyCard on CaseStudy {
+  databaseId
+  title
+  slug
+  uri
+  excerpt
+  featuredImage { node { sourceUrl altText } }
+  caseStudiesOptions {
+    tagLine
+    featuredContent
+    frontFeatureImage { node { sourceUrl altText } }
+  }
+}

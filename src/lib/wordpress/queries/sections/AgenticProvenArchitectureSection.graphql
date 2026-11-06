@@ -1,0 +1,6 @@
+fragment AgenticProvenArchitectureSection on PageBuilderPageBuilderAgenticProvenArchitectureSectionLayout {
+  __typename
+  title
+  highlightTitle
+  architectureCards { image { node { sourceUrl altText } } title content }
+}

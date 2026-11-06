@@ -1,0 +1,21 @@
+# Core WordPress page fields shared by the public and preview page queries.
+# The page-builder sections are appended at runtime from the fragments in ./sections.
+fragment PageCore on Page {
+  databaseId
+  title
+  slug
+  uri
+  status
+  isFrontPage
+  content
+  featuredImage {
+    node {
+      sourceUrl
+      altText
+      mediaDetails {
+        width
+        height
+      }
+    }
+  }
+}

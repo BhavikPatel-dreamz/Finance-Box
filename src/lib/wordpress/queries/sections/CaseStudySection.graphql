@@ -1,0 +1,10 @@
+fragment CaseStudySection on PageBuilderPageBuilderCaseStudySectionLayout {
+  __typename
+  title
+  allCaseStudy { title url }
+  selectCaseStudy {
+    nodes {
+      ... on CaseStudy { ...CaseStudyCard }
+    }
+  }
+}

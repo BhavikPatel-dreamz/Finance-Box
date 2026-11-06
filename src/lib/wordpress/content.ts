@@ -1,74 +1,35 @@
+import "server-only";
+import { cache } from "react";
 import { cacheLife, cacheTag } from "next/cache";
-import { menuTag, menusTag, pageTag, publicReadsAreCached, schemaTag, settingsTag, sitemapTag } from "@/lib/cache/tags";
-import { sectionRegistry } from "@/components/sections/registry";
+import {
+  menuTag,
+  menusTag,
+  pageTag,
+  pagesTag,
+  publicReadsAreCached,
+  schemaTag,
+  settingsTag,
+  sitemapTag,
+} from "@/lib/cache/tags";
+import { sectionSelection } from "@/lib/page-builder/section-fragments";
 import { graphqlEndpoint, graphqlRequest } from "@/lib/wordpress/client";
-import { GraphQLConfigError, GraphQLRequestError } from "@/lib/wordpress/errors";
+import { GraphQLConfigError } from "@/lib/wordpress/errors";
 import {
   MenuByLocationDocument,
-  PageByUriDocument,
-  PreviewPageDocument,
+  PageCoreFragmentDoc,
   PublishedPagesDocument,
+  SchemaCapabilitiesDocument,
   SiteSettingsDocument,
   type MenuByLocationQuery,
-  type PageByUriQuery,
-  type PreviewPageQuery,
+  type PageCoreFragment,
   type PublishedPagesQuery,
+  type SchemaCapabilitiesQuery,
   type SiteSettingsQuery,
 } from "@/lib/wordpress/generated/graphql";
+import type { SectionData } from "@/lib/page-builder/types";
 import { canonicalUrl, plainText, siteOrigin } from "@/lib/wordpress/text";
-
-const PAGE_BUILDER_FIELD = "pageBuilder";
-const PAGE_SECTIONS_FIELD = "pageSections";
-const IDENTIFIER = /^[_A-Za-z][_0-9A-Za-z]*$/;
-type TypeRef = {
-  kind?: string | null;
-  name?: string | null;
-  ofType?: TypeRef | null;
-} | null;
-
-type TypeByNameResult = {
-  __type?: {
-    name?: string | null;
-    kind?: string | null;
-    fields?: Array<{ name?: string | null; type?: TypeRef } | null> | null;
-    enumValues?: Array<{ name?: string | null } | null> | null;
-    possibleTypes?: Array<{ name?: string | null } | null> | null;
-  } | null;
-};
-
-const TYPE_BY_NAME_QUERY = `
-  query TypeByName($name: String!) {
-    __type(name: $name) {
-      name
-      kind
-      fields {
-        name
-        type {
-          kind
-          name
-          ofType {
-            kind
-            name
-            ofType {
-              kind
-              name
-              ofType {
-                kind
-                name
-              }
-            }
-          }
-        }
-      }
-      enumValues {
-        name
-      }
-      possibleTypes {
-        name
-      }
-    }
-  }
-`;
+import { blogPath, isSlug } from "@/lib/wordpress/paths";
+import { print } from "graphql";
 
 export type CmsImage = {
   sourceUrl: string;
@@ -77,27 +38,32 @@ export type CmsImage = {
   height: number | null;
 };
 
+/** One Flexible Content row exactly as WPGraphQL returned it. */
 export type RawSection = Record<string, unknown> & { __typename?: string };
 
+export type PageSeo = {
+  title: string;
+  description: string;
+  canonical: string;
+  openGraphTitle: string;
+  openGraphDescription: string;
+  image: string | null;
+  noindex: boolean;
+};
+
 export type PublicPage = {
+  databaseId: number;
   title: string;
   slug: string;
   uri: string;
-  description: string;
+  isFrontPage: boolean;
   featuredImage: CmsImage | null;
-  sections: RawSection[];
-  sectionError: string | null;
-  seo: {
-    title: string;
-    description: string;
-    canonical: string;
-    openGraphTitle: string;
-    openGraphDescription: string;
-    image: string | null;
-  };
+  sections: SectionData[];
+  seo: PageSeo;
 };
 
 export type PageLoadResult =
+  | { status: "redirect"; to: string }
   | { status: "unconfigured" }
   | { status: "unavailable" }
   | { status: "not-found" }
@@ -110,6 +76,8 @@ export type SiteSettings = {
   source: "wordpress" | "fallback";
 };
 
+export type MenuLocation = "PRIMARY" | "FOOTER";
+
 export type NavigationItem = {
   id: string;
   label: string;
@@ -117,114 +85,163 @@ export type NavigationItem = {
   path: string;
   parentId: string | null;
   target: string;
+  cssClasses: string[];
 };
 
-type IntrospectedField = {
-  name: string;
-  typeName: string | null;
-  kind: string | null;
+/* -------------------------------------------------------------------------- */
+/*                             Schema capabilities                            */
+/* -------------------------------------------------------------------------- */
+
+type SchemaCapabilities = {
+  /** Live layout type names, or null when introspection is unavailable. */
+  layoutTypes: string[] | null;
+  /** Whether a Yoast-compatible `Page.seo` field exists. */
+  hasSeo: boolean;
 };
 
-type IntrospectedType = {
-  name: string;
-  kind: string | null;
-  fields: IntrospectedField[];
-  enumValues: string[];
-  possibleTypes: string[];
-};
-
-type PageNode = {
-  title?: string | null;
-  slug?: string | null;
-  uri?: string | null;
-  content?: string | null;
-  featuredImage?: {
-    node?: {
-      sourceUrl?: string | null;
-      altText?: string | null;
-      mediaDetails?: { width?: number | null; height?: number | null } | null;
-    } | null;
-  } | null;
-};
-
-const fallbackSettings: SiteSettings = {
-  name: "Financebox",
-  description: "",
-  url: siteOrigin(),
-  source: "fallback",
-};
-
-function unwrapType(type: TypeRef | null | undefined): { name: string | null; kind: string | null } {
-  let current = type;
-  while (current && (current.kind === "NON_NULL" || current.kind === "LIST")) {
-    current = current.ofType;
+async function readCapabilities(): Promise<SchemaCapabilities> {
+  try {
+    const data = await graphqlRequest<SchemaCapabilitiesQuery>(SchemaCapabilitiesDocument);
+    const layoutTypes = (data.layouts?.possibleTypes ?? []).flatMap((type) => (type.name ? [type.name] : []));
+    const pageFields = new Set((data.page?.fields ?? []).map((field) => field.name));
+    return { layoutTypes: layoutTypes.length > 0 ? layoutTypes : null, hasSeo: pageFields.has("seo") };
+  } catch (error) {
+    // Introspection can be disabled on hardened sites. Request every known
+    // fragment instead; GraphQL validation then reports any removed layout.
+    console.warn(`[wordpress] schema introspection unavailable: ${errorMessage(error)}`);
+    return { layoutTypes: null, hasSeo: false };
   }
-  return { name: current?.name ?? null, kind: current?.kind ?? null };
 }
 
-function normalizeType(type: TypeByNameResult["__type"]): IntrospectedType | null {
-  if (!type?.name) return null;
-  return {
-    name: type.name,
-    kind: type.kind ?? null,
-    fields: (type.fields ?? []).flatMap((field) => {
-      if (!field?.name) return [];
-      const unwrapped = unwrapType(field.type);
-      return [{ name: field.name, typeName: unwrapped.name, kind: unwrapped.kind }];
-    }),
-    enumValues: (type.enumValues ?? []).flatMap((value) => (value?.name ? [value.name] : [])),
-    possibleTypes: (type.possibleTypes ?? []).flatMap((value) => (value?.name ? [value.name] : [])),
-  };
+async function cachedCapabilities() {
+  "use cache";
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
+  cacheTag(schemaTag);
+  return readCapabilities();
 }
 
-function assertIdentifier(value: string) {
-  if (!IDENTIFIER.test(value)) {
-    throw new GraphQLRequestError("Refusing to query an unexpected GraphQL name.");
+const getCapabilities = cache(async (): Promise<SchemaCapabilities> => {
+  return publicReadsAreCached() ? cachedCapabilities() : readCapabilities();
+});
+
+/* -------------------------------------------------------------------------- */
+/*                                 Page query                                 */
+/* -------------------------------------------------------------------------- */
+
+const SEO_SELECTION = `
+  seo {
+    title
+    metaDesc
+    canonical
+    opengraphTitle
+    opengraphDescription
+    opengraphImage { sourceUrl }
+    metaRobotsNoindex
   }
-  return value;
-}
+`;
 
-function confirmedSelection(selection: string, confirmed: Set<string>) {
-  const chunks: string[] = [];
-  const source = selection.trim();
-  let index = 0;
-  while (index < source.length) {
-    while (index < source.length && /\s/.test(source[index])) index += 1;
-    if (index >= source.length) break;
-    const start = index;
-    while (index < source.length && /[A-Za-z0-9_]/.test(source[index])) index += 1;
-    const name = source.slice(start, index);
-    while (index < source.length && /\s/.test(source[index])) index += 1;
-    if (source[index] === "{") {
-      let depth = 1;
-      index += 1;
-      while (index < source.length && depth > 0) {
-        if (source[index] === "{") depth += 1;
-        else if (source[index] === "}") depth -= 1;
-        index += 1;
+const pageCoreDefinition = print(PageCoreFragmentDoc);
+
+function pageSelection(capabilities: SchemaCapabilities) {
+  const sections = sectionSelection(capabilities.layoutTypes ? new Set(capabilities.layoutTypes) : null);
+  const selection = `
+    ...PageCore
+    ${capabilities.hasSeo ? SEO_SELECTION : ""}
+    pageBuilder {
+      pageBuilder {
+        __typename
+        ${sections.spreads}
       }
     }
-    if (confirmed.has(name)) chunks.push(source.slice(start, index).trim());
-  }
-  return chunks.join(" ");
+  `;
+  return { selection, definitions: `${pageCoreDefinition}\n\n${sections.definitions}` };
 }
 
-async function readTypeInfo(name: string) {
-  if (!graphqlEndpoint()) return null;
-  const data = await graphqlRequest<TypeByNameResult>(TYPE_BY_NAME_QUERY, { name });
-  return normalizeType(data.__type);
+function publicPageQuery(capabilities: SchemaCapabilities) {
+  const { selection, definitions } = pageSelection(capabilities);
+  return `
+    query PageByUri($uri: String!) {
+      nodeByUri(uri: $uri) {
+        __typename
+        ... on Page { ${selection} }
+        ... on Post { slug status }
+      }
+    }
+    ${definitions}
+  `;
 }
 
-async function cachedTypeInfo(name: string) {
-  "use cache";
-  cacheLife("hours");
-  cacheTag(schemaTag);
-  return readTypeInfo(name);
+function minimalPageQuery(capabilities: SchemaCapabilities) {
+  // Fallback used when the full composed page query fails (for example after an
+  // ACF field was renamed or retyped but the frontend still requests the old
+  // field). It keeps the page shell, title and section order available instead
+  // of marking every page as "unavailable".
+  const base = `
+    ...PageCore
+    ${capabilities.hasSeo ? SEO_SELECTION : ""}
+    pageBuilder {
+      pageBuilder {
+        __typename
+      }
+    }
+  `;
+  return `
+    query PageByUri($uri: String!) {
+      nodeByUri(uri: $uri) {
+        __typename
+        ... on Page { ${base} }
+        ... on Post { slug status }
+      }
+    }
+    ${pageCoreDefinition}
+  `;
 }
 
-async function getTypeInfo(name: string) {
-  if (!publicReadsAreCached()) return readTypeInfo(name);
-  return cachedTypeInfo(name);
+function previewPageQuery(capabilities: SchemaCapabilities) {
+  const { selection, definitions } = pageSelection(capabilities);
+  // `preview.node` is the latest unsaved revision of a published page. For a
+  // draft that was never published, the page itself is the draft.
+  return `
+    query PreviewPage($id: ID!) {
+      page(id: $id, idType: DATABASE_ID) {
+        desiredSlug
+        ${selection}
+        preview {
+          node { ${selection} }
+        }
+      }
+    }
+    ${definitions}
+  `;
+}
+
+type YoastSeo = {
+  title?: string | null;
+  metaDesc?: string | null;
+  canonical?: string | null;
+  opengraphTitle?: string | null;
+  opengraphDescription?: string | null;
+  opengraphImage?: { sourceUrl?: string | null } | null;
+  metaRobotsNoindex?: string | null;
+};
+
+type PageNode = PageCoreFragment & {
+  __typename?: string;
+  seo?: YoastSeo | null;
+  pageBuilder?: { pageBuilder?: Array<SectionData | null> | null } | null;
+};
+
+type PublicPageResponse = { nodeByUri?: (PageNode | { __typename: "Post"; slug?: string | null; status?: string | null }) | null };
+type PreviewPageResponse = {
+  page?: (PageNode & { desiredSlug?: string | null; preview?: { node?: PageNode | null } | null }) | null;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                  Mapping                                   */
+/* -------------------------------------------------------------------------- */
+
+function errorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
 }
 
 function mapImage(page: PageNode): CmsImage | null {
@@ -238,175 +255,150 @@ function mapImage(page: PageNode): CmsImage | null {
   };
 }
 
-function mapPage(page: PageNode, sections: RawSection[], sectionError: string | null): PublicPage {
+/** Keeps only well-formed rows; order is exactly as WordPress returned it. */
+function mapSections(page: PageNode): SectionData[] {
+  const rows = page.pageBuilder?.pageBuilder ?? [];
+  return rows.filter(
+    (row): row is SectionData => row !== null && typeof row === "object" && typeof row.__typename === "string",
+  );
+}
+
+/** Without an SEO plugin, the first section that has a description stands in for the meta description. */
+function fallbackDescription(page: PageNode, sections: SectionData[]) {
+  const content = plainText(page.content);
+  if (content) return content.slice(0, 160);
+  for (const section of sections) {
+    const description = "description" in section ? plainText(section.description as string | null) : "";
+    if (description) return description.slice(0, 160);
+  }
+  return "";
+}
+
+/** The first section's title, used for the front page when no SEO plugin supplies one ("Home" is not a useful title). */
+function leadSectionTitle(sections: SectionData[]) {
+  const first = sections[0];
+  return first && typeof first.title === "string" ? plainText(first.title) : "";
+}
+
+function mapPage(page: PageNode, uri: string): PublicPage {
+  const sections = mapSections(page);
   const title = plainText(page.title) || "Untitled";
-  const description = plainText(page.content).slice(0, 160);
-  const uri = page.uri || "/";
+  const documentTitle = (page.isFrontPage && leadSectionTitle(sections)) || title;
+  const description = fallbackDescription(page, sections);
   const image = mapImage(page);
+  const seo = page.seo;
+
   return {
+    databaseId: page.databaseId,
     title,
-    slug: page.slug || "",
+    slug: page.slug ?? "",
     uri,
-    description,
+    isFrontPage: page.isFrontPage,
     featuredImage: image,
     sections,
-    sectionError,
     seo: {
-      title,
-      description,
-      canonical: canonicalUrl(uri),
-      openGraphTitle: title,
-      openGraphDescription: description,
-      image: image?.sourceUrl ?? null,
+      title: plainText(seo?.title) || documentTitle,
+      description: plainText(seo?.metaDesc) || description,
+      canonical: seo?.canonical || canonicalUrl(uri),
+      openGraphTitle: plainText(seo?.opengraphTitle) || plainText(seo?.title) || documentTitle,
+      openGraphDescription: plainText(seo?.opengraphDescription) || plainText(seo?.metaDesc) || description,
+      image: seo?.opengraphImage?.sourceUrl || image?.sourceUrl || null,
+      noindex: seo?.metaRobotsNoindex === "noindex",
     },
   };
 }
 
-const PAGE_SEO_QUERY = `
-  query PageSeo($uri: String!) {
-    nodeByUri(uri: $uri) {
-      ... on Page {
-        seo {
-          title
-          metaDesc
-          canonical
-          opengraphTitle
-          opengraphDescription
-          opengraphImage {
-            sourceUrl
-          }
-        }
-      }
-    }
-  }
-`;
+function failure(error: unknown, context: string): PageLoadResult {
+  if (error instanceof GraphQLConfigError) return { status: "unconfigured" };
+  console.error(`[wordpress] ${context}: ${errorMessage(error)}`);
+  return { status: "unavailable" };
+}
 
-type PageSeoResult = {
-  nodeByUri?: {
-    seo?: {
-      title?: string | null;
-      metaDesc?: string | null;
-      canonical?: string | null;
-      opengraphTitle?: string | null;
-      opengraphDescription?: string | null;
-      opengraphImage?: { sourceUrl?: string | null } | null;
-    } | null;
-  } | null;
+/* -------------------------------------------------------------------------- */
+/*                                Public pages                                */
+/* -------------------------------------------------------------------------- */
+
+async function readPublicPage(uri: string): Promise<PageLoadResult> {
+  if (!graphqlEndpoint()) return { status: "unconfigured" };
+
+  try {
+    const capabilities = await getCapabilities();
+    let data: PublicPageResponse;
+    try {
+      data = await graphqlRequest<PublicPageResponse>(publicPageQuery(capabilities), { uri });
+    } catch (error) {
+      console.warn(`[wordpress] full page query failed for ${uri}; retrying with minimal section data: ${errorMessage(error)}`);
+      data = await graphqlRequest<PublicPageResponse>(minimalPageQuery(capabilities), { uri });
+    }
+    const node = data.nodeByUri;
+    // WordPress puts posts at /<slug>/; the site serves them under /blog/.
+    if (node?.__typename === "Post") {
+      return node.status === "publish" && isSlug(node.slug) ? { status: "redirect", to: blogPath(node.slug) } : { status: "not-found" };
+    }
+    // Only published WordPress pages are public. Posts, terms and attachments
+    // resolve through nodeByUri too, but they are not rendered by this template.
+    if (!node || node.__typename !== "Page" || node.status !== "publish") return { status: "not-found" };
+    return { status: "ok", page: mapPage(node, node.uri || uri) };
+  } catch (error) {
+    return failure(error, `page query failed for ${uri}`);
+  }
+}
+
+async function cachedPublicPage(uri: string) {
+  "use cache";
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
+  cacheTag(pageTag(uri), pagesTag);
+  return readPublicPage(uri);
+}
+
+/** Published page by URI. Deduplicated per request, cached across requests in production. */
+export const getPublicPage = cache(async (uri: string): Promise<PageLoadResult> => {
+  return publicReadsAreCached() ? cachedPublicPage(uri) : readPublicPage(uri);
+});
+
+/**
+ * Draft or latest revision by database ID, fetched with the server-only
+ * preview credentials. Never cached.
+ */
+export const getPreviewPage = cache(async (databaseId: number): Promise<PageLoadResult & { path?: string }> => {
+  if (!graphqlEndpoint()) return { status: "unconfigured" };
+
+  try {
+    const capabilities = await getCapabilities();
+    const data = await graphqlRequest<PreviewPageResponse>(
+      previewPageQuery(capabilities),
+      { id: String(databaseId) },
+      { preview: true },
+    );
+    const page = data.page;
+    if (!page) return { status: "not-found" };
+
+    // Unpublished drafts have no URI yet. Preview them at their intended slug.
+    const path = page.uri || `/${page.desiredSlug || page.slug || `draft-${page.databaseId}`}/`;
+    const source = page.preview?.node ?? page;
+    const mapped = mapPage({ ...source, databaseId: page.databaseId, uri: page.uri }, path);
+    return { status: "ok", page: { ...mapped, seo: { ...mapped.seo, noindex: true } }, path };
+  } catch (error) {
+    return failure(error, `preview query failed for page ${databaseId}`);
+  }
+});
+
+/* -------------------------------------------------------------------------- */
+/*                               Global settings                              */
+/* -------------------------------------------------------------------------- */
+
+const fallbackSettings: SiteSettings = {
+  name: "Financebox",
+  description: "",
+  url: siteOrigin(),
+  source: "fallback",
 };
-
-async function loadSeo(uri: string, page: PublicPage, preview: boolean) {
-  try {
-    const data = await graphqlRequest<PageSeoResult>(PAGE_SEO_QUERY, { uri }, { preview });
-    const seo = data.nodeByUri?.seo;
-    if (!seo) return page;
-
-    return {
-      ...page,
-      seo: {
-        title: plainText(seo.title) || page.seo.title,
-        description: plainText(seo.metaDesc) || page.seo.description,
-        canonical: seo.canonical || page.seo.canonical,
-        openGraphTitle: plainText(seo.opengraphTitle) || plainText(seo.title) || page.seo.openGraphTitle,
-        openGraphDescription:
-          plainText(seo.opengraphDescription) || plainText(seo.metaDesc) || page.seo.openGraphDescription,
-        image: seo.opengraphImage?.sourceUrl || page.seo.image,
-      },
-    };
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "";
-    if (!/Cannot query field "seo"/i.test(message)) {
-      console.error(`Financebox SEO query failed for ${uri}: ${message}`);
-    }
-    return page;
-  }
-}
-
-async function loadSections(uri: string, preview: boolean) {
-  try {
-    const pageType = await getTypeInfo("Page");
-    const builderField = pageType?.fields.find((field) => field.name === PAGE_BUILDER_FIELD);
-    if (!builderField?.typeName) {
-      return { sections: [] as RawSection[], sectionError: null };
-    }
-
-    const builderType = await getTypeInfo(builderField.typeName);
-    const sectionsField = builderType?.fields.find((field) => field.name === PAGE_SECTIONS_FIELD);
-    if (!sectionsField?.typeName) {
-      return { sections: [] as RawSection[], sectionError: null };
-    }
-
-    const sectionsType = await getTypeInfo(sectionsField.typeName);
-    const possibleTypes = sectionsType?.possibleTypes ?? [];
-    const fragments: string[] = [];
-
-    for (const typeName of possibleTypes) {
-      const registration = sectionRegistry.find((section) => section.matchesType(typeName));
-      if (!registration) continue;
-      const layoutType = await getTypeInfo(typeName);
-      const fields = registration.fields.filter((field) =>
-        layoutType?.fields.some((candidate) => candidate.name === field),
-      );
-      if (fields.length === 0) continue;
-      const confirmed = new Set(fields);
-      const selection =
-        registration.selection && fields.length === registration.fields.length
-          ? registration.selection
-          : registration.selection
-            ? confirmedSelection(registration.selection, confirmed)
-            : fields.map(assertIdentifier).join(" ");
-      if (!/^[\sA-Za-z0-9_{}]+$/.test(selection)) {
-        throw new GraphQLRequestError("Refusing to query an unexpected GraphQL selection.");
-      }
-      fragments.push(`... on ${assertIdentifier(typeName)} { __typename ${selection} }`);
-    }
-
-    if (possibleTypes.length === 0) {
-      return { sections: [] as RawSection[], sectionError: null };
-    }
-
-    const query = `
-      query PageSections($uri: String!) {
-        nodeByUri(uri: $uri) {
-          ... on Page {
-            ${assertIdentifier(PAGE_BUILDER_FIELD)} {
-              ${assertIdentifier(PAGE_SECTIONS_FIELD)} {
-                __typename
-                ${fragments.join("\n")}
-              }
-            }
-          }
-        }
-      }
-    `;
-
-    const data = await graphqlRequest<{
-      nodeByUri?: {
-        pageBuilder?: { pageSections?: RawSection[] | null } | null;
-      } | null;
-    }>(query, { uri }, { preview });
-
-    return {
-      sections: data.nodeByUri?.pageBuilder?.pageSections ?? [],
-      sectionError: null,
-    };
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Section query failed.";
-    if (/introspection is not allowed/i.test(message)) {
-      return { sections: [] as RawSection[], sectionError: null };
-    }
-    console.error(`Financebox section query failed for ${uri}: ${message}`);
-    return {
-      sections: [] as RawSection[],
-      sectionError: "Page sections could not be loaded.",
-    };
-  }
-}
 
 async function readSettings(): Promise<SiteSettings> {
   if (!graphqlEndpoint()) return fallbackSettings;
 
   try {
-    const data = await graphqlRequest<SiteSettingsQuery>(SiteSettingsDocument, {});
+    const data = await graphqlRequest<SiteSettingsQuery>(SiteSettingsDocument);
     const settings = data.generalSettings;
     if (!settings?.title) return fallbackSettings;
     return {
@@ -415,109 +407,63 @@ async function readSettings(): Promise<SiteSettings> {
       url: settings.url || siteOrigin(),
       source: "wordpress",
     };
-  } catch {
+  } catch (error) {
+    console.warn(`[wordpress] settings query failed: ${errorMessage(error)}`);
     return fallbackSettings;
   }
 }
 
 async function cachedSettings() {
   "use cache";
-  cacheLife("hours");
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
   cacheTag(settingsTag);
   return readSettings();
 }
 
-export async function getSettings(): Promise<SiteSettings> {
-  if (!publicReadsAreCached()) return readSettings();
-  return cachedSettings();
-}
+export const getSettings = cache(async (): Promise<SiteSettings> => {
+  return publicReadsAreCached() ? cachedSettings() : readSettings();
+});
 
-async function readMenu(location: "PRIMARY" | "FOOTER"): Promise<NavigationItem[]> {
+async function readMenu(location: MenuLocation): Promise<NavigationItem[]> {
   if (!graphqlEndpoint()) return [];
 
   try {
-    const enumType = await getTypeInfo("MenuLocationEnum");
-    if (!enumType?.enumValues.includes(location)) return [];
-
     const data = await graphqlRequest<MenuByLocationQuery>(MenuByLocationDocument, { location });
     return (data.menuItems?.nodes ?? []).flatMap((item) => {
-      if (!item?.id || !item.label) return [];
+      if (!item.id || !item.label) return [];
       return [
         {
           id: item.id,
-          label: item.label,
+          label: plainText(item.label),
           url: item.url ?? "",
           path: item.path ?? "",
           parentId: item.parentId ?? null,
           target: item.target ?? "",
+          cssClasses: (item.cssClasses ?? []).filter((value): value is string => Boolean(value)),
         },
       ];
     });
-  } catch {
+  } catch (error) {
+    console.warn(`[wordpress] ${location} menu query failed: ${errorMessage(error)}`);
     return [];
   }
 }
 
-async function cachedMenu(location: "PRIMARY" | "FOOTER") {
+async function cachedMenu(location: MenuLocation) {
   "use cache";
-  cacheLife("hours");
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
   cacheTag(menusTag, menuTag(location));
   return readMenu(location);
 }
 
-export async function getMenu(location: "PRIMARY" | "FOOTER"): Promise<NavigationItem[]> {
-  if (!publicReadsAreCached()) return readMenu(location);
-  return cachedMenu(location);
-}
+/** Menu assigned to a WordPress menu location. Empty when none is assigned. */
+export const getMenu = cache(async (location: MenuLocation): Promise<NavigationItem[]> => {
+  return publicReadsAreCached() ? cachedMenu(location) : readMenu(location);
+});
 
-async function readPublicPage(uri: string): Promise<PageLoadResult> {
-  if (!graphqlEndpoint()) return { status: "unconfigured" };
-
-  try {
-    const data = await graphqlRequest<PageByUriQuery>(PageByUriDocument, { uri });
-    const node = data.nodeByUri;
-    if (!node || node.__typename !== "Page") return { status: "not-found" };
-
-    const loaded = await loadSections(node.uri || uri, false);
-    const page = await loadSeo(node.uri || uri, mapPage(node, loaded.sections, loaded.sectionError), false);
-    return { status: "ok", page };
-  } catch (error) {
-    if (error instanceof GraphQLConfigError) return { status: "unconfigured" };
-    return { status: "unavailable" };
-  }
-}
-
-async function cachedPublicPage(uri: string) {
-  "use cache";
-  cacheLife("hours");
-  cacheTag(pageTag(uri));
-  return readPublicPage(uri);
-}
-
-export async function getPublicPage(uri: string): Promise<PageLoadResult> {
-  if (!publicReadsAreCached()) return readPublicPage(uri);
-  return cachedPublicPage(uri);
-}
-
-export async function getPreviewPage(uri: string): Promise<PageLoadResult> {
-  if (!graphqlEndpoint()) return { status: "unconfigured" };
-
-  try {
-    const data = await graphqlRequest<PreviewPageQuery>(
-      PreviewPageDocument,
-      { id: uri },
-      { preview: true },
-    );
-    if (!data.page?.uri) return { status: "not-found" };
-
-    const loaded = await loadSections(data.page.uri, true);
-    const page = await loadSeo(data.page.uri, mapPage(data.page, loaded.sections, loaded.sectionError), true);
-    return { status: "ok", page };
-  } catch (error) {
-    if (error instanceof GraphQLConfigError) return { status: "unconfigured" };
-    return { status: "unavailable" };
-  }
-}
+/* -------------------------------------------------------------------------- */
+/*                                   Sitemap                                  */
+/* -------------------------------------------------------------------------- */
 
 async function readPublicPageUris(): Promise<string[]> {
   if (!graphqlEndpoint()) return [];
@@ -527,18 +473,15 @@ async function readPublicPageUris(): Promise<string[]> {
 
   try {
     for (let index = 0; index < 20; index += 1) {
-      const data: PublishedPagesQuery = await graphqlRequest<PublishedPagesQuery>(
-        PublishedPagesDocument,
-        { after },
-      );
+      const data: PublishedPagesQuery = await graphqlRequest<PublishedPagesQuery>(PublishedPagesDocument, { after });
       for (const node of data.pages?.nodes ?? []) {
         if (node?.uri) uris.push(node.uri);
       }
       if (!data.pages?.pageInfo?.hasNextPage || !data.pages.pageInfo.endCursor) break;
       after = data.pages.pageInfo.endCursor;
     }
-  } catch {
-    return uris;
+  } catch (error) {
+    console.warn(`[wordpress] sitemap query failed: ${errorMessage(error)}`);
   }
 
   return uris;
@@ -546,12 +489,11 @@ async function readPublicPageUris(): Promise<string[]> {
 
 async function cachedPublicPageUris() {
   "use cache";
-  cacheLife("hours");
-  cacheTag(sitemapTag);
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
+  cacheTag(sitemapTag, pagesTag);
   return readPublicPageUris();
 }
 
 export async function getPublicPageUris(): Promise<string[]> {
-  if (!publicReadsAreCached()) return readPublicPageUris();
-  return cachedPublicPageUris();
+  return publicReadsAreCached() ? cachedPublicPageUris() : readPublicPageUris();
 }

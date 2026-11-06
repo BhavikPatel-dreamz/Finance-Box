@@ -1,0 +1,7 @@
+fragment WhyFiabLetsTalkSection on PageBuilderPageBuilderWhyFiabLetsTalkSectionLayout {
+  __typename
+  title
+  image { node { sourceUrl altText } }
+  description
+  ctaButton { title url }
+}

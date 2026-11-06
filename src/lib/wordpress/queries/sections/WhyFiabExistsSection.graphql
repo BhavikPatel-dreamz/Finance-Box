@@ -1,0 +1,14 @@
+fragment WhyFiabExistsSection on PageBuilderPageBuilderWhyFiabExistsSectionLayout {
+  __typename
+  title
+  description
+  backgroundImage {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+  missionSubTitle
+  missionContent
+}
+

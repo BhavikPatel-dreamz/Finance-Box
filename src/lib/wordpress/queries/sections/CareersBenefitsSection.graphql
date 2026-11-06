@@ -1,0 +1,5 @@
+fragment CareersBenefitsSection on PageBuilderPageBuilderCareersBenefitsSectionLayout {
+  __typename
+  title
+  benefits { icon { node { sourceUrl altText } } title description }
+}

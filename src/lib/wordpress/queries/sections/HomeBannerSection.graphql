@@ -1,0 +1,10 @@
+fragment HomeBannerSection on PageBuilderPageBuilderHomeBannerSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  ctaButton { title url }
+  floatingCtaButton { title url }
+  statCards { label value note }
+  backgroundImage { node { sourceUrl altText } }
+}

@@ -1,0 +1,17 @@
+fragment ServicesFindYourStageSection on PageBuilderPageBuilderServicesFindYourStageSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  stageCards {
+    title
+    stageLabel
+    description
+    icon {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
+}

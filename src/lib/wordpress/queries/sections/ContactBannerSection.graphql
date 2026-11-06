@@ -1,0 +1,7 @@
+fragment ContactBannerSection on PageBuilderPageBuilderContactBannerSectionLayout {
+  __typename
+  subtitle
+  title
+  description
+  backgroundImage { node { sourceUrl altText } }
+}

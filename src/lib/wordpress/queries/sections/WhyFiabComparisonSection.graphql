@@ -1,0 +1,11 @@
+fragment WhyFiabComparisonSection on PageBuilderPageBuilderWhyFiabComparisonSectionLayout {
+  __typename
+  title
+  description
+  featuresColumnLabel
+  fiabLogo { node { sourceUrl altText } }
+  softwarePlatformLabel
+  freelanceCfoLabel
+  inHouseHireLabel
+  comparisonRows { feature fiab softwarePlatform freelanceCfo inHouseHire }
+}

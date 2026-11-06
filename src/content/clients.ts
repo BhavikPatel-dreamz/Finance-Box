@@ -1,0 +1,183 @@
+export type ClientStat = {
+  value: string;
+  label: string;
+};
+
+export type ClientCaseStudy = {
+  id: string;
+  label: string;
+  title: string;
+  challenge: string;
+  solution: string;
+  outcome: string;
+  image: string;
+  ctaUrl: string;
+};
+
+export type ClientLogosItem = {
+  name: string;
+  image: string;
+};
+
+export type ClientReview = {
+  id: string;
+  text: string;
+  author: string;
+  role: string;
+  avatar: string;
+};
+
+export type ClientsContent = {
+  hero: {
+    eyebrow: string;
+    title: string;
+    highlight: string;
+    text: string;
+    clientProofTitle: string;
+    clientProofItems: string[];
+    stats: ClientStat[];
+  };
+  caseStudies: {
+    title: string;
+    items: ClientCaseStudy[];
+  };
+  logosSection: {
+    title1: string;
+    highlight1: string;
+    title2: string;
+    logos: ClientLogosItem[];
+  };
+  reviewsSection: {
+    title: string;
+    mainReview: {
+      quote: string;
+      author: string;
+      role: string;
+      image: string;
+    };
+    reviews: ClientReview[];
+  };
+  // 👇 NAYA: Pressure / CTA section
+  pressure: {
+    title: string;
+    emphasis: string;
+    text: string;
+    cta: { label: string; url: string };
+  };
+};
+
+export const clientsContent: ClientsContent = {
+  hero: {
+    eyebrow: "CLIENTS",
+    title: "The Work,",
+    highlight: "Measured",
+    text: "Companies bring FIAB a finance function under strain. Here is what changed for some of them.",
+    clientProofTitle: "CLIENT PROOF",
+    clientProofItems: ["300+ successful projects", "95% client retention", "20+ industries served"],
+    stats: [
+      { value: "300+", label: "Successful projects" },
+      { value: "95%", label: "Client retention" },
+      { value: "20+", label: "Industries served" },
+    ],
+  },
+  caseStudies: {
+    title: "Featured Case Studies",
+    items: [
+      {
+        id: "1", label: "CASE STUDY 1: FLYR LABS", title: "Global finance, rebuilt fast",
+        challenge: "Rapid international expansion required complete overhaul of multi-entity financial consolidation and systems integration.",
+        solution: "Deployed fractional CFO leadership, automated revenue recognition, and standardized month-end close schedules.",
+        outcome: "Cut monthly close from 18 days to 3 days and delivered board-ready financial visibility on demand.",
+        image: "/clients/case-study-1.png", ctaUrl: "/clients/case-study-1",
+      },
+      {
+        id: "2", label: "CASE STUDY 2: DEEPSCRIBE", title: "A hiring engine to match growth",
+        challenge: "Fast clinical scaling created urgent need for dedicated finance, payroll, and people operations infrastructure.",
+        solution: "Embedded operational leadership with automated hiring workflows to scale distributed capacity smoothly.",
+        outcome: "Reduced time-to-hire by 45% while maintaining audit-ready operational controls across all teams.",
+        image: "/clients/case-study-2.png", ctaUrl: "/clients/case-study-2",
+      },
+      {
+        id: "3", label: "CASE STUDY 3: OFFSHORING ENABLEMENT", title: "Lower cost, wider talent pool",
+        challenge: "High US operational costs were limiting runway without providing round-the-clock finance and reporting support.",
+        solution: "Established a dedicated offshore delivery hub in India with standardized SOPs, data security, and dual-layer review.",
+        outcome: "Achieved 60%+ operational cost savings with real-time continuous close cycles and zero compliance lapses.",
+        image: "/clients/case-study-3.png", ctaUrl: "/clients/case-study-3",
+      },
+    ],
+  },
+  logosSection: {
+    title1: "Trusted by",
+    highlight1: "40+ Growing",
+    title2: "Companies in the USA and Globally",
+    logos: [
+      { name: "Pawlicy Advisor", image: "/clients/logos/pawlicy-advisor.png" },
+      { name: "CareMessage", image: "/clients/logos/care-message.png" },
+      { name: "Dusty Robotics", image: "/clients/logos/dusty-robotics.png" },
+      { name: "Standard Bots", image: "/clients/logos/standard-bots.png" },
+      { name: "American Robotics", image: "/clients/logos/american-robotics.png" },
+      { name: "Chatfuel", image: "/clients/logos/chatfuel.png" },
+      { name: "Plexxikon", image: "/clients/logos/plexxikon.png" },
+      { name: "FLYR", image: "/clients/logos/flyr.png" },
+      { name: "Embolx", image: "/clients/logos/embolx.png" },
+      { name: "Airlinq", image: "/clients/logos/Airlinq.png" },
+      { name: "Fastly", image: "/clients/logos/fastly.png" },
+      { name: "Neumera Consulting", image: "/clients/logos/neumera.png" },
+      { name: "Lifelink Systems", image: "/clients/logos/lifelink.png" },
+      { name: "Aionics", image: "/clients/logos/Aionics.png" },
+      { name: "Vetcelerator", image: "/clients/logos/vetceleratar.png" },
+      { name: "Ondas", image: "/clients/logos/ondas.png" },
+      { name: "Nova Access", image: "/clients/logos/nova-access.png" },
+      { name: "Kimia", image: "/clients/logos/kimia.png" },
+      { name: "Cargomatic", image: "/clients/logos/cargomatic.png" },
+      { name: "Loopio", image: "/clients/logos/loopio.png" },
+      { name: "Yobi", image: "/clients/logos/yobi.png" },
+    ],
+  },
+  reviewsSection: {
+    title: "In Their Words",
+    mainReview: {
+      quote: "“They offer more customized services than the bigger firms, which is great when you're in the early stage and figuring things out.”",
+      author: "Curran Hughes",
+      role: "Founder & CEO, Renegade Plastics",
+      image: "/clients/ceo.png",
+    },
+    reviews: [
+      {
+        id: "1",
+        text: "Venture-savvy CFO partner. Reports built around metrics that matter.",
+        author: "Co-Founder & CEO, Tribute",
+        role: "",
+        avatar: "/clients/review1.png",
+      },
+      {
+        id: "2",
+        text: "Flexible structure, seamless daily communication, real cost savings.",
+        author: "CEO, Pawlicy Advisor Inc",
+        role: "",
+        avatar: "/clients/review2.png",
+      },
+      {
+        id: "3",
+        text: "Personalized guidance and integrity. An outstanding partnership.",
+        author: "Head of Finance & BizOps, Mutiny",
+        role: "",
+        avatar: "/clients/review3.png",
+      },
+      {
+        id: "4",
+        text: "Delivers at startup speed while doing it right.",
+        author: "Founder & CEO, FLYR Labs",
+        role: "",
+        avatar: "/clients/review4.png",
+      },
+    ],
+  },
+  // 👇 NAYA: Pressure defaults
+  pressure: {
+    title: "Your company could be",
+    emphasis: "the next case study",
+    text: "Tell us where the pressure is. A 30-minute discovery call maps what to fix first.",
+    cta: { label: "Join the Talent Network", url: "/#contact" },
+  },
+};

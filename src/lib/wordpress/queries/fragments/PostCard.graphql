@@ -1,0 +1,15 @@
+# Blog post as shown on cards (Knowledge Hub "Our Blog", /blog archive) and the post header.
+fragment PostCard on Post {
+  databaseId
+  title
+  slug
+  uri
+  date
+  excerpt
+  # Used for the reading-time estimate.
+  content
+  featuredImage { node { sourceUrl altText } }
+  author { node { name avatar { url } } }
+  categories(first: 5) { nodes { name slug } }
+  tags(first: 20) { nodes { name slug } }
+}

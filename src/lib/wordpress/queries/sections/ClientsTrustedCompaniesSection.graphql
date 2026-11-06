@@ -1,0 +1,5 @@
+fragment ClientsTrustedCompaniesSection on PageBuilderPageBuilderClientsTrustedCompaniesSectionLayout {
+  __typename
+  title
+  logos { logo { node { sourceUrl altText } } }
+}

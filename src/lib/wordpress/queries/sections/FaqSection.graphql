@@ -1,0 +1,5 @@
+fragment FaqSection on PageBuilderPageBuilderFaqSectionLayout {
+  __typename
+  title
+  faqs { question answer }
+}

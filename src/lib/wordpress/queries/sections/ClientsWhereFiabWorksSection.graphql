@@ -1,0 +1,11 @@
+fragment ClientsWhereFiabWorksSection on PageBuilderPageBuilderClientsWhereFiabWorksSectionLayout {
+  __typename
+  title
+  description
+  industries { title }
+  image { node { sourceUrl altText } }
+  portfolioTitle
+  portfolioDescription
+  portfolioImage { node { sourceUrl altText } }
+  portfolioCtaButton { title url }
+}

@@ -1,0 +1,10 @@
+fragment OurBlogSection on PageBuilderPageBuilderOurBlogSectionLayout {
+  __typename
+  title
+  allBlogCta { title url }
+  selectBlog {
+    nodes {
+      ... on Post { ...PostCard }
+    }
+  }
+}

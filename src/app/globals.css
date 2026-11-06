@@ -6,7 +6,7 @@
   --foreground: #f5f7fb;
   --muted: #a7b0be;
   --border: rgba(255, 255, 255, 0.12);
-  --accent: #39e58c;
+  --accent: #23c55e;
 }
 
 @theme inline {
@@ -15,11 +15,391 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
+  --font-mono: var(--font-dm-mono), "DM Mono", monospace;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
 }
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Eyebrow common styles */
+.eyebrow {
+  font-family: var(--font-dm-mono), "DM Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  line-height: 18px;
+}
+
+/* Eyebrow for dark section background */
+.eyebrow-dark,
+.eyebrow-on-dark {
+  color: #FFFFFF;
+  opacity: 0.7;
+}
+
+/* Eyebrow for white section background */
+.eyebrow-light,
+.eyebrow-white,
+.eyebrow-on-light {
+  color: #121826;
+  opacity: 0.7;
+}
+
+/* Eyebrow for green accent */
+.eyebrow-green,
+.eyebrow-accent {
+  color: #23C55E;
+  opacity: 1;
+}
+
+/* Eyebrow dash variants */
+.eyebrow-no-dash::before {
+  display: none !important;
+}
+
+/* Standard Project Container (1280px) */
+.container-1280 {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Header Container (1326px) */
+.container-header {
+  width: 100%;
+  max-width: 1326px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Container that aligns to max-w-[1280px] on the left and bleeds to edge on the right */
+.container-bleed-right {
+  padding-left: 1rem;
+  padding-right: 0;
+}
+@media (min-width: 640px) {
+  .container-bleed-right {
+    padding-left: max(1.5rem, calc((100% - 1280px) / 2));
+    padding-right: 0;
+  }
+}
+
+/* Continuous smooth marquee */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+.group:hover .animate-marquee,
+:has(> .animate-marquee):hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+.trusted-by-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
+
+/* iOS smooth touch scrolling */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Why Compare Table Responsive Grid Columns */
+.why-compare-table {
+  --col-first: minmax(170px, 1.3fr);
+  --col-featured: minmax(135px, 1.1fr);
+  --col-other: minmax(115px, 1fr);
+  --header-row-height: 88px;
+}
+
+@media (min-width: 640px) {
+  .why-compare-table {
+    --col-first: minmax(200px, 1.3fr);
+    --col-featured: minmax(160px, 1.15fr);
+    --col-other: minmax(130px, 1fr);
+    --header-row-height: 92px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .why-compare-table {
+    --col-first: minmax(240px, 1.4fr);
+    --col-featured: minmax(200px, 1.15fr);
+    --col-other: minmax(160px, 1fr);
+    --header-row-height: 96px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Green button hover effect inside dark sections: bg color white, text color #121826 (only for actual green buttons, not white buttons) */
+/* In dark sections, green buttons expand with a white circular background and dark text on hover */
+:is(
+  .hero-section,
+  .services-details,
+  .footer-cta-section,
+  .team-section,
+  .how-we-work,
+  [class*="bg-[#121826]"],
+  [class*="bg-[#07110d]"],
+  [class*="bg-[#07090f]"],
+  [class*="bg-[#050D1F]"],
+  [class*="bg-[#050d1f]"],
+  [class*="bg-[#191F2D]"],
+  [class*="bg-[#191f2c]"],
+  [class*="bg-[#091024]"],
+  [class*="bg-[#182030]"],
+  .dark,
+  [data-theme="dark"]
+) :is(
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"])
+) > span[aria-hidden="true"] {
+  background-color: #ffffff !important;
+}
+
+:is(
+  .hero-section,
+  .services-details,
+  .footer-cta-section,
+  .team-section,
+  .how-we-work,
+  [class*="bg-[#121826]"],
+  [class*="bg-[#07110d]"],
+  [class*="bg-[#07090f]"],
+  [class*="bg-[#050D1F]"],
+  [class*="bg-[#050d1f]"],
+  [class*="bg-[#191F2D]"],
+  [class*="bg-[#191f2c]"],
+  [class*="bg-[#091024]"],
+  [class*="bg-[#182030]"],
+  .dark,
+  [data-theme="dark"]
+) :is(
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover
+) {
+  background-color: #ffffff !important;
+  color: #121826 !important;
+}
+
+:is(
+  .hero-section,
+  .services-details,
+  .footer-cta-section,
+  .team-section,
+  .how-we-work,
+  [class*="bg-[#121826]"],
+  [class*="bg-[#07110d]"],
+  [class*="bg-[#07090f]"],
+  [class*="bg-[#050D1F]"],
+  [class*="bg-[#050d1f]"],
+  [class*="bg-[#191F2D]"],
+  [class*="bg-[#191f2c]"],
+  [class*="bg-[#091024]"],
+  [class*="bg-[#182030]"],
+  .dark,
+  [data-theme="dark"]
+) :is(
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
+) {
+  color: #121826 !important;
+}
+
+:is(
+  .hero-section,
+  .services-details,
+  .footer-cta-section,
+  .team-section,
+  .how-we-work,
+  [class*="bg-[#121826]"],
+  [class*="bg-[#07110d]"],
+  [class*="bg-[#07090f]"],
+  [class*="bg-[#050D1F]"],
+  [class*="bg-[#050d1f]"],
+  [class*="bg-[#191F2D]"],
+  [class*="bg-[#191f2c]"],
+  [class*="bg-[#091024]"],
+  [class*="bg-[#182030]"],
+  .dark,
+  [data-theme="dark"]
+) :is(
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
+) svg {
+  color: #121826 !important;
+}
+
+/* Motion Design & Interactive Hover Utilities (Inspired by financeinabox.com) */
+@media (hover: hover) and (pointer: fine) {
+  .image-hover-zoom {
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .group:hover .image-hover-zoom,
+  .group.is-flipped .image-hover-zoom,
+  .image-hover-zoom:hover {
+    transform: scale(1.03);
+  }
+}
+
+/* Header Dropdown & Mobile Menu Animations */
+@keyframes dropdown-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-enter {
+  animation: dropdown-fade 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes menu-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu-enter {
+  animation: menu-slide-down 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Global Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+}
+
+
+@keyframes hero-float {
+
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+@keyframes hero-chart-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.hero-float-a {
+  animation: hero-float 6s ease-in-out 1.6s infinite;
+}
+
+.hero-float-b {
+  animation: hero-float 7s ease-in-out 2s infinite;
+}
+
+.hero-chart-wipe {
+  clip-path: inset(0 100% 0 0);
+  animation: hero-chart-wipe 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+}
+
+/* Services hero tier cards load animations */
+@keyframes tier-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tier-line-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.tier-card-animate {
+  opacity: 0;
+  animation: tier-slide-up 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+.tier-line-animate {
+  opacity: 0;
+  animation: tier-line-fade 850ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero-float-a,
+  .hero-float-b {
+    animation: none;
+  }
+
+  .hero-chart-wipe {
+    animation: none;
+    clip-path: none;
+  }
+
+  .tier-card-animate,
+  .tier-line-animate {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+

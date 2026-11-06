@@ -1,0 +1,14 @@
+query CaseStudyBySlug($slug: ID!) {
+  caseStudy(id: $slug, idType: SLUG) {
+    ...CaseStudyCard
+    status
+    content
+  }
+}
+
+query CaseStudiesList($first: Int!, $after: String) {
+  caseStudies(first: $first, after: $after, where: { status: PUBLISH, orderby: { field: DATE, order: DESC } }) {
+    pageInfo { hasNextPage endCursor }
+    nodes { ...CaseStudyCard }
+  }
+}

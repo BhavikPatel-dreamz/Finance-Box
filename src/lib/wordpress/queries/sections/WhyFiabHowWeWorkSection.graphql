@@ -1,0 +1,5 @@
+fragment WhyFiabHowWeWorkSection on PageBuilderPageBuilderWhyFiabHowWeWorkSectionLayout {
+  __typename
+  title
+  workCards { number title description }
+}

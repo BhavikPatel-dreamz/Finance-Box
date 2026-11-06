@@ -1,37 +1,136 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { HomeContent } from "@/content/home";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 
 type NavLink = HomeContent["header"]["links"][number];
 
-function headerSurface(surface: "grid" | "plain", scrolled: boolean) {
-  if (surface === "plain" && !scrolled) return "border-transparent bg-transparent";
-  if (surface === "plain") return "border-white/5 bg-[#07110d]/95 backdrop-blur";
-  return "border-white/5 bg-[#07110d]";
+function isUrlActive(
+  currentPath: string,
+  targetUrl: string,
+  options?: { currentHash?: string }
+): boolean {
+  if (!currentPath || !targetUrl) return false;
+  if (targetUrl.startsWith("http://") || targetUrl.startsWith("https://")) return false;
+
+  const [pathWithQuery, hash] = targetUrl.split("#");
+  const targetPath = pathWithQuery.split("?")[0];
+
+  const cleanCurrent = currentPath.replace(/\/+$/, "") || "/";
+  const cleanTarget = (targetPath || "").replace(/\/+$/, "") || "/";
+
+  // If the target URL contains an explicit anchor hash (e.g. /services/#foundation, /#about, /#team)
+  if (hash) {
+    const targetHash = `#${hash}`;
+    const hashMatches = options?.currentHash === targetHash;
+    const pathMatches = cleanTarget === "/" ? true : cleanCurrent === cleanTarget;
+    return pathMatches && hashMatches;
+  }
+
+  // If target has no hash:
+  if (cleanTarget === "/") {
+    return cleanCurrent === "/";
+  }
+
+  return cleanCurrent === cleanTarget;
+}
+
+function headerSurface(surface: "grid" | "plain", isSticky: boolean, menuOpen: boolean) {
+  if (menuOpen) return "border-white/10 bg-[#07110d]";
+  if (!isSticky) return "border-transparent bg-transparent";
+  return "border-white/10 bg-[#07110d]/98 backdrop-blur-md shadow-xl";
 }
 
 export function HomeHeader({
   header,
-  surface = "grid",
+  surface = "plain",
   logoHref = "#top",
+  placeholder = true,
 }: {
   header: HomeContent["header"];
   surface?: "grid" | "plain";
   logoHref?: string;
+  placeholder?: boolean;
 }) {
+  const pathname = usePathname() || "";
+  const [currentHash, setCurrentHash] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLabel, setOpenLabel] = useState<string | null>(null);
+  const [mobileOpenLabel, setMobileOpenLabel] = useState<string | null>(null);
+  const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState<number | undefined>(undefined);
   const navRef = useRef<HTMLElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
 
+  // Track location hash for anchor links like #foundation, #momentum, etc.
   useEffect(() => {
-    if (surface !== "plain") return;
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const updateHash = () => setCurrentHash(window.location.hash || "");
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
+
+  // Measure header bar height to keep placeholder perfectly sized
+  useEffect(() => {
+    if (!barRef.current) return;
+    const updateHeight = () => {
+      if (barRef.current) {
+        setHeaderHeight(barRef.current.offsetHeight + 1);
+      }
+    };
+    updateHeight();
+
+    const ro = new ResizeObserver(updateHeight);
+    ro.observe(barRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  // Sticky on scroll up, hide on scroll down
+  useEffect(() => {
+    let lastScrollY = Math.max(0, window.scrollY);
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = Math.max(0, window.scrollY);
+
+          if (currentScrollY <= 10) {
+            setVisible(true);
+            setScrolled(false);
+          } else {
+            setScrolled(true);
+
+            const delta = currentScrollY - lastScrollY;
+            if (Math.abs(delta) > 6) {
+              if (delta > 0) {
+                // Scrolling down -> hide header
+                setVisible(false);
+                setOpenLabel(null);
+              } else {
+                // Scrolling up -> show header
+                setVisible(true);
+              }
+            }
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [surface]);
+  }, []);
 
   useEffect(() => {
     function close(event: MouseEvent) {
@@ -48,85 +147,191 @@ export function HomeHeader({
     };
   }, []);
 
+  // Close mobile menu on page navigation
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  // When mobile menu opens, auto-expand only the dropdown containing the active page (if any)
+  useEffect(() => {
+    if (menuOpen) {
+      const activeParent = header.links.find((link) =>
+        link.children.some((child) => isUrlActive(pathname, child.url, { currentHash }))
+      );
+      setMobileOpenLabel(activeParent ? activeParent.label : null);
+    } else {
+      setMobileOpenLabel(null);
+    }
+  }, [menuOpen, pathname, currentHash, header.links]);
+
+  const isHeaderVisible = menuOpen || visible;
+  const isHeaderSticky = scrolled || menuOpen;
+
   return (
-    <header className={`sticky top-0 z-30 border-b ${headerSurface(surface, scrolled)}`}>
-      {surface === "grid" ? (
+    <>
+      {/* Placeholder to preserve document flow height when header is fixed */}
+      {placeholder ? (
         <div
-          className="pointer-events-none absolute inset-0 opacity-60"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(40,92,62,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(40,92,62,0.35) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
+          style={{ height: headerHeight ? `${headerHeight}px` : undefined }}
+          className={headerHeight === undefined ? "h-[81px] sm:h-[97px] lg:h-[112px]" : ""}
+          aria-hidden="true"
         />
       ) : null}
-      <div className="relative mx-auto flex w-full max-w-6xl items-center justify-between gap-6 px-6 py-4">
-        <a href={logoHref} className="shrink-0">
-          <img src={header.logo.url} alt={header.logo.alt} className="h-10 w-auto" />
-        </a>
-        <nav ref={navRef} aria-label="Primary" className="hidden items-center gap-7 text-sm text-white/85 md:flex">
-          {header.links.map((link) => (
-            <DesktopItem key={link.label} link={link} open={openLabel === link.label} onOpen={setOpenLabel} />
-          ))}
-        </nav>
-        <a
-          href={header.cta.url}
-          className="hidden items-center gap-3 rounded-full bg-[#3DDC84] py-2.5 pr-2.5 pl-5 text-sm font-semibold text-[#06210f] md:inline-flex"
-        >
-          {header.cta.label}
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-[#06210f]/30">
-            <Arrow />
-          </span>
-        </a>
-        <button
-          type="button"
-          className="relative rounded-full border border-white/15 px-3 py-2 text-sm text-white md:hidden"
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((value) => !value)}
-        >
-          Menu
-        </button>
-      </div>
+
+      <header
+        className={`fixed top-0 left-0 right-0 z-99 border-b transition-all duration-300 ease-in-out ${
+          isHeaderVisible ? "translate-y-0" : "-translate-y-full"
+        } ${headerSurface(surface, isHeaderSticky, menuOpen)}`}
+      >
+        <div ref={barRef}>
+          <Container size="header" className="relative flex items-center justify-between gap-6 py-5 sm:py-6 lg:py-7">
+            <Link href={logoHref} className="shrink-0 outline-0">
+              <Image src={header.logo.url} alt={header.logo.alt} width={140} height={40} sizes="(max-width: 1024px) 120px, 160px" className="h-10 sm:h-12 lg:h-13.75 w-auto object-contain" />
+            </Link>
+            <nav
+              ref={navRef}
+              aria-label="Primary"
+              className="hidden items-center gap-6 xl:gap-7.5 text-[15px] xl:text-base text-white/85 lg:flex"
+            >
+              {header.links.map((link) => (
+                <DesktopItem
+                  key={link.label}
+                  link={link}
+                  open={openLabel === link.label}
+                  pathname={pathname}
+                  currentHash={currentHash}
+                  onOpen={setOpenLabel}
+                />
+              ))}
+            </nav>
+
+            {/* Updated Button Size */}
+            <div className="hidden lg:block">
+              <Button
+                color="green"
+                size="header"
+                text={header.cta.label}
+                href={header.cta.url} target={header.cta.target} rel={header.cta.target === "_blank" ? "noopener noreferrer" : undefined}
+                onDark={true}
+                className="w-[154px]"
+              />
+            </div>
+
+            {/* Mobile / Tablet Icon-Only Toggle Button */}
+            <button
+              type="button"
+              className={`relative inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border transition-all duration-200 shadow-sm backdrop-blur-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#23C55E]/50 lg:hidden ${
+                menuOpen
+                  ? "border-[#23C55E]/50 bg-[#23C55E]/15 text-[#23C55E] hover:border-[#23C55E]/70 hover:bg-[#23C55E]/20"
+                  : "border-white/15 bg-white/[0.06] text-white hover:border-white/30 hover:bg-white/[0.12]"
+              }`}
+              aria-expanded={menuOpen}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMenuOpen((value) => !value)}
+            >
+              <div className="relative flex h-3.5 w-4.5 flex-col justify-between items-center" aria-hidden="true">
+                <span
+                  className={`h-[2px] w-full rounded-full transition-all duration-300 ease-in-out ${
+                    menuOpen ? "translate-y-[6px] rotate-45 bg-[#23C55E]" : "bg-white"
+                  }`}
+                />
+                <span
+                  className={`h-[2px] w-full rounded-full bg-white transition-all duration-200 ease-in-out ${
+                    menuOpen ? "scale-x-0 opacity-0" : "opacity-100"
+                  }`}
+                />
+                <span
+                  className={`h-[2px] w-full rounded-full transition-all duration-300 ease-in-out ${
+                    menuOpen ? "-translate-y-[6px] -rotate-45 bg-[#23C55E]" : "bg-white"
+                  }`}
+                />
+              </div>
+            </button>
+          </Container>
+        </div>
+
+      {/* Mobile / Tablet Dropdown Menu */}
       {menuOpen ? (
-        <nav aria-label="Mobile" className="relative flex flex-col gap-2 border-t border-white/10 px-6 py-4 text-sm md:hidden">
-          {header.links.map((link) => (
-            <MobileItem key={link.label} link={link} onNavigate={() => setMenuOpen(false)} />
-          ))}
-          <a href={header.cta.url} className="mt-2 font-semibold text-[#3DDC84]" onClick={() => setMenuOpen(false)}>
-            {header.cta.label}
-          </a>
-        </nav>
+        <div className="mobile-menu-enter relative border-t border-white/10 bg-[#07110d]/98 backdrop-blur-xl shadow-2xl lg:hidden">
+          <Container size="header" className="px-6 md:py-5 max-h-[calc(100vh-80px)] overflow-y-auto">
+            <nav aria-label="Mobile" className="flex flex-col divide-y divide-white/[0.08] pb-6">
+              {header.links.map((link) => (
+                <MobileItem
+                  key={link.label}
+                  link={link}
+                  open={mobileOpenLabel === link.label}
+                  onToggle={() =>
+                    setMobileOpenLabel((current) => (current === link.label ? null : link.label))
+                  }
+                  pathname={pathname}
+                  currentHash={currentHash}
+                  onNavigate={() => setMenuOpen(false)}
+                />
+              ))}
+
+              <div className="pt-5 mt-2 border-t-0">
+                  <Button
+                    color="green"
+                    size="header"
+                    text={header.cta.label}
+                    href={header.cta.url} target={header.cta.target} rel={header.cta.target === "_blank" ? "noopener noreferrer" : undefined}
+                    onDark={true}
+                    className="w-full justify-center text-center"
+                    onClick={() => setMenuOpen(false)}
+                  />
+              </div>
+            </nav>
+          </Container>
+        </div>
       ) : null}
     </header>
+  </>
   );
 }
 
 function DesktopItem({
   link,
   open,
+  pathname,
+  currentHash,
   onOpen,
 }: {
   link: NavLink;
   open: boolean;
+  pathname: string;
+  currentHash: string;
   onOpen: (label: string | null) => void;
 }) {
+  const hasActiveChild = link.children.some((child) => isUrlActive(pathname, child.url, { currentHash }));
+  const isDirectActive = isUrlActive(pathname, link.url, { currentHash });
+  const isActive = isDirectActive || hasActiveChild;
+
   if (link.children.length === 0) {
     return (
-      <a href={link.url} className="hover:text-white">
+      <Link
+        href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+        className={`whitespace-nowrap transition-colors ${isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-[#23C55E]"
+          }`}
+      >
         {link.label}
-      </a>
+      </Link>
     );
   }
 
   return (
-    <div className="relative" onMouseEnter={() => onOpen(link.label)} onMouseLeave={() => onOpen(null)}>
-      <span className="inline-flex items-center gap-1.5">
-        <a href={link.url} className="hover:text-white">
+    <div className="group relative" onMouseEnter={() => onOpen(link.label)} onMouseLeave={() => onOpen(null)}>
+      <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+        <Link
+          href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+          className={`transition-colors ${isActive ? "text-[#23C55E] font-medium" : "text-white/85 group-hover:text-[#23C55E]"
+            }`}
+        >
           {link.label}
-        </a>
+        </Link>
         <button
           type="button"
-          className="hover:text-white"
+          className={`transition-colors ${isActive ? "text-[#23C55E]" : "text-white/85 group-hover:text-[#23C55E]"
+            }`}
           aria-expanded={open}
           aria-haspopup="true"
           aria-label={`${link.label} menu`}
@@ -136,15 +341,28 @@ function DesktopItem({
         </button>
       </span>
       {open ? (
-        <div className="absolute top-full left-1/2 z-40 w-56 -translate-x-1/2 pt-3">
-          <ul className="rounded-2xl border border-white/10 bg-[#0d1612] p-2 shadow-2xl">
-            {link.children.map((child) => (
-              <li key={child.label}>
-                <a href={child.url} className="block rounded-xl px-3 py-2 text-white/80 hover:bg-white/5 hover:text-white" onClick={() => onOpen(null)}>
-                  {child.label}
-                </a>
-              </li>
-            ))}
+        <div className="dropdown-enter absolute top-full left-0 z-50 w-60 pt-2.5">
+          <ul className="rounded-xl border border-white/10 bg-[#121826]/98 backdrop-blur-xl p-1.5 shadow-2xl space-y-0.5">
+            {link.children.map((child) => {
+              const isChildActive = isUrlActive(pathname, child.url, { currentHash });
+              return (
+                <li key={child.label}>
+                  <Link
+                    href={child.url} target={child.target} rel={child.target === "_blank" ? "noopener noreferrer" : undefined}
+                    className={`flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm transition-all duration-150 ${isChildActive
+                        ? "bg-[#23C55E]/15 text-[#23C55E] font-medium"
+                        : "text-white/80 hover:bg-white/[0.08] hover:text-white font-normal"
+                      }`}
+                    onClick={() => onOpen(null)}
+                  >
+                    <span>{child.label}</span>
+                    {isChildActive && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_6px_#23C55E]" />
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       ) : null}
@@ -152,52 +370,116 @@ function DesktopItem({
   );
 }
 
-function MobileItem({ link, onNavigate }: { link: NavLink; onNavigate: () => void }) {
-  const [open, setOpen] = useState(false);
+function MobileItem({
+  link,
+  open,
+  onToggle,
+  pathname,
+  currentHash,
+  onNavigate,
+}: {
+  link: NavLink;
+  open: boolean;
+  onToggle: () => void;
+  pathname: string;
+  currentHash: string;
+  onNavigate: () => void;
+}) {
+  const hasActiveChild = link.children.some((child) => isUrlActive(pathname, child.url, { currentHash }));
+  const isDirectActive = isUrlActive(pathname, link.url, { currentHash });
+  const isParentActive = isDirectActive || hasActiveChild;
+
   if (link.children.length === 0) {
     return (
-      <a href={link.url} onClick={onNavigate}>
-        {link.label}
-      </a>
+      <div className="py-1">
+        <Link
+          href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+          onClick={onNavigate}
+          className={`flex items-center justify-between py-2.5 text-[16px] sm:text-[17px] font-medium transition-colors ${
+            isDirectActive ? "text-[#23C55E] font-semibold" : "text-white/90 hover:text-white"
+          }`}
+        >
+          <span>{link.label}</span>
+          {isDirectActive && (
+            <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_8px_#23C55E]" />
+          )}
+        </Link>
+      </div>
     );
   }
+
   return (
-    <div>
-      <div className="flex items-center justify-between py-1">
-        <a href={link.url} onClick={onNavigate}>
+    <div className="py-1">
+      <div className="flex items-center justify-between py-2.5">
+        <Link
+          href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+          onClick={onNavigate}
+          className={`text-[16px] sm:text-[17px] font-medium transition-colors ${
+            isParentActive ? "text-[#23C55E] font-semibold" : "text-white/90 hover:text-white"
+          }`}
+        >
           {link.label}
-        </a>
-        <button type="button" aria-expanded={open} aria-label={`${link.label} menu`} onClick={() => setOpen((value) => !value)}>
+        </Link>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-label={`${link.label} menu`}
+          onClick={onToggle}
+          className={`flex h-9 w-9 items-center justify-center -mr-2 rounded-full transition-colors ${
+            open ? "text-[#23C55E]" : "text-white/60 hover:text-white"
+          } active:scale-95`}
+        >
           <Chevron open={open} />
         </button>
       </div>
-      {open ? (
-        <ul className="mt-1 mb-2 space-y-2 border-l border-white/10 pl-3 text-white/70">
-          {link.children.map((child) => (
-            <li key={child.label}>
-              <a href={child.url} onClick={onNavigate}>
-                {child.label}
-              </a>
-            </li>
-          ))}
+
+      {open && (
+        <ul className="mb-2.5 ml-1 space-y-1 border-l-2 border-[#23C55E]/30 pl-4">
+          {link.children.map((child) => {
+            const isChildActive = isUrlActive(pathname, child.url, { currentHash });
+            return (
+              <li key={child.label}>
+                <Link
+                  href={child.url} target={child.target} rel={child.target === "_blank" ? "noopener noreferrer" : undefined}
+                  onClick={onNavigate}
+                  className={`flex items-center gap-2 py-2 text-[15px] transition-colors ${
+                    isChildActive
+                      ? "font-semibold text-[#23C55E]"
+                      : "text-white/65 hover:text-white font-normal"
+                  }`}
+                >
+                  {isChildActive && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_6px_#23C55E]" />
+                  )}
+                  {child.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
-      ) : null}
+      )}
     </div>
   );
 }
 
 function Chevron({ open }: { open: boolean }) {
   return (
-    <svg viewBox="0 0 16 16" className={`h-3 w-3 transition ${open ? "rotate-180" : ""}`} aria-hidden="true">
-      <path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function Arrow() {
-  return (
-    <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden="true">
-      <path d="M4 8h8M9 4.5 12.5 8 9 11.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      aria-hidden="true"
+      className={`inline-block transition-transform duration-300 ease-out ${open ? "[transform:rotateX(180deg)]" : "[transform:rotateX(0deg)]"
+        }`}
+    >
+      <path
+        d="M2.5 4.5L6 8l3.5-3.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }

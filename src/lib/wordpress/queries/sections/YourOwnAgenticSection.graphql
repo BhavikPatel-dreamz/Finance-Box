@@ -1,0 +1,6 @@
+fragment YourOwnAgenticSection on PageBuilderPageBuilderYourOwnAgenticSectionLayout {
+  __typename
+  title
+  description
+  buildYourOwnAgentic { icon { node { sourceUrl altText } } title content greatFor }
+}

@@ -1,0 +1,10 @@
+fragment CommonBannerSection on PageBuilderPageBuilderCommonBannerSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  tagLine
+  backgroundImage { node { sourceUrl altText } }
+  ctaButton { title url }
+  backgroundImage { node { sourceUrl altText } }
+}

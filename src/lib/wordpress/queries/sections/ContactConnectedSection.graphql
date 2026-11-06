@@ -1,0 +1,7 @@
+fragment ContactConnectedSection on PageBuilderPageBuilderContactConnectedSectionLayout {
+  __typename
+  connectedTitle
+  connectedDescription
+  linkedinBox { title image { node { sourceUrl altText } } description ctaButton { title url } }
+  newsletterBox { title newsletterFormId description }
+}
