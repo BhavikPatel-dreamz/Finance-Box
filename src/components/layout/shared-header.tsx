@@ -11,7 +11,7 @@ export function SharedHeader({ header }: { header: SiteHeaderContent }) {
   return (
     <HomeHeader
       header={header}
-      surface={isHome ? "grid" : "plain"}
+      surface="plain"
       logoHref={isHome ? "#top" : "/"}
       placeholder={false}
     />
