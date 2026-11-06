@@ -21,7 +21,7 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
 
   return (
     <Container>
-      <div className="flex-1 grid grid-cols-1 min-[890px]:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center py-10 sm:py-14 md:py-12 lg:py-20">
+      <div className="flex-1 grid grid-cols-1 min-[890px]:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center pt-7 pb-10 sm:py-14 md:py-12 lg:py-20">
         {/* Left Column */}
         <div className="max-w-2xl">
           {eyebrowData && (

@@ -564,7 +564,7 @@ export function ServicesInvestors({ investors }: { investors: ServicesContent["i
       <Container>
         {/* Header Area - Contained */}
         <Reveal preset="slide-up" distance={20} className="mx-auto w-full mb-10 sm:mb-14 lg:mb-16">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 sm:gap-10 lg:gap-16">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-0 sm:gap-10 lg:gap-16">
             <div className="max-w-2xl">
               <p className="inline-flex items-center gap-3 text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-5 sm:mb-6">
                 <span className="h-px w-6 bg-[#23C55E]" />
