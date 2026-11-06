@@ -5,4 +5,5 @@ fragment WhyFiabBannerSection on PageBuilderPageBuilderWhyFiabBannerSectionLayou
   description
   ctaButton { title url }
   highlights { number title }
+  backgroundImage { node { sourceUrl altText } }
 }

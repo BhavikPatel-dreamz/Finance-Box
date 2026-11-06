@@ -6,4 +6,5 @@ fragment HomeBannerSection on PageBuilderPageBuilderHomeBannerSectionLayout {
   ctaButton { title url }
   floatingCtaButton { title url }
   statCards { label value note }
+  backgroundImage { node { sourceUrl altText } }
 }

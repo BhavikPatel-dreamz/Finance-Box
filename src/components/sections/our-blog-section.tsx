@@ -2,7 +2,7 @@ import { defineSection } from "@/lib/page-builder/types";
 import type { OurBlogSectionFragment } from "@/lib/wordpress/generated/graphql";
 import type { PostCardFragment } from "@/lib/wordpress/generated/graphql";
 import { KnowledgeHubBlogs } from "@/components/knowledge-hub/knowledge-hub-sections";
-import { blogCardFromPost } from "@/lib/wordpress/cards";
+import { blogCardFromPost, primaryTag } from "@/lib/wordpress/cards";
 import { blogArchivePath, isPlaceholderUrl } from "@/lib/wordpress/paths";
 import { link, text } from "@/lib/wordpress/fields";
 
@@ -17,9 +17,11 @@ export const ourBlogSection = defineSection<OurBlogSectionFragment>({
       <KnowledgeHubBlogs
         blogs={{
           title: text(data.title),
-          items: (data.selectBlog?.nodes ?? []).map((post) =>
-            blogCardFromPost(post as PostCardFragment),
-          ),
+          items: (data.selectBlog?.nodes ?? []).map((post) => {
+            const card = blogCardFromPost(post as PostCardFragment);
+            // Knowledge Hub shows the first tag; the /blog archive keeps the category.
+            return { ...card, category: primaryTag(post as PostCardFragment, card.category) };
+          }),
           cta,
         }}
       />

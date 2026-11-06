@@ -1,7 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { HomeBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { HeroSection } from "@/components/hero";
-import { link, splitEmphasis, text } from "@/lib/wordpress/fields";
+import { link, media, splitEmphasis, text } from "@/lib/wordpress/fields";
 
 function parseStatValue(raw: unknown): { value: string; unit: string } {
   if (typeof raw !== "string") return { value: "", unit: "" };
@@ -25,6 +25,7 @@ export const homeBannerSection = defineSection<HomeBannerSectionFragment>({
   hero: true,
   render: (data) => {
     const titleParts = splitEmphasis(data.title);
+    const backgroundImage = media(data.backgroundImage)?.url;
     const [first, second] = data.statCards ?? [];
     const close = parseStatValue(first?.value);
     const runway = parseStatValue(second?.value);
@@ -40,6 +41,7 @@ export const homeBannerSection = defineSection<HomeBannerSectionFragment>({
       <HeroSection
         page="home"
         overrides={{
+          ...(backgroundImage ? { background: backgroundImage } : {}),
           eyebrow: text(data.subTitle),
           title: titleParts ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim() : text(data.title),
           highlight: titleParts ? titleParts.emphasis : "",
