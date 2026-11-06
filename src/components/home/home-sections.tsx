@@ -205,7 +205,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
       <Container>
 
         <Reveal preset="slide-up" distance={24}>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10">
             {difference.title.split("FIAB")[0]}
             <span className="font-black italic">FIAB</span>
             {difference.title.split("FIAB")[1]}
@@ -313,7 +313,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
               <Eyebrow variant="green" className="mb-4 sm:mb-6">
                 {growth.eyebrow}
               </Eyebrow>
-              <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] lg:max-w-[450px]">
                 {growth.title}
               </h2>
             </div>
@@ -353,7 +353,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
             <StaggerItem
               key={idx}
               index={idx}
-              className="group relative overflow-hidden rounded-[14px] sm:rounded-[16px] p-6 sm:p-7 md:p-8 border border-[#FFFFFF24] flex flex-col min-h-0 md:min-h-[344px] transition-colors duration-500 hover:bg-white/[0.04]"
+              className="group relative overflow-hidden rounded-[10px] p-6 sm:p-7 md:p-8 border border-[#FFFFFF24] flex flex-col min-h-0 md:min-h-[344px] transition-colors duration-500 hover:bg-white/[0.04]"
             >
               <h3 className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold leading-[1.15] mb-3 sm:mb-5">{card.title}</h3>
               <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[150%] text-white/60 mb-5 sm:mb-7 transition-colors duration-500 group-hover:text-white/80">{card.text}</p>
