@@ -385,6 +385,17 @@ export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent
             <p className="text-[16px] font-light leading-[160%] text-white/70">
               {waitlist.text}
             </p>
+
+            {waitlist.cta?.label && waitlist.cta.url && (
+              <div className="mt-6 sm:mt-8">
+                <GreenButton
+                  label={waitlist.cta.label}
+                  href={waitlist.cta.url}
+                  bgColor="#23C55E"
+                  onDark={true}
+                />
+              </div>
+            )}
           </Reveal>
 
           <Reveal preset="slide-right" distance={20} className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
