@@ -58,9 +58,9 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
           </Reveal>
 
           {/* Right Column (Bullets + CTA) */}
-          <div className="max-w-md lg:justify-self-end">
+          <div className="max-w-[472px] w-full lg:justify-self-end">
             {config.rightDescription && (
-              <p className="text-[16px] font-light leading-[160%] text-white/80 max-w-md mb-6">
+              <p className="text-[16px] font-light leading-[160%] text-white/80 mb-6">
                 {config.rightDescription}
               </p>
             )}

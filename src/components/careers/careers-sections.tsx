@@ -300,7 +300,7 @@ export function FaqBlock({
     <Section theme="cream" spacing="both" className="faq-section bg-[#F6F5F3] py-12 sm:py-16 lg:py-20">
       <Container size="narrow">
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[48px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6 sm:mb-8 md:mb-12 text-[#121826]">
+          <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[45px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-6 sm:mb-8 md:mb-12 text-[#121826]">
             {faq.title}
           </h2>
         </Reveal>

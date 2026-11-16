@@ -60,7 +60,7 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
       <Container>
 
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 lg:mb-10">
             {whatWeDo.title}
           </h2>
         </Reveal>

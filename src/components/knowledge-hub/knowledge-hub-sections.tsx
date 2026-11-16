@@ -16,7 +16,7 @@ export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs
     <Section theme="light" spacing="both">
       <Container>
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12">
             {blogs.title}
           </h2>
         </Reveal>
@@ -92,7 +92,7 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
     <Section theme="light" spacing="both">
       <Container>
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium tracking-[-0.8px] leading-[1.15] lg:leading-[1.05] mb-8 lg:mb-10">
             {caseStudy.title}
           </h2>
         </Reveal>

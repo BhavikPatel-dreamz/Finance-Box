@@ -39,7 +39,7 @@ type Theme = {
 };
 
 const DARK_BASE =
-  "w-full border bg-[#121826] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] transition-colors duration-200";
+  "w-full border bg-[#121826] text-white placeholder:text-white/50 focus:outline-none focus:border-[#23C55E] transition-colors duration-200";
 
 const COMMON_FORM_BUTTON_WHITE: Theme["button"] = {
   variant: "white",
@@ -55,7 +55,7 @@ const THEMES: Record<Appearance, Theme> = {
     input: "h-[50px] rounded-[8px] px-4 text-[14px]",
     textarea: "rounded-[8px] p-4 text-[14px]",
     base: DARK_BASE,
-    border: "border-white/10",
+    border: "border-[#FFFFFF1A]",
     choice: "text-white/80",
     legend: "text-white/70",
     option: "bg-[#121826]",
@@ -71,7 +71,7 @@ const THEMES: Record<Appearance, Theme> = {
     input: "h-[46px] sm:h-[50px] rounded-[10px] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base",
     textarea: "rounded-[10px] py-3 sm:py-4 px-4 sm:px-5 text-[15px] sm:text-base",
     base: DARK_BASE,
-    border: "border-white/10",
+    border: "border-[#FFFFFF1A]",
     choice: "text-white/80",
     legend: "text-white/70",
     option: "bg-[#121826]",

@@ -34,7 +34,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
               <Eyebrow variant="light" className="mb-6">
                 {whatIs.eyebrow}
               </Eyebrow>
-              <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
                 {(() => {
                   let title = whatIs.title;
                   const hl = whatIs.highlight;
@@ -368,7 +368,7 @@ export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
           <Reveal preset="slide-left" distance={20} className="max-w-md lg:pt-4">
-            <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
               {(() => {
                 let title = waitlist.title;
                 const hl = waitlist.highlight;
@@ -399,7 +399,7 @@ export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent
             )}
           </Reveal>
 
-          <Reveal preset="slide-right" distance={20} className="w-full bg-[#191F2D] rounded-[16px] p-8 md:p-10 border border-white/5">
+          <Reveal preset="slide-right" distance={20} className="w-full bg-[#FFFFFF0F] rounded-[10px] p-5 md:p-7.5 border border-white/6">
             {form}
           </Reveal>
 

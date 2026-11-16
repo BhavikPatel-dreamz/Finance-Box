@@ -27,11 +27,11 @@ export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
 
       <div className="relative bg-[#121826] rounded-[14px] sm:rounded-[16px] p-4.5 sm:p-5 lg:p-6 m-3 sm:m-3.5 lg:m-4 w-[calc(100%-24px)] sm:w-[calc(100%-28px)] lg:w-[calc(100%-32px)] text-white flex flex-col justify-between min-h-[210px] sm:min-h-[225px] lg:min-h-[247px]">
         <div>
-          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 lg:gap-3 text-[11px] sm:text-[11.5px] lg:text-[12px] font-normal text-white/60 mb-3 sm:mb-3.5 lg:mb-4">
-            <span className="text-white font-medium uppercase font-mono tracking-wider">{blog.category}</span>
-            <span className="opacity-40">|</span>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 lg:gap-3 text-[11px] lg:text-[12px] font-normal text-white/60 mb-3 sm:mb-3.5 lg:mb-4">
+            <span className="text-white font-medium font-mono">{blog.category}</span>
+            <span className="opacity-12">|</span>
             <span className="font-mono">{blog.date}</span>
-            <span className="opacity-40">|</span>
+            <span className="opacity-12">|</span>
             <span className="font-mono">{blog.readTime}</span>
           </div>
           <h3 className="text-[18px] sm:text-[20px] lg:text-[24px] font-semibold leading-[1.25] lg:leading-[1.2] mb-4 sm:mb-5 lg:mb-6">
