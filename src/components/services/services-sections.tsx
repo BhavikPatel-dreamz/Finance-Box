@@ -377,7 +377,7 @@ function DetailBlock({ detail, idx }: { detail: ServiceDetail; idx: number }) {
     >
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-7 sm:gap-9 lg:gap-8 xl:gap-14 2xl:gap-20 items-start">
-          <div className="w-full max-w-2xl lg:max-w-md min-w-0">
+          <div className="w-full max-w-2xl lg:max-w-77.75 min-w-0">
             <div className="flex size-8 lg:size-8.5 items-center justify-center rounded-full border border-white/10 bg-[#121826] text-[13px] lg:text-[14px] font-semibold text-[#23C55E] tabular-nums">
               {String(idx + 1).padStart(2, "0")}
             </div>
