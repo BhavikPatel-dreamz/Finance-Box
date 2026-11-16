@@ -120,14 +120,18 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
                   </p>
                   <h3 className="text-[18px] sm:text-[20px] font-semibold leading-[26px] sm:leading-[30px] text-white">
                     {(() => {
-                      let title = tier.title;
-                      const hl = tier.highlight;
-                      if (title && hl && title.endsWith(hl)) {
+                      let title = tier.title || "";
+                      let hl = tier.highlight || "";
+                      if (!hl && title.includes(".")) {
+                        const dotIdx = title.indexOf(".");
+                        hl = title.slice(dotIdx + 1).trim();
+                        title = title.slice(0, dotIdx + 1).trim();
+                      } else if (title && hl && title.endsWith(hl)) {
                         title = title.slice(0, -hl.length).trim();
                       }
                       return (
                         <>
-                          {title}{" "}
+                          {title}{hl ? " " : ""}
                           {hl && (
                             <span className="font-semibold text-[#23C55E]">
                               {hl}
