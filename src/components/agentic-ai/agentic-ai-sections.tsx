@@ -338,9 +338,10 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
                 {card.bullets.map((bullet, bIdx) => (
                   <li key={bIdx} className="flex items-start gap-3">
                     <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
-                    <span className="text-[16px] leading-[1.2] text-[#121826]">
-                      <span className="font-medium">{bullet.boldText}</span>
-                      <span className="font-light">{bullet.normalText}</span>
+                    <span className="text-[16px] leading-[1.4] text-[#121826]">
+                      {bullet.boldText && <span className="font-medium">{bullet.boldText}</span>}
+                      {bullet.boldText && bullet.normalText && !bullet.boldText.endsWith(" ") && !bullet.normalText.startsWith(" ") && " "}
+                      {bullet.normalText && <span className="font-light">{bullet.normalText}</span>}
                     </span>
                   </li>
                 ))}
