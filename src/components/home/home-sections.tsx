@@ -58,7 +58,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
               </Reveal>
 
               <Reveal immediate preset="slide-up" delay={380} distance={24}>
-                <p className="mt-4 sm:mt-6 max-w-[550px] text-[15px] sm:text-[16px] xl:text-[18px] font-light leading-[160%] text-white/80">
+                <p className="mt-4 sm:mt-6 max-w-[550px] text-[15px] sm:text-[16px] xl:text-[18px] font-light leading-[160%] text-white/70">
                   {hero.text}
                 </p>
               </Reveal>

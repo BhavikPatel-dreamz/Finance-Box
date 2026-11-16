@@ -110,7 +110,23 @@ const variantStyles: Record<ButtonVariant, { base: string; fill: string }> = {
   },
 };
 
-export function ArrowIcon({ isHeader = false, className = "" }: { isHeader?: boolean; className?: string }) {
+// NEW: fill color inside the arrow icon's circle, per button variant.
+const arrowCircleFills: Record<ButtonVariant, string> = {
+  green: "#FFFFFF1A",
+  "green-on-dark": "#FFFFFF1A",
+  dark: "#FFFFFF1A",
+  white: "#1118281A",
+};
+
+export function ArrowIcon({
+  isHeader = false,
+  className = "",
+  circleFill = "none", // CHANGED: new optional prop, defaults to the old behavior (no fill)
+}: {
+  isHeader?: boolean;
+  className?: string;
+  circleFill?: string; // CHANGED
+}) {
   const sizeClass = isHeader ? "h-[18px] w-[18px]" : "h-5 w-5 lg:h-[22px] lg:w-[22px]";
   return (
     <span
@@ -126,7 +142,7 @@ export function ArrowIcon({ isHeader = false, className = "" }: { isHeader?: boo
         className={sizeClass}
         aria-hidden="true"
       >
-        <circle cx="10" cy="10" r="8.75" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="10" cy="10" r="8.75" fill={circleFill} stroke="currentColor" strokeWidth="1.5" />
         <path
           d="M8.75 6.5L12.25 10L8.75 13.5"
           stroke="currentColor"
@@ -217,7 +233,7 @@ export function Button({
           {icon}
         </span>
       ) : showArrow ? (
-        <ArrowIcon isHeader={isHeader} />
+        <ArrowIcon isHeader={isHeader} circleFill={arrowCircleFills[activeVariant]} /> // CHANGED
       ) : null}
     </>
   );
