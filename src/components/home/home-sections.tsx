@@ -212,10 +212,10 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
           </h2>
         </Reveal>
 
-        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[14px] sm:rounded-[16px] overflow-hidden">
+        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[8px] sm:rounded-[10px] overflow-hidden">
 
           {card0 && (
-            <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+            <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white shadow-[8px_8px_20px_0px_#FFFFFF33] text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-7.5 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
               <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10">
                 {icon0 && (
                   <SafeImage
