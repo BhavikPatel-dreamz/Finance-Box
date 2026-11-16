@@ -49,7 +49,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
                   );
                 })()}
               </h2>
-              <p className="text-[16px] font-light leading-[160%] text-[#0B0D0C]">
+              <p className="text-[16px] font-light leading-[160%] text-[#121826]/70">
                 {whatIs.text1}
               </p>
             </div>
@@ -69,7 +69,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
                   {feature.image && <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />}
                 </div>
                 <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
-                <p className="text-[16px] font-normal leading-[140%] text-[#121826]/80">{feature.text}</p>
+                <p className="text-[16px] font-normal leading-[140%] text-[#121826]/70">{feature.text}</p>
               </div>
             </StaggerItem>
           ))}
