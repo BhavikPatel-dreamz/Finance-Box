@@ -299,7 +299,7 @@ export const servicesContent: ServicesContent = {
   },
   investors: {
     eyebrow: "For VCs & advisors",
-    title: "Why investors\nrefer FIAB to their\nportfolio",
+    title: "Why investors\nrefer FIAB to\nportfolio",
     highlight: "their",
     text: "You want your portfolio companies focused on building, with a finance function that quietly works. When it does, fundraises move faster and boards get real answers. Here is what FIAB takes off their plate, and what you can see along the way.",
     primary: { label: "Talk to Us About Your Portfolio", url: "/#contact" },

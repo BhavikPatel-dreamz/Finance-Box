@@ -581,18 +581,65 @@ export function ServicesInvestors({ investors }: { investors: ServicesContent["i
         {/* Header Area - Contained */}
         <Reveal preset="slide-up" distance={20} className="mx-auto w-full mb-10 sm:mb-14 lg:mb-16">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-0 sm:gap-10 lg:gap-16">
-            <div className="max-w-2xl">
+            <div className="max-w-md">
               <p className="inline-flex items-center gap-3 text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-5 sm:mb-6">
                 <span className="h-px w-6 bg-[#23C55E]" />
                 {investors.eyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.1] sm:leading-[1.05] tracking-[-0.8px] text-white">
-                {investors.title.split("\n")[0]}
-                <br />
-                {investors.title.split("\n")[1]}{" "}
-                <span className="font-extrabold italic">{investors.highlight}</span>
-                <br />
-                <span className="font-extrabold italic">{investors.title.split("\n")[2]}</span>
+                {(() => {
+                  const lines = investors.title.split("\n");
+                  const line0 = lines[0];
+                  const line1 = lines[1];
+                  const line2 = lines[2];
+                  const hl = investors.highlight;
+
+                  if (line1 !== undefined && line2 !== undefined) {
+                    return (
+                      <>
+                        {line0}
+                        <br />
+                        {line1}
+                        {hl ? (
+                          <>
+                            {" "}
+                            <span className="font-extrabold italic">{hl}</span>
+                          </>
+                        ) : null}
+                        <br />
+                        <span className="font-extrabold italic">{line2}</span>
+                      </>
+                    );
+                  }
+
+                  if (line1 !== undefined) {
+                    return (
+                      <>
+                        {line0}
+                        <br />
+                        {line1}
+                        {hl ? (
+                          <>
+                            {" "}
+                            <span className="font-extrabold italic">{hl}</span>
+                          </>
+                        ) : null}
+                      </>
+                    );
+                  }
+
+                  return (
+                    <>
+                      {line0}
+                      {hl ? (
+                        <>
+                          {" "}
+                          <span className="font-extrabold italic">{hl}</span>
+                        </>
+                      ) : null}
+                    </>
+                  );
+                })()}
               </h2>
             </div>
 
