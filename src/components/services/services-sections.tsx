@@ -456,9 +456,21 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
               <div>
                 <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:max-w-[500px]">
-                  {cfo.title.split("\n")[0]}
-                  <br />
-                  <span className="font-extrabold italic">{cfo.title.split("\n")[1]}</span>
+                  {(() => {
+                    const before = cfo.titleBefore ?? (cfo.title.includes("\n") ? cfo.title.split("\n")[0] : "");
+                    const highlight = cfo.highlight ?? (cfo.title.includes("\n") ? cfo.title.split("\n")[1] : "");
+                    if (highlight) {
+                      return (
+                        <>
+                          {before}
+                          <br />
+                          <span className="font-extrabold italic">{highlight}</span>
+                          {cfo.titleAfter ? ` ${cfo.titleAfter}` : ""}
+                        </>
+                      );
+                    }
+                    return cfo.title;
+                  })()}
                 </h2>
               </div>
               <div className="max-w-md">

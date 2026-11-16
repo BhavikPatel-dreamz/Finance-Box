@@ -1,7 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { ServicesFractionalCfoSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { ServicesCfo } from "@/components/services/services-sections";
-import { link, media, text } from "@/lib/wordpress/fields";
+import { link, media, splitEmphasis, text } from "@/lib/wordpress/fields";
 
 const CFO_FALLBACK_IMAGES = [
   "/services/cfo-dilivers-1.png",
@@ -13,6 +13,38 @@ const CFO_FALLBACK_IMAGES = [
 export const servicesFractionalCfoSection = defineSection<ServicesFractionalCfoSectionFragment>({
   layout: "ServicesFractionalCfoSection",
   render: (data) => {
+    const rawTitle = data.title ?? "";
+    const parts = splitEmphasis(rawTitle);
+
+    let titleBefore = "";
+    let highlight = "";
+    let titleAfter = "";
+
+    if (parts) {
+      titleBefore = parts.before;
+      highlight = parts.emphasis;
+      titleAfter = parts.after;
+    } else if (rawTitle.includes("\n")) {
+      const lines = rawTitle.split("\n");
+      titleBefore = text(lines[0]);
+      highlight = text(lines.slice(1).join(" "));
+    } else if (/<br\s*\/?>/i.test(rawTitle)) {
+      const lines = rawTitle.split(/<br\s*\/?>/i);
+      titleBefore = text(lines[0]);
+      highlight = text(lines.slice(1).join(" "));
+    } else {
+      const plain = text(rawTitle);
+      const target = "CFOs Deliver";
+      if (plain.toLowerCase().includes(target.toLowerCase())) {
+        const idx = plain.toLowerCase().indexOf(target.toLowerCase());
+        titleBefore = plain.slice(0, idx).trim();
+        highlight = plain.slice(idx, idx + target.length);
+        titleAfter = plain.slice(idx + target.length).trim();
+      } else {
+        titleBefore = plain;
+      }
+    }
+
     const cards = (data.deliverables ?? []).map((card, idx) => {
       const fallback = CFO_FALLBACK_IMAGES[idx] || "/media/placeholder.svg";
       const img = media(card?.image);
@@ -25,7 +57,10 @@ export const servicesFractionalCfoSection = defineSection<ServicesFractionalCfoS
     return (
       <ServicesCfo
         cfo={{
-          title: text(data.title),
+          title: highlight ? `${titleBefore}\n${highlight}${titleAfter ? ` ${titleAfter}` : ""}` : titleBefore,
+          titleBefore,
+          highlight,
+          titleAfter,
           text: text(data.description),
           cta: link(data.ctaButton, { label: "", url: "" }),
           cards,

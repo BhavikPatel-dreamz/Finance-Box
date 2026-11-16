@@ -39,6 +39,9 @@ export type ServicesContent = {
   details: ServicesDetail[];
   cfo: {
     title: string;
+    titleBefore?: string;
+    highlight?: string;
+    titleAfter?: string;
     text: string;
     cta: ServicesLink;
     cards: ServicesPhotoCard[];
@@ -261,6 +264,8 @@ export const servicesContent: ServicesContent = {
   ],
   cfo: {
     title: "What our Fractional\nCFOs Deliver",
+    titleBefore: "What our Fractional",
+    highlight: "CFOs Deliver",
     text: "A CFO's job is more than reporting what happened. It is shaping what happens next.",
     cta: { label: "Explore Foresight", url: "#foresight" },
     cards: [
