@@ -66,6 +66,9 @@ export type HomeContent = {
   };
   difference: {
     title: string;
+    titleBefore?: string;
+    highlight?: string;
+    titleAfter?: string;
     cards: Array<HomeCard & { tone: "light" | "dark" }>;
     statEyebrow: string;
     statValue: string;
@@ -224,6 +227,9 @@ export const homeContent: HomeContent = {
   },
   difference: {
     title: "What Makes FIAB Different",
+    titleBefore: "What Makes ",
+    highlight: "FIAB",
+    titleAfter: " Different",
     cards: [
       {
         icon: "/icons/one-finace-team.svg",

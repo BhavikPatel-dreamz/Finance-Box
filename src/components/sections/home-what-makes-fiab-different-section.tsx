@@ -1,7 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { HomeWhatMakesFiabDifferentSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { HomeDifference } from "@/components/home/home-sections";
-import { media, text } from "@/lib/wordpress/fields";
+import { media, splitEmphasis, text } from "@/lib/wordpress/fields";
 
 const DEFAULT_DIFFERENCE_ICONS = [
   "/icons/one-finace-team.svg",
@@ -25,6 +25,27 @@ function mapDifferenceIcon(title?: string | null, index = 0): string {
 export const homeWhatMakesFiabDifferentSection = defineSection<HomeWhatMakesFiabDifferentSectionFragment>({
   layout: "HomeWhatMakesFiabDifferentSection",
   render: (data) => {
+    const rawTitle = data.title ?? "";
+    const parts = splitEmphasis(rawTitle);
+    const plain = text(rawTitle);
+
+    let titleBefore = "";
+    let highlight = "";
+    let titleAfter = "";
+
+    if (parts) {
+      titleBefore = parts.before;
+      highlight = parts.emphasis;
+      titleAfter = parts.after;
+    } else if (plain.includes("FIAB")) {
+      const idx = plain.indexOf("FIAB");
+      titleBefore = plain.slice(0, idx).trim();
+      highlight = "FIAB";
+      titleAfter = plain.slice(idx + 4).trim();
+    } else {
+      titleBefore = plain;
+    }
+
     const cards = (data.cards ?? [])
       .map((card, idx) => ({
         icon: media(card?.backgroundImage)?.url || mapDifferenceIcon(card?.title, idx),
@@ -33,11 +54,16 @@ export const homeWhatMakesFiabDifferentSection = defineSection<HomeWhatMakesFiab
         text: text(card?.content),
       }))
       .filter((card) => card.title || card.text);
-    if (!text(data.title) || cards.length === 0) return null;
+
+    if (!plain || cards.length === 0) return null;
+
     return (
       <HomeDifference
         difference={{
-          title: text(data.title),
+          title: plain,
+          titleBefore,
+          highlight,
+          titleAfter,
           cards,
           statEyebrow: text(data.outcomeLabel),
           statValue: text(data.outcomeValue),

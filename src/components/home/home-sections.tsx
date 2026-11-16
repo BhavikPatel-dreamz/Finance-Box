@@ -200,15 +200,31 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
   const card0 = difference.cards[0];
   const icon0 = resolveDifferenceIcon(card0?.icon, card0?.title, 0);
 
+  const before = difference.titleBefore?.trim();
+  const highlight = difference.highlight?.trim();
+  const after = difference.titleAfter?.trim();
+
   return (
     <Section theme="dark" spacing="both" className="differance-section">
       <Container>
 
         <Reveal preset="slide-up" distance={24}>
           <h2 className="text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10">
-            {difference.title.split("FIAB")[0]}
-            <span className="font-black italic">FIAB</span>
-            {difference.title.split("FIAB")[1]}
+            {highlight ? (
+              <>
+                {before ? `${before} ` : ""}
+                <span className="font-black italic">{highlight}</span>
+                {after ? ` ${after}` : ""}
+              </>
+            ) : difference.title?.includes("FIAB") ? (
+              <>
+                {difference.title.split("FIAB")[0]}
+                <span className="font-black italic">FIAB</span>
+                {difference.title.split("FIAB").slice(1).join("FIAB")}
+              </>
+            ) : (
+              difference.title
+            )}
           </h2>
         </Reveal>
 
