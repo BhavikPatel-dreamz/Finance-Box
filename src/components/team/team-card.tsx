@@ -11,7 +11,7 @@ import type { WhyTeamMember } from "@/content/why-fiab";
 export function TeamProfileCard({ member, linkToProfile = false }: { member: WhyTeamMember; linkToProfile?: boolean }) {
   const isImageRight = member.imagePosition === "right";
   return (
-    <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col lg:flex-row lg:min-h-[715px]">
+    <div className="relative overflow-hidden rounded-[16px] bg-brand-blue flex flex-col lg:flex-row lg:min-h-[715px]">
 
       <div
         className={`relative w-full lg:w-1/2 min-h-[380px] sm:min-h-[480px] lg:min-h-full overflow-hidden flex items-end justify-center ${isImageRight ? "lg:order-last" : ""
@@ -41,7 +41,7 @@ export function TeamProfileCard({ member, linkToProfile = false }: { member: Why
         <div>
           <h3 className="text-[24px] sm:text-[28px] font-bold leading-[110%] tracking-[-0.8px]">
             {linkToProfile && member.url ? (
-              <Link href={member.url} className="hover:text-[#23C55E] transition-colors duration-300">
+              <Link href={member.url} className="hover:text-brand-green transition-colors duration-300">
                 {member.name}
               </Link>
             ) : (
@@ -96,7 +96,7 @@ export function TeamProfileCard({ member, linkToProfile = false }: { member: Why
           {linkToProfile && member.url ? (
             <Link
               href={member.url}
-              className="inline-flex items-center gap-2 text-[13px] sm:text-[14px] font-medium uppercase tracking-wider font-mono text-[#23C55E] hover:text-white transition-colors duration-300"
+              className="inline-flex items-center gap-2 text-[13px] sm:text-[14px] font-medium uppercase tracking-wider font-mono text-brand-green hover:text-white transition-colors duration-300"
             >
               Full profile <span aria-hidden="true">→</span>
             </Link>

@@ -70,7 +70,7 @@ export function ProcessGrid({ steps, className = "" }: ProcessGridProps) {
               <div className="flex h-[36px] shrink-0 items-center gap-[17px] sm:h-[44px] sm:gap-[21px] lg:h-[48px]">
                 <span
                   aria-hidden="true"
-                  className="h-full w-[3px] shrink-0 bg-[#23C55E]"
+                  className="h-full w-[3px] shrink-0 bg-brand-green"
                 />
                 <span className="text-[32px] font-extrabold leading-none tracking-tight text-white sm:text-[38px] lg:text-[40px]">
                   {step.number}

@@ -35,7 +35,7 @@ export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsConten
                   <>
                     {title}{" "}
                     {hl && (
-                      <span className="font-bold italic text-[#23C55E]">
+                      <span className="font-bold italic text-brand-green">
                         {hl}
                       </span>
                     )}
@@ -79,8 +79,8 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
                 className="absolute inset-0 overflow-hidden pointer-events-none"
                 style={{
                   background: card.reverse
-                    ? "radial-gradient(ellipse 70% 70% at 100% 100%, rgba(35,197,94,0.22) 0%, rgba(35,197,94,0) 70%)"
-                    : "radial-gradient(ellipse 70% 70% at 0% 0%, rgba(35,197,94,0.22) 0%, rgba(35,197,94,0) 70%)",
+                    ? "radial-gradient(ellipse 70% 70% at 100% 100%, color-mix(in srgb, var(--color-brand-green) 22%, transparent) 0%, color-mix(in srgb, var(--color-brand-green) 0%, transparent) 70%)"
+                    : "radial-gradient(ellipse 70% 70% at 0% 0%, color-mix(in srgb, var(--color-brand-green) 22%, transparent) 0%, color-mix(in srgb, var(--color-brand-green) 0%, transparent) 70%)",
                 }}
               />
 
@@ -96,7 +96,7 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
                 <ul className="space-y-1.5 sm:space-y-2.5 xl:space-y-3">
                   {card.bullets.map((bullet, bIdx) => (
                     <li key={bIdx} className="flex items-start gap-2 sm:gap-2.5 xl:gap-3">
-                      <span className="mt-1.5 sm:mt-2 h-[5px] w-[5px] sm:h-[6px] sm:w-[6px] shrink-0 bg-[#23C55E]" />
+                      <span className="mt-1.5 sm:mt-2 h-[5px] w-[5px] sm:h-[6px] sm:w-[6px] shrink-0 bg-brand-green" />
                       <span className="min-w-0 text-[12.5px] sm:text-[14px] lg:text-[15px] xl:text-[16px] font-medium leading-[1.3] lg:leading-[1.2] text-white/90">
                         {bullet}
                       </span>
@@ -153,12 +153,12 @@ export function PeopleOperationsWhereWeHelp({ whereWeHelp }: { whereWeHelp: Peop
             <StaggerItem
               key={idx}
               index={idx}
-              className="card-hover bg-[#EDE9E6] rounded-[10px] py-6 px-5 sm:py-8 sm:px-6 lg:py-10 lg:px-7 min-h-[120px] sm:min-h-[135px] lg:min-h-[145px] flex flex-col justify-center border border-[#FFFFFF24]"
+              className="card-hover bg-brand-sand rounded-[10px] py-6 px-5 sm:py-8 sm:px-6 lg:py-10 lg:px-7 min-h-[120px] sm:min-h-[135px] lg:min-h-[145px] flex flex-col justify-center border border-[#FFFFFF24]"
             >
               <h3 className="text-[22px] sm:text-[26px] lg:text-[30px] font-semibold leading-[1.2] lg:leading-[1.1] mb-1.5 sm:mb-2">
                 {card.title}
               </h3>
-              <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-normal leading-[150%] text-[#121826]/70">
+              <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-normal leading-[150%] text-brand-blue/70">
                 {card.text}
               </p>
             </StaggerItem>

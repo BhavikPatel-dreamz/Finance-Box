@@ -11,11 +11,11 @@ import { GreenButton } from "@/components/ui/green-button";
  */
 export function CaseStudyCard({ index, study, reverse }: { index: number; study: ClientCaseStudy; reverse: boolean }) {
   return (
-    <div className={`relative isolate flex flex-col ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} overflow-hidden rounded-[16px] bg-[#121826] min-h-[500px] lg:p-12.5`}>
+    <div className={`relative isolate flex flex-col ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} overflow-hidden rounded-[16px] bg-brand-blue min-h-[500px] lg:p-12.5`}>
       {/* Green corner glow */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute -bottom-[110px] ${reverse ? "-left-[110px]" : "-right-[110px]"} h-[220px] w-[220px] rounded-full bg-[#23C55E] blur-[90px] -z-10`}
+        className={`pointer-events-none absolute -bottom-[110px] ${reverse ? "-left-[110px]" : "-right-[110px]"} h-[220px] w-[220px] rounded-full bg-brand-green blur-[90px] -z-10`}
       />
 
       <div className="relative z-1 rounded-t-[16px] lg:rounded-[10px] overflow-hidden w-full lg:w-1/2 min-h-[260px] sm:min-h-[320px] lg:min-h-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto">

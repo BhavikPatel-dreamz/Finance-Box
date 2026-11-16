@@ -33,7 +33,7 @@ export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs
           <GreenButton
             label={blogs.cta.label}
             href={blogs.cta.url}
-            bgColor="#121826"
+            variant="dark"
             textColor="#ffffff"
           />
         </Reveal>
@@ -60,7 +60,7 @@ export function KnowledgeHubResources({ resources }: { resources: KnowledgeHubCo
                   <>
                     {title}{" "}
                     {hl && (
-                      <span className="text-[#23C55E] font-black italic">
+                      <span className="text-brand-green font-black italic">
                         {hl}
                       </span>
                     )}
@@ -68,7 +68,7 @@ export function KnowledgeHubResources({ resources }: { resources: KnowledgeHubCo
                 );
               })()}
             </h2>
-            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70 lg:text-[#121826]/60">
+            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-brand-blue/70 lg:text-brand-blue/60">
               {resources.text}
             </p>
           </div>
@@ -76,7 +76,7 @@ export function KnowledgeHubResources({ resources }: { resources: KnowledgeHubCo
             <GreenButton
               label={resources.cta.label}
               href={resources.cta.url}
-              bgColor="#121826"
+              variant="dark"
               textColor="#ffffff"
             />
           </div>
@@ -111,7 +111,7 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
               </div>
               <h3 className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[1.3] lg:leading-[1.2] mb-2">
                 {item.url ? (
-                  <Link href={item.url} className="after:absolute after:inset-0 after:content-[''] hover:text-[#23C55E] transition-colors duration-300">
+                  <Link href={item.url} className="after:absolute after:inset-0 after:content-[''] hover:text-brand-green transition-colors duration-300">
                     {item.title}
                     {item.tagLine && (
                       <span className="text-[16px] sm:text-[17px] lg:text-[18px] font-semibold leading-[1.3] lg:leading-[1.2] mb-2"> - {item.tagLine}</span>
@@ -126,7 +126,7 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
                   </>
                 )}
               </h3>
-              <p className="text-[13px] sm:text-[14px] font-normal leading-[160%] text-[#121826]/70">
+              <p className="text-[13px] sm:text-[14px] font-normal leading-[160%] text-brand-blue/70">
                 {item.text}
               </p>
             </StaggerItem>
@@ -137,7 +137,7 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
           <GreenButton
             label={caseStudy.cta.label}
             href={caseStudy.cta.url}
-            bgColor="#121826"
+            variant="dark"
             textColor="#ffffff"
           />
         </Reveal>
@@ -176,7 +176,7 @@ export function KnowledgeHubNewsletter({ newsletter, form }: { newsletter: Knowl
             <GreenButton
               label={newsletter.cta.label}
               href={newsletter.cta.url}
-              bgColor="#23C55E"
+              variant="green"
               onDark={true}
             />
           </Reveal>

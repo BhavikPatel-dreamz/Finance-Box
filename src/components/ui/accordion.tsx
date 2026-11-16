@@ -32,7 +32,7 @@ export function Accordion({ items, theme = "light" }: AccordionProps) {
             key={index}
             className={`rounded-[10px] overflow-hidden transition-colors duration-300 ${
               isDark
-              ? "bg-[#121826]"
+              ? "bg-brand-blue"
                 : "bg-white"
             }`}
           >
@@ -45,7 +45,7 @@ export function Accordion({ items, theme = "light" }: AccordionProps) {
             >
               <span
                 className={`text-[17px] sm:text-[20px] md:text-[22px] lg:text-[24px] font-medium leading-[1.25] tracking-tight ${
-                  isDark ? "text-white" : "text-[#121826]"
+                  isDark ? "text-white" : "text-brand-blue"
                 }`}
               >
                 {item.question}
@@ -55,10 +55,10 @@ export function Accordion({ items, theme = "light" }: AccordionProps) {
               <span
                 className={`flex h-[40px] w-[40px] sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
                   isOpen
-                    ? "bg-[#23C55E] text-[#121826]"
+                    ? "bg-brand-green text-brand-blue"
                     : isDark
                     ? "bg-white/10 text-white hover:bg-white/15"
-                    : "bg-[#121826]/5 text-[#121826] hover:bg-[#121826]/10"
+                    : "bg-brand-blue/5 text-brand-blue hover:bg-brand-blue/10"
                 }`}
               >
                 <svg
@@ -88,7 +88,7 @@ export function Accordion({ items, theme = "light" }: AccordionProps) {
               <div className="overflow-hidden">
                 <div
                   className={`px-5 sm:px-6 md:px-6 pb-5 sm:pb-6 md:pb-8 text-[15px] sm:text-[16px] md:text-[17px] font-light leading-[160%] ${
-                    isDark ? "text-white/75" : "text-[#121826]/75"
+                    isDark ? "text-white/75" : "text-brand-blue/75"
                   }`}
                 >
                   {item.answer}

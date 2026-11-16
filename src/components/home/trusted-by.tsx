@@ -119,9 +119,9 @@ export function TrustedBy({ trust, logos, className = "" }: TrustedByProps) {
         <div className="lg:flex block items-center justify-between">
           {/* Left-side Text: Aligns with 1280px Container */}
           <div className="lg:text-left text-center lg:w-[200px] shrink-0">
-            <p className="text-[16px] lg:text-[18px] leading-[1.2] font-medium text-[#121826] tracking-[-0.6px]">
+            <p className="text-[16px] lg:text-[18px] leading-[1.2] font-medium text-brand-blue tracking-[-0.6px]">
               {trust.lead}{" "}
-              <span className="text-[#23C55E]">{trust.stat}</span>
+              <span className="text-brand-green">{trust.stat}</span>
               <br />
               <span>{trust.detail}</span>
             </p>

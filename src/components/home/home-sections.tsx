@@ -16,7 +16,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
     hero.highlight?.trim() === "Built and Run For You";
 
   return (
-    <section id="product" className="hero-section relative overflow-hidden bg-[#121826] text-white">
+    <section id="product" className="hero-section relative overflow-hidden bg-brand-blue text-white">
 
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
@@ -44,14 +44,14 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
                       <span className="font-light text-white block">Your Finance</span>
                       <span className="block">
                         <span className="font-light text-white">Function, </span>
-                        <span className="font-bold text-[#23C55E]">Built</span>
+                        <span className="font-bold text-brand-green">Built</span>
                       </span>
-                      <span className="font-bold text-[#23C55E] block">and Run For You</span>
+                      <span className="font-bold text-brand-green block">and Run For You</span>
                     </>
                   ) : (
                     <>
                       <span className="font-light">{hero.title}</span>{" "}
-                      <span className="font-bold text-[#23C55E]">{hero.highlight}</span>
+                      <span className="font-bold text-brand-green">{hero.highlight}</span>
                     </>
                   )}
                 </h1>
@@ -94,7 +94,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
                   </div>
                   <div>
                     <div className="flex items-baseline gap-1 sm:gap-1.5 mb-3 sm:mb-4">
-                      <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-[#23C55E] leading-none">
+                      <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-brand-green leading-none">
                         {hero.closeValue}
                       </span>
                       <span className="text-[11px] sm:text-[12px] font-normal text-white font-sans leading-none">
@@ -124,7 +124,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
                       {hero.runwayLabel}
                     </p>
                     <div className="flex items-baseline gap-1 sm:gap-1.5">
-                      <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-[#23C55E] leading-none">
+                      <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-brand-green leading-none">
                         {hero.runwayValue}
                       </span>
                       <span className="text-[11px] sm:text-[12px] font-normal text-white font-sans leading-none">
@@ -167,7 +167,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
   );
 }
 
-function HoverLine({ className = "bg-[#23C55E]" }: { className?: string }) {
+function HoverLine({ className = "bg-brand-green" }: { className?: string }) {
   return (
     <span
       aria-hidden="true"
@@ -231,8 +231,8 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
         <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[8px] sm:rounded-[10px] overflow-hidden">
 
           {card0 && (
-            <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white shadow-[8px_8px_20px_0px_#FFFFFF33] text-[#121826] transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-7.5 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
-              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-[#23C55E] mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-[#23C55E]/10">
+            <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white shadow-[8px_8px_20px_0px_#FFFFFF33] text-brand-blue transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-7.5 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+              <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-brand-green mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-brand-green/10">
                 {icon0 && (
                   <SafeImage
                     src={icon0}
@@ -246,7 +246,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
                 )}
               </div>
               <h3 className="text-[18px] sm:text-[20px] md:text-[22px] font-semibold leading-[1.2] mb-3 sm:mb-4">{card0.title}</h3>
-              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-[#121826]/70">{card0.text}</p>
+              <p className="text-[14px] sm:text-[15px] md:text-[16px] font-light leading-[1.6] text-brand-blue/70">{card0.text}</p>
               <HoverLine />
             </StaggerItem>
           )}
@@ -256,7 +256,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
             const iconSrc = resolveDifferenceIcon(card.icon, card.title, cardIdx);
             return (
               <StaggerItem key={idx} index={cardIdx} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
-                <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
+                <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-brand-green group-hover:bg-brand-green/10">
                   {iconSrc && (
                     <SafeImage
                       src={iconSrc}
@@ -281,7 +281,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
             const iconSrc = resolveDifferenceIcon(card.icon, card.title, cardIdx);
             return (
               <StaggerItem key={idx} index={cardIdx} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
-                <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-[#23C55E] group-hover:bg-[#23C55E]/10">
+                <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-brand-green group-hover:bg-brand-green/10">
                   {iconSrc && (
                     <SafeImage
                       src={iconSrc}
@@ -301,7 +301,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
             );
           })}
 
-          <StaggerItem index={5} className="card-hover group relative overflow-hidden bg-[#23C55E] transition-colors duration-500 hover:bg-[#1FAF53] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[383px] md:border-t border-white/10 text-white">
+          <StaggerItem index={5} className="card-hover group relative overflow-hidden bg-brand-green transition-colors duration-500 hover:bg-[#1FAF53] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[383px] md:border-t border-white/10 text-white">
             <p className="text-[14px] sm:text-[16px] md:text-[20px] font-mono font-medium tracking-wide uppercase">
               {difference.statEyebrow}
             </p>
@@ -346,7 +346,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
             fill
             className="object-cover image-hover-zoom"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/85 from-[11.52%] via-[#121826]/30 via-[66.82%] to-[#121826]/50 to-[112.07%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/85 from-[11.52%] via-brand-blue/30 via-[66.82%] to-brand-blue/50 to-[112.07%]" />
 
           <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 lg:p-10 flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6">
             <h3 className="text-2xl sm:text-3xl md:text-[40px] font-medium leading-[1.15] text-white max-w-lg">
@@ -356,7 +356,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
             <ol className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-2 text-[11px] sm:text-[12px] font-mono tracking-[1px] text-white uppercase">
               {growth.stages.map((stage, index) => (
                 <li key={stage} className="inline-flex items-center gap-2">
-                  <span className="h-[6px] w-[6px] rounded-full bg-[#23C55E]" />
+                  <span className="h-[6px] w-[6px] rounded-full bg-brand-green" />
                   {String(index + 1).padStart(2, "0")} — {stage}
                 </li>
               ))}
@@ -377,7 +377,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
               <ul className="mt-auto bg-[#091024] rounded-[8px] p-4 sm:p-5 space-y-3 sm:space-y-4">
                 {card.items.map((item, bIdx) => (
                   <li key={bIdx} className="flex items-start gap-3">
-                    <span className="mt-1.5 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
+                    <span className="mt-1.5 h-[6px] w-[6px] shrink-0 bg-brand-green" />
                     <span className="text-[14px] sm:text-[15px] md:text-[16px] font-medium leading-[1.2] text-white/90">{item}</span>
                   </li>
                 ))}
@@ -386,7 +386,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
               {/* Bottom line: grows left to right on hover */}
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full origin-left scale-x-0 bg-[#23C55E] transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
+                className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full origin-left scale-x-0 bg-brand-green transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
               />
             </StaggerItem>
           ))}
@@ -396,7 +396,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
           <GreenButton
             label={growth.cta.label}
             href={growth.cta.url}
-            bgColor="#23C55E"
+            variant="green"
             textColor="#07110d"
             onDark={true}
           />
@@ -426,7 +426,7 @@ export function HomeDecisions({ decisions }: { decisions: HomeContent["decisions
             ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0D0C] via-[#0B0D0C]/50 to-transparent" />
 
-            <div className="absolute top-5 right-5 sm:top-8 sm:right-8 bg-white rounded-[7px] px-2.5 py-1.5 sm:py-2 text-[12px] sm:text-[14px] font-medium tracking-[1px] uppercase text-[#121826]">
+            <div className="absolute top-5 right-5 sm:top-8 sm:right-8 bg-white rounded-[7px] px-2.5 py-1.5 sm:py-2 text-[12px] sm:text-[14px] font-medium tracking-[1px] uppercase text-brand-blue">
               {decisions.badge}
             </div>
 
@@ -445,11 +445,11 @@ export function HomeDecisions({ decisions }: { decisions: HomeContent["decisions
             <Eyebrow variant="light" className="mb-4 sm:mb-6">
               {decisions.eyebrow}
             </Eyebrow>
-            <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] text-[#121826] mb-4 sm:mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] text-brand-blue mb-4 sm:mb-6">
               Built for Better<br />
               <span className="font-extrabold italic">Business Decisions.</span>
             </h2>
-            <p className="text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-[#121826]/80 mb-6 sm:mb-8 xl:mb-10">
+            <p className="text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-brand-blue/80 mb-6 sm:mb-8 xl:mb-10">
               {decisions.text}
             </p>
 
@@ -457,14 +457,14 @@ export function HomeDecisions({ decisions }: { decisions: HomeContent["decisions
               {decisions.cards.map((card, idx) => (
                 <StaggerItem key={idx} index={idx} className="card-hover bg-white rounded-[10px] p-3.5 sm:pl-4 sm:pr-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-4">
                   <div className="flex flex-col md:flex-row md:items-center gap-1.5 md:gap-4 xl:gap-6 flex-1">
-                    <p className="text-[22px] sm:text-[26px] lg:text-[26px] xl:text-[30px] font-medium leading-[1.1] tracking-[-0.8px] text-[#23C55E] md:w-[90px] xl:w-[100px] shrink-0">
+                    <p className="text-[22px] sm:text-[26px] lg:text-[26px] xl:text-[30px] font-medium leading-[1.1] tracking-[-0.8px] text-brand-green md:w-[90px] xl:w-[100px] shrink-0">
                       {card.title}
                     </p>
-                    <p className="text-[13px] sm:text-[14px] font-light leading-[1.35] text-[#121826]/70">
+                    <p className="text-[13px] sm:text-[14px] font-light leading-[1.35] text-brand-blue/70">
                       {card.text}
                     </p>
                   </div>
-                  <div className="flex h-[38px] w-[38px] sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full bg-[#121826]/5 text-[#121826]">
+                  <div className="flex h-[38px] w-[38px] sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full bg-brand-blue/5 text-brand-blue">
                     <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" aria-hidden="true">
                       <path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -477,7 +477,7 @@ export function HomeDecisions({ decisions }: { decisions: HomeContent["decisions
               <GreenButton
                 label={decisions.cta.label}
                 href={decisions.cta.url}
-                bgColor="#121826"
+                variant="dark"
                 textColor="#ffffff"
               />
             </div>

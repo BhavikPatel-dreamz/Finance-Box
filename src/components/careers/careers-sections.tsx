@@ -14,9 +14,9 @@ import type { CareersContent } from "@/content/careers";
 export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"] }) {
   // 2. Why work at FIAB Section
   return (
-    <Section theme="light" spacing="both" className="why-work-section bg-white text-[#121826] py-10 sm:py-14 md:py-16 lg:py-20">
+    <Section theme="light" spacing="both" className="why-work-section bg-white text-brand-blue py-10 sm:py-14 md:py-16 lg:py-20">
       <Container>
-        <div className="rounded-[10px] bg-[#EDE9E6]/50 text-[#121826] overflow-hidden">
+        <div className="rounded-[10px] bg-brand-sand/50 text-brand-blue overflow-hidden">
           <div className="flex flex-col lg:flex-row items-stretch">
             {/* Left Column (Image) */}
             <Reveal
@@ -40,7 +40,7 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
               distance={20}
               className="w-full lg:w-1/2 flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-10 xl:px-14 xl:py-16 2xl:px-15 2xl:py-18"
             >
-              <h2 className="text-[26px] xs:text-[30px] sm:text-[36px] md:text-[40px] lg:text-[44px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-5 sm:mb-8 lg:mb-10 xl:mb-20 text-[#121826]">
+              <h2 className="text-[26px] xs:text-[30px] sm:text-[36px] md:text-[40px] lg:text-[44px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-5 sm:mb-8 lg:mb-10 xl:mb-20 text-brand-blue">
                 {(() => {
                   let title = whyWork.title;
                   const hl = whyWork.highlight;
@@ -51,7 +51,7 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
                     <>
                       {title}{" "}
                       {hl && (
-                        <span className="text-[#23C55E] font-black italic">
+                        <span className="text-brand-green font-black italic">
                           {hl}
                         </span>
                       )}
@@ -67,7 +67,7 @@ export function CareersWhyWork({ whyWork }: { whyWork: CareersContent["whyWork"]
                     index={idx}
                     className="card-hover bg-white rounded-[10px] sm:rounded-[12px] p-4 sm:p-5 lg:p-5 xl:p-6 border border-[#E8E6E3]/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
                   >
-                    <p className="text-[14px] xl:text-[16px] font-light leading-[160%] text-[#121826]/80">
+                    <p className="text-[14px] xl:text-[16px] font-light leading-[160%] text-brand-blue/80">
                       {point}
                     </p>
                   </StaggerItem>
@@ -93,7 +93,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
     <Section theme="light" spacing="both" className="why-fiab-section bg-white pt-0 sm:pt-0 lg:pt-0 pb-12 sm:pb-16 lg:pb-20">
       <Container>
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[46px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 sm:mb-10 lg:mb-12 xl:mb-16 text-[#121826]">
+          <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[46px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-6 sm:mb-10 lg:mb-12 xl:mb-16 text-brand-blue">
             {standOut.title}
           </h2>
         </Reveal>
@@ -119,7 +119,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
                     }
                   }}
                   className={twMerge(
-                    "group card-hover relative rounded-[10px] overflow-hidden min-h-[400px] sm:min-h-[460px] md:min-h-[480px] lg:min-h-[540px] xl:min-h-[620px] w-full flex items-end shadow-sm cursor-pointer outline-none select-none focus-visible:ring-2 focus-visible:ring-[#23C55E]",
+                    "group card-hover relative rounded-[10px] overflow-hidden min-h-[400px] sm:min-h-[460px] md:min-h-[480px] lg:min-h-[540px] xl:min-h-[620px] w-full flex items-end shadow-sm cursor-pointer outline-none select-none focus-visible:ring-2 focus-visible:ring-brand-green",
                     isFlipped && "is-flipped"
                   )}
                 >
@@ -136,7 +136,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
                   <div
                     className={twMerge(
                       "absolute inset-x-0 bottom-0 h-full pointer-events-none",
-                      "bg-[linear-gradient(180deg,rgba(18,24,38,0)_23.47%,rgba(18,24,38,0.771381)_48.73%,rgba(18,24,38,0.829427)_61.13%,rgba(18,24,38,0.857097)_74.41%,#121826_93.31%)]",
+                      "bg-[linear-gradient(180deg,color-mix(in_srgb,var(--color-brand-blue)_0%,transparent)_23.47%,color-mix(in_srgb,var(--color-brand-blue)_77.1381%,transparent)_48.73%,color-mix(in_srgb,var(--color-brand-blue)_82.9427%,transparent)_61.13%,color-mix(in_srgb,var(--color-brand-blue)_85.7097%,transparent)_74.41%,var(--color-brand-blue)_93.31%)]",
                       "transition-[height] duration-[700ms] ease-[cubic-bezier(0.45,0,0.25,1)] motion-reduce:transition-none",
                       hasPoints && "group-hover:duration-[1000ms] group-hover:h-[300%] group-focus-within:duration-[1000ms] group-focus-within:h-[300%]",
                       isFlipped && "duration-[1000ms] h-[300%]"
@@ -175,7 +175,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
                         {card.points!.map((point, pIdx) => (
                           <li key={pIdx} className="flex items-start gap-2.5 sm:gap-3 lg:gap-3.5">
                             <span
-                              className="mt-[5px] xl:mt-[7px] h-[6px] w-[6px] md:h-[5px] md:w-[5px] xl:h-[6px] xl:w-[6px] shrink-0 bg-[#23C55E]"
+                              className="mt-[5px] xl:mt-[7px] h-[6px] w-[6px] md:h-[5px] md:w-[5px] xl:h-[6px] xl:w-[6px] shrink-0 bg-brand-green"
                               aria-hidden="true"
                             />
                             <span className="text-[13px] sm:text-[14px] md:text-[12px] lg:text-[13px] xl:text-[16px] font-medium leading-[130%] text-white">
@@ -198,7 +198,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
 export function CareersBenefits({ benefits }: { benefits: CareersContent["benefits"] }) {
   // 4. Benefits & Perks Section
   return (
-    <Section theme="dark" spacing="both" className="benefits-section bg-[#121826] py-12 sm:py-16 lg:py-20">
+    <Section theme="dark" spacing="both" className="benefits-section bg-brand-blue py-12 sm:py-16 lg:py-20">
       <Container>
         <Reveal preset="slide-up" distance={20}>
           <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[48px] xl:text-[50px] font-medium leading-[1.1] tracking-[-0.8px] mb-8 sm:mb-12 lg:mb-16 text-white">
@@ -206,7 +206,7 @@ export function CareersBenefits({ benefits }: { benefits: CareersContent["benefi
           </h2>
         </Reveal>
 
-        <div className="rounded-[16px] sm:rounded-[20px] border border-white/10 bg-[#121826] overflow-hidden">
+        <div className="rounded-[16px] sm:rounded-[20px] border border-white/10 bg-brand-blue overflow-hidden">
           <StaggerGroup staggerDelay={100} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {benefits.items.map((benefit, idx) => (
               <StaggerItem
@@ -253,7 +253,7 @@ export function CareersBenefits({ benefits }: { benefits: CareersContent["benefi
 export function CareersHowWeHire({ howWeHire }: { howWeHire: CareersContent["howWeHire"] }) {
   // 5. How We Hire Section
   return (
-    <section className="how-hire-section bg-[#121826] pb-14 sm:pb-18 md:pb-20 lg:pb-24 pt-4 sm:pt-6 text-white">
+    <section className="how-hire-section bg-brand-blue pb-14 sm:pb-18 md:pb-20 lg:pb-24 pt-4 sm:pt-6 text-white">
       <Container>
         <Reveal preset="slide-up" distance={20} className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-3 sm:gap-5 lg:gap-6 mb-8 sm:mb-10 lg:mb-14 xl:mb-16">
           <h2 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] font-medium leading-[1.05] tracking-[-0.8px] text-white">
@@ -281,7 +281,7 @@ export function FaqBlock({
     return (
       <Section theme="light" spacing="both" className="faq-section bg-white py-12 sm:py-16 lg:py-20">
         <Container>
-          <div className="rounded-[20px] sm:rounded-[24px] bg-[#121826] text-white p-6 sm:p-10 lg:p-14 xl:p-16">
+          <div className="rounded-[20px] sm:rounded-[24px] bg-brand-blue text-white p-6 sm:p-10 lg:p-14 xl:p-16">
             <Reveal preset="slide-up" distance={20}>
               <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[48px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12 text-white">
                 {faq.title}
@@ -300,7 +300,7 @@ export function FaqBlock({
     <Section theme="cream" spacing="both" className="faq-section bg-[#F6F5F3] py-12 sm:py-16 lg:py-20">
       <Container size="narrow">
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[45px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-6 sm:mb-8 md:mb-12 text-[#121826]">
+          <h2 className="text-center text-[26px] xs:text-[30px] sm:text-[36px] md:text-[42px] lg:text-[45px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-6 sm:mb-8 md:mb-12 text-brand-blue">
             {faq.title}
           </h2>
         </Reveal>

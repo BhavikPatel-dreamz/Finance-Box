@@ -102,7 +102,7 @@ export interface HeroConfig {
   /** Main heading text */
   title: string;
 
-  /** Highlighted text colored in primary brand green (#23C55E) */
+  /** Highlighted text colored in primary brand green */
   highlight?: string;
 
   /** Secondary highlight line (useful for multi-line hero titles like careers) */

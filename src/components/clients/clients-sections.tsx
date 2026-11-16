@@ -24,7 +24,7 @@ export type ClientsWhereFiabWorksContent = {
 export function ClientsBanner({ hero, header }: { hero: ClientsContent["hero"]; header: ReactNode }) {
   // Hero Section
   return (
-    <div className="hero-section relative overflow-hidden bg-[#121826] text-white">
+    <div className="hero-section relative overflow-hidden bg-brand-blue text-white">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
@@ -139,12 +139,12 @@ export function ClientsTrustedCompanies({ logosSection }: { logosSection: Client
             }
             return (
               <>
-                <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.2] tracking-[-0.8px] text-[#121826]">
+                <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.2] tracking-[-0.8px] text-brand-blue">
                   {t1}{" "}
-                  {h1 && <span className="text-[#23C55E] font-bold italic">{h1}</span>}
+                  {h1 && <span className="text-brand-green font-bold italic">{h1}</span>}
                 </h2>
                 {t2 && (
-                  <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-bold italic leading-[1.2] tracking-[-0.8px] text-[#121826]">
+                  <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-bold italic leading-[1.2] tracking-[-0.8px] text-brand-blue">
                     {t2}
                   </h2>
                 )}
@@ -206,7 +206,7 @@ export function ClientsTestimonials({ reviewsSection }: { reviewsSection: Client
                 fill
                 className="object-cover image-hover-zoom"
               />}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#121826] via-[#121826]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-blue via-brand-blue/40 to-transparent" />
 
               <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 md:p-12">
                 <p className="text-[20px] sm:text-[24px] lg:text-[30px] font-medium leading-[1.3] mb-4 sm:mb-6 text-white">
@@ -259,23 +259,23 @@ export function ClientsTestimonials({ reviewsSection }: { reviewsSection: Client
 export function ClientsWhereFiabWorks({ works }: { works: ClientsWhereFiabWorksContent }) {
   // Where FIAB Works Section
   return (
-    <Section spacing="both" className="fiab-works-section bg-[#EDE9E6] text-[#121826]">
+    <Section spacing="both" className="fiab-works-section bg-brand-sand text-brand-blue">
       <Container>
         <div className="flex flex-col gap-12 sm:gap-16 lg:gap-24">
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
             <Reveal preset="slide-left" distance={20} className="pr-0 lg:pr-12">
-              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#121826]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-brand-blue">
                 {works.title}
               </h2>
-              <p className="mt-4 sm:mt-6 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70">
+              <p className="mt-4 sm:mt-6 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-brand-blue/70">
                 {works.text}
               </p>
               <div className="mt-6 sm:mt-8 flex flex-wrap gap-2 sm:gap-3">
                 {works.industries.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center border border-[#12182612] rounded-full bg-white px-3.5 sm:px-5 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-medium text-[#121826]"
+                    className="inline-flex items-center border border-brand-blue/7 rounded-full bg-white px-3.5 sm:px-5 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-medium text-brand-blue"
                   >
                     {tag}
                   </span>
@@ -302,17 +302,17 @@ export function ClientsWhereFiabWorks({ works }: { works: ClientsWhereFiabWorksC
               />}
             </Reveal>
             <Reveal preset="slide-right" distance={20} className="pr-0 lg:pl-12 order-1 lg:order-2">
-              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#121826]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-brand-blue">
                 {works.portfolio.title}
               </h2>
-              <p className="mt-4 sm:mt-6 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70">
+              <p className="mt-4 sm:mt-6 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-brand-blue/70">
                 {works.portfolio.text}
               </p>
               <div className="mt-6 sm:mt-8">
                 <GreenButton
                   label={works.portfolio.cta.label}
                   href={works.portfolio.cta.url}
-                  bgColor="#121826"
+                  variant="dark"
                   textColor="#ffffff"
                   className="w-full sm:w-auto"
                 />

@@ -43,13 +43,13 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
               )}
               {config.highlight && (
                 <>
-                  <span className="text-[#23C55E]">{config.highlight}</span>
+                  <span className="text-brand-green">{config.highlight}</span>
                   <br className="hidden sm:inline" />
                   {" "}
                 </>
               )}
               {config.highlight2 && (
-                <span className="text-[#23C55E]">{config.highlight2}</span>
+                <span className="text-brand-green">{config.highlight2}</span>
               )}
             </h1>
           </Reveal>

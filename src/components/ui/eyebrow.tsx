@@ -133,10 +133,10 @@ export function Eyebrow({
   let defaultOpacity: number | string = 0.7;
 
   if (isWhiteBg) {
-    defaultColor = "#121826";
+    defaultColor = "var(--color-brand-blue)";
     defaultOpacity = 0.7;
   } else if (isGreen) {
-    defaultColor = "#23C55E";
+    defaultColor = "var(--color-brand-green)";
     defaultOpacity = 1;
   } else {
     defaultColor = "#FFFFFF";

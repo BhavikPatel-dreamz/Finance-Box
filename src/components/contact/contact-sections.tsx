@@ -14,7 +14,7 @@ import { useFormSubmit } from "@/hooks/use-form-submit";
 
 export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]; header: ReactNode }) {
   return (
-    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-[#121826] text-white flex flex-col">
+    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-brand-blue text-white flex flex-col">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/contact-us/contactus-hero-bg.svg)" }}
@@ -32,7 +32,7 @@ export function ContactBanner({ hero, header }: { hero: ContactUsContent["hero"]
             </Reveal>
             <Reveal immediate preset="slide-up" delay={220} distance={32}>
               <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 lg:mb-8">
-                {hero.title} <span className="text-[#23C55E]">{hero.highlight}</span>
+                {hero.title} <span className="text-brand-green">{hero.highlight}</span>
               </h1>
             </Reveal>
             <Reveal immediate preset="slide-up" delay={380} distance={24}>
@@ -74,14 +74,14 @@ export function ContactFormBlock({ formSection, form }: { formSection: ContactUs
               <div className="flex items-center gap-3.5 sm:gap-4">
                 <div className="flex h-[40px] w-[40px] sm:h-[44px] sm:w-[44px] items-center justify-center rounded-full bg-white border border-[#1219280D] shrink-0">
                   <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.2762 3.53321L9.45703 0.164068C9.23697 0.0561233 8.99511 0 8.75 0C8.50489 0 8.26303 0.0561233 8.04297 0.164068L1.22383 3.53321C0.856641 3.71136 0.547078 3.98936 0.330625 4.33536C0.114171 4.68135 -0.000415217 5.08134 1.13057e-06 5.48946V12.7008C1.13057e-06 13.907 0.99297 14.8883 2.21367 14.8883H15.2863C16.507 14.8883 17.5 13.907 17.5 12.7008V5.48946C17.5004 5.08134 17.3858 4.68135 17.1694 4.33536C16.9529 3.98936 16.6434 3.71136 16.2762 3.53321ZM8.60859 1.28204C8.65261 1.26045 8.70098 1.24922 8.75 1.24922C8.79902 1.24922 8.84739 1.26045 8.89141 1.28204L15.5078 4.55L8.78906 7.87032C8.74505 7.89191 8.69668 7.90313 8.64766 7.90313C8.59864 7.90313 8.55026 7.89191 8.50625 7.87032L1.88867 4.60196L8.60859 1.28204Z" fill="#121826" />
+                    <path d="M16.2762 3.53321L9.45703 0.164068C9.23697 0.0561233 8.99511 0 8.75 0C8.50489 0 8.26303 0.0561233 8.04297 0.164068L1.22383 3.53321C0.856641 3.71136 0.547078 3.98936 0.330625 4.33536C0.114171 4.68135 -0.000415217 5.08134 1.13057e-06 5.48946V12.7008C1.13057e-06 13.907 0.99297 14.8883 2.21367 14.8883H15.2863C16.507 14.8883 17.5 13.907 17.5 12.7008V5.48946C17.5004 5.08134 17.3858 4.68135 17.1694 4.33536C16.9529 3.98936 16.6434 3.71136 16.2762 3.53321ZM8.60859 1.28204C8.65261 1.26045 8.70098 1.24922 8.75 1.24922C8.79902 1.24922 8.84739 1.26045 8.89141 1.28204L15.5078 4.55L8.78906 7.87032C8.74505 7.89191 8.69668 7.90313 8.64766 7.90313C8.59864 7.90313 8.55026 7.89191 8.50625 7.87032L1.88867 4.60196L8.60859 1.28204Z" fill="var(--color-brand-blue)" />
                   </svg>
                 </div>
                 <div className="min-w-0">
                   <p className="text-[13px] sm:text-[14px] font-medium leading-[160%]">
                     {formSection.email.label}
                   </p>
-                  <Link href={`mailto:${formSection.email.value}`} className="text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826] hover:underline truncate block">
+                  <Link href={`mailto:${formSection.email.value}`} className="text-[15px] sm:text-[16px] font-light leading-[160%] text-brand-blue hover:underline truncate block">
                     {formSection.email.value}
                   </Link>
                 </div>
@@ -90,7 +90,7 @@ export function ContactFormBlock({ formSection, form }: { formSection: ContactUs
           </Reveal>
 
           {/* Right Side: Form */}
-          <Reveal preset="slide-right" distance={20} className="w-full lg:w-[788px] bg-[#EDE9E6]/50 rounded-[10px] p-6 sm:p-8 md:p-10 xl:py-15 xl:px-12.5">
+          <Reveal preset="slide-right" distance={20} className="w-full lg:w-[788px] bg-brand-sand/50 rounded-[10px] p-6 sm:p-8 md:p-10 xl:py-15 xl:px-12.5">
             <h2 className="text-[26px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-medium leading-[1.15] sm:leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-2.5 sm:mb-4">
               {formSection.title}
             </h2>
@@ -122,26 +122,26 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
   };
 
   return (
-    <section className="bg-white text-[#121826] pb-16 sm:pb-20 lg:pb-24 stay-connect-section">
+    <section className="bg-white text-brand-blue pb-16 sm:pb-20 lg:pb-24 stay-connect-section">
       <Container>
         <Reveal preset="slide-up" distance={20} className="text-center mb-10 sm:mb-12 lg:mb-16">
           <h2 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
             {socialSection.title}{" "}
-            <span className="text-[#23C55E] font-black italic">{socialSection.highlight}</span>
+            <span className="text-brand-green font-black italic">{socialSection.highlight}</span>
           </h2>
-          <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70 mt-3 sm:mt-4 max-w-[740px] mx-auto">
+          <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-brand-blue/70 mt-3 sm:mt-4 max-w-[740px] mx-auto">
             {socialSection.subtitle}
           </p>
         </Reveal>
 
         <StaggerGroup staggerDelay={150} className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-4">
           {/* LinkedIn Card */}
-          <StaggerItem index={0} className="card-hover relative w-full lg:w-1/2 rounded-[10px] bg-[#EDE9E6] p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px] overflow-hidden">
+          <StaggerItem index={0} className="card-hover relative w-full lg:w-1/2 rounded-[10px] bg-brand-sand p-6 sm:p-8 lg:p-10 flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px] overflow-hidden">
             <div className="relative z-1 max-w-[70%] sm:max-w-[65%] lg:max-w-none">
               <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4">
                 {socialSection.linkedin.title}
               </h3>
-              <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70">
+              <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-brand-blue/70">
                 {socialSection.linkedin.text}
               </p>
             </div>
@@ -150,7 +150,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
               <GreenButton
                 label={socialSection.linkedin.buttonLabel}
                 href={socialSection.linkedin.buttonUrl}
-                bgColor="#121826"
+                variant="dark"
                 textColor="#ffffff"
               />
             </div>
@@ -166,7 +166,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
           </StaggerItem>
 
           {/* Newsletter Card */}
-          <StaggerItem index={1} className="card-hover w-full lg:w-1/2 rounded-[10px] bg-[#121826] p-6 sm:p-8 md:p-10 lg:p-12.5 text-white flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px]">
+          <StaggerItem index={1} className="card-hover w-full lg:w-1/2 rounded-[10px] bg-brand-blue p-6 sm:p-8 md:p-10 lg:p-12.5 text-white flex flex-col justify-between min-h-[340px] sm:min-h-[380px] lg:min-h-[408px]">
             <div>
               <h3 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] tracking-tight sm:tracking-[-0.8px] mb-3 sm:mb-4 lg:mb-6.5">
                 {socialSection.newsletter.title}
@@ -183,7 +183,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={socialSection.newsletter.placeholder}
-                  className={`w-full h-[48px] sm:h-[50px] rounded-[10px] border ${errors["email-address"] ? 'border-red-500' : 'border-[#FFFFFF0F]'} bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-[#23C55E] mb-2 transition-colors duration-200`}
+                  className={`w-full h-[48px] sm:h-[50px] rounded-[10px] border ${errors["email-address"] ? 'border-red-500' : 'border-[#FFFFFF0F]'} bg-[#191F2D] px-4 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-brand-green mb-2 transition-colors duration-200`}
                 />
                 {errors["email-address"] && <p className="text-red-400 text-xs mt-1 ml-1">{errors["email-address"]}</p>}
               </div>
@@ -193,7 +193,7 @@ export function ContactConnected({ socialSection }: { socialSection: ContactUsCo
                   label={status === "loading" ? "Subscribing..." : socialSection.newsletter.buttonLabel}
                   href="#"
                   bgColor="#ffffff"
-                  textColor="#121826"
+                  textColor="var(--color-brand-blue)"
                 />
               </div>
 

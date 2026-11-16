@@ -55,8 +55,8 @@ export async function BlogArchive({ page }: { page: number }) {
                   aria-current={number === page ? "page" : undefined}
                   className={`inline-flex h-10 min-w-10 items-center justify-center rounded-full border px-3 text-[14px] font-medium transition-colors duration-300 ${
                     number === page
-                      ? "border-[#121826] bg-[#121826] text-white"
-                      : "border-[#121826]/15 text-[#121826] hover:border-[#23C55E] hover:text-[#23C55E]"
+                      ? "border-brand-blue bg-brand-blue text-white"
+                      : "border-brand-blue/15 text-brand-blue hover:border-brand-green hover:text-brand-green"
                   }`}
                 >
                   {number}

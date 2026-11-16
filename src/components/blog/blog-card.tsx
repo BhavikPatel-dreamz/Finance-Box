@@ -25,7 +25,7 @@ export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[24.97%] to-black/50 to-[100%]" />
 
-      <div className="relative bg-[#121826] rounded-[14px] sm:rounded-[16px] p-4.5 sm:p-5 lg:p-6 m-3 sm:m-3.5 lg:m-4 w-[calc(100%-24px)] sm:w-[calc(100%-28px)] lg:w-[calc(100%-32px)] text-white flex flex-col justify-between min-h-[210px] sm:min-h-[225px] lg:min-h-[247px]">
+      <div className="relative bg-brand-blue rounded-[14px] sm:rounded-[16px] p-4.5 sm:p-5 lg:p-6 m-3 sm:m-3.5 lg:m-4 w-[calc(100%-24px)] sm:w-[calc(100%-28px)] lg:w-[calc(100%-32px)] text-white flex flex-col justify-between min-h-[210px] sm:min-h-[225px] lg:min-h-[247px]">
         <div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 lg:gap-3 text-[11px] lg:text-[12px] font-normal text-white/60 mb-3 sm:mb-3.5 lg:mb-4">
             <span className="text-white font-medium font-mono">{blog.category}</span>
@@ -38,7 +38,7 @@ export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
             {blog.url ? (
               <Link
                 href={blog.url}
-                className="after:absolute after:inset-0 after:content-[''] hover:text-[#23C55E] focus-visible:outline-none focus-visible:text-[#23C55E] transition-colors duration-300"
+                className="after:absolute after:inset-0 after:content-[''] hover:text-brand-green focus-visible:outline-none focus-visible:text-brand-green transition-colors duration-300"
               >
                 {blog.title}
               </Link>

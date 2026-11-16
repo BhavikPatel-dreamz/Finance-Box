@@ -6,10 +6,10 @@
   --foreground: #f5f7fb;
   --muted: #a7b0be;
   --border: rgba(255, 255, 255, 0.12);
-  --accent: #23c55e;
+  --accent: var(--color-brand-green);
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
@@ -17,6 +17,11 @@
   --color-accent: var(--accent);
   --font-sans: var(--font-dm-sans), "DM Sans", sans-serif;
   --font-mono: var(--font-dm-mono), "DM Mono", monospace;
+
+  /* Brand colors — changed here only */
+  --color-brand-green: #4ea947;
+  --color-brand-blue: #121826;
+  --color-brand-sand: #EDE9E6;
 }
 
 html {
@@ -56,14 +61,14 @@ button, input, select, textarea {
 .eyebrow-light,
 .eyebrow-white,
 .eyebrow-on-light {
-  color: #121826;
+  color: var(--color-brand-blue);
   opacity: 0.7;
 }
 
 /* Eyebrow for green accent */
 .eyebrow-green,
 .eyebrow-accent {
-  color: #23C55E;
+  color: var(--color-brand-green);
   opacity: 1;
 }
 
@@ -161,7 +166,7 @@ button, input, select, textarea {
   }
 }
 
-/* Green button hover effect inside dark sections: bg color white, text color #121826 (only for actual green buttons, not white buttons) */
+/* Green button hover effect inside dark sections: bg color white, text color var(--color-brand-blue) (only for actual green buttons, not white buttons) */
 /* In dark sections, green buttons expand with a white circular background and dark text on hover */
 :is(
   .hero-section,
@@ -169,7 +174,7 @@ button, input, select, textarea {
   .footer-cta-section,
   .team-section,
   .how-we-work,
-  [class*="bg-[#121826]"],
+  [class*="bg-brand-blue"],
   [class*="bg-[#07110d]"],
   [class*="bg-[#07090f]"],
   [class*="bg-[#050D1F]"],
@@ -181,8 +186,8 @@ button, input, select, textarea {
   .dark,
   [data-theme="dark"]
 ) :is(
-  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
-  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"])
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"])
 ) > span[aria-hidden="true"] {
   background-color: #ffffff !important;
 }
@@ -193,7 +198,7 @@ button, input, select, textarea {
   .footer-cta-section,
   .team-section,
   .how-we-work,
-  [class*="bg-[#121826]"],
+  [class*="bg-brand-blue"],
   [class*="bg-[#07110d]"],
   [class*="bg-[#07090f]"],
   [class*="bg-[#050D1F]"],
@@ -205,11 +210,11 @@ button, input, select, textarea {
   .dark,
   [data-theme="dark"]
 ) :is(
-  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
-  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover
 ) {
   background-color: #ffffff !important;
-  color: #121826 !important;
+  color: var(--color-brand-blue) !important;
 }
 
 :is(
@@ -218,7 +223,7 @@ button, input, select, textarea {
   .footer-cta-section,
   .team-section,
   .how-we-work,
-  [class*="bg-[#121826]"],
+  [class*="bg-brand-blue"],
   [class*="bg-[#07110d]"],
   [class*="bg-[#07090f]"],
   [class*="bg-[#050D1F]"],
@@ -230,10 +235,10 @@ button, input, select, textarea {
   .dark,
   [data-theme="dark"]
 ) :is(
-  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
-  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
 ) {
-  color: #121826 !important;
+  color: var(--color-brand-blue) !important;
 }
 
 :is(
@@ -242,7 +247,7 @@ button, input, select, textarea {
   .footer-cta-section,
   .team-section,
   .how-we-work,
-  [class*="bg-[#121826]"],
+  [class*="bg-brand-blue"],
   [class*="bg-[#07110d]"],
   [class*="bg-[#07090f]"],
   [class*="bg-[#050D1F]"],
@@ -254,10 +259,10 @@ button, input, select, textarea {
   .dark,
   [data-theme="dark"]
 ) :is(
-  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
-  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
 ) svg {
-  color: #121826 !important;
+  color: var(--color-brand-blue) !important;
 }
 
 /* Motion Design & Interactive Hover Utilities (Inspired by financeinabox.com) */

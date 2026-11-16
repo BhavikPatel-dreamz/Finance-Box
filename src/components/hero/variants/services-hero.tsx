@@ -39,7 +39,7 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
             <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.15] lg:leading-[1.12] font-medium tracking-tight text-white">
               {config.title}
               {config.highlight && (
-                <span className="whitespace-pre-line text-[#23C55E]">
+                <span className="whitespace-pre-line text-brand-green">
                   {" "}
                   {config.highlight}
                 </span>
@@ -75,7 +75,7 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
                       href={config.secondaryCta.url}
                       target={config.secondaryCta.target}
                       rel={config.secondaryCta.target === "_blank" ? "noopener noreferrer" : undefined}
-                      className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1"
+                      className="flex items-center gap-3 text-base sm:text-lg hover:text-brand-green font-semibold transition-all duration-300 py-1"
                     >
                       {config.secondaryCta.label} <ArrowIcon />
                     </Link>
@@ -100,18 +100,18 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
             {/* Vertical Gradient Divider Line (stretches with the list) */}
             <div
               aria-hidden="true"
-              className="tier-line-animate hidden lg:block absolute -left-5 xl:-left-6 top-0 bottom-0 w-[1.5px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
+              className="tier-line-animate hidden lg:block absolute -left-5 xl:-left-6 top-0 bottom-0 w-[1.5px] pointer-events-none bg-[linear-gradient(180deg,var(--color-brand-green)_0%,color-mix(in_srgb,var(--color-brand-green)_0%,transparent)_89.31%)]"
               style={{ animationDelay: "150ms" }}
             />
             {config.tiers.map((tier, idx) => (
               <div
                 key={idx}
-                className="tier-card-animate card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                className="tier-card-animate card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-brand-green/50 transition-colors"
                 style={{
                   animationDelay: `${260 + idx * 180}ms`,
                 }}
               >
-                <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E] tabular-nums">
+                <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-brand-blue text-[14px] font-semibold text-brand-green tabular-nums">
                   {formatTierNumber(tier.number, idx)}
                 </div>
                 <div className="flex flex-col">
@@ -133,7 +133,7 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
                         <>
                           {title}{hl ? " " : ""}
                           {hl && (
-                            <span className="font-semibold text-[#23C55E]">
+                            <span className="font-semibold text-brand-green">
                               {hl}
                             </span>
                           )}

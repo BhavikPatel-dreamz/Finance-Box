@@ -27,7 +27,7 @@ export function CenteredHeroVariant({ config }: { config: HeroConfig }) {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6">
             {config.title}{" "}
             {config.highlight && (
-              <span className="text-[#23C55E]">{config.highlight}</span>
+              <span className="text-brand-green">{config.highlight}</span>
             )}
           </h1>
         </Reveal>

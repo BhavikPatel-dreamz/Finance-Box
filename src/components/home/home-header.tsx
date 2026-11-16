@@ -220,9 +220,9 @@ export function HomeHeader({
             {/* Mobile / Tablet Icon-Only Toggle Button */}
             <button
               type="button"
-              className={`relative inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border transition-all duration-200 shadow-sm backdrop-blur-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#23C55E]/50 lg:hidden ${
+              className={`relative inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border transition-all duration-200 shadow-sm backdrop-blur-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green/50 lg:hidden ${
                 menuOpen
-                  ? "border-[#23C55E]/50 bg-[#23C55E]/15 text-[#23C55E] hover:border-[#23C55E]/70 hover:bg-[#23C55E]/20"
+                  ? "border-brand-green/50 bg-brand-green/15 text-brand-green hover:border-brand-green/70 hover:bg-brand-green/20"
                   : "border-white/15 bg-white/[0.06] text-white hover:border-white/30 hover:bg-white/[0.12]"
               }`}
               aria-expanded={menuOpen}
@@ -232,7 +232,7 @@ export function HomeHeader({
               <div className="relative flex h-3.5 w-4.5 flex-col justify-between items-center" aria-hidden="true">
                 <span
                   className={`h-[2px] w-full rounded-full transition-all duration-300 ease-in-out ${
-                    menuOpen ? "translate-y-[6px] rotate-45 bg-[#23C55E]" : "bg-white"
+                    menuOpen ? "translate-y-[6px] rotate-45 bg-brand-green" : "bg-white"
                   }`}
                 />
                 <span
@@ -242,7 +242,7 @@ export function HomeHeader({
                 />
                 <span
                   className={`h-[2px] w-full rounded-full transition-all duration-300 ease-in-out ${
-                    menuOpen ? "-translate-y-[6px] -rotate-45 bg-[#23C55E]" : "bg-white"
+                    menuOpen ? "-translate-y-[6px] -rotate-45 bg-brand-green" : "bg-white"
                   }`}
                 />
               </div>
@@ -310,7 +310,7 @@ function DesktopItem({
     return (
       <Link
         href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
-        className={`whitespace-nowrap transition-colors ${isActive ? "text-[#23C55E] font-medium" : "text-white/85 hover:text-[#23C55E]"
+        className={`whitespace-nowrap transition-colors ${isActive ? "text-brand-green font-medium" : "text-white/85 hover:text-brand-green"
           }`}
       >
         {link.label}
@@ -323,14 +323,14 @@ function DesktopItem({
       <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
         <Link
           href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
-          className={`transition-colors ${isActive ? "text-[#23C55E] font-medium" : "text-white/85 group-hover:text-[#23C55E]"
+          className={`transition-colors ${isActive ? "text-brand-green font-medium" : "text-white/85 group-hover:text-brand-green"
             }`}
         >
           {link.label}
         </Link>
         <button
           type="button"
-          className={`transition-colors ${isActive ? "text-[#23C55E]" : "text-white/85 group-hover:text-[#23C55E]"
+          className={`transition-colors ${isActive ? "text-brand-green" : "text-white/85 group-hover:text-brand-green"
             }`}
           aria-expanded={open}
           aria-haspopup="true"
@@ -342,7 +342,7 @@ function DesktopItem({
       </span>
       {open ? (
         <div className="dropdown-enter absolute top-full left-0 z-50 w-60 pt-2.5">
-          <ul className="rounded-xl border border-white/10 bg-[#121826]/98 backdrop-blur-xl p-1.5 shadow-2xl space-y-0.5">
+          <ul className="rounded-xl border border-white/10 bg-brand-blue/98 backdrop-blur-xl p-1.5 shadow-2xl space-y-0.5">
             {link.children.map((child) => {
               const isChildActive = isUrlActive(pathname, child.url, { currentHash });
               return (
@@ -350,14 +350,14 @@ function DesktopItem({
                   <Link
                     href={child.url} target={child.target} rel={child.target === "_blank" ? "noopener noreferrer" : undefined}
                     className={`flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm transition-all duration-150 ${isChildActive
-                        ? "bg-[#23C55E]/15 text-[#23C55E] font-medium"
+                        ? "bg-brand-green/15 text-brand-green font-medium"
                         : "text-white/80 hover:bg-white/[0.08] hover:text-white font-normal"
                       }`}
                     onClick={() => onOpen(null)}
                   >
                     <span>{child.label}</span>
                     {isChildActive && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_6px_#23C55E]" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-brand-green shadow-[0_0_6px_var(--color-brand-green)]" />
                     )}
                   </Link>
                 </li>
@@ -396,12 +396,12 @@ function MobileItem({
           href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
           onClick={onNavigate}
           className={`flex items-center justify-between py-2.5 text-[16px] sm:text-[17px] font-medium transition-colors ${
-            isDirectActive ? "text-[#23C55E] font-semibold" : "text-white/90 hover:text-white"
+            isDirectActive ? "text-brand-green font-semibold" : "text-white/90 hover:text-white"
           }`}
         >
           <span>{link.label}</span>
           {isDirectActive && (
-            <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_8px_#23C55E]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-green shadow-[0_0_8px_var(--color-brand-green)]" />
           )}
         </Link>
       </div>
@@ -415,7 +415,7 @@ function MobileItem({
           href={link.url} target={link.target} rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
           onClick={onNavigate}
           className={`text-[16px] sm:text-[17px] font-medium transition-colors ${
-            isParentActive ? "text-[#23C55E] font-semibold" : "text-white/90 hover:text-white"
+            isParentActive ? "text-brand-green font-semibold" : "text-white/90 hover:text-white"
           }`}
         >
           {link.label}
@@ -426,7 +426,7 @@ function MobileItem({
           aria-label={`${link.label} menu`}
           onClick={onToggle}
           className={`flex h-9 w-9 items-center justify-center -mr-2 rounded-full transition-colors ${
-            open ? "text-[#23C55E]" : "text-white/60 hover:text-white"
+            open ? "text-brand-green" : "text-white/60 hover:text-white"
           } active:scale-95`}
         >
           <Chevron open={open} />
@@ -434,7 +434,7 @@ function MobileItem({
       </div>
 
       {open && (
-        <ul className="mb-2.5 ml-1 space-y-1 border-l-2 border-[#23C55E]/30 pl-4">
+        <ul className="mb-2.5 ml-1 space-y-1 border-l-2 border-brand-green/30 pl-4">
           {link.children.map((child) => {
             const isChildActive = isUrlActive(pathname, child.url, { currentHash });
             return (
@@ -444,12 +444,12 @@ function MobileItem({
                   onClick={onNavigate}
                   className={`flex items-center gap-2 py-2 text-[15px] transition-colors ${
                     isChildActive
-                      ? "font-semibold text-[#23C55E]"
+                      ? "font-semibold text-brand-green"
                       : "text-white/65 hover:text-white font-normal"
                   }`}
                 >
                   {isChildActive && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#23C55E] shadow-[0_0_6px_#23C55E]" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-green shadow-[0_0_6px_var(--color-brand-green)]" />
                   )}
                   {child.label}
                 </Link>

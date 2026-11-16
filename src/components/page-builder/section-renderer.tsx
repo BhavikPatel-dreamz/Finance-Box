@@ -21,7 +21,7 @@ export function SectionRenderer({ sections, uri }: { sections: SectionData[]; ur
   return (
     <>
       {firstIsHero ? null : (
-        <div className="h-[81px] sm:h-[97px] lg:h-[112px] bg-[#121826]" aria-hidden="true" />
+        <div className="h-[81px] sm:h-[97px] lg:h-[112px] bg-brand-blue" aria-hidden="true" />
       )}
       {sections.map((data, index) => {
         const layout = layoutFromTypename(data.__typename) ?? String(data.__typename);

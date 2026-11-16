@@ -17,7 +17,7 @@ import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
 export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]; header: ReactNode }) {
   // Hero Section
   return (
-    <section className="hero-section relative overflow-hidden bg-[#121826] text-white">
+    <section className="hero-section relative overflow-hidden bg-brand-blue text-white">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/services/services-hero-bg.svg)" }}
@@ -36,7 +36,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
               <Reveal immediate preset="slide-up" delay={220} distance={32}>
                 <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl xl:text-[54px] leading-[1.15] lg:leading-[1.12] font-medium tracking-tight text-white">
                   {hero.title}
-                  <span className="whitespace-pre-line text-[#23C55E]"> {hero.highlight}</span>
+                  <span className="whitespace-pre-line text-brand-green"> {hero.highlight}</span>
                 </h1>
               </Reveal>
 
@@ -54,7 +54,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
                     bgColor="#ffffff"
                     textColor="#07110d"
                   />
-                  <Link href="#" className="flex items-center gap-3 text-base sm:text-lg hover:text-[#23C55E] font-semibold transition-all duration-300 py-1">See How an Engagement Works <ArrowIcon /></Link>
+                  <Link href="#" className="flex items-center gap-3 text-base sm:text-lg hover:text-brand-green font-semibold transition-all duration-300 py-1">See How an Engagement Works <ArrowIcon /></Link>
                 </div>
               </Reveal>
             </div>
@@ -63,10 +63,10 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
               {/* Vertical Gradient Divider Line matching Figma specs */}
               <div
                 aria-hidden="true"
-                className="tier-line-animate hidden lg:block absolute -left-5 xl:-left-6 -top-7 w-[1.5px] h-[510px] pointer-events-none bg-[linear-gradient(180deg,#23C55E_0%,rgba(35,197,94,0)_89.31%)]"
+                className="tier-line-animate hidden lg:block absolute -left-5 xl:-left-6 -top-7 w-[1.5px] h-[510px] pointer-events-none bg-[linear-gradient(180deg,var(--color-brand-green)_0%,color-mix(in_srgb,var(--color-brand-green)_0%,transparent)_89.31%)]"
                 style={{
                   borderLeft: "1.5px solid transparent",
-                  borderImageSource: "linear-gradient(180deg, #23C55E 0%, rgba(35, 197, 94, 0) 89.31%)",
+                  borderImageSource: "linear-gradient(180deg, var(--color-brand-green) 0%, color-mix(in srgb, var(--color-brand-green) 0%, transparent) 89.31%)",
                   borderImageSlice: 1,
                   animationDelay: "150ms",
                 }}
@@ -74,12 +74,12 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
               {hero.tiers.map((tier, idx) => (
                 <div
                   key={idx}
-                  className="tier-card-animate card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-[#23C55E]/50 transition-colors"
+                  className="tier-card-animate card-hover w-full min-h-[110px] h-auto lg:h-[125px] bg-[#050D1F] border border-white/8 rounded-[15px] p-4 sm:p-4.5 flex items-start gap-3.5 sm:gap-4.5 relative overflow-hidden group hover:border-brand-green/50 transition-colors"
                   style={{
                     animationDelay: `${260 + idx * 180}ms`,
                   }}
                 >
-                  <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-[#121826] text-[14px] font-semibold text-[#23C55E]">
+                  <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[#232835] bg-brand-blue text-[14px] font-semibold text-brand-green">
                     {tier.number}
                   </div>
                   <div className="flex flex-col">
@@ -101,7 +101,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
                           <>
                             {title}{hl ? " " : ""}
                             {hl && (
-                              <span className="font-semibold text-[#23C55E]">
+                              <span className="font-semibold text-brand-green">
                                 {hl}
                               </span>
                             )}
@@ -159,7 +159,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
                 <span className="font-black italic">Company Today?</span>
               </h2>
             </div>
-            <p className="max-w-[386px] text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826]/80">
+            <p className="max-w-[386px] text-[15px] sm:text-[16px] font-light leading-[160%] text-brand-blue/80">
               {stages.text}
             </p>
           </div>
@@ -173,7 +173,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
               <StaggerItem
                 key={idx}
                 index={idx}
-                className="card-hover bg-[#121826] rounded-[16px] p-6 sm:p-8 flex flex-col justify-between min-h-[200px] sm:min-h-[226px] h-full relative group border border-white/5"
+                className="card-hover bg-brand-blue rounded-[16px] p-6 sm:p-8 flex flex-col justify-between min-h-[200px] sm:min-h-[226px] h-full relative group border border-white/5"
               >
                 <div className="flex justify-between items-start gap-4 mb-5 sm:mb-6">
                   <div className="flex flex-col gap-y-3.75">
@@ -184,7 +184,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
                       {card.label}
                     </p>
                   </div>
-                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-[#23C55E] group-hover:border-[#23C55E]">
+                  <div className="flex size-13 sm:size-15 shrink-0 items-center justify-center rounded-full border border-white/14 transition-colors duration-300 group-hover:bg-brand-green group-hover:border-brand-green">
                     {iconSrc && (
                       <SafeImage
                         src={iconSrc}
@@ -230,7 +230,7 @@ export function ServicesDepthIntro({ depth }: { depth: ServicesContent["depth"] 
             label={depth.cta.label}
             href={depth.cta.url}
             bgColor="#ffffff"
-            textColor="#121826"
+            textColor="var(--color-brand-blue)"
             className="mt-8 sm:mt-10"
           />
         </Reveal>
@@ -319,7 +319,7 @@ function ServiceCard({
           setIsOpen((prev) => !prev);
         }
       }}
-      className={`group relative overflow-hidden bg-[#121826] p-5 sm:p-6 lg:p-5 xl:p-7 2xl:p-8 flex flex-col justify-start min-h-[160px] sm:min-h-[175px] md:min-h-[180px] lg:min-h-[175px] xl:min-h-[195px] 2xl:min-h-[205px] outline-none transition-all duration-300 ease-out select-none ${
+      className={`group relative overflow-hidden bg-brand-blue p-5 sm:p-6 lg:p-5 xl:p-7 2xl:p-8 flex flex-col justify-start min-h-[160px] sm:min-h-[175px] md:min-h-[180px] lg:min-h-[175px] xl:min-h-[195px] 2xl:min-h-[205px] outline-none transition-all duration-300 ease-out select-none ${
         hasHover
           ? "cursor-pointer hover:bg-white focus-visible:bg-white active:bg-white"
           : "cursor-default"
@@ -352,7 +352,7 @@ function ServiceCard({
               : "opacity-0 translate-y-1 pointer-events-none group-hover:translate-y-0 group-hover:opacity-100 group-hover:pointer-events-auto group-focus-visible:translate-y-0 group-focus-visible:opacity-100 group-active:translate-y-0 group-active:opacity-100"
           }`}
         >
-          <p className="text-[12.5px] sm:text-[13.5px] md:text-[14px] lg:text-[13px] xl:text-[14.5px] 2xl:text-[15.5px] font-normal leading-[150%] xl:leading-[160%] text-[#121826]">
+          <p className="text-[12.5px] sm:text-[13.5px] md:text-[14px] lg:text-[13px] xl:text-[14.5px] 2xl:text-[15.5px] font-normal leading-[150%] xl:leading-[160%] text-brand-blue">
             {item.description}
           </p>
         </div>
@@ -378,7 +378,7 @@ function DetailBlock({ detail, idx }: { detail: ServiceDetail; idx: number }) {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-7 sm:gap-9 lg:gap-8 xl:gap-14 2xl:gap-20 items-start">
           <div className="w-full max-w-2xl lg:max-w-77.75 min-w-0">
-            <div className="flex size-8 lg:size-8.5 items-center justify-center rounded-full border border-white/10 bg-[#121826] text-[13px] lg:text-[14px] font-semibold text-[#23C55E] tabular-nums">
+            <div className="flex size-8 lg:size-8.5 items-center justify-center rounded-full border border-white/10 bg-brand-blue text-[13px] lg:text-[14px] font-semibold text-brand-green tabular-nums">
               {String(idx + 1).padStart(2, "0")}
             </div>
             <h2 className="text-[26px] sm:text-[30px] md:text-[32px] lg:text-[28px] xl:text-[34px] 2xl:text-[36px] font-medium leading-[1.18] sm:leading-[1.12] tracking-[-0.8px] text-white my-3.5 sm:my-5 lg:my-4 xl:my-6">
@@ -390,14 +390,14 @@ function DetailBlock({ detail, idx }: { detail: ServiceDetail; idx: number }) {
             <GreenButton
               label={detail.cta.label}
               href={detail.cta.url}
-              bgColor="#23C55E"
-              textColor="#121826"
+              variant="green"
+              textColor="var(--color-brand-blue)"
               onDark={true}
               className="mt-5 sm:mt-6 lg:mt-6 xl:mt-8"
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border border-white/12 rounded-[10px] overflow-hidden bg-[#121826]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border border-white/12 rounded-[10px] overflow-hidden bg-brand-blue">
             {detail.items.map((item: ServiceItem, itemIdx: number) => {
               const isLastItem = itemIdx === total - 1;
               const isFullWidth = isOdd && isLastItem;
@@ -450,7 +450,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   return (
     <Section theme="light" spacing="both" className="services-cfo-section relative z-1 lg:-mt-[100svh]">
       <Container>
-        <div className="bg-[#F5F3F2] rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] p-6 sm:p-10 md:px-12.5 md:py-20 text-[#121826]">
+        <div className="bg-[#F5F3F2] rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] p-6 sm:p-10 md:px-12.5 md:py-20 text-brand-blue">
 
           <Reveal preset="slide-up" distance={20}>
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
@@ -474,13 +474,13 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                 </h2>
               </div>
               <div className="max-w-md">
-                <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] text-[#121826]/70 mb-6 sm:mb-8">
+                <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] text-brand-blue/70 mb-6 sm:mb-8">
                   {cfo.text}
                 </p>
                 <GreenButton
                   label={cfo.cta.label}
                   href={cfo.cta.url}
-                  bgColor="#121826"
+                  variant="dark"
                   textColor="#ffffff"
                 />
               </div>
@@ -530,7 +530,7 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                   </svg>
 
                   {/* Dark Box */}
-                  <div className="bg-[#121826] group-hover:bg-[#23C55E] text-white rounded-[8px] p-3.5 sm:p-4.5 xl:p-6 flex flex-col justify-start min-h-[130px] sm:min-h-[145px] xl:min-h-[160px] transition-all duration-300">
+                  <div className="bg-brand-blue group-hover:bg-brand-green text-white rounded-[8px] p-3.5 sm:p-4.5 xl:p-6 flex flex-col justify-start min-h-[130px] sm:min-h-[145px] xl:min-h-[160px] transition-all duration-300">
                     <h3 className="text-[14px] sm:text-[15px] xl:text-[18px] font-extrabold uppercase tracking-[0.8px] xl:tracking-[1px] leading-[18px] sm:leading-[20px] mb-1.5 sm:mb-2 xl:mb-3 text-white group-hover:text-[#0B0D0C] transition-all duration-300">
                       {card.title}
                     </h3>
@@ -582,8 +582,8 @@ export function ServicesInvestors({ investors }: { investors: ServicesContent["i
         <Reveal preset="slide-up" distance={20} className="mx-auto w-full mb-10 sm:mb-14 lg:mb-16">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-0 sm:gap-10 lg:gap-16">
             <div className="max-w-md">
-              <p className="inline-flex items-center gap-3 text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-[#23C55E] mb-5 sm:mb-6">
-                <span className="h-px w-6 bg-[#23C55E]" />
+              <p className="inline-flex items-center gap-3 text-[14px] font-mono font-medium tracking-[1.5px] uppercase text-brand-green mb-5 sm:mb-6">
+                <span className="h-px w-6 bg-brand-green" />
                 {investors.eyebrow}
               </p>
               <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.1] sm:leading-[1.05] tracking-[-0.8px] text-white">
@@ -652,11 +652,11 @@ export function ServicesInvestors({ investors }: { investors: ServicesContent["i
                   label={investors.primary.label}
                   href={investors.primary.url}
                   bgColor="#ffffff"
-                  textColor="#121826"
+                  textColor="var(--color-brand-blue)"
                 />
                 <Link
                   href={investors.secondary.url}
-                  className="group inline-flex items-center gap-3 text-[15px] sm:text-[16px] font-semibold text-white hover:text-[#23C55E] transition-colors duration-300 py-2"
+                  className="group inline-flex items-center gap-3 text-[15px] sm:text-[16px] font-semibold text-white hover:text-brand-green transition-colors duration-300 py-2"
                 >
                   <span>{investors.secondary.label}</span>
                   <ArrowIcon />
