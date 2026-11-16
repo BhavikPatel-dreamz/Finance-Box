@@ -32,7 +32,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Re
                 </h1>
               </Reveal>
               <Reveal immediate preset="slide-up" delay={280} distance={28} className="lg:max-w-[460px] lg:justify-self-end lg:pt-2.5">
-                <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/90">
+                <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/80">
                   {hero.text}
                 </p>
                 <div className="mt-6 sm:mt-8">

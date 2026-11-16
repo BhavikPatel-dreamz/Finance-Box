@@ -42,7 +42,7 @@ export function WhyHeroVariant({ config }: { config: HeroConfig }) {
             className="lg:max-w-[460px] lg:justify-self-end lg:pt-2.5"
           >
             {config.description && (
-              <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/90">
+              <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/80">
                 {config.description}
               </p>
             )}
