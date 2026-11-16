@@ -41,7 +41,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
               </Reveal>
 
               <Reveal immediate preset="slide-up" delay={380} distance={24}>
-                <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/90 mt-4 sm:mt-5 lg:max-w-[508px]">
+                <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/80 mt-4 sm:mt-5 lg:max-w-[508px]">
                   {hero.text}
                 </p>
               </Reveal>
@@ -180,7 +180,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
                     <h3 className="text-[24px] sm:text-[28px] lg:text-[30px] font-semibold leading-[1.2] text-white">
                       {card.title}
                     </h3>
-                    <p className="text-[13px] sm:text-[14px] font-medium tracking-[0.06em] uppercase text-white/70 mb-3 sm:mb-4 max-w-[85%] sm:max-w-[80%] leading-[129%]">
+                    <p className="text-[13px] sm:text-[14px] font-medium tracking-[0.06em] uppercase text-white/70 mb-3 sm:mb-4 max-w-[85%] sm:max-w-[430px] leading-[129%]">
                       {card.label}
                     </p>
                   </div>

@@ -49,7 +49,7 @@ export function ServicesHeroVariant({ config }: { config: HeroConfig }) {
 
           {config.description && (
             <Reveal immediate preset="slide-up" delay={380} distance={24}>
-              <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/90 mt-4 sm:mt-5 lg:max-w-[508px]">
+              <p className="text-[14px] sm:text-[16px] font-light leading-[1.65] text-white/80 mt-4 sm:mt-5 lg:max-w-[508px]">
                 {config.description}
               </p>
             </Reveal>
