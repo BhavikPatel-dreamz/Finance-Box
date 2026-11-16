@@ -55,7 +55,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
 
               return (
                 <div key={column.title} className="min-w-0 shrink-0">
-                  <h2 className="text-xs sm:text-sm font-medium tracking-[1.4px] xl:tracking-[1.6px] text-white/70 uppercase">
+                  <h2 className="text-xs sm:text-sm font-medium tracking-[1.4px] xl:tracking-[1.5px] text-white/70 uppercase font-mono">
                     {column.title}
                   </h2>
                   <ul className="mt-4 sm:mt-5 lg:mt-4 xl:mt-6 space-y-3 sm:space-y-3.5 xl:space-y-4 text-[13px] sm:text-[14px] font-normal text-white">
