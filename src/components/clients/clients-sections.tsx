@@ -259,23 +259,23 @@ export function ClientsTestimonials({ reviewsSection }: { reviewsSection: Client
 export function ClientsWhereFiabWorks({ works }: { works: ClientsWhereFiabWorksContent }) {
   // Where FIAB Works Section
   return (
-    <Section spacing="both" className="fiab-works-section bg-[#EDE9E6] text-[#16181d]">
+    <Section spacing="both" className="fiab-works-section bg-[#EDE9E6] text-[#121826]">
       <Container>
         <div className="flex flex-col gap-12 sm:gap-16 lg:gap-24">
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
             <Reveal preset="slide-left" distance={20} className="pr-0 lg:pr-12">
-              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#16181d]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#121826]">
                 {works.title}
               </h2>
-              <p className="mt-4 sm:mt-6 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#16181d]/70">
+              <p className="mt-4 sm:mt-6 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70">
                 {works.text}
               </p>
               <div className="mt-6 sm:mt-8 flex flex-wrap gap-2 sm:gap-3">
                 {works.industries.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center rounded-full bg-white px-3.5 sm:px-5 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-medium text-[#16181d] shadow-sm"
+                    className="inline-flex items-center border border-[#12182612] rounded-full bg-white px-3.5 sm:px-5 py-2 sm:py-2.5 text-[12px] sm:text-[13px] font-medium text-[#121826]"
                   >
                     {tag}
                   </span>
@@ -302,10 +302,10 @@ export function ClientsWhereFiabWorks({ works }: { works: ClientsWhereFiabWorksC
               />}
             </Reveal>
             <Reveal preset="slide-right" distance={20} className="pr-0 lg:pl-12 order-1 lg:order-2">
-              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#16181d]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#121826]">
                 {works.portfolio.title}
               </h2>
-              <p className="mt-4 sm:mt-6 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#16181d]/70">
+              <p className="mt-4 sm:mt-6 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#121826]/70">
                 {works.portfolio.text}
               </p>
               <div className="mt-6 sm:mt-8">
