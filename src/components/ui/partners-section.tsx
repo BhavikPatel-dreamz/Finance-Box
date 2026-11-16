@@ -165,7 +165,7 @@ export function PartnersSection({
         <Container className={containerClassName}>
           <Reveal preset="slide-up" distance={20}>
             <h2
-              className={`text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12 ${titleClassName}`.trim()}
+              className={`text-center text-3xl sm:text-4xl lg:text-[44px] xl:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-8 sm:mb-10 lg:mb-12 ${titleClassName}`.trim()}
             >
               {renderTitle(title, highlight)}
             </h2>

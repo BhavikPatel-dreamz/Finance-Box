@@ -91,7 +91,7 @@ export function AgenticBuildYourOwn({
         <div className="rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#F5F3F2] px-6 py-10 text-center md:p-7.5 xl:p-16">
 
           <Reveal preset="slide-up" distance={20}>
-            <h2 className="mb-4 text-3xl font-medium leading-[1.15] tracking-[-0.8px] text-[#121826] sm:text-4xl lg:text-[54px]">
+            <h2 className="mb-4 text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#121826]">
               {(() => {
                 let title = buildYourOwn.title;
                 const hl = buildYourOwn.highlight;
@@ -183,7 +183,7 @@ export function AgenticPeopleOps({ peopleOps }: { peopleOps: AgenticAiContent["p
       <Container>
 
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-12.5 mb-10">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-12.5 mb-10">
             {peopleOps.title}
           </h2>
         </Reveal>
@@ -250,7 +250,7 @@ export function AgenticOpsCompliance({ opsCompliance }: { opsCompliance: Agentic
       <Container>
 
         <Reveal preset="slide-up" distance={20}>
-          <h2 className="text-center text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-16 mb-8">
+          <h2 className="text-center text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] lg:mb-12 mb-8">
             {opsCompliance.title}
           </h2>
         </Reveal>
@@ -258,7 +258,7 @@ export function AgenticOpsCompliance({ opsCompliance }: { opsCompliance: Agentic
         <StaggerGroup staggerDelay={150} className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {opsCompliance.cards.map((card, idx) => (
             <StaggerItem key={idx} index={idx} >
-              <div className="group card-hover relative rounded-[14px] sm:rounded-[16px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
+              <div className="group card-hover relative rounded-[10px] overflow-hidden lg:min-h-[633px] md:min-h-[450px] min-h-[350px] flex items-end">
                 {card.image && (
                   <Image
                     src={card.image}
@@ -310,10 +310,10 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
       <Container>
 
         <Reveal preset="slide-up" distance={20} className="text-center md:mb-16 mb-10">
-          <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
+          <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px]">
             {provenArchitecture.title}
           </h2>
-          <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-black leading-[1.15] tracking-[-0.8px] text-[#23C55E] italic">
+          <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-black leading-[1.15] tracking-[-0.8px] text-[#23C55E] italic">
             {provenArchitecture.highlight}
           </h2>
         </Reveal>
