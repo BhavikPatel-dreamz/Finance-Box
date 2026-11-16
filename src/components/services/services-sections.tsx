@@ -159,7 +159,7 @@ export function ServicesStages({ stages }: { stages: ServicesContent["stages"] }
                 <span className="font-black italic">Company Today?</span>
               </h2>
             </div>
-            <p className="max-w-md text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826]/80">
+            <p className="max-w-[386px] text-[15px] sm:text-[16px] font-light leading-[160%] text-[#121826]/80">
               {stages.text}
             </p>
           </div>
