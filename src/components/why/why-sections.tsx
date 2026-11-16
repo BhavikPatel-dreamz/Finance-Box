@@ -12,7 +12,7 @@ import { TeamProfileCard } from "@/components/team/team-card";
 
 export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: ReactNode }) {
   return (
-    <section className="hero-section relative overflow-hidden bg-[#121826] text-white">
+    <section className="hero-section relative overflow-hidden bg-brand-blue text-white">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
         style={{ backgroundImage: "url(/why/why-bg-img.svg)" }}
@@ -28,7 +28,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Re
                 </Eyebrow>
                 <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
                   {hero.title}
-                  <span className="block whitespace-pre-line text-[#23C55E]">{hero.highlight}</span>
+                  <span className="block whitespace-pre-line text-brand-green">{hero.highlight}</span>
                 </h1>
               </Reveal>
               <Reveal immediate preset="slide-up" delay={280} distance={28} className="lg:max-w-[460px] lg:justify-self-end lg:pt-2.5">
@@ -60,7 +60,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Re
                       className="card-hover flex min-h-[50px] md:h-[110px] md:flex-col lg:justify-between lg:items-start items-center p-3.5 sm:px-5 sm:py-4 lg:gap-0 gap-x-4"
                     >
                       {/* 🚀 Fallback wapas lagaya gaya hai */}
-                      <span className="point-number inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-full bg-[#121826] border border-[#23C55E]/40 text-[13px] sm:text-[14px] font-semibold text-[#23C55E] shadow-[0_0_10px_rgba(35,197,94,0.1)]">
+                      <span className="point-number inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-full bg-brand-blue border border-brand-green/40 text-[13px] sm:text-[14px] font-semibold text-brand-green shadow-[0_0_10px_color-mix(in_srgb,var(--color-brand-green)_10%,transparent)]">
                         {point.number || String(index + 1).padStart(2, '0')}
                       </span>
                       <p className="text-[16px] sm:text-[18px] md:text-[20px] font-semibold text-white tracking-tight leading-snug">
@@ -106,12 +106,12 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
   const totalRows = compare.rows.length + 1;
 
   return (
-    <section className="compare-section bg-white py-14 sm:py-20 lg:py-24 text-[#121826] overflow-hidden">
+    <section className="compare-section bg-white py-14 sm:py-20 lg:py-24 text-brand-blue overflow-hidden">
       <Container>
         <Reveal preset="slide-up" distance={20} className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
             {compare.title}
-            <span className="mt-1 block font-black text-[#23C55E] italic">{compare.highlight}</span>
+            <span className="mt-1 block font-black text-brand-green italic">{compare.highlight}</span>
           </h2>
           <p className="mx-auto mt-4 sm:mt-5 max-w-[680px] text-sm sm:text-base leading-[1.6] text-[#66707c]">
             {compare.text}
@@ -152,7 +152,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                     return (
                       <div
                         key={`divider-${gridCol}`}
-                        className="border-l border-[#121826]/10 pointer-events-none z-1"
+                        className="border-l border-brand-blue/10 pointer-events-none z-1"
                         style={{
                           gridColumn: gridCol,
                           gridRow: `1 / ${totalRows + 1}`,
@@ -164,7 +164,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                 })}
 
                 <div
-                  className="bg-[#121826] rounded-[14px] pointer-events-none z-1 -mt-7 sm:-mt-9 -mb-5 sm:-mb-7"
+                  className="bg-brand-blue rounded-[14px] pointer-events-none z-1 -mt-7 sm:-mt-9 -mb-5 sm:-mb-7"
                   style={{
                     gridColumn: featuredGridCol,
                     gridRow: `1 / ${totalRows + 1}`,
@@ -173,7 +173,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
 
                 <div
                   role="columnheader"
-                  className="relative z-1 flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 font-semibold text-[17px] sm:text-[22px] text-[#121826] tracking-tight"
+                  className="relative z-1 flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 font-semibold text-[17px] sm:text-[22px] text-brand-blue tracking-tight"
                   style={{ gridColumn: 1, gridRow: 1 }}
                 >
                   {compare.featureLabel}
@@ -211,7 +211,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                     <div
                       key={column.label}
                       role="columnheader"
-                      className="relative z-1 flex items-center justify-center px-2 sm:px-4 text-center font-semibold text-[14px] sm:text-[18px] lg:text-[22px] text-[#121826] leading-snug"
+                      className="relative z-1 flex items-center justify-center px-2 sm:px-4 text-center font-semibold text-[14px] sm:text-[18px] lg:text-[22px] text-brand-blue leading-snug"
                       style={{ gridColumn: gridCol, gridRow: 1 }}
                     >
                       {column.label}
@@ -226,7 +226,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
                     <Fragment key={rowItem.label}>
                       <div
                         role="rowheader"
-                        className="relative z-1 flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 text-[14px] tracking-[0.5px] font-medium text-[#121826]/80 leading-snug"
+                        className="relative z-1 flex items-center justify-start pl-4 sm:pl-8 pr-3 sm:pr-4 text-[14px] tracking-[0.5px] font-medium text-brand-blue/80 leading-snug"
                         style={{ gridColumn: 1, gridRow }}
                       >
                         {rowItem.label}
@@ -281,7 +281,7 @@ export function WhyHowWeWork({ howWeWork }: { howWeWork: WhyContent["howWeWork"]
           {howWeWork.cards.map((card, index) => (
             <StaggerItem key={card.number || index} index={index} className="h-full">
               <div className="card-hover flex h-full flex-col rounded-[20px] bg-[rgba(255,255,255,0.06)] p-6 sm:px-4 sm:py-6 xl:px-7.5 xl:py-10 border border-[rgba(255,255,255,0.07)] shadow-[0px_2px_34px_rgba(255,255,255,0)] transition-[transform,box-shadow,background-color,border-color] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:bg-[rgba(255,255,255,0.08)] hover:shadow-[0px_2px_34px_rgba(255,255,255,0.1)]">
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-[#23C55E] bg-[#121826] border border-[#23C55E]/20">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[14px] font-semibold text-brand-green bg-brand-blue border border-brand-green/20">
                   {card.number || String(index + 1).padStart(2, '0')}
                 </span>
 
@@ -307,10 +307,10 @@ export function WhyTalk({ talk }: { talk: WhyContent["talk"] }) {
         <div className="isolate overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#F5F3F2] border border-[#E8E6E3] flex flex-col md:flex-row items-center justify-between pt-7 px-5 pb-0 sm:pt-9 sm:px-8 sm:pb-0 md:p-8 md:py-6 lg:p-0 lg:pl-10 xl:pl-16 gap-6 sm:gap-8 md:gap-6 lg:gap-8 xl:gap-16">
           {/* Text */}
           <Reveal preset="slide-left" distance={20} className="relative z-1 w-full md:w-[50%] lg:w-[48%] xl:w-[52%] max-w-[560px] text-left lg:py-10 xl:py-14 shrink-0">
-            <h2 className="text-[28px] sm:text-[34px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[54px] font-medium leading-[1.12] lg:leading-[105%] tracking-[-0.8px] text-[#121826]">
+            <h2 className="text-[28px] sm:text-[34px] md:text-[32px] lg:text-[40px] xl:text-[48px] 2xl:text-[54px] font-medium leading-[1.12] lg:leading-[105%] tracking-[-0.8px] text-brand-blue">
               {talk.title}
               <br />
-              <span className="block font-black italic text-[#23C55E]">
+              <span className="block font-black italic text-brand-green">
                 {talk.highlight}
               </span>
             </h2>
@@ -358,7 +358,7 @@ export function WhyAbout({ aboutSection }: { aboutSection: WhyContent["aboutSect
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             )}
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,24,38,0)_13.73%,rgba(18,24,38,0.662784)_52.12%,rgba(18,24,38,0.866393)_77.6%,#121826_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,color-mix(in_srgb,var(--color-brand-blue)_0%,transparent)_13.73%,color-mix(in_srgb,var(--color-brand-blue)_66.2784%,transparent)_52.12%,color-mix(in_srgb,var(--color-brand-blue)_86.6393%,transparent)_77.6%,var(--color-brand-blue)_100%)]" />
 
             <div className="relative z-1 p-6 sm:p-8 lg:p-10 w-full">
               <h3 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[110%] tracking-[-0.8px] text-white">

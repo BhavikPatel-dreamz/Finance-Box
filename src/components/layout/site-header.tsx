@@ -20,5 +20,5 @@ export function SiteHeader({
 
 /** Dark band for pages whose first section is not a hero (or that have no sections). */
 export function StandaloneHeader({ children }: { children: React.ReactNode }) {
-  return <div className="relative bg-[#121826] text-white">{children}</div>;
+  return <div className="relative bg-brand-blue text-white">{children}</div>;
 }

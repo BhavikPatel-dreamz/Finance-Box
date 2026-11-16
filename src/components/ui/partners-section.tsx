@@ -44,7 +44,7 @@ const variantStyles: Record<PartnersVariant, { track: string; item: string }> = 
   },
   bordered: {
     track: "gap-6 pr-6",
-    item: "w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-[10px] border border-[#121826]/6 bg-white p-6 sm:p-8",
+    item: "w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-[10px] border border-brand-blue/6 bg-white p-6 sm:p-8",
   },
 };
 

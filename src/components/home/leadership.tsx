@@ -156,7 +156,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 type="button"
                 aria-label="Previous leader"
                 onClick={handlePrev}
-                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#121826]/12 bg-white/10 text-white hover:bg-white/30 hover:text-white transition-all cursor-pointer shadow-sm"
+                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-brand-blue/12 bg-white/10 text-white hover:bg-white/30 hover:text-white transition-all cursor-pointer shadow-sm"
               >
                 <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
                   <path
@@ -173,7 +173,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                 type="button"
                 aria-label="Next leader"
                 onClick={handleNext}
-                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#121826]/12 bg-white/10 text-white hover:bg-white/30 hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
+                className="flex h-[46px] w-[46px] items-center justify-center rounded-full border border-brand-blue/12 bg-white/10 text-white hover:bg-white/30 hover:text-white active:scale-95 transition-all cursor-pointer shadow-sm"
               >
                 <svg viewBox="0 0 16 16" className="h-4 w-4" aria-hidden="true">
                   <path
@@ -248,7 +248,7 @@ export function Leadership({ leadership }: LeadershipProps) {
                       <h3 className="text-[20px] font-medium text-white leading-tight mb-1">
                         {person.name}
                       </h3>
-                      <p className="text-[11px] font-mono tracking-[1px] uppercase text-white/60 transition-colors duration-500 group-hover:text-[#23C55E]">
+                      <p className="text-[11px] font-mono tracking-[1px] uppercase text-white/60 transition-colors duration-500 group-hover:text-brand-green">
                         {person.role}
                       </p>
                     </div>

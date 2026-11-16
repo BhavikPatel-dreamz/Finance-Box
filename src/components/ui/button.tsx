@@ -14,10 +14,10 @@ export type ButtonSizeObject = {
 
 export type ButtonProps = {
   /**
-   * - "green":         bg #23C55E, text #121826 | hover bg #121826, text white
-   * - "green-on-dark": bg #23C55E, text #121826 | hover bg white,   text #121826
-   * - "dark":          bg #121826, text white   | hover bg #23C55E, text #121826
-   * - "white":         bg white,   text #121826 | hover bg #23C55E, text #121826
+   * - "green":         bg var(--color-brand-green), text var(--color-brand-blue) | hover bg var(--color-brand-blue), text white
+   * - "green-on-dark": bg var(--color-brand-green), text var(--color-brand-blue) | hover bg white,   text var(--color-brand-blue)
+   * - "dark":          bg var(--color-brand-blue), text white   | hover bg var(--color-brand-green), text var(--color-brand-blue)
+   * - "white":         bg white,   text var(--color-brand-blue) | hover bg var(--color-brand-green), text var(--color-brand-blue)
    */
   color?: "green" | "dark" | "white" | "green-on-dark" | string;
   /** Alias for color */
@@ -93,20 +93,20 @@ function resolveVariant(
 // `base`: resting colors + hover text. `fill`: the circle color that grows on hover.
 const variantStyles: Record<ButtonVariant, { base: string; fill: string }> = {
   green: {
-    base: "bg-[#23C55E] text-[#121826] hover:text-white",
-    fill: "bg-[#121826]",
+    base: "bg-brand-green text-brand-blue hover:text-white",
+    fill: "bg-brand-blue",
   },
   "green-on-dark": {
-    base: "bg-[#23C55E] text-[#121826] hover:text-[#121826]",
+    base: "bg-brand-green text-brand-blue hover:text-brand-blue",
     fill: "bg-white",
   },
   dark: {
-    base: "bg-[#121826] text-white hover:text-[#121826]",
-    fill: "bg-[#23C55E]",
+    base: "bg-brand-blue text-white hover:text-brand-blue",
+    fill: "bg-brand-green",
   },
   white: {
-    base: "bg-white text-[#121826] shadow-sm hover:text-[#121826]",
-    fill: "bg-[#23C55E]",
+    base: "bg-white text-brand-blue shadow-sm hover:text-brand-blue",
+    fill: "bg-brand-green",
   },
 };
 
@@ -206,7 +206,7 @@ export function Button({
   const baseClasses = twMerge(
     "group relative isolate inline-flex max-w-full items-center justify-center gap-3.5 overflow-hidden rounded-full font-semibold cursor-pointer select-none",
     "transition-[color,transform] duration-500 ease-in-out active:scale-[0.98]",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#23C55E]/60 focus-visible:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green/60 focus-visible:ring-offset-2",
     "disabled:opacity-50 disabled:pointer-events-none",
     styles.base,
     sizeClasses,

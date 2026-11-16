@@ -39,12 +39,12 @@ type Theme = {
 };
 
 const DARK_BASE =
-  "w-full border bg-[#121826] text-white placeholder:text-white/50 focus:outline-none focus:border-[#23C55E] transition-colors duration-200";
+  "w-full border bg-brand-blue text-white placeholder:text-white/50 focus:outline-none focus:border-brand-green transition-colors duration-200";
 
 const COMMON_FORM_BUTTON_WHITE: Theme["button"] = {
   variant: "white",
   bgColor: "#ffffff",
-  textColor: "#121826",
+  textColor: "var(--color-brand-blue)",
   size: "50",
   className: "px-6 sm:px-7 font-semibold text-[15px] sm:text-[16px]",
 };
@@ -58,7 +58,7 @@ const THEMES: Record<Appearance, Theme> = {
     border: "border-[#FFFFFF1A]",
     choice: "text-white/80",
     legend: "text-white/70",
-    option: "bg-[#121826]",
+    option: "bg-brand-blue",
     button: COMMON_FORM_BUTTON_WHITE,
     actions: "mt-2 sm:mt-3 flex flex-col items-start gap-3",
     success: "text-green-400",
@@ -74,7 +74,7 @@ const THEMES: Record<Appearance, Theme> = {
     border: "border-[#FFFFFF1A]",
     choice: "text-white/80",
     legend: "text-white/70",
-    option: "bg-[#121826]",
+    option: "bg-brand-blue",
     button: COMMON_FORM_BUTTON_WHITE,
     actions: "mt-2 sm:mt-3 flex flex-col items-start gap-3",
     success: "text-green-400",
@@ -87,12 +87,12 @@ const THEMES: Record<Appearance, Theme> = {
     grid: true,
     input: "h-[48px] sm:h-[50px] rounded-[10px] px-4 sm:px-5 text-[14px]",
     textarea: "rounded-[10px] py-3.5 sm:py-4 px-4 sm:px-5 text-[14px]",
-    base: "w-full border bg-white text-[#121826] placeholder:text-[#121826]/70 focus:outline-none focus:border-[#23C55E] transition-colors duration-200",
+    base: "w-full border bg-white text-brand-blue placeholder:text-brand-blue/70 focus:outline-none focus:border-brand-green transition-colors duration-200",
     border: "border-[#747C761A]",
-    choice: "text-[#121826]/80",
-    legend: "text-[#121826]/70",
+    choice: "text-brand-blue/80",
+    legend: "text-brand-blue/70",
     option: "bg-white",
-    button: { bgColor: "#121826", textColor: "#ffffff" },
+    button: { variant: "dark", textColor: "#ffffff" },
     actions: "mt-2 sm:mt-4 flex flex-col justify-start items-start gap-3",
     success: "text-green-600",
     error: "text-red-600",
@@ -225,7 +225,7 @@ export function CmsForm({ form, appearance }: { form: FormDefinition; appearance
                     onChange={(e) =>
                       field.type === "radio" ? setValue(field.name, option) : toggle(field.name, option, e.target.checked)
                     }
-                    className="accent-[#23C55E]"
+                    className="accent-brand-green"
                   />
                   {option}
                 </label>
@@ -242,7 +242,7 @@ export function CmsForm({ form, appearance }: { form: FormDefinition; appearance
               type="checkbox"
               checked={value === "1"}
               onChange={(e) => setValue(field.name, e.target.checked ? "1" : "")}
-              className="mt-1 accent-[#23C55E]"
+              className="mt-1 accent-brand-green"
             />
             {label}
           </label>

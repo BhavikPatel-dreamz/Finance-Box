@@ -8,7 +8,7 @@ import type { LegalDocContent } from "@/content/privacy-policy";
 // Smooth color + underline fade for all text links on this page
 // Underline always visible, text + underline fade to green on hover
 const LINK_CLASS =
-  "font-medium text-[#121826] underline decoration-[#121826]/40 underline-offset-4 transition-colors duration-300 hover:text-[#23C55E] hover:decoration-[#23C55E]";
+  "font-medium text-brand-blue underline decoration-brand-blue/40 underline-offset-4 transition-colors duration-300 hover:text-brand-green hover:decoration-brand-green";
 
 export function LegalPageLayout({ content, chrome }: { content: LegalDocContent; chrome: SiteChrome }) {
   return (
@@ -30,13 +30,13 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
           <div className="space-y-8 sm:space-y-10">
             {content.sections.map((section) => (
               <section key={section.id} id={section.id} className="scroll-mt-24">
-                <h2 className="text-lg sm:text-xl font-semibold text-[#121826] mb-3">
+                <h2 className="text-lg sm:text-xl font-semibold text-brand-blue mb-3">
                   {section.number}) {section.title}
                 </h2>
 
                 <div className="space-y-3 text-[15px] sm:text-[16px] leading-[1.75] text-[#374151]">
                   {section.intro && (
-                    <p className="text-[#121826] font-medium">{section.intro}</p>
+                    <p className="text-brand-blue font-medium">{section.intro}</p>
                   )}
 
                   {section.paragraphs?.map((p, idx) => (
@@ -51,10 +51,10 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
                         const text = isObject ? bullet.text : bullet;
                         return (
                           <li key={idx} className="flex items-start gap-2.5">
-                            <span className="text-[#23C55E] font-bold shrink-0 select-none">•</span>
+                            <span className="text-brand-green font-bold shrink-0 select-none">•</span>
                             <div>
                               {label && (
-                                <strong className="font-semibold text-[#121826]">
+                                <strong className="font-semibold text-brand-blue">
                                   {label}:{" "}
                                 </strong>
                               )}
@@ -101,11 +101,11 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
           {/* Simple Contact Footer Block */}
           <div className="pt-8 mt-12 border-t border-black/[0.08] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-medium text-[#121826]">
+              <p className="text-sm font-medium text-brand-blue">
                 Contact:{" "}
                 <Link
                   href={`mailto:${content.hero.contactEmail}`}
-                  className="text-[#121826] underline decoration-transparent underline-offset-4 transition-colors duration-300 hover:text-[#23C55E] hover:decoration-[#23C55E]"
+                  className="text-brand-blue underline decoration-transparent underline-offset-4 transition-colors duration-300 hover:text-brand-green hover:decoration-brand-green"
                 >
                   {content.hero.contactEmail}
                 </Link>

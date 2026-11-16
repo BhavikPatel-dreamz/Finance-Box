@@ -52,17 +52,17 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
 
       <article className="bg-white py-12 sm:py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-[16px] bg-[#121826]">
+          <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-[16px] bg-brand-blue">
             <Image src={card.image} alt={card.title} fill priority className="object-cover" sizes="(max-width: 1024px) 100vw, 896px" />
           </div>
 
-          {study.excerpt ? <RichText html={study.excerpt} className="text-[17px] sm:text-[18px] text-[#121826]" /> : null}
+          {study.excerpt ? <RichText html={study.excerpt} className="text-[17px] sm:text-[18px] text-brand-blue" /> : null}
 
           {parts.length > 0 ? (
             <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-3">
               {parts.map(([label, key]) => (
-                <div key={key} className="rounded-[16px] bg-[#121826] p-6 sm:p-7 text-white">
-                  <h2 className="mb-2 text-[13px] sm:text-[14px] font-medium uppercase tracking-[1.5px] font-mono text-[#23C55E]">{label}</h2>
+                <div key={key} className="rounded-[16px] bg-brand-blue p-6 sm:p-7 text-white">
+                  <h2 className="mb-2 text-[13px] sm:text-[14px] font-medium uppercase tracking-[1.5px] font-mono text-brand-green">{label}</h2>
                   <p className="text-[14px] sm:text-[15px] font-light leading-[160%] text-white/80">{card[key]}</p>
                 </div>
               ))}
@@ -73,7 +73,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
 
           <div className="mt-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-t border-black/[0.08] pt-8">
             <BackLink href={CASE_STUDY_BASE}>All case studies</BackLink>
-            <GreenButton label="Talk to Us" href="/contact-us/" bgColor="#121826" textColor="#ffffff" />
+            <GreenButton label="Talk to Us" href="/contact-us/" variant="dark" textColor="#ffffff" />
           </div>
         </div>
       </article>

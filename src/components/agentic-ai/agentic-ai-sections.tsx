@@ -13,13 +13,13 @@ import type { AgenticAiContent } from "@/content/agentic-ai";
 
 
 const ICON_CHIP =
-  "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-[#23C55E] motion-reduce:transition-none";
+  "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-brand-green motion-reduce:transition-none";
 const ICON_IMG =
   "relative w-6 h-6 transition-[filter] duration-500 group-hover:brightness-0 group-hover:invert";
 
 
 const ICON_CHIP_LIFT =
-  "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-[#23C55E] motion-reduce:transition-none";
+  "flex h-[60px] w-[60px] items-center justify-center rounded-full transition-[background-color,transform] duration-500 group-hover:bg-brand-green motion-reduce:transition-none";
 
 
 export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] }) {
@@ -69,7 +69,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
                   {feature.image && <Image src={feature.image} alt={feature.title} fill className="object-cover image-hover-zoom" />}
                 </div>
                 <h3 className="text-[18px] font-semibold leading-[1.2] mb-2">{feature.title}</h3>
-                <p className="text-[16px] font-normal leading-[140%] text-[#121826]/70">{feature.text}</p>
+                <p className="text-[16px] font-normal leading-[140%] text-brand-blue/70">{feature.text}</p>
               </div>
             </StaggerItem>
           ))}
@@ -86,12 +86,12 @@ export function AgenticBuildYourOwn({
   buildYourOwn: AgenticAiContent["buildYourOwn"];
 }) {
   return (
-    <section className="build-agentic-ai-section bg-white text-[#121826] pb-24">
+    <section className="build-agentic-ai-section bg-white text-brand-blue pb-24">
       <Container>
         <div className="rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#F5F3F2] px-6 py-10 text-center md:p-7.5 xl:p-16">
 
           <Reveal preset="slide-up" distance={20}>
-            <h2 className="mb-4 text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-[#121826]">
+            <h2 className="mb-4 text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] text-brand-blue">
               {(() => {
                 let title = buildYourOwn.title;
                 const hl = buildYourOwn.highlight;
@@ -104,7 +104,7 @@ export function AgenticBuildYourOwn({
                   <>
                     {title}{" "}
                     {hl && (
-                      <span className="font-black italic text-[#23C55E]">
+                      <span className="font-black italic text-brand-green">
                         {hl}
                       </span>
                     )}
@@ -120,13 +120,13 @@ export function AgenticBuildYourOwn({
 
           <StaggerGroup
             staggerDelay={140}
-            className="grid grid-cols-1 overflow-hidden rounded-[14px] sm:rounded-[16px] text-left divide-y divide-[#121826]/[0.08] md:grid-cols-2 md:divide-y-0 md:divide-x lg:grid-cols-4 border border-[#121826]/[0.08]"
+            className="grid grid-cols-1 overflow-hidden rounded-[14px] sm:rounded-[16px] text-left divide-y divide-brand-blue/[0.08] md:grid-cols-2 md:divide-y-0 md:divide-x lg:grid-cols-4 border border-brand-blue/[0.08]"
           >
             {buildYourOwn.agents.map((agent, idx) => (
               <StaggerItem
                 key={idx}
                 index={idx}
-                className="group relative isolate flex min-h-[255px] flex-col overflow-hidden bg-white p-8 transition-colors duration-500 ease-in-out hover:bg-[#121826]"
+                className="group relative isolate flex min-h-[255px] flex-col overflow-hidden bg-white p-8 transition-colors duration-500 ease-in-out hover:bg-brand-blue"
               >
                 {/* Default Card Content */}
                 <div className="flex h-full flex-col transition-all duration-300 ease-in-out group-hover:translate-y-[-5px] group-hover:opacity-0">
@@ -145,18 +145,18 @@ export function AgenticBuildYourOwn({
                     </div>
                   </div>
 
-                  <h3 className="mb-3 text-[18px] font-semibold leading-[1.2] text-[#121826]">
+                  <h3 className="mb-3 text-[18px] font-semibold leading-[1.2] text-brand-blue">
                     {agent.title}
                   </h3>
 
-                  <p className="text-[14px] font-normal leading-[160%] text-[#121826]/70">
+                  <p className="text-[14px] font-normal leading-[160%] text-brand-blue/70">
                     {agent.text}
                   </p>
                 </div>
 
                 {/* Hover Content */}
                 {agent.greatFor && (
-                  <div className="pointer-events-none absolute inset-0 z-1 flex flex-col justify-start bg-[#121826] p-8 opacity-0 transition-all duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="pointer-events-none absolute inset-0 z-1 flex flex-col justify-start bg-brand-blue p-8 opacity-0 transition-all duration-500 ease-in-out group-hover:translate-y-0 group-hover:opacity-100">
                     <h4 className="mb-4 translate-y-2 text-[16px] font-semibold leading-[1.2] text-white transition-transform duration-500 ease-in-out group-hover:translate-y-0">
                       Great for:
                     </h4>
@@ -224,11 +224,11 @@ export function AgenticPeopleOps({ peopleOps }: { peopleOps: AgenticAiContent["p
                 </div>
 
                 {agent.greatFor && (
-                  <div className="absolute inset-0 z-1 p-10 flex flex-col justify-start bg-white text-[#121826] shadow-2xl opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
-                    <h4 className="text-[18px] sm:text-[20px] font-bold leading-[1.2] mb-4 text-[#121826]">
+                  <div className="absolute inset-0 z-1 p-10 flex flex-col justify-start bg-white text-brand-blue shadow-2xl opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto">
+                    <h4 className="text-[18px] sm:text-[20px] font-bold leading-[1.2] mb-4 text-brand-blue">
                       Great for:
                     </h4>
-                    <p className="text-[15px] font-normal leading-[160%] text-[#121826]/80">
+                    <p className="text-[15px] font-normal leading-[160%] text-brand-blue/80">
                       {agent.greatFor}
                     </p>
                   </div>
@@ -267,13 +267,13 @@ export function AgenticOpsCompliance({ opsCompliance }: { opsCompliance: Agentic
                     className="object-cover image-hover-zoom"
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121826]/90 via-[#121826]/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/90 via-brand-blue/20 to-transparent" />
 
                 <div className="relative isolate p-8 w-full text-white">
                   {/* Gradient panel behind the text: fades in and slides up on hover */}
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 bottom-0 -top-12 -z-1 translate-y-4 bg-[linear-gradient(to_top,rgba(18,24,38,0.96)_0%,rgba(18,24,38,0.82)_55%,rgba(18,24,38,0)_100%)] opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
+                    className="pointer-events-none absolute inset-x-0 bottom-0 -top-12 -z-1 translate-y-4 bg-[linear-gradient(to_top,color-mix(in_srgb,var(--color-brand-blue)_96%,transparent)_0%,color-mix(in_srgb,var(--color-brand-blue)_82%,transparent)_55%,color-mix(in_srgb,var(--color-brand-blue)_0%,transparent)_100%)] opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
                   />
                   <h3 className="text-[24px] font-semibold leading-[1.2] mb-3">
                     {card.title}
@@ -313,7 +313,7 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
           <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px]">
             {provenArchitecture.title}
           </h2>
-          <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-black leading-[1.15] tracking-[-0.8px] text-[#23C55E] italic">
+          <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-black leading-[1.15] tracking-[-0.8px] text-brand-green italic">
             {provenArchitecture.highlight}
           </h2>
         </Reveal>
@@ -331,14 +331,14 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
 
               <div className="mb-6">
                 <h3 className="text-[24px] font-semibold leading-[1.0] mb-2">{card.title}</h3>
-                {card.text && <p className="text-[16px] font-normal leading-[150%] text-[#121826]">{card.text}</p>}
+                {card.text && <p className="text-[16px] font-normal leading-[150%] text-brand-blue">{card.text}</p>}
               </div>
 
               <ul className="space-y-3">
                 {card.bullets.map((bullet, bIdx) => (
                   <li key={bIdx} className="flex items-start gap-3">
-                    <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
-                    <span className="text-[16px] leading-[1.4] text-[#121826]">
+                    <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-brand-green" />
+                    <span className="text-[16px] leading-[1.4] text-brand-blue">
                       {bullet.boldText && <span className="font-medium">{bullet.boldText}</span>}
                       {bullet.boldText && bullet.normalText && !bullet.boldText.endsWith(" ") && !bullet.normalText.startsWith(" ") && " "}
                       {bullet.normalText && <span className="font-light">{bullet.normalText}</span>}
@@ -350,7 +350,7 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
               {/* Bottom line: grows left to right on hover */}
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full origin-left scale-x-0 bg-[#23C55E] transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
+                className="pointer-events-none absolute bottom-0 left-0 h-[4px] w-full origin-left scale-x-0 bg-brand-green transition-transform duration-700 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
               />
             </StaggerItem>
           ))}
@@ -392,7 +392,7 @@ export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent
                 <GreenButton
                   label={waitlist.cta.label}
                   href={waitlist.cta.url}
-                  bgColor="#23C55E"
+                  variant="green"
                   onDark={true}
                 />
               </div>

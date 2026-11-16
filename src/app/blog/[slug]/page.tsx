@@ -91,7 +91,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
           {tags.length > 0 ? (
             <ul aria-label="Tags" className="mt-10 flex flex-wrap gap-2">
               {tags.map((tag) => (
-                <li key={tag} className="rounded-full bg-[#EDE9E6] px-3.5 py-1.5 text-[12px] font-medium text-[#121826]">
+                <li key={tag} className="rounded-full bg-brand-sand px-3.5 py-1.5 text-[12px] font-medium text-brand-blue">
                   {tag}
                 </li>
               ))}

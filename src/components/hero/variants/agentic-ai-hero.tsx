@@ -32,7 +32,7 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
             >
               {config.title}{" "}
               {config.highlight && (
-                <span className="text-[#23C55E]">{config.highlight}</span>
+                <span className="text-brand-green">{config.highlight}</span>
               )}
             </h1>
             {config.tagLine && (
@@ -72,7 +72,7 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
                     index={idx}
                     className="flex items-start gap-4"
                   >
-                    <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-[#23C55E]" />
+                    <span className="mt-2 h-[6px] w-[6px] shrink-0 bg-brand-green" />
                     <span className="text-[16px] font-light leading-[160%] text-white/80">
                       {bullet}
                     </span>

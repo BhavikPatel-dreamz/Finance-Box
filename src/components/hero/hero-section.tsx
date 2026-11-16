@@ -58,7 +58,7 @@ export function HeroSection({
     <section
       id={sectionId}
       className={twMerge(
-        "bhavik5 hero-section relative overflow-hidden bg-[#121826] text-white flex flex-col",
+        "bhavik5 hero-section relative overflow-hidden bg-brand-blue text-white flex flex-col",
         resolvedConfig.sectionClassName,
         className,
       )}

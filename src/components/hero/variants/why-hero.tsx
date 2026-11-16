@@ -27,7 +27,7 @@ export function WhyHeroVariant({ config }: { config: HeroConfig }) {
             <h1 className="mt-3.5 sm:mt-4.5 text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
               {config.title}
               {config.highlight && (
-                <span className="block whitespace-pre-line text-[#23C55E]">
+                <span className="block whitespace-pre-line text-brand-green">
                   {config.highlight}
                 </span>
               )}
@@ -80,7 +80,7 @@ export function WhyHeroVariant({ config }: { config: HeroConfig }) {
                     index={index}
                     className="card-hover flex min-h-[50px] md:h-[110px] md:flex-col lg:justify-between lg:items-start items-center p-3.5 sm:px-5 sm:py-4 lg:gap-0 gap-x-4"
                   >
-                    <span className="point-number inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-full bg-[#121826] border border-white/7 text-[13px] sm:text-[14px] font-semibold text-[#23C55E]">
+                    <span className="point-number inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-full bg-brand-blue border border-white/7 text-[13px] sm:text-[14px] font-semibold text-brand-green">
                       {point.number || String(index + 1).padStart(2, "0")}
                     </span>
                     <p className="text-[16px] sm:text-[18px] md:text-[20px] font-semibold text-white tracking-tight leading-snug">

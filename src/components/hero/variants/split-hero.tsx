@@ -30,7 +30,7 @@ export function SplitHeroVariant({ config }: { config: HeroConfig }) {
             )}>
               {config.title}{" "}
               {config.highlight && (
-                <span className="text-[#23C55E]">{config.highlight}</span>
+                <span className="text-brand-green">{config.highlight}</span>
               )}
             </h1>
           </Reveal>

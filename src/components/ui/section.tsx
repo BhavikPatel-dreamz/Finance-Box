@@ -5,7 +5,7 @@ export type SectionTheme = "light" | "dark" | "faq" | "cream" | "lightblue";
 export type SectionSpacing = "both" | "top" | "bottom" | "none" | "space50" | "space60";
 
 export type SectionProps = {
-  /** light: bg white, text #121826 | dark: bg #121826, text white */
+  /** light: bg white, text brand-blue | dark: bg brand-blue, text white */
   theme?: SectionTheme;
   /** both: top + bottom padding | top: only top | bottom: only bottom | none: no vertical padding */
   spacing?: SectionSpacing;
@@ -15,10 +15,10 @@ export type SectionProps = {
 };
 
 const themeStyles: Record<SectionTheme, string> = {
-  light: "bg-white text-[#121826]",
-  dark: "bg-[#121826] text-white",
-  faq: "bg-white text-[#121826]",
-  cream: "bg-[#F5F3F2] text-[#121826]",
+  light: "bg-white text-brand-blue",
+  dark: "bg-brand-blue text-white",
+  faq: "bg-white text-brand-blue",
+  cream: "bg-[#F5F3F2] text-brand-blue",
   lightblue: "bg-[#191F2D] text-white",
 };
 

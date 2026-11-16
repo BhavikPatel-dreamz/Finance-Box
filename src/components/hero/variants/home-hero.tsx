@@ -83,15 +83,15 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                   <span className="font-light text-white block">Your Finance</span>
                   <span className="block">
                     <span className="font-light text-white">Function, </span>
-                    <span className="font-bold text-[#23C55E]">Built</span>
+                    <span className="font-bold text-brand-green">Built</span>
                   </span>
-                  <span className="font-bold text-[#23C55E] block">and Run For You</span>
+                  <span className="font-bold text-brand-green block">and Run For You</span>
                 </>
               ) : (
                 <>
                   <span className="font-light">{config.title}</span>{" "}
                   {config.highlight && (
-                    <span className="font-bold text-[#23C55E]">{config.highlight}</span>
+                    <span className="font-bold text-brand-green">{config.highlight}</span>
                   )}
                 </>
               )}
@@ -143,7 +143,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 </div>
                 <div>
                   <div className="flex items-baseline gap-1 sm:gap-1.5 mb-3 sm:mb-4">
-                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-[#23C55E] leading-none tabular-nums">
+                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-brand-green leading-none tabular-nums">
                       {closeDisplay}
                     </span>
                     <span className="text-[11px] sm:text-[12px] font-normal text-white font-sans leading-none">
@@ -175,7 +175,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                     {config.runwayLabel || "RUNWAY VISIBILITY"}
                   </p>
                   <div className="flex items-baseline gap-1 sm:gap-1.5">
-                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-[#23C55E] leading-none tabular-nums">
+                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-brand-green leading-none tabular-nums">
                       {runwayDisplay}
                     </span>
                     <span className="text-[11px] sm:text-[12px] font-normal text-white font-sans leading-none">

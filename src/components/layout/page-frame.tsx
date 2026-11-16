@@ -21,7 +21,7 @@ export function PageFrame({ chrome, children }: { chrome: SiteChrome; children: 
 export function MessagePage({ chrome, title, body }: { chrome: SiteChrome; title: string; body?: string }) {
   return (
     <PageFrame chrome={chrome}>
-      <div className="h-[81px] sm:h-[97px] lg:h-[112px] bg-[#121826]" aria-hidden="true" />
+      <div className="h-[81px] sm:h-[97px] lg:h-[112px] bg-brand-blue" aria-hidden="true" />
       <Section theme="light" spacing="both">
         <Container>
           <h1 className="text-3xl font-medium tracking-tight sm:text-4xl lg:text-[54px]">{title}</h1>

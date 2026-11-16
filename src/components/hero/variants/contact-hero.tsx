@@ -27,7 +27,7 @@ export function ContactHeroVariant({ config }: { config: HeroConfig }) {
           <h1 className="text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-4 sm:mb-6 lg:mb-8">
             {config.title}{" "}
             {config.highlight && (
-              <span className="text-[#23C55E]">{config.highlight}</span>
+              <span className="text-brand-green">{config.highlight}</span>
             )}
           </h1>
         </Reveal>

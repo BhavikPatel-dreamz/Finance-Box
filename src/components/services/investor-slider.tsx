@@ -72,7 +72,7 @@ export function InvestorSlider({ cards }: { cards: ServicesPhotoCard[] }) {
                 />
 
                 {/* Bottom-to-top animated gradient */}
-                <div className="absolute inset-0 origin-bottom scale-y-[0.58] group-hover:scale-y-100 transition-transform duration-700 ease-in-out bg-[linear-gradient(180deg,rgba(18,24,38,0)_6.84%,rgba(18,24,38,0.729525)_45.64%,rgba(18,24,38,0.817256)_56.69%,#121826_92.91%)] pointer-events-none" />
+                <div className="absolute inset-0 origin-bottom scale-y-[0.58] group-hover:scale-y-100 transition-transform duration-700 ease-in-out bg-[linear-gradient(180deg,color-mix(in_srgb,var(--color-brand-blue)_0%,transparent)_6.84%,color-mix(in_srgb,var(--color-brand-blue)_72.9525%,transparent)_45.64%,color-mix(in_srgb,var(--color-brand-blue)_81.7256%,transparent)_56.69%,var(--color-brand-blue)_92.91%)] pointer-events-none" />
 
                 {(card.title || card.text) && (
                   <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 text-white pointer-events-none">

@@ -29,7 +29,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
             </Eyebrow>
             <h2 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">
               {title}{" "}
-              {highlight && <span className="text-[#23C55E]">{highlight}</span>}
+              {highlight && <span className="text-brand-green">{highlight}</span>}
             </h2>
             <p className="text-[14px] sm:text-base font-light leading-[1.6] sm:leading-[1.65] text-[#66707c] mt-4 sm:mt-5 mb-8 sm:mb-10 max-w-md">
               {founders.text}
@@ -37,7 +37,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
             <GreenButton
               label={founders.cta.label}
               href={founders.cta.url}
-              bgColor="#121826"
+              variant="dark"
               textColor="#ffffff"
             />
           </Reveal>
@@ -52,7 +52,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
                 <StaggerItem
                   key={index}
                   index={index}
-                  className="card-hover bg-[#121826] rounded-[14px] overflow-hidden"
+                  className="card-hover bg-brand-blue rounded-[14px] overflow-hidden"
                 >
                   <button
                     type="button"
@@ -66,7 +66,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
                     </span>
 
                     <span
-                      className={`flex h-10 w-10 sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${isOpen ? "bg-[#23C55E] text-[#121826]" : "bg-white/10 text-white"
+                      className={`flex h-10 w-10 sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${isOpen ? "bg-brand-green text-brand-blue" : "bg-white/10 text-white"
                         }`}
                     >
                       <svg
