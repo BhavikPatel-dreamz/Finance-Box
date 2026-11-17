@@ -167,8 +167,8 @@ button, input, select, textarea {
 }
 
 /* Green button resting text color: white across the whole site */
-a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
-button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]) {
+a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:hover),
+button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:hover) {
   color: #ffffff;
 }
 
@@ -190,6 +190,8 @@ button[class*="hover:bg-brand-green"]:hover svg {
 /* Green button hover effect inside dark sections: bg color white, text color var(--color-brand-blue) (only for actual green buttons, not white buttons) */
 /* In dark sections, green buttons expand with a white circular background and dark text on hover */
 :is(
+  header,
+  .site-header,
   .hero-section,
   .services-details,
   .footer-cta-section,
@@ -214,6 +216,8 @@ button[class*="hover:bg-brand-green"]:hover svg {
 }
 
 :is(
+  header,
+  .site-header,
   .hero-section,
   .services-details,
   .footer-cta-section,
@@ -239,6 +243,8 @@ button[class*="hover:bg-brand-green"]:hover svg {
 }
 
 :is(
+  header,
+  .site-header,
   .hero-section,
   .services-details,
   .footer-cta-section,
@@ -256,13 +262,15 @@ button[class*="hover:bg-brand-green"]:hover svg {
   .dark,
   [data-theme="dark"]
 ) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover
 ) {
   color: var(--color-brand-blue) !important;
 }
 
 :is(
+  header,
+  .site-header,
   .hero-section,
   .services-details,
   .footer-cta-section,
@@ -280,10 +288,29 @@ button[class*="hover:bg-brand-green"]:hover svg {
   .dark,
   [data-theme="dark"]
 ) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover,
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff"]):hover
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover
 ) svg {
   color: var(--color-brand-blue) !important;
+}
+
+/* Header Contact Us button hover styling */
+header :is(a, button):is([class~="bg-brand-green"]):hover,
+.site-header :is(a, button):is([class~="bg-brand-green"]):hover,
+.header-contact-btn:hover {
+  color: #121826 !important;
+}
+
+header :is(a, button):is([class~="bg-brand-green"]):hover svg,
+.site-header :is(a, button):is([class~="bg-brand-green"]):hover svg,
+.header-contact-btn:hover svg {
+  color: #121826 !important;
+}
+
+header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
+.site-header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
+.header-contact-btn:hover svg circle {
+  fill: rgba(18, 24, 38, 0.1) !important;
 }
 
 /* Motion Design & Interactive Hover Utilities (Inspired by financeinabox.com) */

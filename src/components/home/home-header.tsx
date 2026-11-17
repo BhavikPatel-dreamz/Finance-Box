@@ -179,7 +179,7 @@ export function HomeHeader({
       ) : null}
 
       <header
-        className={`fixed top-0 left-0 right-0 z-99 border-b transition-all duration-300 ease-in-out ${
+        className={`site-header fixed top-0 left-0 right-0 z-99 border-b transition-all duration-300 ease-in-out ${
           isHeaderVisible ? "translate-y-0" : "-translate-y-full"
         } ${headerSurface(surface, isHeaderSticky, menuOpen)}`}
       >
@@ -213,7 +213,7 @@ export function HomeHeader({
                 text={header.cta.label}
                 href={header.cta.url} target={header.cta.target} rel={header.cta.target === "_blank" ? "noopener noreferrer" : undefined}
                 onDark={true}
-                className="w-[154px]"
+                className="w-[154px] header-contact-btn hover:!text-[#121826]"
               />
             </div>
 
@@ -276,7 +276,7 @@ export function HomeHeader({
                     text={header.cta.label}
                     href={header.cta.url} target={header.cta.target} rel={header.cta.target === "_blank" ? "noopener noreferrer" : undefined}
                     onDark={true}
-                    className="w-full justify-center text-center"
+                    className="w-full justify-center text-center header-contact-btn hover:!text-[#121826]"
                     onClick={() => setMenuOpen(false)}
                   />
               </div>
