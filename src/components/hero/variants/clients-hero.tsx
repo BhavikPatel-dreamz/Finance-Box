@@ -10,6 +10,7 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
 
   return (
     <Container>
+      <div className="mx-auto max-w-[1140px]">
       {/* Centered Heading */}
       <div className="pt-10 md:pt-12 xl:pt-24 pb-10 sm:pb-12 xl:pb-15 flex flex-col items-center text-center">
         {eyebrowData && (
@@ -116,6 +117,7 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
           </div>
         </Reveal>
       )}
+      </div>
     </Container>
   );
 }

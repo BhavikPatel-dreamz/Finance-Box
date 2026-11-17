@@ -14,10 +14,10 @@ export type ButtonSizeObject = {
 
 export type ButtonProps = {
   /**
-   * - "green":         bg var(--color-brand-green), text var(--color-brand-blue) | hover bg var(--color-brand-blue), text white
-   * - "green-on-dark": bg var(--color-brand-green), text var(--color-brand-blue) | hover bg white,   text var(--color-brand-blue)
-   * - "dark":          bg var(--color-brand-blue), text white   | hover bg var(--color-brand-green), text var(--color-brand-blue)
-   * - "white":         bg white,   text var(--color-brand-blue) | hover bg var(--color-brand-green), text var(--color-brand-blue)
+   * - "green":         bg var(--color-brand-green), text white | hover bg var(--color-brand-blue), text white
+   * - "green-on-dark": bg var(--color-brand-green), text white | hover bg white,   text var(--color-brand-blue)
+   * - "dark":          bg var(--color-brand-blue), text white   | hover bg var(--color-brand-green), text white
+   * - "white":         bg white,   text var(--color-brand-blue) | hover bg var(--color-brand-green), text white
    */
   color?: "green" | "dark" | "white" | "green-on-dark" | string;
   /** Alias for color */
@@ -93,19 +93,19 @@ function resolveVariant(
 // `base`: resting colors + hover text. `fill`: the circle color that grows on hover.
 const variantStyles: Record<ButtonVariant, { base: string; fill: string }> = {
   green: {
-    base: "bg-brand-green text-brand-blue hover:text-white",
+    base: "bg-brand-green text-white hover:text-white",
     fill: "bg-brand-blue",
   },
   "green-on-dark": {
-    base: "bg-brand-green text-brand-blue hover:text-brand-blue",
+    base: "bg-brand-green text-white hover:text-brand-blue",
     fill: "bg-white",
   },
   dark: {
-    base: "bg-brand-blue text-white hover:text-brand-blue",
+    base: "bg-brand-blue text-white hover:text-white",
     fill: "bg-brand-green",
   },
   white: {
-    base: "bg-white text-brand-blue shadow-sm hover:text-brand-blue",
+    base: "bg-white text-brand-blue shadow-sm hover:text-white",
     fill: "bg-brand-green",
   },
 };

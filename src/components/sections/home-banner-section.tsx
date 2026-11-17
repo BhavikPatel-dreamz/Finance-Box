@@ -34,7 +34,7 @@ export const homeBannerSection = defineSection<HomeBannerSectionFragment>({
       ? { label: text(data.ctaButton.title), url: text(data.ctaButton.url), color: "white" }
       : undefined;
     const floating = data.floatingCtaButton
-      ? { label: text(data.floatingCtaButton.title), url: text(data.floatingCtaButton.url), color: "green", onDark: true }
+      ? { label: text(data.floatingCtaButton.title), url: text(data.floatingCtaButton.url), color: "green", onDark: true, className: "border-[1.5px] border-white" }
       : undefined;
 
     return (

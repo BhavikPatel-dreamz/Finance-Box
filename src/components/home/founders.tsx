@@ -66,7 +66,7 @@ export function Founders({ founders }: { founders: HomeContent["founders"] }) {
                     </span>
 
                     <span
-                      className={`flex h-10 w-10 sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${isOpen ? "bg-brand-green text-brand-blue" : "bg-white/10 text-white"
+                      className={`flex h-10 w-10 sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${isOpen ? "bg-brand-green text-white" : "bg-white/10 text-white"
                         }`}
                     >
                       <svg

@@ -12,7 +12,7 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
 
   return (
     <Container>
-      <div className="flex-1 flex items-center pb-10 sm:pb-14 md:pb-16 lg:pb-24 pt-6 sm:pt-10 md:pt-12 lg:pt-16">
+      <div className="max-w-[1099px] mx-auto flex-1 flex items-center pb-10 sm:pb-14 md:pb-16 lg:pb-24 pt-6 sm:pt-10 md:pt-12 lg:pt-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center w-full">
           {/* Left Column */}
           <Reveal immediate preset="slide-up" delay={80} distance={24} className={twMerge("w-full", config.titleMaxWidth || "lg:max-w-[400px]")}>

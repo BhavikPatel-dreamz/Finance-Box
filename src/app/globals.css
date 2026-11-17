@@ -166,6 +166,27 @@ button, input, select, textarea {
   }
 }
 
+/* Green button resting text color: white across the whole site */
+a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
+button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]) {
+  color: #ffffff;
+}
+
+/* If button hover background color is green, text color should be white */
+a:has(> span[class*="bg-brand-green"]):hover,
+button:has(> span[class*="bg-brand-green"]):hover,
+a[class*="hover:bg-brand-green"]:hover,
+button[class*="hover:bg-brand-green"]:hover {
+  color: #ffffff !important;
+}
+
+a:has(> span[class*="bg-brand-green"]):hover svg,
+button:has(> span[class*="bg-brand-green"]):hover svg,
+a[class*="hover:bg-brand-green"]:hover svg,
+button[class*="hover:bg-brand-green"]:hover svg {
+  color: #ffffff !important;
+}
+
 /* Green button hover effect inside dark sections: bg color white, text color var(--color-brand-blue) (only for actual green buttons, not white buttons) */
 /* In dark sections, green buttons expand with a white circular background and dark text on hover */
 :is(

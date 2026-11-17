@@ -55,7 +55,7 @@ export function Accordion({ items, theme = "light" }: AccordionProps) {
               <span
                 className={`flex h-[40px] w-[40px] sm:h-[46px] sm:w-[46px] shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
                   isOpen
-                    ? "bg-brand-green text-brand-blue"
+                    ? "bg-brand-green text-white"
                     : isDark
                     ? "bg-white/10 text-white hover:bg-white/15"
                     : "bg-brand-blue/5 text-brand-blue hover:bg-brand-blue/10"

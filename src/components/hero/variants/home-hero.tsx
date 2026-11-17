@@ -9,6 +9,7 @@ import { GreenButton } from "@/components/ui/green-button";
 import Container from "@/components/ui/container";
 import { Reveal } from "@/components/motion/reveal";
 import { CashVisibilityChart } from "@/components/ui/cash-visibility-chart";
+import { twMerge } from "tailwind-merge";
 
 function useCountUp(target: string | undefined, delay = 0, duration = 1400) {
   const parsed = target ? parseFloat(target) : NaN;
@@ -217,7 +218,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 href={config.floatingCta.url}
                 color={config.floatingCta.color || "green"}
                 onDark={config.floatingCta.onDark ?? true}
-                className={config.floatingCta.className}
+                className={twMerge("border-[1.5px] border-white", config.floatingCta.className)}
               />
             </Reveal>
           )}

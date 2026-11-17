@@ -391,7 +391,7 @@ function DetailBlock({ detail, idx }: { detail: ServiceDetail; idx: number }) {
               label={detail.cta.label}
               href={detail.cta.url}
               variant="green"
-              textColor="var(--color-brand-blue)"
+              textColor="#ffffff"
               onDark={true}
               className="mt-5 sm:mt-6 lg:mt-6 xl:mt-8"
             />

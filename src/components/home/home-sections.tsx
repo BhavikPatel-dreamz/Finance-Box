@@ -156,6 +156,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
                   href={hero.call.url}
                   color="green"
                   onDark={true}
+                  className="border-[1.5px] border-white"
                 />
               </Reveal>
 
@@ -397,7 +398,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
             label={growth.cta.label}
             href={growth.cta.url}
             variant="green"
-            textColor="#07110d"
+            textColor="#ffffff"
             onDark={true}
           />
         </Reveal>
