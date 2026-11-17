@@ -15,7 +15,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Re
     <section className="hero-section relative overflow-hidden bg-brand-blue text-white">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: "url(/why/why-bg-img.svg)" }}
+        style={{ backgroundImage: "url(/why/why-hero-bg-img.webp)" }}
       />
       <div className="relative">
         {header}

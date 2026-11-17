@@ -20,7 +20,7 @@ export function HomeHero({ hero, header }: { hero: HomeContent["hero"]; header: 
 
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: "url(/home/homepage-hero-bg.svg)" }}
+        style={{ backgroundImage: "url(/home/homepage-hero-bg.webp)" }}
       />
       <div className="relative w-full min-h-[auto] lg:min-h-[660px] xl:min-h-[771px] lg:h-auto xl:min-h-[771px] flex flex-col justify-between">
 

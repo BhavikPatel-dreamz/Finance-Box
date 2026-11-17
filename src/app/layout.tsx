@@ -13,6 +13,11 @@ export const metadata: Metadata = {
     template: "%s · Financebox",
   },
   description: "Financebox",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

@@ -2,13 +2,13 @@ import type { HomeContent } from "@/content/home";
 import type { HeroBackgroundKey, HeroEyebrowConfig } from "./types";
 
 const BACKGROUND_MAP: Record<string, string> = {
-  home: "url(/home/homepage-hero-bg.svg)",
-  services: "url(/services/services-hero-bg.svg)",
-  knowledgehub: "url(/knowledge-hub/knowledgehub-hero-bg.svg)",
-  why: "url(/why/why-bg-img.svg)",
-  clients: "url(/clients/client-hero-bg.svg)",
-  careers: "url(/careers/careers-page-hero-bg.svg)",
-  contact: "url(/contact-us/contactus-hero-bg.svg)",
+  home: "url(/home/homepage-hero-bg.webp)",
+  services: "url(/services/services-hero-bg.webp)",
+  knowledgehub: "url(/knowledge-hub/knowledge-hub-hero-bg.webp)",
+  why: "url(/why/why-hero-bg-img.webp)",
+  clients: "url(/clients/clients-hero-bg.webp)",
+  careers: "url(/careers/careers-page-hero-bg.webp)",
+  contact: "url(/contact-us/contact-us-hero-bg.webp)",
   none: "",
 };
 

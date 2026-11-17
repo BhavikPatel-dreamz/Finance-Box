@@ -179,19 +179,19 @@ export const agenticAiContent: AgenticAiContent = {
     title: "People Ops, Payroll & IT",
     agents: [
       {
-        icon: "/icons/on-offboarding-agent.png",
+        icon: "/icons/on-offboarding-agent.svg",
         title: "On/Offboarding Agent",
         text: "Creates offers, checklists, access tickets; provisions in HRIS/ITSM; books orientation; confirms completion.",
         greatFor: "First-day ready, SoD enforcement. Works with: Rippling, Keka, ManageEngine, Slack, Gmail.",
       },
       {
-        icon: "/icons/service-desk-agent.png",
+        icon: "/icons/service-desk-agent.svg",
         title: "Service Desk Agent",
         text: "Triages HR/IT tickets, answers FAQs, resolves routine requests, escalates when needed.",
         greatFor: "Faster SLAs. Works with: ManageEngine, Slack/Teams, Google Workspace/M365.",
       },
       {
-        icon: "/icons/payrol.png",
+        icon: "/icons/payrol.svg",
         title: "Payroll Prep Agent",
         text: "Creates offers, checklists, access tickets; provisions in HRIS/ITSM; books orientation; confirms completion.",
         greatFor: "Accurate, timely payroll. Works with: Keka, Rippling, ADP, Gusto, and ERP",

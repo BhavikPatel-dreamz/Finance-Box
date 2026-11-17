@@ -22,8 +22,8 @@ export function ArticleHero({
   return (
     <section className="relative bg-brand-blue text-white overflow-hidden pt-[81px] sm:pt-[97px] lg:pt-[112px]">
       <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat opacity-80"
-        style={{ backgroundImage: "url(/contact-us/contactus-hero-bg.svg)" }}
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80"
+        style={{ backgroundImage: "url(/contact-us/contact-us-hero-bg.webp)" }}
         aria-hidden="true"
       />
 

@@ -20,7 +20,7 @@ export function ServicesBanner({ hero, header }: { hero: ServicesContent["hero"]
     <section className="hero-section relative overflow-hidden bg-brand-blue text-white">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: "url(/services/services-hero-bg.svg)" }}
+        style={{ backgroundImage: "url(/services/services-hero-bg.webp)" }}
       />
       <div className="relative z-1">
         {header}

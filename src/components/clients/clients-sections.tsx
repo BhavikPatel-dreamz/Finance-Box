@@ -27,7 +27,7 @@ export function ClientsBanner({ hero, header }: { hero: ClientsContent["hero"]; 
     <div className="hero-section relative overflow-hidden bg-brand-blue text-white">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: "url(/clients/client-hero-bg.svg)" }}
+        style={{ backgroundImage: "url(/clients/clients-hero-bg.webp)" }}
       />
 
       <div className="relative z-1">

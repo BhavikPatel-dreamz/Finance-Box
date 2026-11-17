@@ -79,12 +79,12 @@ You can switch the layout of any hero section simply by changing the `variant` p
 You can change the background vector graphic by setting the `background` property:
 
 ```ts
-background: "home"      // url(/home/homepage-hero-bg.svg)
-background: "services"  // url(/services/services-hero-bg.svg)
-background: "why"       // url(/why/why-bg-img.svg)
-background: "clients"   // url(/clients/client-hero-bg.svg)
-background: "careers"   // url(/careers/careers-page-hero-bg.svg)
-background: "contact"   // url(/contact-us/contactus-hero-bg.svg)
+background: "home"      // url(/home/homepage-hero-bg.webp)
+background: "services"  // url(/services/services-hero-bg.webp)
+background: "why"       // url(/why/why-hero-bg-img.webp)
+background: "clients"   // url(/clients/clients-hero-bg.webp)
+background: "careers"   // url(/careers/careers-page-hero-bg.webp)
+background: "contact"   // url(/contact-us/contact-us-hero-bg.webp)
 background: "none"      // No background image
 // Or pass any custom image:
 background: "/images/custom-hero-bg.png"

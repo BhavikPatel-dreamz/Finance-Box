@@ -130,7 +130,6 @@ export function FooterHero({
   text,
   buttonLabel,
   buttonUrl,
-  bgImage = "/media/Footer-bg.svg",
   variant = "default",
   layout,
   titleMaxWidth,
@@ -154,18 +153,6 @@ export function FooterHero({
         <Reveal preset="slide-up" distance={24}>
           {/* Container exactly 1280px on desktop matching Figma */}
           <div className="relative overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-brand-blue flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-10 min-h-[320px] lg:min-h-[342px] w-full">
-
-            {bgImage && (
-              <div className="absolute inset-0 z-0">
-                <Image
-                  src={bgImage}
-                  alt="Background"
-                  fill
-                  className="object-cover opacity-100" // object-cover se image container ke andar crop hogi, stretch nahi
-                  priority
-                />
-              </div>
-            )}
 
             <div className="relative flex flex-col items-center">
               {(() => {

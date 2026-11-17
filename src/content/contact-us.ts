@@ -56,7 +56,7 @@ export const contactUsContent: ContactUsContent = {
     email: {
       label: "Email",
       value: "info@financeinbox.com",
-      icon: "/icons/email.png",
+      icon: "/icons/email.svg",
     },
     formId: "1284",
     form: {
