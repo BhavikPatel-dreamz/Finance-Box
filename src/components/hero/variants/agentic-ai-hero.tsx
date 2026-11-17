@@ -13,7 +13,7 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
   return (
     <Container>
       <div className="w-full max-w-[1096px] mx-auto flex-1 flex items-center pb-0 lg:pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 gap-0 items-center w-full">
+        <div className="flex lg:flex-nowrap flex-wrap justify-between lg:gap-12 gap-0 items-center w-full ">
           {/* Left Column */}
           <Reveal immediate preset="slide-up" delay={80} distance={24} className={twMerge("w-full", config.titleMaxWidth || "lg:max-w-[400px]")}>
             {eyebrowData && (
@@ -58,7 +58,7 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
           </Reveal>
 
           {/* Right Column (Bullets + CTA) */}
-          <div className="max-w-[470px] w-full lg:justify-self-end">
+          <div className="lg:max-w-[470px] w-full lg:justify-self-end">
             {config.rightDescription && (
               <p className="text-[16px] font-light leading-[160%] text-white/80 mb-6">
                 {config.rightDescription}

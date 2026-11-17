@@ -21,7 +21,7 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
     const titleParts = splitEmphasis(data.title);
     const page = resolvePageKey(context?.uri);
     const backgroundImage = media(data.backgroundImage)?.url;
-    const titleMaxWidth = page === "people-operations" ? "lg:max-w-[590px]" : "lg:max-w-[480px]";
+    const titleMaxWidth = page === "people-operations" ? "lg:max-w-[590px] md:max-w-[90%]" : "lg:max-w-[480px]";
 
     return (
       <HeroSection
