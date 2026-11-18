@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 import { permanentRedirect } from "next/navigation";
 import { BlogArchive } from "@/components/blog/blog-archive";
 import { blogArchivePath } from "@/lib/wordpress/paths";
+import { blogPageStaticParams } from "@/lib/wordpress/static-params";
 
 export const instant = false;
+
+// Prerender every page WordPress has at build time; newer ones render on first request.
+export const generateStaticParams = blogPageStaticParams;
 
 function pageNumber(value: string) {
   return /^\d{1,4}$/.test(value) ? Number(value) : NaN;

@@ -10,9 +10,13 @@ import Section from "@/components/ui/section";
 import { getTeamMember } from "@/lib/wordpress/collections";
 import { TEAM_BASE, teamPath } from "@/lib/wordpress/paths";
 import { getSiteChrome } from "@/lib/wordpress/site-chrome";
+import { teamStaticParams } from "@/lib/wordpress/static-params";
 
 /** Team member profile (WordPress `team`), using the Why FIAB team card. */
 export const instant = false;
+
+// Prerender every page WordPress has at build time; newer ones render on first request.
+export const generateStaticParams = teamStaticParams;
 
 export async function generateMetadata({ params }: PageProps<"/team/[slug]">): Promise<Metadata> {
   const result = await getTeamMember((await params).slug);

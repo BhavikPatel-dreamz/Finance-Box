@@ -8,6 +8,7 @@ import { getSiteChrome } from "@/lib/wordpress/site-chrome";
 import { decodePreviewTarget, PREVIEW_COOKIE } from "@/lib/wordpress/preview";
 import { uriFromSlug } from "@/lib/wordpress/uri";
 import Link from "next/link";
+import { pageStaticParams } from "@/lib/wordpress/static-params";
 
 /**
  * The single template for every WordPress page: `/`, `/about`,
@@ -21,6 +22,9 @@ import Link from "next/link";
 
 // Navigations into this route wait on WordPress data; do not validate them as instant.
 export const instant = false;
+
+// Prerender every page WordPress has at build time; newer ones render on first request.
+export const generateStaticParams = pageStaticParams;
 
 type Loaded = { uri: string; result: PageLoadResult; preview: boolean };
 

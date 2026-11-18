@@ -13,9 +13,13 @@ import { getPost, getPosts } from "@/lib/wordpress/collections";
 import { BLOG_BASE, blogPath } from "@/lib/wordpress/paths";
 import { getSiteChrome } from "@/lib/wordpress/site-chrome";
 import { plainText } from "@/lib/wordpress/text";
+import { postStaticParams } from "@/lib/wordpress/static-params";
 
 /** Single blog post (WordPress `post`). WordPress serves posts at `/<slug>/`; the site serves them here. */
 export const instant = false;
+
+// Prerender every page WordPress has at build time; newer ones render on first request.
+export const generateStaticParams = postStaticParams;
 
 function description(post: { excerpt?: string | null; content?: string | null }) {
   return (plainText(post.excerpt) || plainText(post.content)).slice(0, 160);

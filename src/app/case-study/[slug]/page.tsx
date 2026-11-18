@@ -11,9 +11,13 @@ import { getCaseStudy } from "@/lib/wordpress/collections";
 import { CASE_STUDY_BASE, caseStudyPath } from "@/lib/wordpress/paths";
 import { getSiteChrome } from "@/lib/wordpress/site-chrome";
 import { plainText } from "@/lib/wordpress/text";
+import { caseStudyStaticParams } from "@/lib/wordpress/static-params";
 
 /** Single case study (WordPress `case-study`). */
 export const instant = false;
+
+// Prerender every page WordPress has at build time; newer ones render on first request.
+export const generateStaticParams = caseStudyStaticParams;
 
 export async function generateMetadata({ params }: PageProps<"/case-study/[slug]">): Promise<Metadata> {
   const result = await getCaseStudy((await params).slug);
