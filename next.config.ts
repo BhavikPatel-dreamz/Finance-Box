@@ -44,6 +44,9 @@ function wordpressImagePatterns(): RemotePattern[] {
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
+  experimental: {
+    agentUpgrade: "security",
+  },
   images: {
     remotePatterns: wordpressImagePatterns(),
   },
