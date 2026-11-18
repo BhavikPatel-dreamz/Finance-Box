@@ -52,14 +52,14 @@ export function FoundationHero({
         <Container className="flex flex-col items-center text-center">
           {/* Eyebrow */}
           <Reveal immediate preset="slide-up" delay={60} distance={20}>
-            <Eyebrow variant="white-dash" className="mb-4 sm:mb-6 text-white/80 font-mono tracking-[0.2em] text-[12px] sm:text-[13px] uppercase">
+            <Eyebrow variant="no-dash" className="mb-4 sm:mb-6 text-white/80 font-mono tracking-[0.2em] text-[12px] sm:text-[13px] uppercase">
               {subTitle}
             </Eyebrow>
           </Reveal>
 
           {/* Title */}
           <Reveal immediate preset="slide-up" delay={180} distance={24} className="max-w-4xl">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[62px] leading-[1.12] sm:leading-[1.14] font-medium tracking-tight text-white mb-6">
+            <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6">
               {title}{" "}
               <span className="block sm:inline text-brand-green">
                 {highlight}
