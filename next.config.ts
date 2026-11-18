@@ -48,6 +48,9 @@ const nextConfig: NextConfig = {
     agentUpgrade: "security",
   },
   images: {
+    // Serve images as-is instead of through the image optimizer: the Vercel
+    // plan's optimization quota is exhausted (402 OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED).
+    unoptimized: true,
     remotePatterns: wordpressImagePatterns(),
   },
   async redirects() {

@@ -2,6 +2,7 @@ import "server-only";
 import { cache } from "react";
 import { homeContent, type HomeContent } from "@/content/home";
 import { getMenu, getSettings, type NavigationItem } from "@/lib/wordpress/content";
+import { siteHref } from "@/lib/wordpress/links";
 
 export type SiteHeaderContent = HomeContent["header"];
 export type SiteFooterContent = HomeContent["footer"];
@@ -20,8 +21,11 @@ export type SiteChrome = {
 export const HEADER_CTA_CLASS = "menu-cta";
 
 function href(item: NavigationItem) {
-  // Internal WordPress links arrive as absolute URLs on the CMS host; `path` is the site-relative form.
-  return item.path?.startsWith("/") ? item.path : item.url || "#";
+  // Internal WordPress links arrive as absolute URLs on the CMS host, and `path`
+  // still includes the install's subdirectory (e.g. /wordpress/2026/finance/momentum/).
+  // siteHref strips the CMS origin and that base path; external links pass through.
+  if (item.url) return siteHref(item.url);
+  return item.path || "#";
 }
 
 function childrenOf(items: NavigationItem[], parent: NavigationItem) {
