@@ -50,7 +50,7 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
           preset="slide-up"
           delay={520}
           distance={28}
-          className="w-full overflow-hidden rounded-[16px] lg:rounded-none border border-white/10 lg:border-x-0 backdrop-blur-[3px] bg-black/[0.03] mb-12 sm:mb-16 xl:mb-20"
+            className="w-full overflow-hidden rounded-[16px] lg:rounded-none border border-white/10 lg:border-x-0 backdrop-blur-[3px] bg-black/[0.03] mb-12 sm:mb-16 lg:mb-27"
           style={{ WebkitBackdropFilter: "blur(3px)" }}
         >
           <div className="w-full backdrop-blur-md flex flex-col lg:flex-row">
