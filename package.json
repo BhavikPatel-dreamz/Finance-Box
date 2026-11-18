@@ -14,6 +14,7 @@
     "schema": "node scripts/fetch-schema.mjs",
     "sections:inventory": "node scripts/section-inventory.mjs",
     "sections:check": "node scripts/check-sections.mjs",
+    "acf:section": "node scripts/acf-section.mjs",
     "typecheck": "tsc --noEmit",
     "new-section": "npx -y tsx scripts/new-section.ts",
     "remove-section": "npx -y tsx scripts/remove-section.ts",
