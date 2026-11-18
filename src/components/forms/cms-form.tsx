@@ -96,12 +96,12 @@ const THEMES: Record<Appearance, Theme> = {
     actions: "mt-2 sm:mt-4 flex flex-col justify-start items-start gap-3",
     success: "text-green-600",
     error: "text-red-600",
-    submitLabel: "Send Message",
+    submitLabel: "Contact Us",
     loadingLabel: "Sending...",
   },
 };
 
-const SHORT_TYPES = new Set<FormField["type"]>(["text", "email", "tel", "url", "number", "date", "select"]);
+const SHORT_TYPES = new Set<FormField["type"]>(["text", "email", "tel", "url", "number", "date"]);
 
 /** Fields that take the whole row in a two-column form. */
 function wideFields(fields: FormField[]) {
