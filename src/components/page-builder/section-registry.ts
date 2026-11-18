@@ -36,6 +36,10 @@ import { servicesFractionalCfoSection } from "@/components/sections/services-fra
 import { servicesInvestorsSection } from "@/components/sections/services-investors-section";
 import { servicesOperatingCadenceSection } from "@/components/sections/services-operating-cadence-section";
 import { servicesTiersInDepthSection } from "@/components/sections/services-tiers-in-depth-section";
+import { serviceDetailBannerSection } from "@/components/sections/service-detail-banner-section";
+import { serviceDetailIntroSection } from "@/components/sections/service-detail-intro-section";
+import { serviceDetailServicesSection } from "@/components/sections/service-detail-services-section";
+import { serviceDetailProcessSection } from "@/components/sections/service-detail-process-section";
 import { simpleCtaSection } from "@/components/sections/simple-cta-section";
 import { teamMemberLeadersSection } from "@/components/sections/team-member-leaders-section";
 import { teamMemberExpertsSection } from "@/components/sections/team-member-experts-section";
@@ -96,6 +100,10 @@ const definitions = [
   servicesInvestorsSection,
   servicesOperatingCadenceSection,
   servicesTiersInDepthSection,
+  serviceDetailBannerSection,
+  serviceDetailIntroSection,
+  serviceDetailServicesSection,
+  serviceDetailProcessSection,
   simpleCtaSection,
   teamMemberLeadersSection,
   teamMemberExpertsSection,

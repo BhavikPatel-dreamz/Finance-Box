@@ -1,0 +1,25 @@
+fragment ServiceDetailIntroSection on PageBuilderPageBuilderServiceDetailIntroSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  ctaButton {
+    title
+    url
+  }
+  highlightCards {
+    title
+    icon {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+    image {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
+}

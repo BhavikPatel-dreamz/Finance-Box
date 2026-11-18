@@ -1,0 +1,13 @@
+fragment ServiceDetailProcessSection on PageBuilderPageBuilderServiceDetailProcessSectionLayout {
+  __typename
+  title
+  description
+  tags {
+    title
+  }
+  steps {
+    number
+    title
+    description
+  }
+}

@@ -1,0 +1,16 @@
+fragment ServiceDetailBannerSection on PageBuilderPageBuilderServiceDetailBannerSectionLayout {
+  __typename
+  subTitle
+  title
+  description
+  backgroundImage {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+  ctaButton {
+    title
+    url
+  }
+}

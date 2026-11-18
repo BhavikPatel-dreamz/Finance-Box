@@ -1,0 +1,20 @@
+fragment ServiceDetailServicesSection on PageBuilderPageBuilderServiceDetailServicesSectionLayout {
+  __typename
+  subTitle
+  title
+  ctaButton {
+    title
+    url
+  }
+  serviceCards {
+    title
+    tagLine
+    points
+    icon {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
+}
