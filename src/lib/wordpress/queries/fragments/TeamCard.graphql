@@ -1,5 +1,6 @@
 # Team member (custom post type `team`). The bio in `content` is parsed into the profile card.
 fragment TeamCard on Team {
+  __typename
   databaseId
   title
   slug
@@ -7,4 +8,8 @@ fragment TeamCard on Team {
   excerpt
   content
   featuredImage { node { sourceUrl altText } }
+  teamMemberOptions {
+    linkedinLink
+    twitterLink
+  }
 }

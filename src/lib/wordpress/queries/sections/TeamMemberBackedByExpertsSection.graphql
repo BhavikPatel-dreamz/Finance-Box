@@ -1,0 +1,11 @@
+fragment TeamMemberBackedByExpertsSection on PageBuilderPageBuilderTeamMemberBackedByExpertsSectionLayout {
+  __typename
+  title
+  description
+  image {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+}

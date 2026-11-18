@@ -3418,7 +3418,7 @@ interface MenuItemLinkableConnectionEdge implements Edge {
 
 union MenuItemObjectUnion = Post | Page | CaseStudy | Team | Category | Tag
 
-type Team implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithExcerpt & MenuItemLinkable {
+type Team implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithExcerpt & MenuItemLinkable & WithAcfTeamMemberOptions {
   ancestors(first: Int, last: Int, after: String, before: String): TeamToTeamConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
   content(format: PostObjectFieldFormatEnum): String
   contentType: ContentNodeToContentTypeConnectionEdge
@@ -3457,9 +3457,16 @@ type Team implements Node & ContentNode & UniformResourceIdentifiable & Database
   slug: String
   status: String
   teamId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
+  teamMemberOptions: TeamMemberOptions
   template: ContentTemplate
   title(format: PostObjectFieldFormatEnum): String
   uri: String
+}
+
+type TeamMemberOptions implements TeamMemberOptions_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  linkedinLink: String
+  twitterLink: String
 }
 
 type TeamToTeamConnection implements TeamConnection & Connection {
@@ -6232,6 +6239,174 @@ type PageBuilderPageBuilderHomeLeadershipSectionLayout implements PageBuilderPag
   teamMembers: [PageBuilderPageBuilderTeamMembers]
 }
 
+interface PageBuilderPageBuilderTeamMemberLeadersSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  leaders(first: Int, last: Int, after: String, before: String): AcfContentNodeConnection
+  title: String
+}
+
+type PageBuilderPageBuilderTeamMemberLeadersSectionLayout implements PageBuilderPageBuilderTeamMemberLeadersSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  leaders(first: Int, last: Int, after: String, before: String): AcfContentNodeConnection
+  title: String
+}
+
+interface PageBuilderPageBuilderTeamMemberExpertsSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  experts(first: Int, last: Int, after: String, before: String): AcfContentNodeConnection
+  fieldGroupName: String
+  subTitle: String
+  title: String
+}
+
+type PageBuilderPageBuilderTeamMemberExpertsSectionLayout implements PageBuilderPageBuilderTeamMemberExpertsSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  experts(first: Int, last: Int, after: String, before: String): AcfContentNodeConnection
+  fieldGroupName: String
+  subTitle: String
+  title: String
+}
+
+interface PageBuilderPageBuilderTeamMemberBackedByExpertsSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  image: AcfMediaItemConnectionEdge
+  title: String
+}
+
+type PageBuilderPageBuilderTeamMemberBackedByExpertsSectionLayout implements PageBuilderPageBuilderTeamMemberBackedByExpertsSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  image: AcfMediaItemConnectionEdge
+  title: String
+}
+
+interface PageBuilderPageBuilderTeamMemberHelpFormSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  formId: String
+  image: AcfMediaItemConnectionEdge
+  title: String
+}
+
+type PageBuilderPageBuilderTeamMemberHelpFormSectionLayout implements PageBuilderPageBuilderTeamMemberHelpFormSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  formId: String
+  image: AcfMediaItemConnectionEdge
+  title: String
+}
+
+interface PageBuilderPageBuilderServiceDetailBannerSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
+  ctaButton: AcfLink
+  description: String
+  fieldGroupName: String
+  subTitle: String
+  title: String
+}
+
+type PageBuilderPageBuilderServiceDetailBannerSectionLayout implements PageBuilderPageBuilderServiceDetailBannerSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  backgroundImage: AcfMediaItemConnectionEdge
+  ctaButton: AcfLink
+  description: String
+  fieldGroupName: String
+  subTitle: String
+  title: String
+}
+
+interface PageBuilderPageBuilderHighlightCards_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  image: AcfMediaItemConnectionEdge
+  title: String
+}
+
+type PageBuilderPageBuilderHighlightCards implements PageBuilderPageBuilderHighlightCards_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  image: AcfMediaItemConnectionEdge
+  title: String
+}
+
+interface PageBuilderPageBuilderServiceDetailIntroSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  ctaButton: AcfLink
+  description: String
+  fieldGroupName: String
+  highlightCards: [PageBuilderPageBuilderHighlightCards]
+  subTitle: String
+  title: String
+}
+
+type PageBuilderPageBuilderServiceDetailIntroSectionLayout implements PageBuilderPageBuilderServiceDetailIntroSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  ctaButton: AcfLink
+  description: String
+  fieldGroupName: String
+  highlightCards: [PageBuilderPageBuilderHighlightCards]
+  subTitle: String
+  title: String
+}
+
+interface PageBuilderPageBuilderServiceCards_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  points: String
+  tagLine: String
+  title: String
+}
+
+type PageBuilderPageBuilderServiceCards implements PageBuilderPageBuilderServiceCards_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  points: String
+  tagLine: String
+  title: String
+}
+
+interface PageBuilderPageBuilderServiceDetailServicesSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  ctaButton: AcfLink
+  fieldGroupName: String
+  serviceCards: [PageBuilderPageBuilderServiceCards]
+  subTitle: String
+  title: String
+}
+
+type PageBuilderPageBuilderServiceDetailServicesSectionLayout implements PageBuilderPageBuilderServiceDetailServicesSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  ctaButton: AcfLink
+  fieldGroupName: String
+  serviceCards: [PageBuilderPageBuilderServiceCards]
+  subTitle: String
+  title: String
+}
+
+interface PageBuilderPageBuilderTags_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  title: String
+}
+
+type PageBuilderPageBuilderTags implements PageBuilderPageBuilderTags_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  title: String
+}
+
+interface PageBuilderPageBuilderServiceDetailProcessSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  steps: [PageBuilderPageBuilderSteps]
+  tags: [PageBuilderPageBuilderTags]
+  title: String
+}
+
+type PageBuilderPageBuilderServiceDetailProcessSectionLayout implements PageBuilderPageBuilderServiceDetailProcessSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  steps: [PageBuilderPageBuilderSteps]
+  tags: [PageBuilderPageBuilderTags]
+  title: String
+}
+
 interface WithAcfPageBuilder {
   pageBuilder: PageBuilder
 }
@@ -6239,4 +6414,14 @@ interface WithAcfPageBuilder {
 interface PageBuilder_Fields implements AcfFieldGroup & AcfFieldGroupFields {
   fieldGroupName: String
   pageBuilder: [PageBuilderPageBuilder_Layout]
+}
+
+interface WithAcfTeamMemberOptions {
+  teamMemberOptions: TeamMemberOptions
+}
+
+interface TeamMemberOptions_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  linkedinLink: String
+  twitterLink: String
 }

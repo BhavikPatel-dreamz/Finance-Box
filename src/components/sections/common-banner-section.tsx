@@ -1,15 +1,17 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { CommonBannerSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { HeroSection } from "@/components/hero";
-import { listItems, media, splitEmphasis, text } from "@/lib/wordpress/fields";
+import { TeamHero } from "@/components/team/team-sections";
+import { listItems, media, multilineText, splitEmphasis, text } from "@/lib/wordpress/fields";
 import { slugFromUri } from "@/lib/wordpress/paths";
 import type { HeroPageKey } from "@/components/hero/types";
 
-function resolvePageKey(uri?: string): HeroPageKey {
+function resolvePageKey(uri?: string): HeroPageKey | "team-member" {
   const slug = slugFromUri(uri);
   if (slug === "careers") return "careers";
   if (slug === "agentic-ai") return "agentic-ai";
   if (slug === "people-operations") return "people-operations";
+  if (slug === "team-member" || slug === "team-members") return "team-member";
   return "knowledge-hub";
 }
 
@@ -21,6 +23,28 @@ export const commonBannerSection = defineSection<CommonBannerSectionFragment>({
     const titleParts = splitEmphasis(data.title);
     const page = resolvePageKey(context?.uri);
     const backgroundImage = media(data.backgroundImage)?.url;
+
+    if (page === "team-member") {
+      const paragraphs = multilineText(data.description).split("\n\n").filter(Boolean);
+      return (
+        <TeamHero
+          hero={{
+            eyebrow: text(data.subTitle, "TEAM MEMBER"),
+            title: titleParts ? titleParts.before.trim() : (text(data.title) || "Experts Behind Your"),
+            highlight: titleParts ? titleParts.emphasis : "Back-Office Transformation",
+            paragraphs:
+              paragraphs.length > 0
+                ? paragraphs
+                : [
+                    "We pair senior operators with automation‑first thinking.",
+                    "The result? Reliable finance and operations, faster closes, and decisions you can trust.",
+                  ],
+            backgroundImage: backgroundImage || "/team-members-hero-bg.webp",
+          }}
+        />
+      );
+    }
+
     const titleMaxWidth = page === "people-operations" ? "lg:max-w-[590px] md:max-w-[90%]" : "lg:max-w-[480px]";
 
     return (

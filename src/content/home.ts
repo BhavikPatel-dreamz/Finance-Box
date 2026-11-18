@@ -156,7 +156,7 @@ export const homeContent: HomeContent = {
         url: "/#about",
         children: [
           { label: "Why FIAB", url: "/why-fiab/" },
-          { label: "Team", url: "/team/" },
+          { label: "Team", url: "/team-members/" },
           { label: "Careers", url: "/careers/" },
           { label: "Knowledge Hub", url: "/knowledge-hub/" },
         ],
@@ -361,7 +361,7 @@ export const homeContent: HomeContent = {
         title: "Company",
         links: [
           { label: "Why FIAB", url: "/why-fiab/" },
-          { label: "Team", url: "/team/" },
+          { label: "Team", url: "/team-members/" },
           { label: "Careers", url: "/careers/" },
           { label: "Contact", url: "/contact-us/" },
         ],

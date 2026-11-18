@@ -64,7 +64,11 @@ export async function caseStudyStaticParams() {
   return atLeastOne(slugs.map((slug) => ({ slug })), { slug: PLACEHOLDER_SLUG }, "/case-study/[slug]");
 }
 
+import { getAllTeamMemberSlugs } from "@/content/team-members-data";
+
 export async function teamStaticParams() {
-  const slugs = slugsOf(await getTeamMembers());
-  return atLeastOne(slugs.map((slug) => ({ slug })), { slug: PLACEHOLDER_SLUG }, "/team/[slug]");
+  const wpSlugs = slugsOf(await getTeamMembers());
+  const localSlugs = getAllTeamMemberSlugs();
+  const allSlugs = Array.from(new Set([...wpSlugs, ...localSlugs]));
+  return allSlugs.map((slug) => ({ slug }));
 }

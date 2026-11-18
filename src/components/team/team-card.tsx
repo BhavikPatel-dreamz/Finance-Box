@@ -8,7 +8,17 @@ import type { WhyTeamMember } from "@/content/why-fiab";
  * focus areas on the other. Moved from the Why FIAB team section; also the
  * main block of the /team/<slug>/ profile page.
  */
-export function TeamProfileCard({ member, linkToProfile = false }: { member: WhyTeamMember; linkToProfile?: boolean }) {
+export function TeamProfileCard({
+  member,
+  linkToProfile = false,
+  ctaLabel,
+  ctaHref,
+}: {
+  member: WhyTeamMember;
+  linkToProfile?: boolean;
+  ctaLabel?: string;
+  ctaHref?: string;
+}) {
   const isImageRight = member.imagePosition === "right";
   return (
     <div className="relative overflow-hidden rounded-[16px] bg-brand-blue flex flex-col lg:flex-row lg:min-h-[715px]">
@@ -65,14 +75,18 @@ export function TeamProfileCard({ member, linkToProfile = false }: { member: Why
         <div className="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
           {member.focusTitle && member.focusText && (
             <div>
-              <h4 className="text-[13px] sm:text-[14px] font-medium uppercase tracking-wider text-white font-mono">{member.focusTitle}</h4>
+              <h4 className="text-[13px] sm:text-[14px] font-medium uppercase tracking-wider text-white font-mono">
+                {member.focusTitle.replace(/:\s*$/, "")}:
+              </h4>
               <p className="mt-1 text-[13px] sm:text-[14px] text-white/70 font-light">{member.focusText}</p>
             </div>
           )}
           {member.partnerships && (
             <div>
-              <h4 className="text-[13px] sm:text-[14px] font-medium uppercase tracking-wider text-white font-mono whitespace-pre-line">{member.partnerships.split('\n')[0]}</h4>
-              <p className="mt-1 text-[13px] sm:text-[14px] text-white/70 font-light">{member.partnerships.split('\n')[1]}</p>
+              <h4 className="text-[13px] sm:text-[14px] font-medium uppercase tracking-wider text-white font-mono whitespace-pre-line">
+                {member.partnerships.split("\n")[0].replace(/:\s*$/, "")}:
+              </h4>
+              <p className="mt-1 text-[13px] sm:text-[14px] text-white/70 font-light">{member.partnerships.split("\n")[1]}</p>
             </div>
           )}
           {member.work && (
@@ -98,7 +112,14 @@ export function TeamProfileCard({ member, linkToProfile = false }: { member: Why
               href={member.url}
               className="inline-flex items-center gap-2 text-[13px] sm:text-[14px] font-medium uppercase tracking-wider font-mono text-brand-green hover:text-white transition-colors duration-300"
             >
-              Full profile <span aria-hidden="true">→</span>
+              {ctaLabel || "Full profile"} <span aria-hidden="true">→</span>
+            </Link>
+          ) : ctaHref ? (
+            <Link
+              href={ctaHref}
+              className="inline-flex items-center gap-2 text-[13px] sm:text-[14px] font-medium uppercase tracking-wider font-mono text-brand-green hover:text-white transition-colors duration-300"
+            >
+              {ctaLabel || "Talk to Us"} <span aria-hidden="true">→</span>
             </Link>
           ) : null}
         </div>

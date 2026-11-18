@@ -9,6 +9,8 @@ const BACKGROUND_MAP: Record<string, string> = {
   clients: "url(/clients/clients-hero-bg.webp)",
   careers: "url(/careers/careers-page-hero-bg.webp)",
   contact: "url(/contact-us/contact-us-hero-bg.webp)",
+  team: "url(/team-members-hero-bg.webp)",
+  "team-members": "url(/team-members-hero-bg.webp)",
   none: "",
 };
 

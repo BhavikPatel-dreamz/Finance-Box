@@ -1,0 +1,14 @@
+fragment TeamMemberExpertsSection on PageBuilderPageBuilderTeamMemberExpertsSectionLayout {
+  __typename
+  title
+  subTitle
+  description
+  experts {
+    nodes {
+      __typename
+      ... on Team {
+        ...TeamCard
+      }
+    }
+  }
+}

@@ -37,6 +37,10 @@ import { servicesInvestorsSection } from "@/components/sections/services-investo
 import { servicesOperatingCadenceSection } from "@/components/sections/services-operating-cadence-section";
 import { servicesTiersInDepthSection } from "@/components/sections/services-tiers-in-depth-section";
 import { simpleCtaSection } from "@/components/sections/simple-cta-section";
+import { teamMemberLeadersSection } from "@/components/sections/team-member-leaders-section";
+import { teamMemberExpertsSection } from "@/components/sections/team-member-experts-section";
+import { teamMemberBackedByExpertsSection } from "@/components/sections/team-member-backed-by-experts-section";
+import { teamMemberHelpFormSection } from "@/components/sections/team-member-help-form-section";
 import { teamMembersSection } from "@/components/sections/team-members-section";
 import { whyFiabBannerSection } from "@/components/sections/why-fiab-banner-section";
 import { whyFiabComparisonSection } from "@/components/sections/why-fiab-comparison-section";
@@ -93,6 +97,10 @@ const definitions = [
   servicesOperatingCadenceSection,
   servicesTiersInDepthSection,
   simpleCtaSection,
+  teamMemberLeadersSection,
+  teamMemberExpertsSection,
+  teamMemberBackedByExpertsSection,
+  teamMemberHelpFormSection,
   teamMembersSection,
   whyFiabBannerSection,
   whyFiabComparisonSection,

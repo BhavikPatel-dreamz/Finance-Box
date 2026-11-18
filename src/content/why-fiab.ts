@@ -31,6 +31,8 @@ export type WhyTeamMember = {
   imagePosition?: "left" | "right";
   /** Profile page, when the member comes from WordPress. */
   url?: string;
+  linkedin?: string;
+  twitter?: string;
 };
 
 export type WhyContent = {
@@ -170,7 +172,7 @@ export const whyContent: WhyContent = {
   },
   team: {
     title: "The People Behind the Work",
-    cta: { label: "Meet the Full Team", url: "/team" },
+    cta: { label: "Meet the Full Team", url: "/team-members" },
     members: [
       {
         name: "Amit Mulchandani",

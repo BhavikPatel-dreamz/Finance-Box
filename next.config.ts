@@ -55,6 +55,8 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      { source: "/team", destination: "/team-members", permanent: true },
+      { source: "/team/:slug((?!.*\\.[a-zA-Z0-9]+$).*)", destination: "/team-members/:slug*", permanent: true },
       { source: "/terms-and-conditions", destination: "/terms-conditions", permanent: true },
       // WordPress category archives; the site has one blog archive.
       { source: "/category/:path*", destination: "/blog", permanent: false },

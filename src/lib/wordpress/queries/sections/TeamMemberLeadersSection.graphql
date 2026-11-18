@@ -1,0 +1,13 @@
+fragment TeamMemberLeadersSection on PageBuilderPageBuilderTeamMemberLeadersSectionLayout {
+  __typename
+  title
+  description
+  leaders {
+    nodes {
+      __typename
+      ... on Team {
+        ...TeamCard
+      }
+    }
+  }
+}

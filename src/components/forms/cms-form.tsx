@@ -87,7 +87,7 @@ const THEMES: Record<Appearance, Theme> = {
     grid: true,
     input: "h-[48px] sm:h-[50px] rounded-[10px] px-4 sm:px-5 text-[14px]",
     textarea: "rounded-[10px] py-3.5 sm:py-4 px-4 sm:px-5 text-[14px]",
-    base: "w-full border bg-white text-brand-blue placeholder:text-brand-blue/70 focus:outline-none focus:border-brand-green transition-colors duration-200",
+    base: "w-full border border-[#747C761A] bg-white text-brand-blue placeholder:text-brand-blue/45 focus:outline-none focus:border-brand-green transition-colors duration-200",
     border: "border-[#747C761A]",
     choice: "text-brand-blue/80",
     legend: "text-brand-blue/70",
@@ -181,33 +181,75 @@ export function CmsForm({ form, appearance }: { form: FormDefinition; appearance
           />
         );
         break;
-      case "select":
+      case "select": {
+        const isPlaceholder = !field.multiple && (!value || value === "");
         control = (
-          <select
-            {...common}
-            multiple={field.multiple}
-            value={value}
-            onChange={(e) =>
-              setValue(
-                field.name,
-                field.multiple ? Array.from(e.target.selectedOptions, (option) => option.value) : e.target.value,
-              )
-            }
-            className={`${styles.base} ${border} ${styles.input} ${field.multiple ? "h-auto py-2" : ""}`}
-          >
+          <div className="relative w-full">
+            <select
+              {...common}
+              multiple={field.multiple}
+              value={value ?? ""}
+              onChange={(e) =>
+                setValue(
+                  field.name,
+                  field.multiple ? Array.from(e.target.selectedOptions, (option) => option.value) : e.target.value,
+                )
+              }
+              className={`${styles.base} ${border} ${styles.input} ${
+                field.multiple
+                  ? "h-auto py-2"
+                  : `appearance-none pr-10 sm:pr-12 cursor-pointer ${
+                      isPlaceholder
+                        ? appearance === "contact"
+                          ? "text-brand-blue/45"
+                          : "text-white/50"
+                        : ""
+                    }`
+              }`}
+            >
+              {!field.multiple && (
+                <option value="" disabled className={appearance === "contact" ? "text-brand-blue/45" : "text-white/50"}>
+                  {label}
+                </option>
+              )}
+              {field.options.map((option) => (
+                <option
+                  key={option}
+                  value={option}
+                  className={`${styles.option} ${appearance === "contact" ? "text-brand-blue" : "text-white"}`}
+                >
+                  {option}
+                </option>
+              ))}
+            </select>
             {!field.multiple && (
-              <option value="" disabled>
-                {label}
-              </option>
+              <div
+                className={`pointer-events-none absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 flex items-center justify-center ${
+                  appearance === "contact" ? "text-brand-blue" : "text-white"
+                }`}
+                aria-hidden="true"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="stroke-current"
+                >
+                  <path
+                    d="M4 9L12 17L20 9"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
             )}
-            {field.options.map((option) => (
-              <option key={option} value={option} className={styles.option}>
-                {option}
-              </option>
-            ))}
-          </select>
+          </div>
         );
         break;
+      }
       case "checkbox":
       case "radio":
         control = (

@@ -1,0 +1,12 @@
+fragment TeamMemberHelpFormSection on PageBuilderPageBuilderTeamMemberHelpFormSectionLayout {
+  __typename
+  title
+  description
+  formId
+  image {
+    node {
+      sourceUrl
+      altText
+    }
+  }
+}

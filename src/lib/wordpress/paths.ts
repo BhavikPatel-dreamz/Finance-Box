@@ -5,7 +5,7 @@
  */
 export const BLOG_BASE = "/blog/";
 export const CASE_STUDY_BASE = "/case-study/";
-export const TEAM_BASE = "/team/";
+export const TEAM_BASE = "/team-members/";
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
