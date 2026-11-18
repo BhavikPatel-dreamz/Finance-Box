@@ -92,6 +92,8 @@ export default async function TeamPage() {
         role: match.role || leader.role,
         image: match.image && !match.image.includes("why-team-bg.svg") ? match.image : leader.image,
         slug: leader.slug || slugFromUri(match.url) || undefined,
+        linkedin: match.linkedin || leader.linkedin || "https://www.linkedin.com/",
+        twitter: match.twitter || leader.twitter || "https://x.com/",
       };
     }),
   };

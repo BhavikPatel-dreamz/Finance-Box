@@ -137,42 +137,38 @@ export function TeamLeaders({ leaders }: { leaders: TeamPageContent["leaders"] }
 
                       {/* Top-Right Social Icon Buttons (Vertical Stack) */}
                       <div className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 flex flex-col items-center gap-2 sm:gap-2.5">
-                        {leader.linkedin && (
-                          <a
-                            href={leader.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${leader.name} on LinkedIn`}
-                            className="flex h-8 w-8 sm:h-10.5 sm:w-10.5 items-center justify-center rounded-full bg-black/45 border border-white/20 backdrop-blur-md text-white transition-all duration-300 hover:bg-brand-green hover:border-brand-green hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
-                          >
-                            <Image
-                              src="/icons/linkedin-icon.svg"
-                              alt=""
-                              width={14}
-                              height={14}
-                              className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain"
-                              aria-hidden="true"
-                            />
-                          </a>
-                        )}
-                        {leader.twitter && (
-                          <a
-                            href={leader.twitter}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${leader.name} on X (Twitter)`}
-                            className="flex h-8 w-8 sm:h-10.5 sm:w-10.5 items-center justify-center rounded-full bg-black/45 border border-white/20 backdrop-blur-md text-white transition-all duration-300 hover:bg-brand-green hover:border-brand-green hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
-                          >
-                            <Image
-                              src="/icons/twiter-icon.svg"
-                              alt=""
-                              width={14}
-                              height={14}
-                              className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain"
-                              aria-hidden="true"
-                            />
-                          </a>
-                        )}
+                        <a
+                          href={leader.linkedin || "https://www.linkedin.com/"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${leader.name} on LinkedIn`}
+                          className="flex h-8 w-8 sm:h-10.5 sm:w-10.5 items-center justify-center rounded-full bg-black/45 border border-white/20 backdrop-blur-md text-white transition-all duration-300 hover:bg-brand-green hover:border-brand-green hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
+                        >
+                          <Image
+                            src="/icons/linkedin-icon.svg"
+                            alt=""
+                            width={14}
+                            height={14}
+                            className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain"
+                            aria-hidden="true"
+                          />
+                        </a>
+                        <a
+                          href={leader.twitter || "https://x.com/"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${leader.name} on X (Twitter)`}
+                          className="flex h-8 w-8 sm:h-10.5 sm:w-10.5 items-center justify-center rounded-full bg-black/45 border border-white/20 backdrop-blur-md text-white transition-all duration-300 hover:bg-brand-green hover:border-brand-green hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
+                        >
+                          <Image
+                            src="/icons/twiter-icon.svg"
+                            alt=""
+                            width={14}
+                            height={14}
+                            className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain"
+                            aria-hidden="true"
+                          />
+                        </a>
                       </div>
                     </div>
 

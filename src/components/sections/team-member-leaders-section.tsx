@@ -17,13 +17,18 @@ export const teamMemberLeadersSection = defineSection<TeamMemberLeadersSectionFr
     for (const node of rawLeaders) {
       if (!node || !("title" in node) || !node.title) continue;
       const img = media(node.featuredImage)?.url;
+      const name = text(node.title);
+      const fallbackLeader = teamPageContent.leaders.people.find(
+        (p) => p.name.toLowerCase() === name.toLowerCase() || (node.slug && p.slug === node.slug)
+      );
+
       people.push({
-        name: text(node.title),
+        name,
         role: text(node.excerpt),
-        image: img && !img.includes("why-team-bg.svg") ? img : "/media/placeholder.svg",
-        slug: node.slug ?? undefined,
-        linkedin: node.teamMemberOptions?.linkedinLink ?? undefined,
-        twitter: node.teamMemberOptions?.twitterLink ?? undefined,
+        image: img && !img.includes("why-team-bg.svg") ? img : (fallbackLeader?.image || "/media/placeholder.svg"),
+        slug: node.slug ?? fallbackLeader?.slug ?? undefined,
+        linkedin: node.teamMemberOptions?.linkedinLink || fallbackLeader?.linkedin || "https://www.linkedin.com/",
+        twitter: node.teamMemberOptions?.twitterLink || fallbackLeader?.twitter || "https://x.com/",
       });
     }
 
