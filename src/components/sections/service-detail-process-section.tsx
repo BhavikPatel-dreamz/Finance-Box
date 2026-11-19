@@ -6,9 +6,10 @@ import { fallbackFoundationContent } from "@/content/foundation";
 
 export const serviceDetailProcessSection = defineSection<ServiceDetailProcessSectionFragment>({
   layout: "ServiceDetailProcessSection",
-  render: (data) => {
+  render: (data, context) => {
     const fallback = fallbackFoundationContent.process;
     const titleParts = splitEmphasis(data.title);
+    const isMomentum = context?.uri?.includes("momentum");
 
     const titleLead = titleParts
       ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
@@ -40,6 +41,7 @@ export const serviceDetailProcessSection = defineSection<ServiceDetailProcessSec
       <FoundationProcess
         title={titleLead}
         highlight={titleHighlight}
+        highlightClassName={isMomentum ? "text-white" : "text-brand-green"}
         steps={steps}
       />
     );

@@ -25,8 +25,21 @@
 }
 
 @layer base {
-  h1, h2, h3, h4, h5, h6,
-  p, li, blockquote, a, label, span, figcaption, td {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  li,
+  blockquote,
+  a,
+  label,
+  span,
+  figcaption,
+  td {
     overflow-wrap: anywhere;
     word-break: normal;
   }
@@ -39,7 +52,10 @@
     word-break: normal;
   }
 
-  img, svg, video, iframe {
+  img,
+  svg,
+  video,
+  iframe {
     max-width: 100%;
   }
 
@@ -60,7 +76,10 @@ body {
   font-family: var(--font-dm-sans), "DM Sans", sans-serif;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
 }
 
@@ -125,6 +144,7 @@ button, input, select, textarea {
   padding-left: 1rem;
   padding-right: 0;
 }
+
 @media (min-width: 640px) {
   .container-bleed-right {
     padding-left: max(1.5rem, calc((100% - 1280px) / 2));
@@ -137,6 +157,7 @@ button, input, select, textarea {
   from {
     transform: translateX(0%);
   }
+
   to {
     transform: translateX(-100%);
   }
@@ -216,8 +237,7 @@ button[class*="hover:bg-brand-green"]:hover svg {
 
 /* Green button hover effect inside dark sections: bg color white, text color var(--color-brand-blue) (only for actual green buttons, not white buttons) */
 /* In dark sections, green buttons expand with a white circular background and dark text on hover */
-:is(
-  header,
+:is(header,
   .site-header,
   .hero-section,
   .services-details,
@@ -234,16 +254,12 @@ button[class*="hover:bg-brand-green"]:hover svg {
   [class*="bg-[#091024]"],
   [class*="bg-[#182030]"],
   .dark,
-  [data-theme="dark"]
-) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"])
-) > span[aria-hidden="true"] {
+  [data-theme="dark"]) :is(a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]))>span[aria-hidden="true"] {
   background-color: #ffffff !important;
 }
 
-:is(
-  header,
+:is(header,
   .site-header,
   .hero-section,
   .services-details,
@@ -260,17 +276,13 @@ button[class*="hover:bg-brand-green"]:hover svg {
   [class*="bg-[#091024]"],
   [class*="bg-[#182030]"],
   .dark,
-  [data-theme="dark"]
-) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover
-) {
+  [data-theme="dark"]) :is(a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover) {
   background-color: #ffffff !important;
   color: var(--color-brand-blue) !important;
 }
 
-:is(
-  header,
+:is(header,
   .site-header,
   .hero-section,
   .services-details,
@@ -287,16 +299,12 @@ button[class*="hover:bg-brand-green"]:hover svg {
   [class*="bg-[#091024]"],
   [class*="bg-[#182030]"],
   .dark,
-  [data-theme="dark"]
-) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover
-) {
+  [data-theme="dark"]) :is(a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover) {
   color: var(--color-brand-blue) !important;
 }
 
-:is(
-  header,
+:is(header,
   .site-header,
   .hero-section,
   .services-details,
@@ -313,11 +321,8 @@ button[class*="hover:bg-brand-green"]:hover svg {
   [class*="bg-[#091024]"],
   [class*="bg-[#182030]"],
   .dark,
-  [data-theme="dark"]
-) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover
-) svg {
+  [data-theme="dark"]) :is(a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover) svg {
   color: var(--color-brand-blue) !important;
 }
 
@@ -346,6 +351,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
     transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
   }
+
   .group:hover .image-hover-zoom,
   .group.is-flipped .image-hover-zoom,
   .image-hover-zoom:hover {
@@ -359,6 +365,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
     opacity: 0;
     transform: translateY(-6px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -374,6 +381,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
     opacity: 0;
     transform: translateY(-8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -386,7 +394,10 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
 
 /* Global Reduced Motion Compliance */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -437,6 +448,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
     opacity: 0;
     transform: translateY(28px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -447,6 +459,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -504,21 +517,20 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
 */
 .automate-card-glow {
   position: absolute;
-  top: -45px;
-  left: -45px;
-  width: 220px;
-  height: 200px;
+  left: -6.49%;
+  right: auto;
+  top: -13.22%;
+  width: 90px;
+  height: 84px;
   border-radius: 9999px;
   background: #4EA947;
-  opacity: 0;
-  filter: blur(70px);
+  opacity: 0.8;
+  filter: blur(90px);
   pointer-events: none;
   transition: opacity 300ms ease;
   z-index: 0;
 }
 
 .automate-deliver-card:hover .automate-card-glow {
-  opacity: 0.8;
+  opacity: 0;
 }
-
-

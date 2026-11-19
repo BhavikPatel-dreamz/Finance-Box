@@ -169,7 +169,7 @@ export function ProcessGrid({
   return (
     <div
       className={twMerge(
-        "overflow-hidden rounded-[16px] sm:rounded-[20px] border border-white/10 bg-[#191F2D]",
+        "overflow-hidden border border-white/12 bg-[#191F2D]",
         className
       )}
     >

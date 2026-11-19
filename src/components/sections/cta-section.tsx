@@ -14,6 +14,7 @@ function resolveCtaVariant(uri?: string): FooterHeroVariant {
   if (slug === "knowledge-hub") return "knowledge-hub";
   if (slug === "people-operations") return "people-operations";
   if (slug === "foundation") return "foundation";
+  if (slug === "momentum") return "momentum";
   if (!slug || slug === "home") return "home";
   return "default";
 }

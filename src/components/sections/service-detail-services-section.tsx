@@ -12,10 +12,32 @@ export const serviceDetailServicesSection = defineSection<ServiceDetailServicesS
     const subTitle = text(data.subTitle, fallback.subTitle);
     const cta = link(data.ctaButton, fallback.ctaButton);
 
-    const titleLead = titleParts
-      ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
-      : text(data.title, fallback.title);
-    const titleHighlight = titleParts ? titleParts.emphasis : fallback.highlight;
+    let titleLead = fallback.title;
+    let titleHighlight = fallback.highlight;
+
+    if (data.title) {
+      if (titleParts) {
+        titleLead = [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim();
+        titleHighlight = titleParts.emphasis;
+      } else {
+        const rawTitle = text(data.title).trim();
+        const targetPhrases = ["Automate & Deliver", "accurate, compliant, audit-ready", "seamless compliance."];
+        let found = false;
+        for (const phrase of targetPhrases) {
+          if (rawTitle.toLowerCase().includes(phrase.toLowerCase())) {
+            const idx = rawTitle.toLowerCase().indexOf(phrase.toLowerCase());
+            titleLead = rawTitle.slice(0, idx).trim();
+            titleHighlight = rawTitle.slice(idx, idx + phrase.length).trim();
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          titleLead = rawTitle;
+          titleHighlight = "";
+        }
+      }
+    }
 
     const cards = (data.serviceCards && data.serviceCards.length > 0
       ? data.serviceCards

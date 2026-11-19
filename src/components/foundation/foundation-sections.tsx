@@ -69,7 +69,7 @@ export function FoundationHero({
           </Reveal>
 
           {/* Description */}
-          <Reveal immediate preset="slide-up" delay={300} distance={20} className="max-w-2xl sm:max-w-198.5">
+          <Reveal immediate preset="slide-up" delay={300} distance={20} className="max-w-2xl sm:max-w-[660px] mx-auto">
             <p className="text-[14px] md:text-[16px] text-white/80 font-light tracking-0 leading-[1.68] mb-6 sm:mb-8.5">
               {description}
             </p>
@@ -127,12 +127,13 @@ export function FoundationIntro({
         {/* Top Row: Heading and Description/CTA */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 sm:gap-12 lg:gap-16 items-start mb-8 lg:mb-12.5">
           {/* Left Column: Eyebrow + Title */}
-          <Reveal preset="slide-up" delay={60} distance={20} className="max-w-[620px]">
+          <Reveal preset="slide-up" delay={60} distance={20} className="max-w-[540px]">
             <Eyebrow variant="black-dash" className="mb-4 sm:mb-6 text-brand-blue/70 font-mono tracking-[1.5px] text-[12px] sm:text-[14px] uppercase">
               {subTitle}
             </Eyebrow>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-medium leading-[1.18] tracking-tight text-brand-blue">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-medium leading-[1.18] tracking-tight text-brand-blue max-w-[540px]">
               {title}{" "}
+              <br className="hidden sm:inline" />
               <span className="text-brand-green italic font-bold">
                 {highlight}
               </span>
@@ -330,12 +331,14 @@ export type { ProcessStepItem } from "@/components/ui/process-grid";
 export interface FoundationProcessProps {
   title: string;
   highlight: string;
+  highlightClassName?: string;
   steps: ProcessStepItem[];
 }
 
 export function FoundationProcess({
   title,
   highlight,
+  highlightClassName,
   steps,
 }: FoundationProcessProps) {
   return (
@@ -346,7 +349,7 @@ export function FoundationProcess({
           <Reveal preset="slide-up" delay={60} distance={20}>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white leading-[1.18]">
               {title}{" "}
-              <span className="italic font-bold block sm:inline text-brand-green">
+              <span className={`italic font-bold block sm:inline ${highlightClassName || "text-brand-green"}`}>
                 {highlight}
               </span>
             </h2>

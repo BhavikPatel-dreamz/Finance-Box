@@ -16,6 +16,7 @@ export type FooterHeroVariant =
   | "people-operations"
   | "why-fiab"
   | "foundation"
+  | "momentum"
   | "single-line"
   | "two-line"
   | "default";
@@ -87,6 +88,12 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
     titleMaxWidth: "max-w-[540px]",
     highlightItalic: false,
     textMaxWidth: "max-w-[680px]",
+  },
+  momentum: {
+    layout: "two-line",
+    titleMaxWidth: "max-w-[760px]",
+    highlightItalic: false,
+    textMaxWidth: "max-w-[720px]",
   },
   "single-line": {
     layout: "single-line",
@@ -193,6 +200,17 @@ export function FooterHero({
                     const commaIdx = displayTitle.indexOf(",");
                     const part1 = displayTitle.slice(0, commaIdx + 1);
                     const part2 = displayTitle.slice(commaIdx + 1).trim();
+                    renderedTitle = (
+                      <>
+                        <span className="block sm:inline">{part1}</span>
+                        <br className="hidden sm:inline" />
+                        <span className="block sm:inline">{part2}</span>
+                      </>
+                    );
+                  } else if (!displayHighlight && displayTitle.includes(" without ")) {
+                    const withoutIdx = displayTitle.indexOf(" without ") + " without".length;
+                    const part1 = displayTitle.slice(0, withoutIdx);
+                    const part2 = displayTitle.slice(withoutIdx).trim();
                     renderedTitle = (
                       <>
                         <span className="block sm:inline">{part1}</span>
