@@ -15,6 +15,7 @@ export type FooterHeroVariant =
   | "knowledge-hub"
   | "people-operations"
   | "why-fiab"
+  | "foundation"
   | "single-line"
   | "two-line"
   | "default";
@@ -81,6 +82,12 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
     highlightItalic: true,
     textMaxWidth: "max-w-[780px]",
   },
+  foundation: {
+    layout: "two-line",
+    titleMaxWidth: "max-w-[540px]",
+    highlightItalic: false,
+    textMaxWidth: "max-w-[680px]",
+  },
   "single-line": {
     layout: "single-line",
     titleMaxWidth: "max-w-[860px]",
@@ -94,10 +101,10 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
     textMaxWidth: "max-w-full",
   },
   default: {
-    layout: "single-line",
-    titleMaxWidth: "max-w-[860px]",
-    highlightItalic: true,
-    textMaxWidth: "max-w-full",
+    layout: "two-line",
+    titleMaxWidth: "max-w-[540px]",
+    highlightItalic: false,
+    textMaxWidth: "max-w-[680px]",
   },
 };
 
@@ -130,6 +137,7 @@ export function FooterHero({
   text,
   buttonLabel,
   buttonUrl,
+  bgImage,
   variant = "default",
   layout,
   titleMaxWidth,
@@ -152,9 +160,17 @@ export function FooterHero({
       <Container>
         <Reveal preset="slide-up" distance={24}>
           {/* Container exactly 1280px on desktop matching Figma */}
-          <div className="relative overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-brand-blue flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-12 lg:py-10 min-h-[320px] lg:min-h-[342px] w-full">
+          <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-12 py-10 sm:py-12 lg:py-14 min-h-[360px] sm:min-h-[389px] w-full shadow-2xl shadow-black/20">
+            {/* Background Image: public/footer-cta-bg.svg */}
+            <Image
+              src={bgImage || "/footer-cta-bg.svg"}
+              alt=""
+              fill
+              priority
+              className="pointer-events-none object-cover select-none"
+            />
 
-            <div className="relative flex flex-col items-center">
+            <div className="relative z-10 flex flex-col items-center w-full min-w-0 max-w-full">
               {(() => {
                 let displayTitle = title;
                 const displayHighlight = highlight;
@@ -163,15 +179,39 @@ export function FooterHero({
                     displayTitle = displayTitle.slice(0, -displayHighlight.length).trim();
                   }
                 }
+
+                let renderedTitle: React.ReactNode = displayTitle;
+                if (typeof displayTitle === "string") {
+                  if (displayTitle.includes("\n")) {
+                    const lines = displayTitle.split("\n");
+                    renderedTitle = lines.map((line, idx) => (
+                      <span key={idx} className="block">
+                        {line}
+                      </span>
+                    ));
+                  } else if (!displayHighlight && displayTitle.includes(",")) {
+                    const commaIdx = displayTitle.indexOf(",");
+                    const part1 = displayTitle.slice(0, commaIdx + 1);
+                    const part2 = displayTitle.slice(commaIdx + 1).trim();
+                    renderedTitle = (
+                      <>
+                        <span className="block sm:inline">{part1}</span>
+                        <br className="hidden sm:inline" />
+                        <span className="block sm:inline">{part2}</span>
+                      </>
+                    );
+                  }
+                }
+
                 return (
                   <h2
                     className={twMerge(
-                      "text-[26px] sm:text-[36px] lg:text-[50px] leading-[1.15] font-medium tracking-[-0.8px] text-white",
+                      "text-[28px] sm:text-[38px] md:text-[44px] lg:text-[48px] leading-[1.18] font-medium tracking-tight text-white",
                       activeTitleMaxWidth,
                       titleClassName
                     )}
                   >
-                    <span>{displayTitle}</span>
+                    {renderedTitle}
                     {displayHighlight && (
                       <>
                         {isTwoLine ? (
@@ -199,7 +239,7 @@ export function FooterHero({
               {text ? (
                 <p
                   className={twMerge(
-                    "mx-auto mt-4 sm:mt-5 lg:mt-5 text-[14px] sm:text-[16px] font-normal leading-[160%] text-white/70",
+                    "mx-auto mt-4 sm:mt-5 text-[15px] sm:text-[16px] lg:text-[17px] font-normal leading-[160%] text-white/70",
                     activeTextMaxWidth,
                     textClassName
                   )}
@@ -208,11 +248,12 @@ export function FooterHero({
                 </p>
               ) : null}
 
-              <div className="mt-6 sm:mt-7 lg:mt-8 flex justify-center">
+              <div className="mt-7 sm:mt-8 lg:mt-9 flex justify-center">
                 <GreenButton
                   label={buttonLabel}
                   href={buttonUrl}
                   onDark={true}
+                  className="h-[52px] sm:h-[56px] px-7 sm:px-8 text-[15px] sm:text-[16px] font-medium shadow-lg shadow-black/20"
                 />
               </div>
             </div>

@@ -131,7 +131,7 @@ export function Reveal({
   const Component = Tag as any;
 
   return (
-    <Component ref={ref} id={id} className={className} style={motionStyle}>
+    <Component ref={ref} id={id} className={`min-w-0 ${className}`.trim()} style={motionStyle}>
       {children}
     </Component>
   );
@@ -249,7 +249,7 @@ export function StaggerItem({
   const Component = Tag as any;
 
   return (
-    <Component className={className} style={motionStyle}>
+    <Component className={`min-w-0 ${className}`.trim()} style={motionStyle}>
       {children}
     </Component>
   );

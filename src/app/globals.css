@@ -24,6 +24,30 @@
   --color-brand-sand: #EDE9E6;
 }
 
+@layer base {
+  h1, h2, h3, h4, h5, h6,
+  p, li, blockquote, a, label, span, figcaption, td {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .rich-text,
+  [class*="rich-text"],
+  .prose,
+  [data-rich-text] {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  img, svg, video, iframe {
+    max-width: 100%;
+  }
+
+  table {
+    max-width: 100%;
+  }
+}
+
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -48,6 +72,9 @@ button, input, select, textarea {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   line-height: 18px;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  max-width: 100%;
 }
 
 /* Eyebrow for dark section background */
@@ -455,4 +482,43 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
     transform: none;
   }
 }
+
+/* What We Automate & Deliver - Figma Rectangle box 50 & Hover effects */
+.automate-deliver-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  box-shadow: 0px 2px 34px rgba(255, 255, 255, 0);
+  transition: box-shadow 300ms ease, background-color 300ms ease;
+}
+
+.automate-deliver-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0px 2px 34px rgba(255, 255, 255, 0.1);
+}
+
+/* Ellipse 12 from Figma:
+   Width: 89px, Height: 84.47px, Top: -37.02px, Left: -41px, Opacity: 80%, Color: #4EA947, Blur: 180
+   In CSS with web standard blur, w: 220px, h: 200px, blur(70px) recreates the exact Figma Layer Blur 180 spread
+*/
+.automate-card-glow {
+  position: absolute;
+  top: -45px;
+  left: -45px;
+  width: 220px;
+  height: 200px;
+  border-radius: 9999px;
+  background: #4EA947;
+  opacity: 0;
+  filter: blur(70px);
+  pointer-events: none;
+  transition: opacity 300ms ease;
+  z-index: 0;
+}
+
+.automate-deliver-card:hover .automate-card-glow {
+  opacity: 0.8;
+}
+
 

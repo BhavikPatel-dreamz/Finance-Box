@@ -10,7 +10,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
       <Container>
         <div className="grid gap-10 sm:gap-12 lg:gap-10 xl:gap-16 2xl:gap-20 py-12 sm:py-14 lg:py-16 xl:py-20 lg:grid-cols-[240px_1fr] xl:grid-cols-[280px_1fr] 2xl:grid-cols-[310px_1fr] items-start">
           {/* Brand Info Column */}
-          <div className="flex flex-col items-start max-w-sm lg:max-w-none">
+          <div className="flex flex-col items-start max-w-sm lg:max-w-none min-w-0">
             <Link href="/" aria-label="Finance in a Box" className="inline-block">
               <Image
                 src={footer.logo.url}
@@ -47,7 +47,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
           </div>
 
           {/* Navigation Columns */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:justify-between lg:items-start gap-x-6 sm:gap-x-8 lg:gap-x-4 xl:gap-x-8 gap-y-8 sm:gap-y-10 w-full">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:justify-between lg:items-start gap-x-6 sm:gap-x-8 lg:gap-x-4 xl:gap-x-8 gap-y-8 sm:gap-y-10 w-full min-w-0">
             {footer.columns.map((column) => {
               const isSocialColumn =
                 column.title.toLowerCase().includes("follow") ||

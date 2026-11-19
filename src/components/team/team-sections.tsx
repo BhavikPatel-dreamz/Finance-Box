@@ -79,7 +79,7 @@ export function TeamLeaders({ leaders }: { leaders: TeamPageContent["leaders"] }
       <Container>
         <div className="flex flex-col xl:flex-row items-start justify-between gap-8 sm:gap-10 xl:gap-16">
           {/* Left Column: Heading and Subtitle */}
-          <Reveal preset="slide-up" distance={20} className="w-full xl:w-auto xl:max-w-[400px] shrink-0">
+          <Reveal preset="slide-up" distance={20} className="w-full xl:w-auto xl:max-w-[400px] shrink-0 min-w-0">
             <h2 className="text-2xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-medium leading-[1.15] sm:leading-[1.12] tracking-[-0.8px] text-brand-blue whitespace-normal">
               {leaders.title}{" "}
               <span className="font-bold italic text-brand-blue">{leaders.highlight}</span>
@@ -90,7 +90,7 @@ export function TeamLeaders({ leaders }: { leaders: TeamPageContent["leaders"] }
           </Reveal>
 
           {/* Right Column: Two Leader Cards Side by Side */}
-          <div className="w-full flex-1 max-w-[760px]">
+          <div className="w-full flex-1 max-w-[760px] min-w-0">
             <StaggerGroup
               staggerDelay={150}
               className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 lg:gap-6.5"

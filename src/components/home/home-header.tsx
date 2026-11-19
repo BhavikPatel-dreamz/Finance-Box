@@ -191,7 +191,7 @@ export function HomeHeader({
             <nav
               ref={navRef}
               aria-label="Primary"
-              className="hidden items-center gap-6 xl:gap-7.5 text-[15px] xl:text-base text-white/85 lg:flex"
+              className="hidden items-center gap-6 xl:gap-7.5 text-[15px] xl:text-base text-white/85 lg:flex min-w-0"
             >
               {header.links.map((link) => (
                 <DesktopItem
@@ -206,7 +206,7 @@ export function HomeHeader({
             </nav>
 
             {/* Updated Button Size */}
-            <div className="hidden lg:block">
+            <div className="hidden lg:block shrink-0">
               <Button
                 color="green"
                 size="header"

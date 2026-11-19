@@ -1,7 +1,7 @@
 import { defineSection } from "@/lib/page-builder/types";
 import type { ServiceDetailProcessSectionFragment } from "@/lib/wordpress/generated/graphql";
 import { FoundationProcess } from "@/components/foundation/foundation-sections";
-import { multilineText, splitEmphasis, text } from "@/lib/wordpress/fields";
+import { media, multilineText, splitEmphasis, text } from "@/lib/wordpress/fields";
 import { fallbackFoundationContent } from "@/content/foundation";
 
 export const serviceDetailProcessSection = defineSection<ServiceDetailProcessSectionFragment>({
@@ -15,13 +15,24 @@ export const serviceDetailProcessSection = defineSection<ServiceDetailProcessSec
       : text(data.title, fallback.title);
     const titleHighlight = titleParts ? titleParts.emphasis : fallback.highlight;
 
-    const steps = (data.steps && data.steps.length > 0 ? data.steps : fallback.steps).map((step, idx) => {
+    const rawSteps =
+      data.processSteps && data.processSteps.length > 0
+        ? data.processSteps
+        : fallback.steps;
+
+    const steps = rawSteps.map((step, idx) => {
       const fb = fallback.steps[idx % fallback.steps.length];
       const stepTitle = text(step?.title, fb.title);
       const stepDesc = multilineText(step?.description) || fb.description;
+      const stepIcon =
+        (step && "icon" in step && step.icon
+          ? media(step.icon)?.url || (typeof step.icon === "string" ? step.icon : null)
+          : null) || fb.icon;
+
       return {
         title: stepTitle,
         description: stepDesc,
+        icon: stepIcon,
       };
     });
 

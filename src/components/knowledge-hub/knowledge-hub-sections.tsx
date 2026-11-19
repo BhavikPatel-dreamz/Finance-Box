@@ -48,7 +48,7 @@ export function KnowledgeHubResources({ resources }: { resources: KnowledgeHubCo
     <Section theme="cream" className="py-10 sm:py-12 md:py-15">
       <Container>
         <Reveal preset="slide-up" distance={20} className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl min-w-0">
             <h2 className="text-3xl sm:text-4xl md:text-[44px] lg:text-[50px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-3 sm:mb-4">
               {(() => {
                 let title = resources.title;

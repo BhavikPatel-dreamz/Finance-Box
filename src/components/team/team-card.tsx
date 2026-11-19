@@ -47,7 +47,7 @@ export function TeamProfileCard({
         </div>
       </div>
 
-      <div className={`relative z-1 flex flex-col justify-center p-6 sm:p-8 md:p-11 w-full lg:w-1/2 text-white bg-[rgba(255,255,255,0.04)] ${isImageRight ? "lg:order-first" : ""}`}>
+      <div className={`relative z-1 flex flex-col justify-center p-6 sm:p-8 md:p-11 w-full lg:w-1/2 min-w-0 text-white bg-[rgba(255,255,255,0.04)] ${isImageRight ? "lg:order-first" : ""}`}>
         <div>
           <h3 className="text-[24px] sm:text-[28px] font-bold leading-[110%] tracking-[-0.8px]">
             {linkToProfile && member.url ? (

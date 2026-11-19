@@ -326,7 +326,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
 
         <Reveal preset="slide-up" distance={24}>
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-8 sm:mb-12">
-            <div>
+            <div className="min-w-0">
               <Eyebrow variant="green" className="mb-4 sm:mb-6">
                 {growth.eyebrow}
               </Eyebrow>
@@ -334,7 +334,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
                 {growth.title}
               </h2>
             </div>
-            <p className="max-w-[363px] text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/70 lg:pb-2">
+            <p className="max-w-[363px] min-w-0 text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/70 lg:pb-2">
               {growth.text}
             </p>
           </div>
@@ -350,7 +350,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
           <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/85 from-[11.52%] via-brand-blue/30 via-[66.82%] to-brand-blue/50 to-[112.07%]" />
 
           <div className="absolute bottom-0 left-0 w-full p-6 sm:p-8 lg:p-10 flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6">
-            <h3 className="text-2xl sm:text-3xl md:text-[40px] font-medium leading-[1.15] text-white max-w-lg">
+            <h3 className="text-2xl sm:text-3xl md:text-[40px] font-medium leading-[1.15] text-white max-w-lg min-w-0">
               {growth.overlay}
             </h3>
 

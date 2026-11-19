@@ -123,7 +123,10 @@ export function Eyebrow({
     variantStr.includes("light") ||
     variantStr.includes("on-light") ||
     variantStr === "on-white" ||
-    variantStr === "dark-text";
+    variantStr === "dark-text" ||
+    variantStr.includes("black") ||
+    variantStr.includes("dark-dash") ||
+    variantStr.includes("brand-blue");
 
   const isGreen =
     variantStr.includes("green") ||
@@ -163,7 +166,8 @@ export function Eyebrow({
     className.includes("text-black") ||
     className.includes("text-[") ||
     className.includes("text-green") ||
-    className.includes("text-gray");
+    className.includes("text-gray") ||
+    className.includes("text-brand-");
   const hasCustomOpacity =
     opacity !== undefined ||
     className.includes("opacity-") ||
@@ -173,7 +177,7 @@ export function Eyebrow({
 
   return (
     <Component
-      className={`${dmMono.className} inline-flex items-center font-mono ${hasCustomFontSize ? "" : "text-[12px] sm:text-[14px]"
+      className={`${dmMono.className} inline-flex items-center font-mono max-w-full ${hasCustomFontSize ? "" : "text-[12px] sm:text-[14px]"
         } font-medium uppercase tracking-[1.5px] leading-[18px] ${className}`.trim()}
       style={{
         fontFamily: "var(--font-dm-mono), 'DM Mono', monospace",
@@ -193,7 +197,7 @@ export function Eyebrow({
           style={{
             width: resolvedDashWidth,
             height: "0px",
-            borderTop: `1.5px solid ${dashColor ?? finalColor}`,
+            borderTop: `1.5px solid ${dashColor ?? (hasCustomTextColor ? "currentColor" : finalColor)}`,
             opacity: dashOpacity !== undefined ? dashOpacity : undefined,
             marginRight: resolvedDashSpace,
           }}
@@ -201,7 +205,7 @@ export function Eyebrow({
         />
       )}
       {prefix}
-      {content}
+      <span className="min-w-0">{content}</span>
     </Component>
   );
 }

@@ -3322,7 +3322,6 @@ type Menu implements Node & DatabaseIdentifier {
 
 enum MenuLocationEnum {
   FOOTER
-  MENU_1
   PRIMARY
 }
 
@@ -4176,7 +4175,7 @@ type RootQueryToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo
 
 input RootQueryToUserConnectionWhereArgs {
   exclude: [Int]
-  hasPublishedPosts: [ContentTypeEnum]
+  hasPublishedContent: [PublishableContentTypeEnum]
   include: [Int]
   login: String
   loginIn: [String]
@@ -4190,6 +4189,13 @@ input RootQueryToUserConnectionWhereArgs {
   roleNotIn: [UserRoleEnum]
   search: String
   searchColumns: [UsersConnectionSearchColumnEnum]
+}
+
+enum PublishableContentTypeEnum {
+  CASE_STUDY
+  PAGE
+  POST
+  TEAM
 }
 
 input UsersConnectionOrderbyInput {
@@ -6391,10 +6397,24 @@ type PageBuilderPageBuilderTags implements PageBuilderPageBuilderTags_Fields & A
   title: String
 }
 
+interface PageBuilderPageBuilderProcessSteps_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  title: String
+}
+
+type PageBuilderPageBuilderProcessSteps implements PageBuilderPageBuilderProcessSteps_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  title: String
+}
+
 interface PageBuilderPageBuilderServiceDetailProcessSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
   description: String
   fieldGroupName: String
-  steps: [PageBuilderPageBuilderSteps]
+  processSteps: [PageBuilderPageBuilderProcessSteps]
   tags: [PageBuilderPageBuilderTags]
   title: String
 }
@@ -6402,9 +6422,127 @@ interface PageBuilderPageBuilderServiceDetailProcessSectionLayout_Fields impleme
 type PageBuilderPageBuilderServiceDetailProcessSectionLayout implements PageBuilderPageBuilderServiceDetailProcessSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
   description: String
   fieldGroupName: String
-  steps: [PageBuilderPageBuilderSteps]
+  processSteps: [PageBuilderPageBuilderProcessSteps]
   tags: [PageBuilderPageBuilderTags]
   title: String
+}
+
+interface PageBuilderPageBuilderPartnerWithUsStatsSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  stats: [PageBuilderPageBuilderStats]
+}
+
+type PageBuilderPageBuilderPartnerWithUsStatsSectionLayout implements PageBuilderPageBuilderPartnerWithUsStatsSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  stats: [PageBuilderPageBuilderStats]
+}
+
+interface PageBuilderPageBuilderPartnerTypes_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  title: String
+}
+
+type PageBuilderPageBuilderPartnerTypes implements PageBuilderPageBuilderPartnerTypes_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  title: String
+}
+
+interface PageBuilderPageBuilderPartnerWithUsWhoWePartnerWithSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  partnerTypes: [PageBuilderPageBuilderPartnerTypes]
+  title: String
+}
+
+type PageBuilderPageBuilderPartnerWithUsWhoWePartnerWithSectionLayout implements PageBuilderPageBuilderPartnerWithUsWhoWePartnerWithSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  partnerTypes: [PageBuilderPageBuilderPartnerTypes]
+  title: String
+}
+
+interface PageBuilderPageBuilderPartnerWithUsOfficialPartnersSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  officialPartners: [PageBuilderPageBuilderOfficialPartners]
+  title: String
+}
+
+type PageBuilderPageBuilderPartnerWithUsOfficialPartnersSectionLayout implements PageBuilderPageBuilderPartnerWithUsOfficialPartnersSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  officialPartners: [PageBuilderPageBuilderOfficialPartners]
+  title: String
+}
+
+interface PageBuilderPageBuilderReasons_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  image: AcfMediaItemConnectionEdge
+  title: String
+}
+
+type PageBuilderPageBuilderReasons implements PageBuilderPageBuilderReasons_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  image: AcfMediaItemConnectionEdge
+  title: String
+}
+
+interface PageBuilderPageBuilderPartnerWithUsWhyPartnerSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  ctaButton: AcfLink
+  fieldGroupName: String
+  reasons: [PageBuilderPageBuilderReasons]
+  title: String
+}
+
+type PageBuilderPageBuilderPartnerWithUsWhyPartnerSectionLayout implements PageBuilderPageBuilderPartnerWithUsWhyPartnerSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  ctaButton: AcfLink
+  fieldGroupName: String
+  reasons: [PageBuilderPageBuilderReasons]
+  title: String
+}
+
+interface PageBuilderPageBuilderPlatformFits_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  title: String
+}
+
+type PageBuilderPageBuilderPlatformFits implements PageBuilderPageBuilderPlatformFits_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  description: String
+  fieldGroupName: String
+  icon: AcfMediaItemConnectionEdge
+  title: String
+}
+
+interface PageBuilderPageBuilderPartnerWithUsPlatformFitSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  platformFits: [PageBuilderPageBuilderPlatformFits]
+  title: String
+}
+
+type PageBuilderPageBuilderPartnerWithUsPlatformFitSectionLayout implements PageBuilderPageBuilderPartnerWithUsPlatformFitSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  platformFits: [PageBuilderPageBuilderPlatformFits]
+  title: String
+}
+
+interface PageBuilderPageBuilderAllCaseStudiesSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+}
+
+type PageBuilderPageBuilderAllCaseStudiesSectionLayout implements PageBuilderPageBuilderAllCaseStudiesSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+}
+
+interface PageBuilderPageBuilderAllBlogsSectionLayout_Fields implements PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+}
+
+type PageBuilderPageBuilderAllBlogsSectionLayout implements PageBuilderPageBuilderAllBlogsSectionLayout_Fields & PageBuilderPageBuilder_Layout & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
 }
 
 interface WithAcfPageBuilder {

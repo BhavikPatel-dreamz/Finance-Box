@@ -5,9 +5,14 @@ fragment ServiceDetailProcessSection on PageBuilderPageBuilderServiceDetailProce
   tags {
     title
   }
-  steps {
-    number
+  processSteps {
     title
     description
+    icon {
+      node {
+        sourceUrl
+        altText
+      }
+    }
   }
 }

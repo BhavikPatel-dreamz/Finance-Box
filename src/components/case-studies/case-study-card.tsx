@@ -30,7 +30,7 @@ export function CaseStudyCard({ index, study, reverse }: { index: number; study:
 
       {/* Padding only on the side facing the image, so the outer spacing matches the image side */}
       <div
-        className={`relative z-1 flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:py-0 lg:w-1/2 text-white ${reverse ? "lg:pl-0 lg:pr-8 xl:pr-12" : "lg:pr-0 lg:pl-8 xl:pl-12"
+        className={`relative z-1 flex flex-col justify-center p-6 sm:p-8 md:p-12 lg:py-0 lg:w-1/2 min-w-0 text-white ${reverse ? "lg:pl-0 lg:pr-8 xl:pr-12" : "lg:pr-0 lg:pl-8 xl:pl-12"
           }`}
       >
         <Eyebrow variant="green-no-dash" className="mb-3 sm:mb-4">

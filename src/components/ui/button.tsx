@@ -204,7 +204,7 @@ export function Button({
   }
 
   const baseClasses = twMerge(
-    "group relative isolate inline-flex max-w-full items-center justify-center gap-3.5 overflow-hidden rounded-full font-semibold cursor-pointer select-none",
+    "group relative isolate inline-flex max-w-full shrink-0 items-center justify-center gap-3.5 overflow-hidden rounded-full font-semibold cursor-pointer select-none",
     "transition-[color,transform] duration-500 ease-in-out active:scale-[0.98]",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green/60 focus-visible:ring-offset-2",
     "disabled:opacity-50 disabled:pointer-events-none",

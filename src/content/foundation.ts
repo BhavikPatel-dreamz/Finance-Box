@@ -46,6 +46,7 @@ export interface FoundationPageContent {
     steps: Array<{
       title: string;
       description: string;
+      icon?: string;
     }>;
   };
 }
@@ -154,22 +155,27 @@ export const fallbackFoundationContent: FoundationPageContent = {
       {
         title: "Discover",
         description: "Baseline risks, policies, and current stack",
+        icon: "/foundation/discover-icon.svg",
       },
       {
         title: "Design",
         description: "SOPs, SLAs, charts, and approvals",
+        icon: "/foundation/design-icon.svg",
       },
       {
         title: "Implement",
         description: "Stand up teams, close cadences, and compliance calendars",
+        icon: "/foundation/implement-icon.svg",
       },
       {
         title: "Stabilize",
         description: "Measure against KPIs, tune controls",
+        icon: "/foundation/stabilize-icon.svg",
       },
       {
         title: "Hand off",
         description: "Playbooks, access, and training for continuity",
+        icon: "/foundation/hand-off-icon.svg",
       },
     ],
   },
