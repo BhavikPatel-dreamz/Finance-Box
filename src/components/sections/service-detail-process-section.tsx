@@ -11,10 +11,21 @@ export const serviceDetailProcessSection = defineSection<ServiceDetailProcessSec
     const titleParts = splitEmphasis(data.title);
     const isMomentum = context?.uri?.includes("momentum");
 
-    const titleLead = titleParts
-      ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
-      : text(data.title, fallback.title);
-    const titleHighlight = titleParts ? titleParts.emphasis : fallback.highlight;
+    let titleLead = fallback.title;
+    let titleHighlight = fallback.highlight;
+
+    if (data.title) {
+      if (titleParts) {
+        titleLead = [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim();
+        titleHighlight = titleParts.emphasis;
+      } else {
+        titleLead = text(data.title);
+        titleHighlight = "";
+      }
+    }
+
+    const tags = data.tags?.map((t) => text(t?.title)).filter(Boolean) || [];
+    const description = text(data.description);
 
     const rawSteps =
       data.processSteps && data.processSteps.length > 0
@@ -42,6 +53,8 @@ export const serviceDetailProcessSection = defineSection<ServiceDetailProcessSec
         title={titleLead}
         highlight={titleHighlight}
         highlightClassName={isMomentum ? "text-white" : "text-brand-green"}
+        description={description}
+        tags={tags}
         steps={steps}
       />
     );

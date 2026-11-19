@@ -22,6 +22,8 @@ export interface FoundationHeroProps {
     label: string;
     url: string;
   };
+  titleMaxWidth?: string;
+  descriptionMaxWidth?: string;
 }
 
 export function FoundationHero({
@@ -31,6 +33,8 @@ export function FoundationHero({
   description,
   backgroundImage,
   ctaButton,
+  titleMaxWidth = "max-w-[700px]",
+  descriptionMaxWidth = "max-w-[660px]",
 }: FoundationHeroProps) {
   return (
     <section className="relative min-h-auto sm:min-h-115 lg:min-h-131.25 overflow-hidden bg-brand-blue text-white flex flex-col justify-center">
@@ -59,9 +63,9 @@ export function FoundationHero({
           </Reveal>
 
           {/* Title */}
-          <Reveal immediate preset="slide-up" delay={180} distance={24} className="max-w-4xl">
+          <Reveal immediate preset="slide-up" delay={180} distance={24} className={`${titleMaxWidth} mx-auto`}>
             <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-[-0.8px] text-white mb-7.5">
-              {title}{" "} <br></br>
+              {title}{" "} <br className="hidden sm:inline" />
               <span className="block sm:inline text-brand-green">
                 {highlight}
               </span>
@@ -69,7 +73,7 @@ export function FoundationHero({
           </Reveal>
 
           {/* Description */}
-          <Reveal immediate preset="slide-up" delay={300} distance={20} className="max-w-2xl sm:max-w-[660px] mx-auto">
+          <Reveal immediate preset="slide-up" delay={300} distance={20} className={`${descriptionMaxWidth} mx-auto`}>
             <p className="text-[14px] md:text-[16px] text-white/80 font-light tracking-0 leading-[1.68] mb-6 sm:mb-8.5">
               {description}
             </p>
@@ -127,11 +131,11 @@ export function FoundationIntro({
         {/* Top Row: Heading and Description/CTA */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 sm:gap-12 lg:gap-16 items-start mb-8 lg:mb-12.5">
           {/* Left Column: Eyebrow + Title */}
-          <Reveal preset="slide-up" delay={60} distance={20} className="max-w-[540px]">
+          <Reveal preset="slide-up" delay={60} distance={20} className="max-w-[580px]">
             <Eyebrow variant="black-dash" className="mb-4 sm:mb-6 text-brand-blue/70 font-mono tracking-[1.5px] text-[12px] sm:text-[14px] uppercase">
               {subTitle}
             </Eyebrow>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-medium leading-[1.18] tracking-tight text-brand-blue max-w-[540px]">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-medium leading-[1.18] tracking-tight text-brand-blue max-w-[580px]">
               {title}{" "}
               <br className="hidden sm:inline" />
               <span className="text-brand-green italic font-bold">
@@ -330,8 +334,10 @@ export type { ProcessStepItem } from "@/components/ui/process-grid";
 
 export interface FoundationProcessProps {
   title: string;
-  highlight: string;
+  highlight?: string;
   highlightClassName?: string;
+  description?: string;
+  tags?: string[];
   steps: ProcessStepItem[];
 }
 
@@ -339,6 +345,8 @@ export function FoundationProcess({
   title,
   highlight,
   highlightClassName,
+  description,
+  tags,
   steps,
 }: FoundationProcessProps) {
   return (
@@ -348,12 +356,36 @@ export function FoundationProcess({
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <Reveal preset="slide-up" delay={60} distance={20}>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white leading-[1.18]">
-              {title}{" "}
-              <span className={`italic font-bold block sm:inline ${highlightClassName || "text-brand-green"}`}>
-                {highlight}
-              </span>
+              {title}
+              {highlight ? (
+                <>
+                  {" "}
+                  <span className={`italic font-bold block sm:inline ${highlightClassName || "text-brand-green"}`}>
+                    {highlight}
+                  </span>
+                </>
+              ) : null}
             </h2>
           </Reveal>
+          {description ? (
+            <Reveal preset="slide-up" delay={120} distance={20}>
+              <p className="mt-3.5 sm:mt-4 text-[14px] sm:text-[15px] md:text-[16px] text-white/70 font-light">
+                {description}
+              </p>
+            </Reveal>
+          ) : null}
+          {tags && tags.length > 0 ? (
+            <Reveal preset="slide-up" delay={180} distance={20}>
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[13px] sm:text-[14px] text-white/90">
+                {tags.map((tag, i) => (
+                  <span key={i} className="inline-flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-brand-green shrink-0" aria-hidden="true" />
+                    <span>{tag}</span>
+                  </span>
+                ))}
+              </div>
+            </Reveal>
+          ) : null}
         </div>
 
         {/* Common Process Grid with variant="icon" */}

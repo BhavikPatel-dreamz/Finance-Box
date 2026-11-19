@@ -1,0 +1,14 @@
+fragment PartnerWithUsPlatformFitSection on PageBuilderPageBuilderPartnerWithUsPlatformFitSectionLayout {
+  __typename
+  title
+  platformFits {
+    title
+    description
+    icon {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
+}

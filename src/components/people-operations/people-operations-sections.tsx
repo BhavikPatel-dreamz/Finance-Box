@@ -65,7 +65,7 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
           </h2>
         </Reveal>
 
-        <div className="relative flex flex-col gap-8 sm:gap-10 lg:gap-12">
+        <div className="relative flex flex-col gap-8 lg:gap-10">
           {whatWeDo.items.map((card, idx) => (
             <div
               key={idx}

@@ -1,0 +1,7 @@
+fragment PartnerWithUsStatsSection on PageBuilderPageBuilderPartnerWithUsStatsSectionLayout {
+  __typename
+  stats {
+    label
+    number
+  }
+}

@@ -17,6 +17,8 @@ export type FooterHeroVariant =
   | "why-fiab"
   | "foundation"
   | "momentum"
+  | "foresight"
+  | "partner-with-us"
   | "single-line"
   | "two-line"
   | "default";
@@ -95,6 +97,18 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
     highlightItalic: false,
     textMaxWidth: "max-w-[720px]",
   },
+  foresight: {
+    layout: "single-line",
+    titleMaxWidth: "max-w-[800px]",
+    highlightItalic: false,
+    textMaxWidth: "max-w-[680px]",
+  },
+  "partner-with-us": {
+    layout: "single-line",
+    titleMaxWidth: "max-w-[880px]",
+    highlightItalic: false,
+    textMaxWidth: "max-w-[680px]",
+  },
   "single-line": {
     layout: "single-line",
     titleMaxWidth: "max-w-[860px]",
@@ -167,7 +181,7 @@ export function FooterHero({
       <Container>
         <Reveal preset="slide-up" distance={24}>
           {/* Container exactly 1280px on desktop matching Figma */}
-          <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-12 py-10 sm:py-12 lg:py-14 min-h-[360px] sm:min-h-[389px] w-full shadow-2xl shadow-black/20">
+          <div className="relative overflow-hidden rounded-[16px] bg-[#121826] flex flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-12 py-10 sm:py-12 lg:py-14 sm:min-h-[334px] w-full shadow-2xl shadow-black/20">
             {/* Background Image: public/footer-cta-bg.svg */}
             <Image
               src={bgImage || "/footer-cta-bg.svg"}

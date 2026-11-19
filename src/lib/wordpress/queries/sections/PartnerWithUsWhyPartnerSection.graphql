@@ -1,0 +1,18 @@
+fragment PartnerWithUsWhyPartnerSection on PageBuilderPageBuilderPartnerWithUsWhyPartnerSectionLayout {
+  __typename
+  title
+  ctaButton {
+    title
+    url
+  }
+  reasons {
+    title
+    description
+    image {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
+}

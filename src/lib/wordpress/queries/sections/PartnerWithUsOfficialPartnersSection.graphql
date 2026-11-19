@@ -1,0 +1,12 @@
+fragment PartnerWithUsOfficialPartnersSection on PageBuilderPageBuilderPartnerWithUsOfficialPartnersSectionLayout {
+  __typename
+  title
+  officialPartners {
+    logo {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
+}

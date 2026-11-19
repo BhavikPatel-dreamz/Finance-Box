@@ -4,13 +4,59 @@ import { FoundationHero } from "@/components/foundation/foundation-sections";
 import { link, media, multilineText, splitEmphasis, text } from "@/lib/wordpress/fields";
 import { fallbackFoundationContent } from "@/content/foundation";
 
+/**
+ * Per-page hero layout configuration matching Figma designs.
+ * Easily adjust title and paragraph max-widths per page here without affecting other pages:
+ * - foresight: Title ~520px (2 lines), Paragraph ~565px (2 lines breaking at "scenario plans,")
+ * - partner-with-us: Title ~960px (2 lines), Paragraph ~880px (3 lines breaking at "Power BI," and "implement,")
+ * - momentum / foundation: Defaults to max-w-[700px] / max-w-[660px]
+ */
+export const SERVICE_HERO_CONFIG: Record<string, { titleMaxWidth: string; descriptionMaxWidth: string }> = {
+  foresight: {
+    titleMaxWidth: "max-w-[620px]",
+    descriptionMaxWidth: "max-w-[565px]",
+  },
+  "partner-with-us": {
+    titleMaxWidth: "max-w-[960px]",
+    descriptionMaxWidth: "max-w-[880px]",
+  },
+  momentum: {
+    titleMaxWidth: "max-w-[780px]",
+    descriptionMaxWidth: "max-w-[660px]",
+  },
+  foundation: {
+    titleMaxWidth: "max-w-[700px]",
+    descriptionMaxWidth: "max-w-[660px]",
+  },
+};
+
+function resolveHeroConfig(uri?: string | null) {
+  if (!uri) return SERVICE_HERO_CONFIG.foundation;
+  const clean = uri.toLowerCase();
+  if (clean.includes("foresight")) return SERVICE_HERO_CONFIG.foresight;
+  if (clean.includes("partner")) return SERVICE_HERO_CONFIG["partner-with-us"];
+  if (clean.includes("momentum")) return SERVICE_HERO_CONFIG.momentum;
+  return SERVICE_HERO_CONFIG.foundation;
+}
+
 export const serviceDetailBannerSection = defineSection<ServiceDetailBannerSectionFragment>({
   layout: "ServiceDetailBannerSection",
   hero: true,
-  render: (data) => {
+  render: (data, context) => {
     const fallback = fallbackFoundationContent.banner;
     const titleParts = splitEmphasis(data.title);
-    const bgImage = media(data.backgroundImage)?.url || fallback.backgroundImage;
+    const heroConfig = resolveHeroConfig(context?.uri);
+
+    let defaultBg = fallback.backgroundImage;
+    if (context?.uri?.includes("foresight")) {
+      defaultBg = "/foundation/foundation-foresight-hero-bg.jpg";
+    } else if (context?.uri?.includes("momentum")) {
+      defaultBg = "/foundation/foundation-momentum-hero-bg.jpg";
+    } else if (context?.uri?.includes("partner")) {
+      defaultBg = "/foundation/partner-with-us-hero-bg.jpg";
+    }
+
+    const bgImage = media(data.backgroundImage)?.url || defaultBg;
     const cta = link(data.ctaButton, fallback.ctaButton);
     const rawDesc = multilineText(data.description) || fallback.description;
     const subTitle = text(data.subTitle, fallback.subTitle);
@@ -28,6 +74,8 @@ export const serviceDetailBannerSection = defineSection<ServiceDetailBannerSecti
         description={rawDesc}
         backgroundImage={bgImage}
         ctaButton={cta}
+        titleMaxWidth={heroConfig.titleMaxWidth}
+        descriptionMaxWidth={heroConfig.descriptionMaxWidth}
       />
     );
   },

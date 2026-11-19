@@ -67,7 +67,7 @@ export function LegalPageLayout({ content, chrome }: { content: LegalDocContent;
                   )}
 
                   {section.note && (
-                    <p className="text-[#4B5563] text-sm pt-1">
+                    <p className="text-brand-blue/70 text-sm pt-1">
                       {section.note}
                     </p>
                   )}

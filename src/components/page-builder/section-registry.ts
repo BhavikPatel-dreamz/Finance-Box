@@ -30,6 +30,11 @@ import { ourBlogSection } from "@/components/sections/our-blog-section";
 import { peopleOperationsIntroSection } from "@/components/sections/people-operations-intro-section";
 import { peopleOperationsWhatWeDoSection } from "@/components/sections/people-operations-what-we-do-section";
 import { peopleOperationsWhereWeHelpSection } from "@/components/sections/people-operations-where-we-help-section";
+import { partnerWithUsStatsSection } from "@/components/sections/partner-with-us-stats-section";
+import { partnerWithUsWhoWePartnerWithSection } from "@/components/sections/partner-with-us-who-we-partner-with-section";
+import { partnerWithUsOfficialPartnersSection } from "@/components/sections/partner-with-us-official-partners-section";
+import { partnerWithUsWhyPartnerSection } from "@/components/sections/partner-with-us-why-partner-section";
+import { partnerWithUsPlatformFitSection } from "@/components/sections/partner-with-us-platform-fit-section";
 import { servicesBannerSection } from "@/components/sections/services-banner-section";
 import { servicesFindYourStageSection } from "@/components/sections/services-find-your-stage-section";
 import { servicesFractionalCfoSection } from "@/components/sections/services-fractional-cfo-section";
@@ -94,6 +99,11 @@ const definitions = [
   peopleOperationsIntroSection,
   peopleOperationsWhatWeDoSection,
   peopleOperationsWhereWeHelpSection,
+  partnerWithUsStatsSection,
+  partnerWithUsWhoWePartnerWithSection,
+  partnerWithUsOfficialPartnersSection,
+  partnerWithUsWhyPartnerSection,
+  partnerWithUsPlatformFitSection,
   servicesBannerSection,
   servicesFindYourStageSection,
   servicesFractionalCfoSection,

@@ -1,0 +1,14 @@
+fragment PartnerWithUsWhoWePartnerWithSection on PageBuilderPageBuilderPartnerWithUsWhoWePartnerWithSectionLayout {
+  __typename
+  title
+  partnerTypes {
+    title
+    description
+    icon {
+      node {
+        sourceUrl
+        altText
+      }
+    }
+  }
+}
