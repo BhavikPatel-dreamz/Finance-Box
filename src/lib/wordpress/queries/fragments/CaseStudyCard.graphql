@@ -4,11 +4,14 @@ fragment CaseStudyCard on CaseStudy {
   title
   slug
   uri
+  date
   excerpt
   featuredImage { node { sourceUrl altText } }
   caseStudiesOptions {
     tagLine
     featuredContent
+    caseStudyInformation
+    conclusion
     frontFeatureImage { node { sourceUrl altText } }
   }
 }

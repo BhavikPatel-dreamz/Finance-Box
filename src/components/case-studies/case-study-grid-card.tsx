@@ -35,12 +35,12 @@ export function CaseStudyGridCard({ study }: { study: CaseStudyGridItem }) {
           title={study.title}
           className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green/60 rounded-[2px]"
         >
-          <h2 className="text-[17px] sm:text-[18px] lg:text-[19px] font-semibold text-brand-blue tracking-tight leading-[1.3] mb-2 sm:mb-2.5 truncate transition-colors duration-300 group-hover:text-brand-green">
+          <h2 className="text-[16px] sm:text-[18px] lg:text-[18px] font-semibold text-brand-blue tracking-tight leading-[1.3] mb-2 sm:mb-2.5 truncate transition-colors duration-300 group-hover:text-brand-green">
             {study.title}
           </h2>
         </Link>
 
-        <p className="text-[14px] sm:text-[15px] lg:text-[15.5px] text-brand-blue/70 font-light leading-[1.6] mb-6 sm:mb-7 line-clamp-2 min-h-[44px] sm:min-h-[50px]">
+        <p className="text-[14px] text-brand-blue/70 font-normal leading-[1.6] mb-6 sm:mb-7 line-clamp-2 min-h-[44px] sm:min-h-[50px]">
           {study.excerpt}
         </p>
 

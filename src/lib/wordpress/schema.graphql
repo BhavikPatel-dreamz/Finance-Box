@@ -2982,6 +2982,8 @@ type UserToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo & WP
 }
 
 type CaseStudiesOptions implements CaseStudiesOptions_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  caseStudyInformation: String
+  conclusion: String
   featuredContent: String
   fieldGroupName: String
   frontFeatureImage: AcfMediaItemConnectionEdge
@@ -4999,6 +5001,8 @@ interface AcfFieldGroupFields {
 }
 
 interface CaseStudiesOptions_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  caseStudyInformation: String
+  conclusion: String
   featuredContent: String
   fieldGroupName: String
   frontFeatureImage: AcfMediaItemConnectionEdge

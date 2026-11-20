@@ -129,7 +129,7 @@ export default async function CaseStudiesPage() {
   return (
     <PageFrame chrome={chrome}>
       {/* 1. Hero Section matching Figma */}
-      <section className="relative overflow-hidden bg-brand-blue text-white flex flex-col justify-center pt-32 sm:pt-36 lg:pt-40 pb-16 sm:pb-20 lg:pb-24">
+      <section className="relative overflow-hidden bg-brand-blue text-white flex flex-col justify-center pt-32 sm:pt-36 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 min-h-[450px] lg:min-h-[525px]">
         {/* Background Mesh Image with diamond pattern and green glows */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <Image
@@ -179,7 +179,7 @@ export default async function CaseStudiesPage() {
               No case studies have been published yet.
             </p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 sm:gap-y-16 lg:gap-y-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-5 sm:gap-y-8 lg:gap-y-10">
               {studies.map((study, index) => (
                 <Reveal key={study.id} preset="slide-up" distance={24} delay={(index % 3) * 80}>
                   <CaseStudyGridCard study={study} />
