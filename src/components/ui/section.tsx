@@ -41,6 +41,7 @@ export function Section({
   return (
     <section
       id={id}
+      data-theme={theme}
       className={twMerge(themeStyles[theme], spacingStyles[spacing], className)}
     >
       {children}
