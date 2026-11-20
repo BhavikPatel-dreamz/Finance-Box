@@ -8,6 +8,16 @@ export const simpleCtaSection = defineSection<SimpleCtaSectionFragment>({
   layout: "SimpleCtaSection",
   render: (data) => {
     const titleParts = splitEmphasis(data.title);
+    const cta = link(data.ctaButton, {
+      label: "Download Templates",
+      url: "/downloadable-resources",
+    });
+
+    // If WordPress ctaButton url is unset, placeholder "#", or obsolete "/resources", fallback to "/downloadable-resources"
+    if (!cta.url || cta.url === "#" || cta.url === "/resources") {
+      cta.url = "/downloadable-resources";
+    }
+
     return (
       <KnowledgeHubResources
         resources={{
@@ -16,7 +26,7 @@ export const simpleCtaSection = defineSection<SimpleCtaSectionFragment>({
             : text(data.title),
           highlight: titleParts ? titleParts.emphasis : "",
           text: text(data.description),
-          cta: link(data.ctaButton, { label: "", url: "" }),
+          cta,
         }}
       />
     );

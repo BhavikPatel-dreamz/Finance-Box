@@ -133,7 +133,7 @@ export const knowledgeHubContent: KnowledgeHubContent = {
     title: "Resources to ",
     highlight: "Help You Grow",
     text: "Access useful guides, tools, and insights to help you navigate finance, operations, and growth with confidence.",
-    cta: { label: "Download Templates", url: "/resources" },
+    cta: { label: "Download Templates", url: "/downloadable-resources" },
   },
   caseStudy: {
     title: "Case Study",
