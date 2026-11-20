@@ -34,12 +34,12 @@ export function FoundationHero({
   description,
   backgroundImage,
   ctaButton,
-  titleMaxWidth = "max-w-[700px]",
-  descriptionMaxWidth = "max-w-[660px]",
+  titleMaxWidth = "max-w-[960px]",
+  descriptionMaxWidth = "max-w-[800px]",
   breakLine = true,
 }: FoundationHeroProps) {
   return (
-    <section className="relative min-h-[450px] lg:min-h-[525px] overflow-hidden bg-brand-blue text-white flex flex-col justify-center">
+    <section className="hero-section relative min-h-[auto] sm:min-h-[460px] lg:min-h-[525px] overflow-hidden bg-brand-blue text-white flex flex-col justify-center">
       {/* Background Mesh Image */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <Image
@@ -50,23 +50,25 @@ export function FoundationHero({
           sizes="100vw"
           className="object-cover object-center pointer-events-none select-none opacity-90"
         />
-        {/* Subtle Radial Green Ambient Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 sm:w-200 h-90 bg-brand-green/12 blur-[130px] rounded-full pointer-events-none" />
+        {/* Radial Green Ambient Glows matching Figma */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] sm:w-[850px] h-[360px] bg-brand-green/18 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-16 left-[5%] w-[360px] h-[260px] bg-brand-green/12 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute -top-16 right-[5%] w-[360px] h-[260px] bg-brand-green/12 blur-[100px] rounded-full pointer-events-none" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex-1 flex flex-col justify-center pt-25 lg:pt-30 pb-10 sm:pb-12 lg:pb-15">
+      <div className="relative z-10 flex-1 flex flex-col justify-center pt-[88px] sm:pt-[104px] lg:pt-[116px] pb-10 sm:pb-12 lg:pb-14">
         <Container className="flex flex-col items-center text-center">
           {/* Eyebrow */}
           <Reveal immediate preset="slide-up" delay={60} distance={20}>
-            <Eyebrow variant="no-dash" className="mb-4 sm:mb-6 text-white/70 font-mono tracking-[1.5px] text-[12px] sm:text-[14px] uppercase">
+            <Eyebrow variant="no-dash" className="mb-3 sm:mb-4 lg:mb-5 text-white/70 font-mono tracking-[1.5px] text-[12px] sm:text-[14px] uppercase">
               {subTitle}
             </Eyebrow>
           </Reveal>
 
           {/* Title */}
           <Reveal immediate preset="slide-up" delay={180} distance={24} className={`${titleMaxWidth} mx-auto`}>
-            <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-[-0.8px] text-white mb-7.5">
+            <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-[-0.8px] text-white mb-4 sm:mb-5">
               {title}{" "} {breakLine ? <br className="hidden sm:inline" /> : null}
               <span className="block sm:inline text-brand-green">
                 {highlight}
@@ -76,7 +78,7 @@ export function FoundationHero({
 
           {/* Description */}
           <Reveal immediate preset="slide-up" delay={300} distance={20} className={`${descriptionMaxWidth} mx-auto`}>
-            <p className="text-[14px] md:text-[16px] text-white/80 font-light tracking-0 leading-[1.68] mb-6 sm:mb-8.5">
+            <p className="text-[14px] md:text-[16px] text-white/80 font-light tracking-0 leading-[1.68] mb-6 sm:mb-7">
               {description}
             </p>
           </Reveal>

@@ -25,8 +25,8 @@ export const SERVICE_HERO_CONFIG: Record<string, { titleMaxWidth: string; descri
     descriptionMaxWidth: "max-w-[660px]",
   },
   foundation: {
-    titleMaxWidth: "max-w-[700px]",
-    descriptionMaxWidth: "max-w-[660px]",
+    titleMaxWidth: "max-w-[960px]",
+    descriptionMaxWidth: "max-w-[800px]",
   },
   blogs: {
     titleMaxWidth: "max-w-[1240px]",

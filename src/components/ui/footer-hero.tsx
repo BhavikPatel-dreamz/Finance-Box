@@ -2,7 +2,7 @@ import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { GreenButton } from "./green-button";
 import Container from "./container";
-import Section, { type SectionSpacing } from "./section";
+import Section, { type SectionSpacing, type SectionTheme } from "./section";
 import { Reveal } from "@/components/motion/reveal";
 
 export type FooterHeroVariant =
@@ -153,6 +153,8 @@ export type FooterHeroProps = {
   textMaxWidth?: string;
   /** Section vertical spacing: defaults to "both" (80px top & bottom), automatically collapses top padding when following a light section */
   spacing?: SectionSpacing;
+  /** Backdrop section theme (defaults to "cream" for service detail/careers pages, "light" otherwise) */
+  theme?: SectionTheme;
 };
 
 export function FooterHero({
@@ -173,6 +175,7 @@ export function FooterHero({
   textClassName,
   className,
   spacing = "both",
+  theme,
 }: FooterHeroProps) {
   const config = VARIANT_CONFIGS[variant] || VARIANT_CONFIGS.default;
   const activeLayout = layout ?? config.layout;
@@ -180,9 +183,10 @@ export function FooterHero({
   const activeTextMaxWidth = textMaxWidth ?? config.textMaxWidth;
   const isItalic = highlightItalic ?? config.highlightItalic;
   const isTwoLine = activeLayout === "two-line";
+  const activeTheme = theme ?? "light";
 
   return (
-    <Section id={id} theme="light" spacing={spacing} className={twMerge("footer-cta-section", className)}>
+    <Section id={id} theme={activeTheme} spacing={spacing} className={twMerge("footer-cta-section bg-white", className)}>
       <Container>
         <Reveal preset="slide-up" distance={24}>
           {/* Container exactly 1280px on desktop matching Figma */}

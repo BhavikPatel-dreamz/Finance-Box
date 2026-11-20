@@ -718,25 +718,19 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
    Section Spacing Consistency & Anti-Doubling
    - Desktop section spacing is strictly 80px (lg:py-20 / 5rem).
    - Responsive section spacing: 56px mobile (py-14), 64px tablet (sm:py-16), 80px desktop (lg:py-20).
-   - When FooterHero follows a light/white section, collapse top padding so
+   - When FooterHero follows a white section, collapse top padding so
      the 80px bottom padding of the preceding section serves as the 80px gap (no doubling).
-   - When FooterHero follows a dark section, keep standard 80px top padding
-     so the CTA card is properly padded from the dark section boundary.
+   - When FooterHero follows a non-white section (dark, brand-sand, FAQ), keep standard
+     80px top padding so the CTA card is properly padded from the section boundary.
    ========================================================================== */
 :is(
-  section[data-theme="light"],
-  section[data-theme="cream"],
-  section[data-theme="faq"],
-  section[class*="bg-white"],
-  section[class*="bg-[#fff]"],
-  section[class*="bg-[#F6F5F3]"],
-  section[class*="bg-[#F5F3F2]"],
-  section[class*="bg-brand-sand"],
+  section[data-theme="light"]:not(.faq-section):not([class*="bg-brand-sand"]),
+  section[class*="bg-white"]:not(.faq-section):not([class*="bg-brand-sand"]):not(.trusted-clients-logo),
+  section[class*="bg-[#fff]"]:not(.faq-section):not([class*="bg-brand-sand"]),
   .case-studies-section,
   .why-work-section,
   .decisions-section,
-  .about-grid-section,
-  .fiab-works-section
+  .about-grid-section
 ) + .footer-cta-section {
   padding-top: 0 !important;
 }

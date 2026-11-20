@@ -308,7 +308,7 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
                   {displayCategories.map((category, idx) => (
                     <span
                       key={idx}
-                      className="bg-brand-green/10 text-brand-green px-4.25 py-2 rounded-[5px] font-semibold text-[18px] tracking-wide"
+                      className="bg-brand-green/10 text-brand-green px-4.25 py-2 rounded-[5px] font-semibold text-sm md:text-[18px] tracking-wide"
                     >
                       {category}
                     </span>
