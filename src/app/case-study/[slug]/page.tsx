@@ -332,7 +332,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
   return (
     <PageFrame chrome={chrome}>
       {/* 1. Hero Section matching Figma */}
-      <section className="relative overflow-hidden bg-brand-blue text-white flex flex-col justify-center pt-32 sm:pt-36 lg:pt-40 pb-16 sm:pb-20 lg:pb-24">
+      <section className="relative overflow-hidden bg-brand-blue text-white flex flex-col justify-center pt-32 sm:pt-36 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 min-h-[450px] lg:min-h-[525px]">
         {/* Background Mesh Image with diamond pattern and green glows */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <Image
@@ -370,11 +370,11 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
 
           {/* Meta: Author & Date */}
           <Reveal immediate preset="slide-up" delay={280} distance={20}>
-            <div className="flex items-center justify-center gap-3 sm:gap-4 text-[14px] sm:text-[15px] text-white/70">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 text-[14px] sm:text-[16px] font-light text-white/80">
               <span>
                 Author: <strong className="font-semibold text-white">Admin</strong>
               </span>
-              <span className="text-white/30">•</span>
+              <span className="text-white/80">•</span>
               <span>
                 Date: <strong className="font-semibold text-white">{dateFormatted}</strong>
               </span>

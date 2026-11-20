@@ -41,9 +41,9 @@ function isUrlActive(
 }
 
 function headerSurface(surface: "grid" | "plain", isSticky: boolean, menuOpen: boolean) {
-  if (menuOpen) return "border-white/10 bg-[#07110d]";
+  if (menuOpen) return "border-white/10 bg-[#121826]";
   if (!isSticky) return "border-transparent bg-transparent";
-  return "border-white/10 bg-[#07110d]/98 backdrop-blur-md shadow-xl";
+  return "border-white/10 bg-[#121826]/98 backdrop-blur-md shadow-xl";
 }
 
 export function HomeHeader({
@@ -252,7 +252,7 @@ export function HomeHeader({
 
       {/* Mobile / Tablet Dropdown Menu */}
       {menuOpen ? (
-        <div className="mobile-menu-enter relative border-t border-white/10 bg-[#07110d]/98 backdrop-blur-xl shadow-2xl lg:hidden">
+        <div className="mobile-menu-enter relative border-t border-white/10 bg-[#121826]/98 backdrop-blur-xl shadow-2xl lg:hidden">
           <Container size="header" className="px-6 md:py-5 max-h-[calc(100vh-80px)] overflow-y-auto">
             <nav aria-label="Mobile" className="flex flex-col divide-y divide-white/[0.08] pb-6">
               {header.links.map((link) => (
