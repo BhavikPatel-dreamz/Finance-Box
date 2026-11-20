@@ -374,7 +374,6 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
               <span>
                 Author: <strong className="font-semibold text-white">Admin</strong>
               </span>
-              <span className="text-white/80">•</span>
               <span>
                 Date: <strong className="font-semibold text-white">{dateFormatted}</strong>
               </span>
