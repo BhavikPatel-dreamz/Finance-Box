@@ -125,7 +125,7 @@ export const teamPageContent: TeamPageContent = {
     title: "Built for Growing Businesses,\nBacked by Experts",
     description:
       "From early stage startups to established companies, we support businesses through fundraising, scaling, restructuring, and beyond. Wherever you are in your journey, we bring the right blend of expertise, systems, and heart.",
-    image: "/backed-by-experts.png",
+    image: "/team/backed-by-experts.png",
   },
   contact: {
     title: "We're here to help",

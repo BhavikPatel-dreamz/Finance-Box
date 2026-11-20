@@ -19,7 +19,7 @@ import { teamPageContent, type TeamExpert, type TeamPageContent } from "@/conten
 export const instant = false;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const pageResult = await getPublicPage("/team-member/");
+  const pageResult = await getPublicPage("/team-members/");
   if (pageResult.status === "ok" && pageResult.page.seo) {
     const seo = pageResult.page.seo;
     return {
@@ -57,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function TeamPage() {
   const [chrome, pageResult, membersResult] = await Promise.all([
     getSiteChrome(),
-    getPublicPage("/team-member/"),
+    getPublicPage("/team-members/"),
     getTeamMembers(),
   ]);
 
