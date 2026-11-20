@@ -53,10 +53,17 @@ export function blogCardFromPost(post: PostCardFragment, fallback?: Partial<Blog
     readTime: readingTime(post.content),
     title: plainText(post.title) || fallback?.title || "Untitled",
     author: {
-      name: author?.name ? `By ${plainText(author.name)}` : fallback?.author?.name || "",
-      avatar: author?.avatar?.url || fallback?.author?.avatar || DEFAULT_AVATAR,
+      name: author?.name
+        ? plainText(author.name).startsWith("By ")
+          ? plainText(author.name)
+          : `By ${plainText(author.name)}`
+        : fallback?.author?.name || "By Guruprasad",
+      avatar:
+        author?.avatar?.url && !author.avatar.url.includes("gravatar.com")
+          ? author.avatar.url
+          : fallback?.author?.avatar || DEFAULT_AVATAR,
     },
-    url: slug ? blogPath(slug) : fallback?.url || "/blog/",
+    url: slug ? blogPath(slug) : fallback?.url || "/blogs/",
   };
 }
 

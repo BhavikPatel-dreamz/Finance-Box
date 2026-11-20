@@ -2,14 +2,32 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { homeContent, type HomeContent } from "@/content/home";
 import Container from "@/components/ui/container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import Section from "@/components/ui/section";
 import { Reveal } from "@/components/motion/reveal";
+import { teamPath } from "@/lib/wordpress/paths";
 
 interface LeadershipProps {
   leadership: HomeContent["leadership"];
+}
+
+const LEADER_SLUGS: Record<string, string> = {
+  "amit mulchandani": "amit-mulchandani",
+  "berena reynoso": "berena-reynoso",
+  "galina puzankova": "galina-puzankova",
+  "aswathy vijayakumar": "aswathy-vijayakumar",
+  "neeti chauhan": "neeti-chauhan",
+  "jitheesh": "jitheesh",
+  "denise uniacke": "denise-uniacke",
+  "siddharth nagrath": "siddharth-nagrath",
+};
+
+export function resolveLeaderSlug(name: string): string {
+  const clean = name.trim().toLowerCase();
+  return LEADER_SLUGS[clean] || clean.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
 // Per-person image scale for assets exported with extra padding
@@ -205,12 +223,15 @@ export function Leadership({ leadership }: LeadershipProps) {
             >
               {slides.map((person, idx) => {
                 const isReal = idx >= CLONES && idx < CLONES + total;
+                const slug = (person as { slug?: string }).slug || resolveLeaderSlug(person.name);
+                const href = teamPath(slug);
+
                 return (
                   <div
                     key={`${person.name}-${idx}`}
                     ref={idx === CLONES ? cardRef : null}
                     aria-hidden={isReal ? undefined : true}
-                    className="group relative w-[280px] sm:w-[300px] xl:w-[320px] h-[370px] xl:h-[390px] rounded-[10px] overflow-hidden shrink-0 bg-[#050D1F] select-none"
+                    className="group relative w-[280px] sm:w-[300px] xl:w-[320px] h-[370px] xl:h-[390px] rounded-[10px] overflow-hidden shrink-0 bg-[#050D1F] select-none cursor-pointer transition-transform duration-300 hover:scale-[1.02] shadow-sm"
                   >
                     {/* Background: leadership-bg.svg */}
                     <div
@@ -220,7 +241,7 @@ export function Leadership({ leadership }: LeadershipProps) {
 
                     {/* Person's Image */}
                     {person.image && (
-                      <div className="absolute inset-0 flex items-end justify-center pointer-events-none overflow-hidden origin-bottom transition-transform duration-700 ease-out motion-reduce:transition-none">
+                      <div className="absolute inset-0 flex items-end justify-center pointer-events-none overflow-hidden origin-bottom transition-transform duration-700 ease-out motion-reduce:transition-none group-hover:scale-105">
                         <Image
                           src={person.image.url}
                           alt={person.image.alt || person.name}
@@ -245,7 +266,7 @@ export function Leadership({ leadership }: LeadershipProps) {
 
                     {/* Name and Role */}
                     <div className="absolute bottom-0 left-0 w-full pb-6 px-4 text-center z-1 pointer-events-none transition-transform duration-500 ease-out group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
-                      <h3 className="text-[20px] font-medium text-white leading-tight mb-1">
+                      <h3 className="text-[20px] font-medium text-white leading-tight mb-1 group-hover:text-brand-green transition-colors duration-300">
                         {person.name}
                       </h3>
                       <p className="text-[11px] font-mono tracking-[1px] uppercase text-white/60 transition-colors duration-500 group-hover:text-brand-green">
@@ -286,6 +307,22 @@ export function Leadership({ leadership }: LeadershipProps) {
                         </linearGradient>
                       </defs>
                     </svg>
+
+                    {/* Clickable Overlay Link */}
+                    {isReal ? (
+                      <Link
+                        href={href}
+                        aria-label={`View ${person.name}'s profile`}
+                        className="absolute inset-0 z-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green rounded-[10px]"
+                      />
+                    ) : (
+                      <Link
+                        href={href}
+                        tabIndex={-1}
+                        aria-hidden="true"
+                        className="absolute inset-0 z-30 focus-visible:outline-none rounded-[10px]"
+                      />
+                    )}
                   </div>
                 );
               })}

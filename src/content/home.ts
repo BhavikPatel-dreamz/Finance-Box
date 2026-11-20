@@ -24,6 +24,7 @@ export type HomePerson = {
   image: HomeMedia | null;
   name: string;
   role: string;
+  slug?: string;
 };
 
 export type HomeContent = {
@@ -336,14 +337,14 @@ export const homeContent: HomeContent = {
     text: "Finance in a Box was founded by Amit Mulchandani to give growing businesses direct access to senior finance operators, practical systems expertise and decision-ready insight.\n\nOur teams combine hands-on execution with the judgment to know what matters next.",
     cta: { label: "Book a call", url: "/contact-us/" },
     people: [
-      { image: { url: "/home/amit-mulchandani.png", alt: "Amit Mulchandani" }, name: "Amit Mulchandani", role: "FOUNDER & CEO, FINANCE IN A BOX" },
-      { image: { url: "/home/Berena-Reynoso.png", alt: "Berena Reynoso" }, name: "Berena Reynoso", role: "HEAD OF OPERATIONS" },
-      { image: { url: "/home/Galina-Puzankova.png", alt: "Galina Puzankova" }, name: "Galina Puzankova", role: "VICE PRESIDENT, DELIVERY" },
-      { image: { url: "/home/Aswathy-Vijayakumar.png", alt: "Aswathy Vijayakumar" }, name: "Aswathy Vijayakumar", role: "DIRECTOR FP&A" },
-      { image: { url: "/home/Neeti-Chauhan.png", alt: "Neeti Chauhan" }, name: "Neeti Chauhan", role: "FINANCE CONTROLLER" },
-      { image: { url: "/home/Jitheesh.png", alt: "Jitheesh" }, name: "Jitheesh", role: "HEAD OF OTC REVOPS" },
-      { image: { url: "/home/Denise-Uniacke.png", alt: "Denise Uniacke" }, name: "Denise Uniacke", role: "BUSINESS DEVELOPMENT & CLIENT SUCCESS MANAGER" },
-      { image: { url: "/home/Siddharth-Nagrath.png", alt: "Siddharth Nagrath" }, name: "Siddharth Nagrath", role: "TRAINING MANAGER - L&D OPERATIONS" },
+      { image: { url: "/home/amit-mulchandani.png", alt: "Amit Mulchandani" }, name: "Amit Mulchandani", role: "FOUNDER & CEO, FINANCE IN A BOX", slug: "amit-mulchandani" },
+      { image: { url: "/home/Berena-Reynoso.png", alt: "Berena Reynoso" }, name: "Berena Reynoso", role: "HEAD OF OPERATIONS", slug: "berena-reynoso" },
+      { image: { url: "/home/Galina-Puzankova.png", alt: "Galina Puzankova" }, name: "Galina Puzankova", role: "VICE PRESIDENT, DELIVERY", slug: "galina-puzankova" },
+      { image: { url: "/home/Aswathy-Vijayakumar.png", alt: "Aswathy Vijayakumar" }, name: "Aswathy Vijayakumar", role: "DIRECTOR FP&A", slug: "aswathy-vijayakumar" },
+      { image: { url: "/home/Neeti-Chauhan.png", alt: "Neeti Chauhan" }, name: "Neeti Chauhan", role: "FINANCE CONTROLLER", slug: "neeti-chauhan" },
+      { image: { url: "/home/Jitheesh.png", alt: "Jitheesh" }, name: "Jitheesh", role: "HEAD OF OTC REVOPS", slug: "jitheesh" },
+      { image: { url: "/home/Denise-Uniacke.png", alt: "Denise Uniacke" }, name: "Denise Uniacke", role: "BUSINESS DEVELOPMENT & CLIENT SUCCESS MANAGER", slug: "denise-uniacke" },
+      { image: { url: "/home/Siddharth-Nagrath.png", alt: "Siddharth Nagrath" }, name: "Siddharth Nagrath", role: "TRAINING MANAGER - L&D OPERATIONS", slug: "siddharth-nagrath" },
     ],
   },
   pressure: {

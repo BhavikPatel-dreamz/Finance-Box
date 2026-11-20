@@ -156,7 +156,7 @@ export default async function CaseStudiesPage() {
           <Reveal immediate preset="slide-up" delay={180} distance={24} className="max-w-[1020px] mx-auto">
             <h1 className="text-[30px] xs:text-[38px] sm:text-[46px] md:text-[50px] lg:text-[54px] leading-[1.14] font-medium tracking-tight text-white mb-5 sm:mb-6">
               Building Smarter{" "}
-              <span className="text-[#4EA947]">Business Operations</span>
+              <span className="text-brand-green">Business Operations</span>
             </h1>
           </Reveal>
 

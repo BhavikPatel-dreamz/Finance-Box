@@ -1,5 +1,6 @@
 import type { SectionDefinition } from "@/lib/page-builder/types";
 import { aboutAgenticSection } from "@/components/sections/about-agentic-section";
+import { allBlogsSection } from "@/components/sections/all-blogs-section";
 import { agenticOfficialPartnerStack } from "@/components/sections/agentic-official-partner-stack";
 import { agenticOpsComplianceSection } from "@/components/sections/agentic-ops-compliance-section";
 import { agenticPeopleOpsPayrollItSection } from "@/components/sections/agentic-people-ops-payroll-it-section";
@@ -69,6 +70,7 @@ import { yourOwnAgenticSection } from "@/components/sections/your-own-agentic-se
  */
 const definitions = [
   aboutAgenticSection,
+  allBlogsSection,
   agenticOfficialPartnerStack,
   agenticOpsComplianceSection,
   agenticPeopleOpsPayrollItSection,

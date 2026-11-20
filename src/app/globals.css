@@ -346,11 +346,11 @@ button[class*="hover:bg-brand-green"]:hover svg {
   [data-theme="light"],
   [data-theme="cream"],
   [data-theme="faq"]
-) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
-  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]),
-  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"])
+):not(.footer-cta-section) :is(
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *),
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *),
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *),
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *)
 ) > span[aria-hidden="true"] {
   background-color: var(--color-brand-blue) !important;
 }
@@ -377,11 +377,11 @@ button[class*="hover:bg-brand-green"]:hover svg {
   [data-theme="light"],
   [data-theme="cream"],
   [data-theme="faq"]
-) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
-  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
-  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover
+):not(.footer-cta-section) :is(
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):hover,
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):hover
 ) {
   color: #ffffff !important;
 }
@@ -408,11 +408,11 @@ button[class*="hover:bg-brand-green"]:hover svg {
   [data-theme="light"],
   [data-theme="cream"],
   [data-theme="faq"]
-) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
-  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover,
-  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):hover
+):not(.footer-cta-section) :is(
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):hover,
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):hover
 ) svg {
   color: #ffffff !important;
 }
@@ -439,11 +439,11 @@ button[class*="hover:bg-brand-green"]:hover svg {
   [data-theme="light"],
   [data-theme="cream"],
   [data-theme="faq"]
-) :is(
-  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
-  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
-  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover,
-  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not(:has(> span[aria-hidden="true"])):hover
+):not(.footer-cta-section) :is(
+  a[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):not(:has(> span[aria-hidden="true"])):hover,
+  button[class~="bg-brand-green"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):not(:has(> span[aria-hidden="true"])):hover,
+  a[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):not(:has(> span[aria-hidden="true"])):hover,
+  button[class~="bg-[#23C55E]"]:not([class*="bg-white"]):not([class*="bg-[#fff]"]):not([data-on-dark="true"]):not([data-variant="green-on-dark"]):not(.footer-cta-section *):not(:has(> span[aria-hidden="true"])):hover
 ) {
   background-color: var(--color-brand-blue) !important;
   color: #ffffff !important;
@@ -460,6 +460,62 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg,
 .site-header :is(a, button):is([class~="bg-brand-green"]):hover svg,
 .header-contact-btn:hover svg {
   color: #121826 !important;
+}
+
+/* ==========================================================================
+   Footer Hero CTA Button Hover (Site-Wide):
+   The button sits inside a dark card (bg-[#121826]), so on hover:
+   - Its inner circle (span[aria-hidden="true"]) expands with background white (#ffffff)
+     over 900ms, identical to other green-on-dark buttons.
+   - Text color and arrow icon stroke transition to brand-blue (#121826).
+   - Arrow icon inner circle fill transitions to rgba(18, 24, 38, 0.1).
+   - DO NOT set background-color on the button root when it has span[aria-hidden="true"],
+     so the 900ms expanding circle transition is fully visible and not bypassed!
+   ========================================================================== */
+.footer-cta-section :is(
+  a[class~="bg-brand-green"],
+  button[class~="bg-brand-green"],
+  a[class~="bg-[#23C55E]"],
+  button[class~="bg-[#23C55E]"]
+) > span[aria-hidden="true"] {
+  background-color: #ffffff !important;
+}
+
+.footer-cta-section :is(
+  a[class~="bg-brand-green"],
+  button[class~="bg-brand-green"],
+  a[class~="bg-[#23C55E]"],
+  button[class~="bg-[#23C55E]"]
+):not(:has(> span[aria-hidden="true"])):hover {
+  background-color: #ffffff !important;
+}
+
+.footer-cta-section :is(
+  a[class~="bg-brand-green"],
+  button[class~="bg-brand-green"],
+  a[class~="bg-[#23C55E]"],
+  button[class~="bg-[#23C55E]"]
+):hover {
+  color: var(--color-brand-blue) !important;
+}
+
+.footer-cta-section :is(
+  a[class~="bg-brand-green"],
+  button[class~="bg-brand-green"],
+  a[class~="bg-[#23C55E]"],
+  button[class~="bg-[#23C55E]"]
+):hover svg {
+  color: var(--color-brand-blue) !important;
+}
+
+.footer-cta-section :is(
+  a[class~="bg-brand-green"],
+  button[class~="bg-brand-green"],
+  a[class~="bg-[#23C55E]"],
+  button[class~="bg-[#23C55E]"]
+):hover svg circle,
+:is(a, button):is([data-on-dark="true"], [data-variant="green-on-dark"]):hover svg circle {
+  fill: rgba(18, 24, 38, 0.1) !important;
 }
 
 header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
@@ -662,8 +718,130 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
    Section Spacing Consistency & Anti-Doubling
    - Desktop section spacing is strictly 80px (lg:py-20 / 5rem).
    - Responsive section spacing: 56px mobile (py-14), 64px tablet (sm:py-16), 80px desktop (lg:py-20).
-   - Footer CTA section never doubles top padding when following a section.
+   - When FooterHero follows a light/white section, collapse top padding so
+     the 80px bottom padding of the preceding section serves as the 80px gap (no doubling).
+   - When FooterHero follows a dark section, keep standard 80px top padding
+     so the CTA card is properly padded from the dark section boundary.
    ========================================================================== */
-.footer-cta-section {
+:is(
+  section[data-theme="light"],
+  section[data-theme="cream"],
+  section[data-theme="faq"],
+  section[class*="bg-white"],
+  section[class*="bg-[#fff]"],
+  section[class*="bg-[#F6F5F3]"],
+  section[class*="bg-[#F5F3F2]"],
+  section[class*="bg-brand-sand"],
+  .case-studies-section,
+  .why-work-section,
+  .decisions-section,
+  .about-grid-section,
+  .fiab-works-section
+) + .footer-cta-section {
   padding-top: 0 !important;
 }
+
+/* ==========================================================================
+   Blog Details Rich Text Body Styling matching Figma
+   ========================================================================== */
+.blog-content-body {
+  color: rgba(18, 24, 38, 0.85);
+  font-size: 15px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+@media (min-width: 640px) {
+  .blog-content-body {
+    font-size: 16px;
+  }
+}
+
+.blog-content-body p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.blog-content-body h2,
+.blog-content-body h3,
+.blog-content-body h4,
+.blog-content-body h5,
+.blog-content-body h6 {
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+  color: rgba(18, 24, 38, 0.8);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.8;
+  letter-spacing: 0px;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-content-body strong,
+.blog-content-body b {
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+  color: rgba(18, 24, 38, 0.8);
+  font-weight: 600;
+  letter-spacing: 0px;
+  line-height: 1.8;
+}
+
+.blog-content-body a {
+  color: var(--color-brand-green, #4ea947);
+  text-decoration: underline;
+  transition: opacity 0.2s;
+}
+
+.blog-content-body a:hover {
+  opacity: 0.8;
+}
+
+/* Green square bullet points matching Figma */
+.blog-content-body ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin-top: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-content-body ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.65;
+}
+
+.blog-content-body ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-brand-green, #4ea947);
+  border-radius: 1px;
+}
+
+.blog-content-body ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-content-body ol li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-content-body blockquote {
+  border-left: 3px solid var(--color-brand-green, #4ea947);
+  padding-left: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  color: var(--color-brand-blue, #121826);
+  font-weight: 400;
+}
+

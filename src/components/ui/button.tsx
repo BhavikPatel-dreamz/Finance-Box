@@ -243,6 +243,8 @@ export function Button({
       <Link
         href={href}
         style={customStyle}
+        data-on-dark={onDark ? "true" : undefined}
+        data-variant={activeVariant}
         className={baseClasses}
         target={target ?? (href && /^https?:\/\//i.test(href) ? "_blank" : undefined)}
         rel={(target ?? (href && /^https?:\/\//i.test(href) ? "_blank" : undefined)) === "_blank" ? (rel ?? "noopener noreferrer") : rel}
@@ -257,6 +259,8 @@ export function Button({
     <button
       type={type}
       style={customStyle}
+      data-on-dark={onDark ? "true" : undefined}
+      data-variant={activeVariant}
       disabled={disabled}
       className={baseClasses}
       onClick={onClick}

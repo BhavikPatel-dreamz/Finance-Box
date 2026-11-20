@@ -11,11 +11,15 @@ export const homeLeadershipSection = defineSection<HomeLeadershipSectionFragment
     const titles = Array.from(new Set(slides.map((slide) => text(slide?.title)).filter(Boolean)));
     const descriptions = Array.from(new Set(slides.map((slide) => multilineText(slide?.description)).filter(Boolean)));
 
-    const people = (data.teamMembersList ?? []).map((member) => ({
-      image: media(member?.image),
-      name: text(member?.name),
-      role: text(member?.designation),
-    }));
+    const people = (data.teamMembersList ?? []).map((member) => {
+      const name = text(member?.name);
+      return {
+        image: media(member?.image),
+        name,
+        role: text(member?.designation),
+        slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+      };
+    });
 
     return (
       <Leadership

@@ -48,15 +48,15 @@ export async function pageStaticParams(): Promise<{ slug?: string[] }[]> {
 
 export async function postStaticParams() {
   const slugs = slugsOf(await getPosts());
-  return atLeastOne(slugs.map((slug) => ({ slug })), { slug: PLACEHOLDER_SLUG }, "/blog/[slug]");
+  return atLeastOne(slugs.map((slug) => ({ slug })), { slug: PLACEHOLDER_SLUG }, "/blogs/[slug]");
 }
 
-/** `/blog/page/<n>`: page 1 is `/blog`, so this covers pages 2..N. */
+/** `/blogs/page/<n>`: page 1 is `/blogs`, so this covers pages 2..N. */
 export async function blogPageStaticParams() {
   const result = await getPosts();
   const total = result.status === "ok" ? Math.ceil(result.items.length / POSTS_PER_PAGE) : 0;
   const pages = Array.from({ length: Math.max(0, total - 1) }, (_, index) => ({ page: String(index + 2) }));
-  return atLeastOne(pages, { page: "2" }, "/blog/page/[page]");
+  return atLeastOne(pages, { page: "2" }, "/blogs/page/[page]");
 }
 
 export async function caseStudyStaticParams() {

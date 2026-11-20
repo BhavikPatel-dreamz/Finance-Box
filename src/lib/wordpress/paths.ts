@@ -1,9 +1,9 @@
 /**
  * Where each WordPress content type lives on this site. WordPress itself puts
- * posts at the root (`/<slug>/`); the site serves them under `/blog/`.
+ * posts at the root (`/<slug>/`); the site serves them under `/blogs/`.
  * Used for links, canonical URLs, the sitemap and redirects, so change routes here only.
  */
-export const BLOG_BASE = "/blog/";
+export const BLOG_BASE = "/blogs/";
 export const CASE_STUDY_BASE = "/case-study/";
 export const TEAM_BASE = "/team-members/";
 

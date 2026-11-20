@@ -5,12 +5,12 @@ import type { KnowledgeHubBlog } from "@/content/knowledge-hub";
 
 /** Classes for the element that wraps a `BlogCard` (a grid item). Moved from the Knowledge Hub "Our Blog" section. */
 export const BLOG_CARD_CLASS =
-  "group card-hover relative rounded-[10px] overflow-hidden h-[480px] sm:h-[540px] md:h-[580px] lg:h-[661px] flex items-end bg-gray-100 shadow-sm";
+  "group card-hover relative rounded-[10px] overflow-hidden h-[480px] sm:h-[540px] md:h-[580px] lg:h-[661px] flex items-end bg-gray-100 shadow-sm cursor-pointer";
 
 /**
  * Blog post card: image with a dark panel for category, date, reading time,
- * title and author. The title link is stretched over the whole card.
- * Used by the Knowledge Hub "Our Blog" section and the /blog archive.
+ * title and author. The link is stretched over the entire card so the whole card is clickable.
+ * Used by the Knowledge Hub "Our Blog" section, /blogs archive, and related articles.
  */
 export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
   return (
@@ -23,9 +23,13 @@ export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
         className="object-cover image-hover-zoom"
         sizes="(max-width: 768px) 100vw, 33vw"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[24.97%] to-black/50 to-[100%]" />
+      {/* Gradient overlay on the image and below the content */}
+      <div
+        className="absolute inset-0 pointer-events-none z-1"
+        style={{ background: "linear-gradient(180deg, rgba(0, 0, 0, 0) 24.97%, #000000 100%)" }}
+      />
 
-      <div className="relative bg-brand-blue rounded-[14px] sm:rounded-[16px] p-4.5 sm:p-5 lg:p-6 m-3 sm:m-3.5 lg:m-4 w-[calc(100%-24px)] sm:w-[calc(100%-28px)] lg:w-[calc(100%-32px)] text-white flex flex-col justify-between min-h-[210px] sm:min-h-[225px] lg:min-h-[247px] min-w-0">
+      <div className="relative z-10 bg-brand-blue rounded-[14px] sm:rounded-[16px] p-4.5 sm:p-5 lg:p-6 m-3 sm:m-3.5 lg:m-4 w-[calc(100%-24px)] sm:w-[calc(100%-28px)] lg:w-[calc(100%-32px)] text-white flex flex-col justify-between min-h-[210px] sm:min-h-[225px] lg:min-h-[247px] min-w-0 pointer-events-none">
         <div>
           <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 lg:gap-3 text-[11px] lg:text-[12px] font-normal text-white/60 mb-3 sm:mb-3.5 lg:mb-4">
             <span className="text-white font-medium font-mono">{blog.category}</span>
@@ -34,17 +38,8 @@ export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
             <span className="opacity-12">|</span>
             <span className="font-mono">{blog.readTime}</span>
           </div>
-          <h3 className="text-[18px] sm:text-[20px] lg:text-[24px] font-semibold leading-[1.25] lg:leading-[1.2] mb-4 sm:mb-5 lg:mb-6">
-            {blog.url ? (
-              <Link
-                href={blog.url}
-                className="after:absolute after:inset-0 after:content-[''] hover:text-brand-green focus-visible:outline-none focus-visible:text-brand-green transition-colors duration-300"
-              >
-                {blog.title}
-              </Link>
-            ) : (
-              blog.title
-            )}
+          <h3 className="text-[18px] sm:text-[20px] lg:text-[24px] font-semibold leading-[1.25] lg:leading-[1.2] mb-4 sm:mb-5 lg:mb-6 group-hover:text-brand-green transition-colors duration-300">
+            {blog.title}
           </h3>
         </div>
         <div className="flex items-center gap-3">
@@ -54,6 +49,14 @@ export function BlogCard({ blog }: { blog: KnowledgeHubBlog }) {
           <span className="text-[13px] sm:text-[14px] font-medium text-white/80">{blog.author.name}</span>
         </div>
       </div>
+
+      {blog.url && (
+        <Link
+          href={blog.url}
+          aria-label={blog.title}
+          className="absolute inset-0 z-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green rounded-[10px]"
+        />
+      )}
     </>
   );
 }

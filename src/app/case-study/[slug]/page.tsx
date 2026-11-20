@@ -362,7 +362,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
               {highlight ? (
                 <>
                   {" – "}
-                  <span className="text-[#4EA947]">{highlight}</span>
+                  <span className="text-brand-green">{highlight}</span>
                 </>
               ) : null}
             </h1>
@@ -404,7 +404,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
             <Reveal preset="slide-up" distance={24} delay={180}>
               <div className="mt-10 bg-brand-sand/50 rounded-[10px] p-6 sm:p-10 lg:p-12.5">
                 <div
-                  className="case-study-info-content text-[15px] sm:text-[16px] text-brand-blue/80 font-light leading-[1.7] [&_h2]:leading-normal [&_h2]:text-[28px] sm:[&_h2]:text-[36px] md:[&_h2]:text-[42px] lg:[&_h2]:text-[50px] [&_h2]:font-bold [&_h2]:text-brand-blue [&_h2]:tracking-tight [&_h2]:mb-5 sm:[&_h2]:mb-6 [&_h3]:text-[18px] sm:[&_h3]:text-[20px] [&_h3]:font-bold [&_h3]:text-brand-blue [&_h3]:tracking-tight [&_h3]:mt-6 [&_h3]:mb-2.5 [&_p]:mb-7 [&_strong]:font-semibold [&_strong]:text-brand-blue [&>p:last-child]:mb-0"
+                  className="case-study-info-content text-[15px] sm:text-[16px] text-brand-blue/80 font-light leading-[1.7] [&_h2]:leading-normal [&_h2]:text-[28px] sm:[&_h2]:text-[36px] md:[&_h2]:text-[42px] lg:[&_h2]:text-[50px] [&_h2]:font-bold [&_h2]:text-brand-blue [&_h2]:tracking-tight [&_h2]:mb-5 sm:[&_h2]:mb-6 [&_h3]:text-[18px] sm:[&_h3]:text-[20px] [&_h3]:font-semibold [&_h3]:text-brand-blue [&_h3]:tracking-tight [&_h3]:mt-6 [&_h3]:mb-2.5 [&_p]:mb-7 [&_strong]:font-semibold [&_strong]:text-brand-blue [&>p:last-child]:mb-0"
                   dangerouslySetInnerHTML={{ __html: infoHtml }}
                 />
               </div>
@@ -426,7 +426,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
           {/* 5. Client Testimonial Section */}
           {testimonials.length > 0 ? (
             <Reveal preset="slide-up" distance={24} delay={280}>
-              <div className="mt-16 sm:mt-20 lg:mt-24">
+              <div className="mt-16 sm:mt-20 lg:mt-24 client-testimonial-section">
                 <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold text-brand-blue tracking-tight mb-6 sm:mb-8">
                   Client Testimonial
                 </h2>
@@ -434,14 +434,14 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
                   {testimonials.map((t, idx) => (
                     <div
                       key={idx}
-                      className="bg-brand-sand/50 rounded-[15px] sm:px-6 py-5 sm:py-7.5 flex flex-col justify-between border border-black/[0.04]"
+                      className="bg-brand-sand/50 rounded-[15px] px-5 sm:px-6.5 py-5 sm:py-7.5 flex flex-col justify-between"
                     >
-                      <p className="text-[15px] sm:text-[16px] italic leading-[1.7] text-brand-blue/90 mb-6 sm:mb-8">
+                      <p className="text-[14px] sm:text-[16px] italic leading-[1.7] text-brand-blue/90 mb-6 sm:mb-8">
                         {t.quote}
                       </p>
-                      <p className="text-[15px] sm:text-[16px] mt-auto">
+                      <p className="text-[14px] sm:text-[16px] mt-auto">
                         <span className="font-semibold text-brand-blue">{t.author}, </span>
-                        <span className="text-[#4EA947] italic font-normal">{t.role}</span>
+                        <span className="text-brand-green italic font-normal">{t.role}</span>
                       </p>
                     </div>
                   ))}
@@ -455,9 +455,9 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
       {/* 6. Conclusion Section (Dark theme with inner bullet card matching Figma) */}
       {parsedConclusion ? (
         <section className="bg-[#121826] text-white py-14 sm:py-16 lg:py-20">
-          <Container className="max-w-[1280px]">
+          <Container >
             <Reveal preset="slide-up" distance={24}>
-              <h2 className="text-[30px] sm:text-[38px] lg:text-[42px] font-semibold text-white tracking-tight mb-4 sm:mb-5">
+              <h2 className="text-[30px] sm:text-[34px] lg:text-[38px] font-semibold text-white tracking-tight mb-4 sm:mb-6">
                 Conclusion
               </h2>
             </Reveal>
@@ -465,7 +465,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
             {parsedConclusion.introHtml ? (
               <Reveal preset="slide-up" distance={24} delay={100}>
                 <div
-                  className="text-white/80 text-[15px] sm:text-[16px] lg:text-[16.5px] font-light leading-[1.7] max-w-[1080px] mb-8 sm:mb-10 space-y-4 [&_p]:mb-4 last:[&_p]:mb-0"
+                  className="text-white/80 text-[14px] sm:text-[16px] font-light leading-[1.7] mb-8 sm:mb-10 space-y-4 [&_p]:mb-4 last:[&_p]:mb-0"
                   dangerouslySetInnerHTML={{ __html: parsedConclusion.introHtml }}
                 />
               </Reveal>
@@ -474,16 +474,16 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
             {/* Inner Bullet Card */}
             {(parsedConclusion.bullets.length > 0 || parsedConclusion.outroHtml) ? (
               <Reveal preset="slide-up" distance={24} delay={180}>
-                <div className="bg-[#182234]/70 border border-white/10 rounded-[20px] p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+                <div className="bg-[#182234]/70 border border-white/7 rounded-[20px] p-6 sm:p-10 lg:p-12 relative overflow-hidden">
                   {/* Ambient subtle green glow in corner */}
-                  <div className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 bg-[#4EA947]/15 blur-[80px] rounded-full" />
+                  <div className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 bg-brand-green/15 blur-[80px] rounded-full" />
 
                   {parsedConclusion.bullets.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-14 gap-y-4 sm:gap-y-5 relative z-10">
                       {parsedConclusion.bullets.map((bullet, idx) => (
                         <div key={idx} className="flex items-start gap-3">
-                          <span className="w-2 h-2 rounded-[2px] bg-[#4EA947] shrink-0 mt-2" />
-                          <span className="text-[14.5px] sm:text-[15.5px] text-white/95 leading-[1.6]">
+                          <span className="w-2 h-2 bg-brand-green shrink-0 mt-2" />
+                          <span className="text-[14px] sm:text-[16px] text-white leading-[1.6] font-medium">
                             {bullet}
                           </span>
                         </div>
@@ -493,7 +493,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
 
                   {parsedConclusion.outroHtml ? (
                     <div
-                      className="text-white/75 text-[14px] sm:text-[15px] font-light mt-8 pt-6 sm:pt-8 border-t border-white/10 leading-[1.65] relative z-10 [&_p]:mb-3 last:[&_p]:mb-0"
+                      className="text-white/75 text-[14px] sm:text-[15px] font-light mt-8 pt-6 sm:pt-8 leading-[1.65] relative z-10 [&_p]:mb-3 last:[&_p]:mb-0"
                       dangerouslySetInnerHTML={{ __html: parsedConclusion.outroHtml }}
                     />
                   ) : null}
@@ -507,20 +507,20 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
       {/* 7. Related Case Studies ("We specialize in following Case Studies") */}
       {relatedStudies.length > 0 ? (
         <section className="bg-white py-14 sm:py-16 lg:py-20">
-          <Container className="max-w-[1280px]">
+          <Container >
             <Reveal preset="slide-up" distance={20}>
-              <p className="text-[#4EA947] font-mono tracking-[1.5px] text-[12px] sm:text-[13px] uppercase font-medium text-center mb-3">
+              <p className="text-brand-green font-mono tracking-[1.5px] text-[12px] sm:text-[13px] uppercase font-medium text-center mb-6">
                 PROJECTS BY FINANCEINABOX
               </p>
             </Reveal>
 
             <Reveal preset="slide-up" distance={24} delay={80}>
-              <h2 className="text-[28px] sm:text-[38px] lg:text-[44px] font-semibold tracking-tight text-brand-blue text-center mb-12 sm:mb-16">
-                We specialize in following <span className="italic font-serif">Case Studies</span>
+              <h2 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[50px] font-medium leading-[1.1] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px] text-brand-blue text-center mb-6 sm:mb-10">
+                We specialize in following <span className="italic font-bold">Case Studies</span>
               </h2>
             </Reveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {relatedStudies.map((item, idx) => (
                 <Reveal key={item.id} preset="slide-up" distance={24} delay={120 + idx * 80}>
                   <article className="group flex flex-col items-start h-full">
@@ -561,13 +561,14 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
 
             {/* Explore All Button */}
             <Reveal preset="slide-up" distance={20} delay={360}>
-              <div className="mt-12 sm:mt-16 flex justify-center">
+              <div className="mt-8 sm:mt-10 flex justify-center">
                 <Button
                   variant="dark"
-                  size="50"
+                  size="62"
                   text="Explore All"
                   href="/case-study/"
                   showArrow
+                  className="min-w-46"
                 />
               </div>
             </Reveal>

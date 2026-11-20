@@ -59,7 +59,9 @@ const nextConfig: NextConfig = {
       { source: "/team/:slug((?!.*\\.[a-zA-Z0-9]+$).*)", destination: "/team-members/:slug*", permanent: true },
       { source: "/terms-and-conditions", destination: "/terms-conditions", permanent: true },
       // WordPress category archives; the site has one blog archive.
-      { source: "/category/:path*", destination: "/blog", permanent: false },
+      { source: "/category/:path*", destination: "/blogs", permanent: false },
+      { source: "/blog", destination: "/blogs", permanent: true },
+      { source: "/blog/:slug((?!.*\\.[a-zA-Z0-9]+$).*)", destination: "/blogs/:slug*", permanent: true },
     ];
   },
   turbopack: {

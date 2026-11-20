@@ -1,0 +1,4 @@
+fragment AllBlogsSection on PageBuilderPageBuilderAllBlogsSectionLayout {
+  __typename
+  fieldGroupName
+}

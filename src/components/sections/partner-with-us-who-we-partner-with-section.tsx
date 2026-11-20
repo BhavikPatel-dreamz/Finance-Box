@@ -89,7 +89,7 @@ export function PartnerWithUsWhoWePartnerWith({
             >
               {/* Corner glowing ellipse matching Figma */}
               <div
-                className="pointer-events-none absolute -top-12 -left-12 w-40 h-40 rounded-full bg-[#4EA947] opacity-80 blur-[90px] transition-opacity duration-300 group-hover:opacity-0"
+                className="pointer-events-none absolute -top-12 -left-12 w-40 h-40 rounded-full bg-brand-green opacity-80 blur-[90px] transition-opacity duration-300 group-hover:opacity-0"
                 aria-hidden="true"
               />
 

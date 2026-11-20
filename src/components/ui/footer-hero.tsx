@@ -130,6 +130,7 @@ const VARIANT_CONFIGS: Record<FooterHeroVariant, VariantConfig> = {
 };
 
 export type FooterHeroProps = {
+  id?: string;
   title: string;
   highlight?: string;
   text?: string;
@@ -150,11 +151,12 @@ export type FooterHeroProps = {
   textClassName?: string;
   className?: string;
   textMaxWidth?: string;
-  /** Section vertical spacing: defaults to "bottom" so top padding does not double with the preceding section */
+  /** Section vertical spacing: defaults to "both" (80px top & bottom), automatically collapses top padding when following a light section */
   spacing?: SectionSpacing;
 };
 
 export function FooterHero({
+  id,
   title,
   highlight,
   text,
@@ -170,7 +172,7 @@ export function FooterHero({
   highlightClassName,
   textClassName,
   className,
-  spacing = "bottom",
+  spacing = "both",
 }: FooterHeroProps) {
   const config = VARIANT_CONFIGS[variant] || VARIANT_CONFIGS.default;
   const activeLayout = layout ?? config.layout;
@@ -180,7 +182,7 @@ export function FooterHero({
   const isTwoLine = activeLayout === "two-line";
 
   return (
-    <Section theme="light" spacing={spacing} className={twMerge("footer-cta-section", className)}>
+    <Section id={id} theme="light" spacing={spacing} className={twMerge("footer-cta-section", className)}>
       <Container>
         <Reveal preset="slide-up" distance={24}>
           {/* Container exactly 1280px on desktop matching Figma */}

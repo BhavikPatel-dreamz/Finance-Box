@@ -28,6 +28,10 @@ export const SERVICE_HERO_CONFIG: Record<string, { titleMaxWidth: string; descri
     titleMaxWidth: "max-w-[700px]",
     descriptionMaxWidth: "max-w-[660px]",
   },
+  blogs: {
+    titleMaxWidth: "max-w-[1240px]",
+    descriptionMaxWidth: "max-w-[780px]",
+  },
 };
 
 function resolveHeroConfig(uri?: string | null) {
@@ -36,6 +40,7 @@ function resolveHeroConfig(uri?: string | null) {
   if (clean.includes("foresight")) return SERVICE_HERO_CONFIG.foresight;
   if (clean.includes("partner")) return SERVICE_HERO_CONFIG["partner-with-us"];
   if (clean.includes("momentum")) return SERVICE_HERO_CONFIG.momentum;
+  if (clean.includes("blog")) return SERVICE_HERO_CONFIG.blogs;
   return SERVICE_HERO_CONFIG.foundation;
 }
 
@@ -46,6 +51,7 @@ export const serviceDetailBannerSection = defineSection<ServiceDetailBannerSecti
     const fallback = fallbackFoundationContent.banner;
     const titleParts = splitEmphasis(data.title);
     const heroConfig = resolveHeroConfig(context?.uri);
+    const isBlog = Boolean(context?.uri?.includes("blog"));
 
     let defaultBg = fallback.backgroundImage;
     if (context?.uri?.includes("foresight")) {
@@ -54,17 +60,21 @@ export const serviceDetailBannerSection = defineSection<ServiceDetailBannerSecti
       defaultBg = "/foundation/foundation-momentum-hero-bg.jpg";
     } else if (context?.uri?.includes("partner")) {
       defaultBg = "/foundation/partner-with-us-hero-bg.jpg";
+    } else if (isBlog) {
+      defaultBg = "/foundation/foundation-foresight-hero-bg.jpg";
     }
 
     const bgImage = media(data.backgroundImage)?.url || defaultBg;
-    const cta = link(data.ctaButton, fallback.ctaButton);
+    const cta = isBlog
+      ? (data.ctaButton ? link(data.ctaButton, { label: "", url: "" }) : { label: "", url: "" })
+      : link(data.ctaButton, fallback.ctaButton);
     const rawDesc = multilineText(data.description) || fallback.description;
-    const subTitle = text(data.subTitle, fallback.subTitle);
+    const subTitle = text(data.subTitle, isBlog ? "Our Blogs" : fallback.subTitle);
 
     const titleLead = titleParts
       ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
       : text(data.title, fallback.title);
-    const titleHighlight = titleParts ? titleParts.emphasis : fallback.highlight;
+    const titleHighlight = titleParts ? titleParts.emphasis : (isBlog ? "Businesses Forward" : fallback.highlight);
 
     return (
       <FoundationHero
@@ -76,6 +86,7 @@ export const serviceDetailBannerSection = defineSection<ServiceDetailBannerSecti
         ctaButton={cta}
         titleMaxWidth={heroConfig.titleMaxWidth}
         descriptionMaxWidth={heroConfig.descriptionMaxWidth}
+        breakLine={!isBlog}
       />
     );
   },

@@ -24,6 +24,7 @@ export interface FoundationHeroProps {
   };
   titleMaxWidth?: string;
   descriptionMaxWidth?: string;
+  breakLine?: boolean;
 }
 
 export function FoundationHero({
@@ -35,9 +36,10 @@ export function FoundationHero({
   ctaButton,
   titleMaxWidth = "max-w-[700px]",
   descriptionMaxWidth = "max-w-[660px]",
+  breakLine = true,
 }: FoundationHeroProps) {
   return (
-    <section className="relative min-h-auto sm:min-h-115 lg:min-h-131.25 overflow-hidden bg-brand-blue text-white flex flex-col justify-center">
+    <section className="relative min-h-[450px] lg:min-h-[525px] overflow-hidden bg-brand-blue text-white flex flex-col justify-center">
       {/* Background Mesh Image */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <Image
@@ -65,7 +67,7 @@ export function FoundationHero({
           {/* Title */}
           <Reveal immediate preset="slide-up" delay={180} distance={24} className={`${titleMaxWidth} mx-auto`}>
             <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-[-0.8px] text-white mb-7.5">
-              {title}{" "} <br className="hidden sm:inline" />
+              {title}{" "} {breakLine ? <br className="hidden sm:inline" /> : null}
               <span className="block sm:inline text-brand-green">
                 {highlight}
               </span>

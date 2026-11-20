@@ -499,15 +499,14 @@ export function HomePressure({ pressure }: { pressure: HomeContent["pressure"] }
   const highlight = emphasis;
 
   return (
-    <section id="contact" className="bg-white">
-      <FooterHero
-        variant="home"
-        title={title}
-        highlight={highlight}
-        text={pressure.text}
-        buttonLabel={pressure.cta.label}
-        buttonUrl={pressure.cta.url}
-      />
-    </section>
+    <FooterHero
+      id="contact"
+      variant="home"
+      title={title}
+      highlight={highlight}
+      text={pressure.text}
+      buttonLabel={pressure.cta.label}
+      buttonUrl={pressure.cta.url}
+    />
   );
 }

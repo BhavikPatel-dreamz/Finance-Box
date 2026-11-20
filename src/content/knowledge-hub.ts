@@ -98,7 +98,7 @@ export const knowledgeHubContent: KnowledgeHubContent = {
   },
   blogs: {
     title: "Our Blogs",
-    cta: { label: "Explore Blogs", url: "/blog/" },
+    cta: { label: "Explore Blogs", url: "/blogs/" },
     items: [
       {
         image: "/knowledge-hub/blog1.png",
