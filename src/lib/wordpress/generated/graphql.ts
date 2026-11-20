@@ -4,8 +4,11 @@ type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type MenuLocationEnum =
-  | 'FOOTER'
-  | 'PRIMARY';
+  | 'COMPANY_FOOTER'
+  | 'EXPLORE_FOOTER'
+  | 'PRIMARY'
+  | 'SERVICES_FOOTER'
+  | 'SUPPORT_FOOTER';
 
 export type CaseStudyBySlugQueryVariables = Exact<{
   slug: string | number;

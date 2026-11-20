@@ -3323,8 +3323,11 @@ type Menu implements Node & DatabaseIdentifier {
 }
 
 enum MenuLocationEnum {
-  FOOTER
+  COMPANY_FOOTER
+  EXPLORE_FOOTER
   PRIMARY
+  SERVICES_FOOTER
+  SUPPORT_FOOTER
 }
 
 input MenuToMenuItemConnectionWhereArgs {

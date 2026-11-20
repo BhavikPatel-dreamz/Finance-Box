@@ -92,7 +92,10 @@ export async function POST(request: Request) {
   const menuEvent = () => {
     tags.add(menusTag);
     tags.add(menuTag("PRIMARY"));
-    tags.add(menuTag("FOOTER"));
+    tags.add(menuTag("COMPANY_FOOTER"));
+    tags.add(menuTag("SERVICES_FOOTER"));
+    tags.add(menuTag("EXPLORE_FOOTER"));
+    tags.add(menuTag("SUPPORT_FOOTER"));
   };
   const settingsEvent = () => tags.add(settingsTag);
   const schemaEvent = () => tags.add(schemaTag);

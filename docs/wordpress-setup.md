@@ -41,10 +41,17 @@ To add a field: edit the form in **Contact → Contact Forms**, add the tag (e.g
 
 ## Menus (needed for WordPress-managed navigation)
 
-Appearance → Menus. Assign a menu to **Primary** and to **Footer** (GraphQL `PRIMARY`, `FOOTER`). Until then the header and footer use the built-in navigation.
+Appearance → Menus. Assign menus to locations:
+- **Primary (header)** (`primary`, GraphQL `PRIMARY`)
+- **Company Footer** (`company-footer`, GraphQL `COMPANY_FOOTER`)
+- **Services Footer** (`services-footer`, GraphQL `SERVICES_FOOTER`)
+- **Explore Footer** (`explore-footer`, GraphQL `EXPLORE_FOOTER`)
+- **Support Footer** (`support-footer`, GraphQL `SUPPORT_FOOTER`)
+
+Until then the header and footer use the built-in navigation.
 
 - Primary: top-level items are the nav; child items form the dropdown. Give the "Contact Us" item the CSS class `menu-cta` (enable *CSS Classes* in Screen Options) to make it the green button.
-- Footer: each top-level item is a column title; its children are the links.
+- Footer menus: items in each menu become the links under the respective footer column.
 
 ## Plugin settings
 

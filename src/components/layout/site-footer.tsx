@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { SiteFooterContent } from "@/lib/wordpress/site-chrome";
 import { Container } from "@/components/ui/container";
 
-/** Shared site footer. Rendered once per page by the page template. */
+/** Shared site footer matching the live site layout and styling. */
 export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
   return (
     <footer className="footer-section relative bg-[linear-gradient(180deg,var(--color-brand-blue)_38.14%,#141D32_93.71%)] text-white border-t border-white/[0.08]">

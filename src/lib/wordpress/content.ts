@@ -20,6 +20,7 @@ import {
   PublishedPagesDocument,
   SchemaCapabilitiesDocument,
   SiteSettingsDocument,
+  type MenuLocationEnum,
   type MenuByLocationQuery,
   type PageCoreFragment,
   type PublishedPagesQuery,
@@ -76,7 +77,7 @@ export type SiteSettings = {
   source: "wordpress" | "fallback";
 };
 
-export type MenuLocation = "PRIMARY" | "FOOTER";
+export type MenuLocation = MenuLocationEnum;
 
 export type NavigationItem = {
   id: string;

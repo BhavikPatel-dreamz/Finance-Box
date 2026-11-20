@@ -54,8 +54,8 @@ The client (`client.ts`, `server-only`) adds a 15 s timeout per attempt and retr
 `src/components/layout/site-header.tsx` (wraps the client `HomeHeader`: fixed bar, dropdowns, mobile menu) and `site-footer.tsx`. Content comes from `getSiteChrome()`:
 
 - PRIMARY menu → nav links (children → dropdown). An item with CSS class `menu-cta` becomes the green button.
-- FOOTER menu → columns (top-level item = column title, children = links).
-- No menu assigned → the current static navigation in `src/content/home.ts`.
+- Footer menus (`company-footer`, `services-footer`, `explore-footer`, `support-footer` / GraphQL `COMPANY_FOOTER`, `SERVICES_FOOTER`, `EXPLORE_FOOTER`, `SUPPORT_FOOTER`) → corresponding footer columns (Company, Services, Explore, Support).
+- No menu assigned → falls back to built-in navigation in `src/content/home.ts`.
 
 Logo, footer text, email and legal line have no WordPress source yet.
 
