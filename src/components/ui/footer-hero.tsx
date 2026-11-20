@@ -2,7 +2,7 @@ import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { GreenButton } from "./green-button";
 import Container from "./container";
-import Section from "./section";
+import Section, { type SectionSpacing } from "./section";
 import { Reveal } from "@/components/motion/reveal";
 
 export type FooterHeroVariant =
@@ -150,6 +150,8 @@ export type FooterHeroProps = {
   textClassName?: string;
   className?: string;
   textMaxWidth?: string;
+  /** Section vertical spacing: defaults to "bottom" so top padding does not double with the preceding section */
+  spacing?: SectionSpacing;
 };
 
 export function FooterHero({
@@ -168,6 +170,7 @@ export function FooterHero({
   highlightClassName,
   textClassName,
   className,
+  spacing = "bottom",
 }: FooterHeroProps) {
   const config = VARIANT_CONFIGS[variant] || VARIANT_CONFIGS.default;
   const activeLayout = layout ?? config.layout;
@@ -177,7 +180,7 @@ export function FooterHero({
   const isTwoLine = activeLayout === "two-line";
 
   return (
-    <Section theme="light" spacing="both" className={twMerge("footer-cta-section", className)}>
+    <Section theme="light" spacing={spacing} className={twMerge("footer-cta-section", className)}>
       <Container>
         <Reveal preset="slide-up" distance={24}>
           {/* Container exactly 1280px on desktop matching Figma */}

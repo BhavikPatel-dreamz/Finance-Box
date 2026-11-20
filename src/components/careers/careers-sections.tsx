@@ -253,7 +253,7 @@ export function CareersBenefits({ benefits }: { benefits: CareersContent["benefi
 export function CareersHowWeHire({ howWeHire }: { howWeHire: CareersContent["howWeHire"] }) {
   // 5. How We Hire Section
   return (
-    <section className="how-hire-section bg-brand-blue pb-14 sm:pb-18 md:pb-20 lg:pb-24 pt-4 sm:pt-6 text-white">
+    <section className="how-hire-section bg-brand-blue pb-14 sm:pb-16 lg:pb-20 pt-4 sm:pt-6 text-white">
       <Container>
         <Reveal preset="slide-up" distance={20} className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-3 sm:gap-5 lg:gap-6 mb-8 sm:mb-10 lg:mb-14 xl:mb-16">
           <h2 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] font-medium leading-[1.05] tracking-[-0.8px] text-white min-w-0">

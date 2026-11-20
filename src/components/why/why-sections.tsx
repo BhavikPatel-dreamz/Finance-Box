@@ -106,7 +106,7 @@ export function WhyCompare({ compare }: { compare: WhyContent["compare"] }) {
   const totalRows = compare.rows.length + 1;
 
   return (
-    <section className="compare-section bg-white py-14 sm:py-20 lg:py-24 text-brand-blue overflow-hidden">
+    <section className="compare-section bg-white py-14 sm:py-16 lg:py-20 text-brand-blue overflow-hidden">
       <Container>
         <Reveal preset="slide-up" distance={20} className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px]">

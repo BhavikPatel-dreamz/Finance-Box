@@ -129,7 +129,7 @@ export default async function CaseStudiesPage() {
   return (
     <PageFrame chrome={chrome}>
       {/* 1. Hero Section matching Figma */}
-      <section className="relative overflow-hidden bg-brand-blue text-white flex flex-col justify-center pt-32 sm:pt-36 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 min-h-[450px] lg:min-h-[525px]">
+      <section className="relative overflow-hidden bg-brand-blue text-white flex flex-col justify-center pt-32 sm:pt-36 lg:pt-40 pb-14 sm:pb-16 lg:pb-20 min-h-[450px] lg:min-h-[525px]">
         {/* Background Mesh Image with diamond pattern and green glows */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <Image
@@ -172,7 +172,7 @@ export default async function CaseStudiesPage() {
       </section>
 
       {/* 2. Case Study Cards Grid */}
-      <Section theme="light" spacing="both" className="case-studies-section !py-16 sm:!py-20 lg:!py-24">
+      <Section theme="light" spacing="both" className="case-studies-section">
         <Container>
           {studies.length === 0 ? (
             <p className="text-center text-[16px] font-light text-[#16181d]/70">

@@ -86,7 +86,7 @@ export function AgenticBuildYourOwn({
   buildYourOwn: AgenticAiContent["buildYourOwn"];
 }) {
   return (
-    <section className="build-agentic-ai-section bg-white text-brand-blue pb-24">
+    <section className="build-agentic-ai-section bg-white text-brand-blue pb-14 sm:pb-16 lg:pb-20">
       <Container>
         <div className="rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] bg-[#F5F3F2] px-6 py-10 text-center md:p-7.5 xl:p-16">
 

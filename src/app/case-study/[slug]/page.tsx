@@ -332,7 +332,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
   return (
     <PageFrame chrome={chrome}>
       {/* 1. Hero Section matching Figma */}
-      <section className="relative overflow-hidden bg-brand-blue text-white flex flex-col justify-center pt-32 sm:pt-36 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 min-h-[450px] lg:min-h-[525px]">
+      <section className="relative overflow-hidden bg-brand-blue text-white flex flex-col justify-center pt-32 sm:pt-36 lg:pt-40 pb-14 sm:pb-16 lg:pb-20 min-h-[450px] lg:min-h-[525px]">
         {/* Background Mesh Image with diamond pattern and green glows */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <Image
@@ -383,8 +383,8 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
       </section>
 
       {/* 2. Main Content Body on White */}
-      <section className="bg-white py-12 sm:py-16 lg:py-20">
-        <Container className="max-w-[1280px]">
+      <section className="bg-white text-brand-blue py-7.5 sm:py-10 lg:py-15">
+        <Container>
           {/* Hero Featured Image */}
           <Reveal preset="slide-up" distance={24} delay={100}>
             <div className="relative w-full h-[320px] sm:h-[460px] md:h-[540px] lg:h-[600px] rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#e5e7eb] shadow-sm">
@@ -402,9 +402,9 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
           {/* 3. Case Study Information Card (Light gray background matching Figma) */}
           {infoHtml ? (
             <Reveal preset="slide-up" distance={24} delay={180}>
-              <div className="mt-10 sm:mt-12 lg:mt-14 bg-[#F6F5F3] rounded-[20px] sm:rounded-[24px] p-6 sm:p-10 lg:p-14 border border-black/[0.04]">
+              <div className="mt-10 bg-brand-sand/50 rounded-[10px] p-6 sm:p-10 lg:p-12.5">
                 <div
-                  className="case-study-info-content text-[15px] sm:text-[16px] text-brand-blue/80 font-light leading-[1.7] [&_h2]:text-[24px] sm:[&_h2]:text-[30px] lg:[&_h2]:text-[34px] [&_h2]:font-bold [&_h2]:text-brand-blue [&_h2]:tracking-tight [&_h2]:mb-5 sm:[&_h2]:mb-6 [&_h3]:text-[18px] sm:[&_h3]:text-[20px] [&_h3]:font-bold [&_h3]:text-brand-blue [&_h3]:tracking-tight [&_h3]:mt-6 [&_h3]:mb-2.5 [&_p]:mb-4 last:[&_p]:mb-0 [&_strong]:font-semibold [&_strong]:text-brand-blue"
+                  className="case-study-info-content text-[15px] sm:text-[16px] text-brand-blue/80 font-light leading-[1.7] [&_h2]:leading-normal [&_h2]:text-[28px] sm:[&_h2]:text-[36px] md:[&_h2]:text-[42px] lg:[&_h2]:text-[50px] [&_h2]:font-bold [&_h2]:text-brand-blue [&_h2]:tracking-tight [&_h2]:mb-5 sm:[&_h2]:mb-6 [&_h3]:text-[18px] sm:[&_h3]:text-[20px] [&_h3]:font-bold [&_h3]:text-brand-blue [&_h3]:tracking-tight [&_h3]:mt-6 [&_h3]:mb-2.5 [&_p]:mb-7 [&_strong]:font-semibold [&_strong]:text-brand-blue [&>p:last-child]:mb-0"
                   dangerouslySetInnerHTML={{ __html: infoHtml }}
                 />
               </div>
@@ -416,7 +416,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
             <Reveal preset="slide-up" distance={24} delay={240}>
               <div className="mt-12 sm:mt-16 lg:mt-20">
                 <div
-                  className="case-study-main-content text-[15.5px] sm:text-[16.5px] text-brand-blue/80 font-light leading-[1.75] [&_h2]:text-[26px] sm:[&_h2]:text-[32px] lg:[&_h2]:text-[36px] [&_h2]:font-semibold [&_h2]:text-brand-blue [&_h2]:tracking-tight [&_h2]:mt-12 sm:[&_h2]:mt-16 [&_h2]:mb-4 sm:[&_h2]:mb-5 first:[&_h2]:mt-0 [&_h3]:text-[22px] sm:[&_h3]:text-[28px] lg:[&_h3]:text-[32px] [&_h3]:font-semibold [&_h3]:text-brand-blue [&_h3]:tracking-tight [&_h3]:mt-10 sm:[&_h3]:mt-14 [&_h3]:mb-4 first:[&_h3]:mt-0 [&_h4]:text-[18px] sm:[&_h4]:text-[22px] lg:[&_h4]:text-[24px] [&_h4]:font-semibold [&_h4]:text-brand-blue [&_h4]:tracking-tight [&_h4]:mt-8 sm:[&_h4]:mt-10 [&_h4]:mb-3 [&_p]:mb-6 last:[&_p]:mb-0 [&_strong]:font-semibold [&_strong]:text-brand-blue [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_li]:mb-2"
+                  className="case-study-main-content text-[15.5px] sm:text-[16.5px] text-brand-blue/80 font-light leading-[1.75] [&_h2]:leading-normal [&_h2]:text-[28px] sm:[&_h2]:text-[36px] md:[&_h2]:text-[42px] lg:[&_h2]:text-[50px] [&_h2]:font-semibold [&_h2]:text-brand-blue [&_h2]:tracking-tight [&_h2]:mt-12 sm:[&_h2]:mt-16 [&_h2]:mb-4 sm:[&_h2]:mb-5 first:[&_h2]:mt-0 [&_h3]:text-[22px] sm:[&_h3]:text-[28px] lg:[&_h3]:text-[38px] [&_h3]:font-semibold [&_h3]:text-brand-blue [&_h3]:tracking-tight [&_h3]:mt-10 sm:[&_h3]:mt-14 [&_h3]:mb-4 first:[&_h3]:mt-0 [&_h4]:text-[18px] sm:[&_h4]:text-[22px] lg:[&_h4]:text-[24px] [&_h4]:font-semibold [&_h4]:text-brand-blue [&_h4]:tracking-tight [&_h4]:mt-8 sm:[&_h4]:mt-10 [&_h4]:mb-3 [&_p]:mb-6  [&_strong]:font-semibold [&_strong]:text-brand-blue [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_li]:mb-2 [&>p:last-child]:mb-0"
                   dangerouslySetInnerHTML={{ __html: contentHtml }}
                 />
               </div>
@@ -430,11 +430,11 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
                 <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold text-brand-blue tracking-tight mb-6 sm:mb-8">
                   Client Testimonial
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-4">
                   {testimonials.map((t, idx) => (
                     <div
                       key={idx}
-                      className="bg-[#F6F5F3] rounded-[20px] p-8 sm:p-10 flex flex-col justify-between border border-black/[0.04]"
+                      className="bg-brand-sand/50 rounded-[15px] sm:px-6 py-5 sm:py-7.5 flex flex-col justify-between border border-black/[0.04]"
                     >
                       <p className="text-[15px] sm:text-[16px] italic leading-[1.7] text-brand-blue/90 mb-6 sm:mb-8">
                         {t.quote}
@@ -454,7 +454,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
 
       {/* 6. Conclusion Section (Dark theme with inner bullet card matching Figma) */}
       {parsedConclusion ? (
-        <section className="bg-[#121826] text-white py-16 sm:py-20 lg:py-24">
+        <section className="bg-[#121826] text-white py-14 sm:py-16 lg:py-20">
           <Container className="max-w-[1280px]">
             <Reveal preset="slide-up" distance={24}>
               <h2 className="text-[30px] sm:text-[38px] lg:text-[42px] font-semibold text-white tracking-tight mb-4 sm:mb-5">
@@ -506,7 +506,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
 
       {/* 7. Related Case Studies ("We specialize in following Case Studies") */}
       {relatedStudies.length > 0 ? (
-        <section className="bg-white py-16 sm:py-20 lg:py-24">
+        <section className="bg-white py-14 sm:py-16 lg:py-20">
           <Container className="max-w-[1280px]">
             <Reveal preset="slide-up" distance={20}>
               <p className="text-[#4EA947] font-mono tracking-[1.5px] text-[12px] sm:text-[13px] uppercase font-medium text-center mb-3">

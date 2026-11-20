@@ -657,3 +657,13 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
 .automate-deliver-card:hover .automate-card-glow {
   opacity: 0;
 }
+
+/* ==========================================================================
+   Section Spacing Consistency & Anti-Doubling
+   - Desktop section spacing is strictly 80px (lg:py-20 / 5rem).
+   - Responsive section spacing: 56px mobile (py-14), 64px tablet (sm:py-16), 80px desktop (lg:py-20).
+   - Footer CTA section never doubles top padding when following a section.
+   ========================================================================== */
+.footer-cta-section {
+  padding-top: 0 !important;
+}

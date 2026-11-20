@@ -207,7 +207,7 @@ export function TeamLeaders({ leaders }: { leaders: TeamPageContent["leaders"] }
 
 export function TeamExperts({ experts }: { experts: TeamPageContent["experts"] }) {
   return (
-    <section className="bg-brand-blue text-white py-16 sm:py-20 lg:py-28 overflow-hidden">
+    <section className="bg-brand-blue text-white py-14 sm:py-16 lg:py-20 overflow-hidden">
       <Container>
         {/* Centered Heading and Intro */}
         <Reveal preset="slide-up" distance={20} className="text-center max-w-[850px] mx-auto">
