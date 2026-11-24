@@ -16,10 +16,10 @@
 <line opacity="0.2" x1="1159.5" y1="178" x2="1159.5" y2="2.18557e-08" stroke="url(#paint11_linear_92_23)"/>
 <line opacity="0.2" x1="1239.5" y1="129" x2="1239.5" y2="2.18557e-08" stroke="url(#paint12_linear_92_23)"/>
 <g opacity="0.5" filter="url(#filter1_f_92_23)">
-<circle cx="1304" cy="433" r="175" fill="#4EA947"/>
+<circle cx="1304" cy="433" r="175" fill="#25C45F"/>
 </g>
 <g opacity="0.5" filter="url(#filter2_f_92_23)">
-<circle cy="-94" r="175" fill="#4EA947"/>
+<circle cy="-94" r="175" fill="#25C45F"/>
 </g>
 </g>
 <defs>

@@ -19,7 +19,7 @@
   --font-mono: var(--font-dm-mono), "DM Mono", monospace;
 
   /* Brand colors — changed here only */
-  --color-brand-green: #4ea947;
+  --color-brand-green: #25c45f;
   --color-brand-blue: #121826;
   --color-brand-sand: #EDE9E6;
 }
@@ -691,7 +691,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
 }
 
 /* Ellipse 12 from Figma:
-   Width: 89px, Height: 84.47px, Top: -37.02px, Left: -41px, Opacity: 80%, Color: #4EA947, Blur: 180
+   Width: 89px, Height: 84.47px, Top: -37.02px, Left: -41px, Opacity: 80%, Color: #25C45F, Blur: 180
    In CSS with web standard blur, w: 220px, h: 200px, blur(70px) recreates the exact Figma Layer Blur 180 spread
 */
 .automate-card-glow {
@@ -702,7 +702,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
   width: 90px;
   height: 84px;
   border-radius: 9999px;
-  background: #4EA947;
+  background: #25C45F;
   opacity: 0.8;
   filter: blur(90px);
   pointer-events: none;
@@ -781,7 +781,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
 }
 
 .blog-content-body a {
-  color: var(--color-brand-green, #4ea947);
+  color: var(--color-brand-green, #25c45f);
   text-decoration: underline;
   transition: opacity 0.2s;
 }
@@ -813,7 +813,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
   top: 0.6em;
   width: 6px;
   height: 6px;
-  background-color: var(--color-brand-green, #4ea947);
+  background-color: var(--color-brand-green, #25c45f);
   border-radius: 1px;
 }
 
@@ -830,7 +830,7 @@ header :is(a, button):is([class~="bg-brand-green"]):hover svg circle,
 }
 
 .blog-content-body blockquote {
-  border-left: 3px solid var(--color-brand-green, #4ea947);
+  border-left: 3px solid var(--color-brand-green, #25c45f);
   padding-left: 1.25rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
