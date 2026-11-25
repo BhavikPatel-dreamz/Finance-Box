@@ -350,7 +350,7 @@ export function HomeGrowth({ growth }: { growth: HomeContent["growth"] }) {
                 {growth.title}
               </h2>
             </div>
-            <p className="max-w-[363px] min-w-0 text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/70 lg:pb-2">
+            <p className="lg:max-w-[363px] min-w-0 text-[14px] sm:text-[15px] xl:text-[16px] font-light leading-[160%] text-white/70 lg:pb-2">
               {growth.text}
             </p>
           </div>
