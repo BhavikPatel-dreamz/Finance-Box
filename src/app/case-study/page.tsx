@@ -7,6 +7,8 @@ import Container from "@/components/ui/container";
 import { FooterHero } from "@/components/ui/footer-hero";
 import Section from "@/components/ui/section";
 import { getCaseStudies } from "@/lib/wordpress/collections";
+import { getPublicPage } from "@/lib/wordpress/content";
+import { media, splitEmphasis, text } from "@/lib/wordpress/fields";
 import { CASE_STUDY_BASE, caseStudyPath, slugFromUri } from "@/lib/wordpress/paths";
 import { getSiteChrome } from "@/lib/wordpress/site-chrome";
 import { plainText } from "@/lib/wordpress/text";
@@ -78,8 +80,45 @@ const PREFERRED_ORDER = [
 
 const FALLBACK_MAP = new Map(FIGMA_CASE_STUDIES.map((item) => [item.slug, item]));
 
+/** WordPress page whose "Service Detail Banner" section edits this archive's hero. */
+const CASE_STUDY_ARCHIVE_PAGE_URI = "/case_studies/";
+
+const HERO_FALLBACK = {
+  eyebrow: "CASE STUDIES",
+  title: "Building Smarter",
+  highlight: "Business Operations",
+  description:
+    "We help businesses streamline finance, HR, payroll, and people operations through intelligent system integration and automation. Explore how we simplify complex workflows, connect business platforms, and build scalable operations that drive efficiency and long-term growth.",
+  backgroundImage: "/foundation/foundation-foresight-hero-bg.jpg",
+};
+
+/**
+ * Hero content from the banner section of the WordPress "Case Study" page,
+ * falling back field by field to the built-in copy when WordPress is empty or
+ * unreachable.
+ */
+async function getCaseStudyHero() {
+  const result = await getPublicPage(CASE_STUDY_ARCHIVE_PAGE_URI);
+  const banner =
+    result.status === "ok"
+      ? result.page.sections.find((section) => section.__typename === "PageBuilderPageBuilderServiceDetailBannerSectionLayout")
+      : undefined;
+  if (!banner) return HERO_FALLBACK;
+
+  const titleParts = splitEmphasis(banner.title);
+  return {
+    eyebrow: text(banner.subTitle, HERO_FALLBACK.eyebrow),
+    title: titleParts
+      ? [titleParts.before, titleParts.after].filter(Boolean).join(" ").trim()
+      : text(banner.title, HERO_FALLBACK.title),
+    highlight: titleParts ? titleParts.emphasis : text(banner.title) ? "" : HERO_FALLBACK.highlight,
+    description: text(banner.description, HERO_FALLBACK.description),
+    backgroundImage: media(banner.backgroundImage)?.url || HERO_FALLBACK.backgroundImage,
+  };
+}
+
 export default async function CaseStudiesPage() {
-  const [chrome, result] = await Promise.all([getSiteChrome(), getCaseStudies()]);
+  const [chrome, result, hero] = await Promise.all([getSiteChrome(), getCaseStudies(), getCaseStudyHero()]);
 
   let studies: CaseStudyGridItem[] = [];
 
@@ -133,7 +172,7 @@ export default async function CaseStudiesPage() {
         {/* Background Mesh Image with diamond pattern and green glows */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <Image
-            src="/foundation/foundation-foresight-hero-bg.jpg"
+            src={hero.backgroundImage}
             alt=""
             fill
             priority
@@ -148,24 +187,27 @@ export default async function CaseStudiesPage() {
           {/* Eyebrow */}
           <Reveal immediate preset="slide-up" delay={60} distance={20}>
             <p className="mb-4 sm:mb-5 text-white/70 font-mono tracking-[1.5px] text-[12px] sm:text-[14px] uppercase font-medium">
-              CASE STUDIES
+              {hero.eyebrow}
             </p>
           </Reveal>
 
           {/* Title */}
           <Reveal immediate preset="slide-up" delay={180} distance={24} className="max-w-[1020px] mx-auto">
             <h1 className="text-[30px] xs:text-[38px] sm:text-[46px] md:text-[50px] lg:text-[54px] leading-[1.14] font-medium tracking-tight text-white mb-5 sm:mb-6">
-              Building Smarter{" "}
-              <span className="text-brand-green">Business Operations</span>
+              {hero.title}
+              {hero.highlight && (
+                <>
+                  {" "}
+                  <span className="text-brand-green">{hero.highlight}</span>
+                </>
+              )}
             </h1>
           </Reveal>
 
           {/* Description */}
           <Reveal immediate preset="slide-up" delay={300} distance={20} className="max-w-[760px] mx-auto">
             <p className="text-[14px] sm:text-[15px] md:text-[16px] text-white/80 font-light leading-[1.65]">
-              We help businesses streamline finance, HR, payroll, and people operations through intelligent
-              system integration and automation. Explore how we simplify complex workflows, connect business
-              platforms, and build scalable operations that drive efficiency and long-term growth.
+              {hero.description}
             </p>
           </Reveal>
         </Container>

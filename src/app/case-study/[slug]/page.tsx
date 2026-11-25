@@ -336,7 +336,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/case-study/[
         {/* Background Mesh Image with diamond pattern and green glows */}
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <Image
-            src="/foundation/foundation-foresight-hero-bg.jpg"
+            src="/why/why-bg-img.webp"
             alt=""
             fill
             priority
