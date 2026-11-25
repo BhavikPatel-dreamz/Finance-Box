@@ -100,7 +100,7 @@ export function CareersStandOut({ standOut }: { standOut: CareersContent["standO
 
         <StaggerGroup
           staggerDelay={150}
-          className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 lg:gap-3 xl:gap-4"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-3 xl:gap-4"
         >
           {standOut.cards.map((card, idx) => {
             const hasPoints = Boolean(card.points && card.points.length > 0);

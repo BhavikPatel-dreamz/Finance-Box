@@ -197,6 +197,22 @@ function resolveDifferenceIcon(icon?: { url: string } | string | null, title?: s
   return DEFAULT_DIFFERENCE_ICONS[idx % DEFAULT_DIFFERENCE_ICONS.length];
 }
 
+/**
+ * Grid lines between the six difference cells: 1 column on mobile,
+ * 2 columns on tablet (md), 3 columns on desktop (lg).
+ */
+const DIFFERENCE_CELL_BORDERS = [
+  "border-b md:border-r md:border-b lg:border-r lg:border-b",
+  "border-b md:border-r-0 md:border-b lg:border-r lg:border-b",
+  "border-b md:border-r md:border-b lg:border-r-0 lg:border-b",
+  "border-b md:border-r-0 md:border-b lg:border-r lg:border-b-0",
+  "border-b md:border-r md:border-b-0 lg:border-r lg:border-b-0",
+];
+
+function differenceCellBorder(index: number) {
+  return `${DIFFERENCE_CELL_BORDERS[index] ?? ""} border-white/10`;
+}
+
 export function HomeDifference({ difference }: { difference: HomeContent["difference"] }) {
   const card0 = difference.cards[0];
   const icon0 = resolveDifferenceIcon(card0?.icon, card0?.title, 0);
@@ -229,10 +245,10 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
           </h2>
         </Reveal>
 
-        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10 rounded-[8px] sm:rounded-[10px] overflow-hidden">
+        <StaggerGroup staggerDelay={140} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-white/10 rounded-[8px] sm:rounded-[10px] overflow-hidden">
 
           {card0 && (
-            <StaggerItem index={0} className="card-hover group relative overflow-hidden bg-white shadow-[8px_8px_20px_0px_#FFFFFF33] text-brand-blue transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-7.5 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+            <StaggerItem index={0} className={`card-hover group relative overflow-hidden bg-white shadow-[8px_8px_20px_0px_#FFFFFF33] text-brand-blue transition-colors duration-500 hover:bg-[#F6FBF8] p-6 sm:p-8 md:p-8 xl:p-7.5 flex flex-col min-h-0 lg:min-h-[383px] ${differenceCellBorder(0)}`}>
               <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-brand-green mb-4 sm:mb-6 transition-colors duration-500 group-hover:bg-brand-green/10">
                 {icon0 && (
                   <SafeImage
@@ -256,7 +272,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
             const cardIdx = idx + 1;
             const iconSrc = resolveDifferenceIcon(card.icon, card.title, cardIdx);
             return (
-              <StaggerItem key={idx} index={cardIdx} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-r border-white/10">
+              <StaggerItem key={idx} index={cardIdx} className={`card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 lg:min-h-[383px] ${differenceCellBorder(cardIdx)}`}>
                 <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-brand-green group-hover:bg-brand-green/10">
                   {iconSrc && (
                     <SafeImage
@@ -281,7 +297,7 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
             const cardIdx = idx + 3;
             const iconSrc = resolveDifferenceIcon(card.icon, card.title, cardIdx);
             return (
-              <StaggerItem key={idx} index={cardIdx} className="card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 md:min-h-[383px] border-b md:border-b-0 md:border-t md:border-r border-white/10">
+              <StaggerItem key={idx} index={cardIdx} className={`card-hover group relative overflow-hidden bg-white/1 transition-colors duration-500 hover:bg-white/5 p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col min-h-0 lg:min-h-[383px] ${differenceCellBorder(cardIdx)}`}>
                 <div className="flex h-12 w-12 sm:h-[60px] sm:w-[60px] items-center justify-center rounded-full border border-white/20 mb-4 sm:mb-6 transition-colors duration-500 group-hover:border-brand-green group-hover:bg-brand-green/10">
                   {iconSrc && (
                     <SafeImage
@@ -302,12 +318,12 @@ export function HomeDifference({ difference }: { difference: HomeContent["differ
             );
           })}
 
-          <StaggerItem index={5} className="card-hover group relative overflow-hidden bg-brand-green transition-colors duration-500 hover:bg-[#1FAF53] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[383px] md:border-t border-white/10 text-white">
+          <StaggerItem index={5} className="card-hover group relative overflow-hidden bg-brand-green transition-colors duration-500 hover:bg-[#1FAF53] p-6 sm:p-8 md:p-8 xl:p-10 flex flex-col justify-between min-h-[220px] md:min-h-[300px] lg:min-h-[383px] text-white">
             <p className="text-[14px] sm:text-[16px] md:text-[20px] font-mono font-medium tracking-wide uppercase">
               {difference.statEyebrow}
             </p>
             <div className="mt-6 md:mt-0">
-              <p className="origin-left text-[64px] sm:text-[84px] md:text-[120px] font-normal leading-tight tracking-[-2px] transition-transform duration-500 ease-out motion-reduce:transition-none">{difference.statValue}</p>
+              <p className="origin-left text-[64px] sm:text-[84px] md:text-[104px] lg:text-[120px] font-normal leading-tight tracking-[-2px] transition-transform duration-500 ease-out motion-reduce:transition-none">{difference.statValue}</p>
               <p className="text-[16px] sm:text-[18px] md:text-[20px] font-medium leading-[1.1] mt-1 sm:mt-2">{difference.statLabel}</p>
             </div>
             <HoverLine className="bg-white" />

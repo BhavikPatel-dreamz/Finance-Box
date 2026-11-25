@@ -192,7 +192,7 @@ export const contactHeroConfig: HeroConfig = {
 export const agenticAiHeroConfig: HeroConfig = {
   variant: "agentic-ai",
   background: "clients",
-  titleMaxWidth: "lg:max-w-[400px]",
+  titleMaxWidth: "tablet:max-w-[340px] desktop:max-w-[400px]",
   eyebrow: {
     text: agenticAiContent.hero.eyebrow || "INTELLIGENT FINANCE",
     variant: "dark",
@@ -207,7 +207,7 @@ export const agenticAiHeroConfig: HeroConfig = {
     "Real-time visibility: Approvals, postings, tickets, and updates happen automatically",
     "Faster go-lives: Deploy in weeks, not quarters, using prebuilt playbooks",
   ],
-  heightClassName: "min-h-[auto] sm:min-h-[460px] lg:min-h-[525px]",
+  heightClassName: "min-h-[auto] sm:min-h-[460px] desktop:min-h-[525px]",
 };
 
 // ----------------------------------------------------------------------------

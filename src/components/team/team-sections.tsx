@@ -34,7 +34,7 @@ export function TeamHero({ hero }: { hero: TeamPageContent["hero"] }) {
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 sm:gap-10 lg:gap-12 items-center w-full">
             {/* Left Column */}
             <Reveal immediate preset="slide-up" delay={80} distance={24} className="w-full max-w-[620px]">
-              <Eyebrow variant="white-dash" className="mb-4 sm:mb-5 lg:mb-6 text-white/70">
+              <Eyebrow variant="white-dash" className="mb-4 sm:mb-5 lg:mb-6">
                 {hero.eyebrow}
               </Eyebrow>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white">
@@ -227,7 +227,7 @@ export function TeamExperts({ experts }: { experts: TeamPageContent["experts"] }
         <div className="mt-12.5">
           <StaggerGroup
             staggerDelay={130}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5"
+            className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5"
           >
             {experts.people.map((expert, index) => {
               const cardContent = (

@@ -21,7 +21,7 @@ export function KnowledgeHubBlogs({ blogs }: { blogs: KnowledgeHubContent["blogs
           </h2>
         </Reveal>
 
-        <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.items.map((blog, idx) => (
             <StaggerItem key={blog.url || idx} index={idx} className={BLOG_CARD_CLASS}>
               <BlogCard blog={blog} />
@@ -47,7 +47,7 @@ export function KnowledgeHubResources({ resources }: { resources: KnowledgeHubCo
   return (
     <Section theme="cream" className="py-10 sm:py-12 md:py-15">
       <Container>
-        <Reveal preset="slide-up" distance={20} className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8">
+        <Reveal preset="slide-up" distance={20} className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-2xl min-w-0">
             <h2 className="text-3xl sm:text-4xl md:text-[44px] lg:text-[50px] font-medium leading-[1.15] lg:leading-[1.05] tracking-[-0.8px] mb-3 sm:mb-4">
               {(() => {
@@ -97,7 +97,7 @@ export function KnowledgeHubCaseStudies({ caseStudy }: { caseStudy: KnowledgeHub
           </h2>
         </Reveal>
 
-        <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-6 md:gap-4 lg:gap-5">
+        <StaggerGroup staggerDelay={150} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-6 md:gap-4 lg:gap-5">
           {caseStudy.items.map((item, idx) => (
             <StaggerItem key={item.url || idx} index={idx} className="group card-hover relative flex flex-col">
               <div className="relative w-full aspect-[414/560] max-h-[460px] sm:max-h-[500px] md:max-h-none lg:aspect-auto lg:h-[560px] rounded-[10px] sm:rounded-[12px] overflow-hidden mb-4 sm:mb-5 lg:mb-6">

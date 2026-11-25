@@ -69,7 +69,7 @@ export function FoundationHero({
           {/* Title */}
           <Reveal immediate preset="slide-up" delay={180} distance={24} className={`${titleMaxWidth} mx-auto`}>
             <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-[-0.8px] text-white mb-4 sm:mb-5">
-              {title}{" "} {breakLine ? <br className="hidden sm:inline" /> : null}
+              {title}{" "} {breakLine ? <br className="hidden lg:inline" /> : null}
               <span className="block sm:inline text-brand-green">
                 {highlight}
               </span>
@@ -135,13 +135,13 @@ export function FoundationIntro({
         {/* Top Row: Heading and Description/CTA */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 sm:gap-12 lg:gap-16 items-start mb-8 lg:mb-12.5">
           {/* Left Column: Eyebrow + Title */}
-          <Reveal preset="slide-up" delay={60} distance={20} className="max-w-[580px]">
+          <Reveal preset="slide-up" delay={60} distance={20} className="min-w-[992px]:max-w-[580px]">
             <Eyebrow variant="black-dash" className="mb-4 sm:mb-6 text-brand-blue/70 font-mono tracking-[1.5px] text-[12px] sm:text-[14px] uppercase">
               {subTitle}
             </Eyebrow>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-medium leading-[1.18] tracking-tight text-brand-blue max-w-[580px]">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-medium leading-[1.18] tracking-tight text-brand-blue min-w-[992px]:max-w-[580px]">
               {title}{" "}
-              <br className="hidden sm:inline" />
+              <br className="hidden lg:inline" />
               <span className="text-brand-green italic font-bold">
                 {highlight}
               </span>
@@ -149,7 +149,7 @@ export function FoundationIntro({
           </Reveal>
 
           {/* Right Column: Paragraph + CTA */}
-          <Reveal preset="slide-up" delay={180} distance={20} className="max-w-[492px] lg:pt-2">
+          <Reveal preset="slide-up" delay={180} distance={20} className="min-w-[992px]:max-w-[492px] lg:pt-2">
             <p className="text-[15px] sm:text-[16px] text-brand-blue/70 font-light leading-[160%] tracking-0 mb-6 sm:mb-10">
               {description}
             </p>
@@ -181,7 +181,7 @@ export function FoundationIntro({
 
                 {/* Info Pill */}
                 <div className="rounded-[10px] bg-white p-3 sm:p-3.5 flex items-center gap-3.5 shadow-sm mt-auto">
-                  <div className="w-15 h-15 rounded-full bg-[#FFFFFF00] border border-[#1219280D] flex items-center justify-center shrink-0">
+                  <div className="xl:w-15 w-12 xl:h-15 h-12 rounded-full bg-[#FFFFFF00] border border-[#1219280D] flex items-center justify-center shrink-0">
                     {card.icon ? (
                       <Image
                         src={card.icon}

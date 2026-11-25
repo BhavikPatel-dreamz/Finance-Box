@@ -32,7 +32,7 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
                 config.title.split("\n").map((line, idx) => (
                   <React.Fragment key={idx}>
                     {line}
-                    <br className="hidden sm:inline" />
+                    <br className="hidden lg:inline" />
                     {" "}
                   </React.Fragment>
                 ))
@@ -44,7 +44,7 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
               {config.highlight && (
                 <>
                   <span className="text-brand-green">{config.highlight}</span>
-                  <br className="hidden sm:inline" />
+                  <br className="hidden lg:inline" />
                   {" "}
                 </>
               )}
@@ -60,7 +60,7 @@ export function CareersHeroVariant({ config }: { config: HeroConfig }) {
             preset="slide-up"
             delay={260}
             distance={24}
-            className="max-w-md lg:justify-self-end w-full"
+            className="lg:max-w-md lg:justify-self-end w-full"
           >
             {config.description && (
               <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-white/80 mb-6 sm:mb-8">

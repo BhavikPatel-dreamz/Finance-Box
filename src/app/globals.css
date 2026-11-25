@@ -22,6 +22,11 @@
   --color-brand-green: #25c45f;
   --color-brand-blue: #121826;
   --color-brand-sand: #EDE9E6;
+
+  /* 800px — between md (768) and desktop (992); `tablet:` variant */
+  --breakpoint-tablet: 50rem;
+  /* 992px — sits between md (768) and lg (1024); `desktop:` variant */
+  --breakpoint-desktop: 62rem;
 }
 
 @layer base {

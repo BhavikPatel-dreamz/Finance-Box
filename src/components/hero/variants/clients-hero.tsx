@@ -56,13 +56,14 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
           <div className="w-full backdrop-blur-md flex flex-col lg:flex-row">
             {/* Left Proof Column */}
             {config.clientProofItems && (
-              <div className="flex-1 px-5 py-6 sm:py-8 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center">
+              <div className="flex-1 px-5 py-6 sm:py-6 lg:py-8 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center sm:items-center sm:text-center lg:items-stretch lg:text-left">
                 {config.clientProofTitle && (
-                  <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-6 lg:mb-8">
+                  <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-3 lg:mb-8">
                     {config.clientProofTitle}
                   </Eyebrow>
                 )}
-                <ul>
+                {/* Tablet (sm–lg): items sit on one centered line with green markers. */}
+                <ul className="sm:flex sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-1 lg:block">
                   {(() => {
                     let items = config.clientProofItems;
                     if (
@@ -86,8 +87,9 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
                     return items.map((item, idx) => (
                       <li
                         key={idx}
-                        className="text-[16px] sm:text-[18px] lg:text-[20px] font-semibold leading-[130%] text-white"
+                        className="text-[16px] sm:flex sm:items-center sm:gap-2.5 lg:block lg:text-[20px] font-semibold leading-[130%] text-white"
                       >
+                        <span aria-hidden="true" className="hidden sm:inline-block lg:hidden h-[6px] w-[6px] shrink-0 bg-brand-green" />
                         {item}
                       </li>
                     ));
@@ -102,7 +104,7 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
                 {config.stats.map((stat, idx) => (
                   <div
                     key={idx}
-                    className="flex flex-col justify-between p-6 sm:p-6 lg:p-8 text-left"
+                    className="flex flex-col justify-between p-6 sm:p-6 lg:p-8 text-left sm:text-center lg:text-left"
                   >
                     <p className="text-4xl sm:text-4xl lg:text-[52px] font-semibold leading-[100%] tracking-[-0.8px]">
                       {stat.value}

@@ -62,10 +62,10 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
     config.highlight?.trim() === "Built and Run For You";
 
   return (
-    <Container className="relative flex-1 flex flex-col justify-end lg:justify-start pb-10 sm:pb-12 lg:pb-8">
-      <div className="relative flex-1 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 xl:gap-0 items-start pt-4 sm:pt-6 lg:pt-10 xl:pt-16">
+    <Container className="relative flex-1 flex flex-col justify-end desktop:justify-start pb-10 sm:pb-12 desktop:pb-8">
+      <div className="relative flex-1 grid grid-cols-1 desktop:grid-cols-12 gap-10 md:gap-12 desktop:gap-6 xl:gap-0 items-start pt-4 sm:pt-6 md:pt-8 desktop:pt-10 xl:pt-16">
         {/* Left Column */}
-        <div className="lg:col-span-7">
+        <div className="desktop:col-span-7 text-left min-[426px]:text-center desktop:text-left">
           {eyebrowData && (
             <Reveal immediate preset="slide-up" delay={80} distance={18}>
               <Eyebrow
@@ -78,15 +78,17 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
           )}
 
           <Reveal immediate preset="slide-up" delay={220} distance={32}>
-            <h1 className="text-[34px] sm:text-[50px] lg:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
+            <h1 className="text-[30px] min-[380px]:text-[34px] sm:text-[50px] md:text-[60px] desktop:text-[54px] xl:text-[76px] 2xl:text-[84px] leading-[1.08] sm:leading-[1.05] tracking-tight sm:tracking-[-0.8px]">
               {isDefaultTitle ? (
                 <>
-                  <span className="font-light text-white block">Your Finance</span>
-                  <span className="block">
+                  {/* Below 992px the title sits on two lines (centered from 426px to 991px); desktop keeps three. */}
+                  <span className="font-light text-white inline desktop:block">Your Finance</span>{" "}
+                  <span className="inline desktop:block">
                     <span className="font-light text-white">Function, </span>
+                    <br className="desktop:hidden" />
                     <span className="font-bold text-brand-green">Built</span>
-                  </span>
-                  <span className="font-bold text-brand-green block">and Run For You</span>
+                  </span>{" "}
+                  <span className="font-bold text-brand-green inline desktop:block">and Run For You</span>
                 </>
               ) : (
                 <>
@@ -101,7 +103,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
 
           {config.description && (
             <Reveal immediate preset="slide-up" delay={380} distance={24}>
-              <p className="mt-4 sm:mt-6 max-w-[550px] text-[15px] sm:text-[16px] xl:text-[18px] font-light leading-[160%] text-white/70">
+              <p className="mt-4 sm:mt-6 max-w-[550px] md:max-w-[620px] min-[426px]:mx-auto desktop:mx-0 desktop:max-w-[550px] text-[15px] sm:text-[16px] md:text-[17px] desktop:text-[16px] xl:text-[18px] font-light leading-[160%] text-white/70">
                 {config.description}
               </p>
             </Reveal>
@@ -109,7 +111,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
 
           {config.primaryCta && (
             <Reveal immediate preset="slide-up" delay={540} distance={20}>
-              <div className="mt-6 sm:mt-7">
+              <div className="mt-6 sm:mt-7 flex justify-start min-[426px]:justify-center desktop:justify-start">
                 <GreenButton
                   label={config.primaryCta.label}
                   href={config.primaryCta.url}
@@ -126,8 +128,8 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
         </div>
 
         {/* Right Column */}
-        <div className="lg:col-span-5 relative flex flex-col items-center lg:items-end pt-28 sm:pt-36 lg:pt-[180px] xl:pt-[200px] lg:mr-0 xl:-mr-[38px]">
-          <div className="relative w-full max-w-[420px] lg:max-w-[440px] xl:max-w-[519px]">
+        <div className="desktop:col-span-5 relative flex flex-col items-center desktop:items-end pt-28 sm:pt-36 md:pt-[170px] desktop:pt-[180px] xl:pt-[200px] desktop:mr-0 xl:-mr-[38px]">
+          <div className="relative w-full max-w-[420px] md:max-w-[600px] desktop:max-w-[440px] xl:max-w-[519px]">
             {/* Month-End Close Card */}
             {config.closeValue && (
               <Reveal
@@ -135,23 +137,23 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 preset="slide-up"
                 delay={460}
                 distance={28}
-                className="hero-float-a card-hover absolute -top-[95px] sm:-top-[110px] lg:-top-[125px] xl:-top-[143px] left-0 sm:-left-[20px] lg:-left-[50px] xl:-left-[118px] w-[130px] min-[360px]:w-[140px] sm:w-[170px] lg:w-[175px] xl:w-[196px] h-auto min-h-[115px] sm:h-[135px] lg:h-[140px] xl:h-[152px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between"
+                className="hero-float-a card-hover absolute -top-[95px] sm:-top-[110px] md:-top-[135px] desktop:-top-[125px] xl:-top-[143px] left-0 sm:-left-[20px] md:left-[24px] desktop:-left-[50px] xl:-left-[118px] w-[130px] min-[360px]:w-[140px] sm:w-[170px] md:w-[190px] desktop:w-[175px] xl:w-[196px] h-auto min-h-[115px] sm:h-[135px] md:h-[145px] desktop:h-[140px] xl:h-[152px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 md:p-5 desktop:p-4 xl:p-5 z-1 flex flex-col justify-between"
               >
                 <div>
-                  <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-mono text-white uppercase tracking-[0.86px] leading-none">
+                  <p className="text-[10px] sm:text-[11px] desktop:text-[11px] xl:text-[12px] font-mono text-white uppercase tracking-[0.86px] leading-none">
                     {config.closeLabel || "MONTH-END CLOSE"}
                   </p>
                 </div>
                 <div>
                   <div className="flex items-baseline gap-1 sm:gap-1.5 mb-3 sm:mb-4">
-                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-brand-green leading-none tabular-nums">
+                    <span className="text-[26px] sm:text-[34px] md:text-[36px] desktop:text-[34px] xl:text-[40px] font-medium text-brand-green leading-none tabular-nums">
                       {closeDisplay}
                     </span>
                     <span className="text-[11px] sm:text-[12px] font-normal text-white font-sans leading-none">
                       {config.closeUnit || "days"}
                     </span>
                   </div>
-                  <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-normal text-white leading-none">
+                  <p className="text-[10px] sm:text-[11px] desktop:text-[11px] xl:text-[12px] font-normal text-white leading-none">
                     {config.closeTrend
                       ? config.closeTrend.startsWith("↓")
                         ? config.closeTrend
@@ -169,14 +171,14 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 preset="slide-up"
                 delay={620}
                 distance={28}
-                className="hero-float-b card-hover absolute -top-[115px] sm:-top-[140px] lg:-top-[165px] xl:-top-[195px] right-0 lg:right-[20px] xl:right-[87px] w-[138px] min-[360px]:w-[150px] sm:w-[180px] lg:w-[175px] xl:w-[194px] h-auto min-h-[125px] sm:h-[140px] lg:h-[138px] xl:h-[147px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 xl:p-5 z-1 flex flex-col justify-between"
+                className="hero-float-b card-hover absolute -top-[115px] sm:-top-[140px] md:-top-[160px] desktop:-top-[165px] xl:-top-[195px] right-0 md:right-[24px] desktop:right-[20px] xl:right-[87px] w-[138px] min-[360px]:w-[150px] sm:w-[180px] md:w-[190px] desktop:w-[175px] xl:w-[194px] h-auto min-h-[125px] sm:h-[140px] md:h-[145px] desktop:h-[138px] xl:h-[147px] bg-[#050D1F] border [border-image-source:linear-gradient(139.46deg,rgba(255,255,255,0.1)_1.38%,rgba(255,255,255,0.06)_76.95%)] [border-image-slice:1] p-3 sm:p-4 md:p-5 desktop:p-4 xl:p-5 z-1 flex flex-col justify-between"
               >
                 <div>
-                  <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-mono text-white uppercase tracking-[0.86px] leading-none mb-2 sm:mb-3">
+                  <p className="text-[10px] sm:text-[11px] desktop:text-[11px] xl:text-[12px] font-mono text-white uppercase tracking-[0.86px] leading-none mb-2 sm:mb-3">
                     {config.runwayLabel || "RUNWAY VISIBILITY"}
                   </p>
                   <div className="flex items-baseline gap-1 sm:gap-1.5">
-                    <span className="text-[26px] sm:text-[34px] lg:text-[34px] xl:text-[40px] font-medium text-brand-green leading-none tabular-nums">
+                    <span className="text-[26px] sm:text-[34px] md:text-[36px] desktop:text-[34px] xl:text-[40px] font-medium text-brand-green leading-none tabular-nums">
                       {runwayDisplay}
                     </span>
                     <span className="text-[11px] sm:text-[12px] font-normal text-white font-sans leading-none">
@@ -184,7 +186,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                     </span>
                   </div>
                 </div>
-                <p className="text-[10px] sm:text-[11px] lg:text-[11px] xl:text-[12px] font-normal text-white leading-none">
+                <p className="text-[10px] sm:text-[11px] desktop:text-[11px] xl:text-[12px] font-normal text-white leading-none">
                   {config.runwayTrend || "Real-time rolling model"}
                 </p>
               </Reveal>
@@ -197,7 +199,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
                 preset="scale-up"
                 delay={300}
                 duration={900}
-                className="relative w-full h-[200px] sm:h-[250px] md:h-[270px] xl:h-[293px]"
+                className="relative w-full h-[200px] sm:h-[250px] md:h-[250px] desktop:h-[270px] xl:h-[293px]"
               >
                 <CashVisibilityChart title={config.chartTitle || "Cash visibility"} />
               </Reveal>
@@ -211,7 +213,7 @@ export function HomeHeroVariant({ config }: { config: HeroConfig }) {
               preset="slide-up"
               delay={740}
               distance={20}
-              className="mt-6 sm:mt-8 lg:mt-6 xl:mt-[38px] flex justify-center lg:justify-end w-full max-w-[420px] lg:max-w-[440px] xl:max-w-[519px] lg:pr-0 xl:pr-[7px]"
+              className="mt-6 sm:mt-8 desktop:mt-6 xl:mt-[38px] flex justify-center desktop:justify-end w-full max-w-[420px] md:max-w-[600px] desktop:max-w-[440px] xl:max-w-[519px] desktop:pr-0 xl:pr-[7px]"
             >
               <GreenButton
                 label={config.floatingCta.label}

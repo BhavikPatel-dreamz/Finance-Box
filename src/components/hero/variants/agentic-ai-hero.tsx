@@ -12,10 +12,10 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
 
   return (
     <Container>
-      <div className="w-full max-w-[1096px] mx-auto flex-1 flex items-center pb-0 lg:pb-12">
-        <div className="flex lg:flex-nowrap flex-wrap justify-between lg:gap-12 gap-0 items-center w-full ">
+      <div className="w-full max-w-[1096px] mx-auto flex-1 flex items-center pb-12 sm:pb-14 tablet:pb-12">
+        <div className="flex flex-wrap tablet:flex-nowrap justify-between gap-0 tablet:gap-8 desktop:gap-12 items-center w-full">
           {/* Left Column */}
-          <Reveal immediate preset="slide-up" delay={80} distance={24} className={twMerge("w-full", config.titleMaxWidth || "lg:max-w-[400px]")}>
+          <Reveal immediate preset="slide-up" delay={80} distance={24} className={twMerge("w-full mb-6 sm:mb-8 tablet:mb-0", config.titleMaxWidth || "tablet:max-w-[340px] desktop:max-w-[400px]")}>
             {eyebrowData && (
               <Eyebrow
                 variant={eyebrowData.variant}
@@ -26,8 +26,8 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
             )}
             <h1
               className={twMerge(
-                "text-[32px] sm:text-[40px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6",
-                config.titleMaxWidth || "lg:max-w-[400px]"
+                "text-[32px] sm:text-[40px] md:text-[48px] tablet:text-[42px] desktop:text-[54px] leading-[1.12] font-medium tracking-tight text-white mb-6 last:mb-0",
+                config.titleMaxWidth || "tablet:max-w-[340px] desktop:max-w-[400px]"
               )}
             >
               {config.title}{" "}
@@ -58,9 +58,9 @@ export function AgenticAiHeroVariant({ config }: { config: HeroConfig }) {
           </Reveal>
 
           {/* Right Column (Bullets + CTA) */}
-          <div className="lg:max-w-[470px] w-full lg:justify-self-end">
+          <div className="tablet:max-w-[400px] desktop:max-w-[470px] w-full tablet:justify-self-end">
             {config.rightDescription && (
-              <p className="text-[16px] font-light leading-[160%] text-white/80 mb-6">
+              <p className="text-[16px] font-light leading-[160%] text-white/80 mb-6 last:mb-0">
                 {config.rightDescription}
               </p>
             )}

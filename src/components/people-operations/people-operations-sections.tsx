@@ -24,7 +24,7 @@ export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsConten
             />}
           </Reveal>
           <Reveal preset="slide-right" distance={20} className="w-full min-w-0 lg:flex-1">
-            <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-medium leading-[1.25] lg:leading-[1.3] tracking-[-0.8px] mb-4 sm:mb-6 max-w-[590px]">
+            <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-medium leading-[1.25] lg:leading-[1.3] tracking-[-0.8px] mb-4 sm:mb-6 lg:max-w-[590px]">
               {(() => {
                 let title = intro.title;
                 const hl = intro.highlight;
@@ -43,7 +43,7 @@ export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsConten
                 );
               })()}
             </h2>
-            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#16181d]/70 max-w-[560px]">
+            <p className="text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-[#16181d]/70 lg:max-w-[560px]">
               {intro.text}
             </p>
           </Reveal>
@@ -126,8 +126,10 @@ export function PeopleOperationsWhatWeDo({ whatWeDo }: { whatWeDo: PeopleOperati
 
 export function PeopleOperationsWhereWeHelp({ whereWeHelp }: { whereWeHelp: PeopleOperationsContent["whereWeHelp"] }) {
   // 4. Where we help Section
+  // Bottom padding too: the CTA that follows drops its own top padding after a
+  // white section (see globals.css), so this section provides the gap.
   return (
-    <Section theme="light" spacing="top">
+    <Section theme="light" spacing="both">
       <Container>
 
         <Reveal preset="slide-up" distance={20}>

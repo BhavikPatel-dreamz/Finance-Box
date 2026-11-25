@@ -73,17 +73,17 @@ export function WhyHeroVariant({ config }: { config: HeroConfig }) {
                 WebkitBackdropFilter: "blur(3px)",
               }}
             >
-              <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
+              <div className="grid grid-cols-1 divide-y divide-white/10 sm:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
                 {config.points.map((point, index) => (
                   <StaggerItem
                     key={point.number || index}
                     index={index}
-                    className="card-hover flex min-h-[50px] md:h-[110px] md:flex-col lg:justify-between lg:items-start items-center p-3.5 sm:px-5 sm:py-4 lg:gap-0 gap-x-4"
+                    className="card-hover flex min-h-[50px] md:min-h-[110px] lg:h-[110px] items-center sm:flex-col md:items-start md:justify-start sm:gap-y-3 lg:justify-between lg:gap-0 p-3.5 sm:px-5 sm:py-4 gap-x-4"
                   >
                     <span className="point-number inline-flex h-8 w-8 sm:h-8.5 sm:w-8.5 shrink-0 items-center justify-center rounded-full bg-brand-blue border border-white/7 text-[13px] sm:text-[14px] font-semibold text-brand-green">
                       {point.number || String(index + 1).padStart(2, "0")}
                     </span>
-                    <p className="text-[16px] sm:text-[18px] md:text-[20px] font-semibold text-white tracking-tight leading-snug">
+                    <p className="text-[16px] sm:text-[18px] lg:text-[20px] font-semibold text-white tracking-tight leading-snug">
                       {point.title}
                     </p>
                   </StaggerItem>

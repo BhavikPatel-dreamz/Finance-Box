@@ -450,10 +450,10 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
   return (
     <Section theme="light" spacing="both" className="services-cfo-section relative z-1 lg:-mt-[100svh]">
       <Container>
-        <div className="bg-[#F5F3F2] rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] p-6 sm:p-10 md:px-12.5 md:py-20 text-brand-blue">
+        <div className="bg-[#F5F3F2] rounded-[16px] sm:rounded-[20px] lg:rounded-[24px] p-6 sm:p-10 md:px-10 md:py-16 lg:px-12.5 lg:py-20 text-brand-blue">
 
           <Reveal preset="slide-up" distance={20}>
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-16">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 sm:gap-8 mb-10 sm:mb-12 lg:mb-16">
               <div>
                 <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-medium leading-[1.15] tracking-[-0.8px] lg:max-w-[500px]">
                   {(() => {
@@ -462,8 +462,9 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                     if (highlight) {
                       return (
                         <>
-                          {before}
-                          <br />
+                          {before}{" "}
+                          {/* One full-width line on tablet; two lines on mobile and desktop */}
+                          <br className="md:hidden lg:inline" />
                           <span className="font-extrabold italic">{highlight}</span>
                           {cfo.titleAfter ? ` ${cfo.titleAfter}` : ""}
                         </>
@@ -473,8 +474,8 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                   })()}
                 </h2>
               </div>
-              <div className="max-w-md">
-                <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] text-brand-blue/70 mb-6 sm:mb-8">
+              <div className="max-w-md md:max-w-none md:w-full md:flex md:items-center md:justify-between md:gap-8 lg:block lg:w-auto lg:max-w-md">
+                <p className="text-[14px] sm:text-[16px] font-normal leading-[150%] text-brand-blue/70 mb-6 sm:mb-8 md:mb-0 md:max-w-[420px] lg:mb-8">
                   {cfo.text}
                 </p>
                 <GreenButton
@@ -487,12 +488,12 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
             </div>
           </Reveal>
 
-          <StaggerGroup staggerDelay={140} className="cfo-cards grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+          <StaggerGroup staggerDelay={140} className="cfo-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {cfo.cards.map((card, idx) => (
               <StaggerItem
                 key={idx}
                 index={idx}
-                className="group card-hover relative w-full h-[340px] sm:h-[400px] md:h-[420px] lg:h-[430px] xl:h-[490px] rounded-[14px] sm:rounded-[16px] overflow-hidden bg-[#F5F3F2]"
+                className={`group card-hover relative w-full h-[340px] sm:h-[400px] lg:h-[430px] xl:h-[490px] ${idx === 2 ? "md:col-span-2 md:h-[340px] lg:col-span-1 lg:h-[430px] xl:h-[490px]" : ""} rounded-[14px] sm:rounded-[16px] overflow-hidden bg-[#F5F3F2]`}
               >
                 <SafeImage
                   src={card.image?.url || CFO_FALLBACK_IMAGES[idx] || "/media/placeholder.svg"}

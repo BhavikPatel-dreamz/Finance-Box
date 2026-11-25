@@ -22,7 +22,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
                 className="max-w-[182px] w-full object-contain"
               />
             </Link>
-            <p className="mt-4 sm:mt-5 lg:mt-6 max-w-[17rem] text-[13px] sm:text-[14px] xl:text-[15px] font-light leading-[155%] text-white/75">
+            <p className="mt-4 sm:mt-5 lg:mt-6 lg:max-w-[17rem] text-[13px] sm:text-[14px] xl:text-[15px] font-light leading-[155%] text-white/75">
               {footer.text}
             </p>
             <Link

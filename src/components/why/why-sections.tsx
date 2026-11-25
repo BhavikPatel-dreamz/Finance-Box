@@ -52,7 +52,7 @@ export function WhyHero({ hero, header }: { hero: WhyContent["hero"]; header: Re
                   WebkitBackdropFilter: "blur(3px)",
                 }}
               >
-                <div className="grid grid-cols-1 divide-y divide-white/10 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
+                <div className="grid grid-cols-1 divide-y divide-white/10 sm:grid-cols-3 md:divide-y-0 md:divide-x md:divide-white/10">
                   {hero.points.map((point, index) => (
                     <StaggerItem
                       key={point.number || index}

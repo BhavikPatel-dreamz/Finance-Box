@@ -29,8 +29,8 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
       <Container>
 
         <Reveal preset="slide-up" distance={20}>
-          <div className="flex flex-col lg:flex-row justify-between gap-10 mb-16">
-            <div className="max-w-xl">
+          <div className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-10 mb-10 lg:mb-16">
+            <div className="lg:max-w-xl">
               <Eyebrow variant="light" className="mb-6">
                 {whatIs.eyebrow}
               </Eyebrow>
@@ -53,7 +53,7 @@ export function AgenticAbout({ whatIs }: { whatIs: AgenticAiContent["whatIs"] })
                 {whatIs.text1}
               </p>
             </div>
-            <div className="max-w-[492px] lg:pt-12">
+            <div className="lg:max-w-[492px] lg:pt-12">
               <p className="text-[16px] font-light leading-[160%] text-[#16181d]/70">
                 {whatIs.text2}
               </p>
@@ -309,7 +309,7 @@ export function AgenticProvenArchitecture({ provenArchitecture }: { provenArchit
     <Section theme="light" spacing="bottom" className="proven-architecture">
       <Container>
 
-        <Reveal preset="slide-up" distance={20} className="text-center md:mb-16 mb-10">
+        <Reveal preset="slide-up" distance={20} className="text-center lg:mb-16 mb-6">
           <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px]">
             {provenArchitecture.title}
           </h2>
@@ -365,9 +365,9 @@ export function AgenticWaitlist({ waitlist, form }: { waitlist: AgenticAiContent
   return (
     <Section theme="dark" spacing="both" className="waitlist-section">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 gap-8 items-start">
 
-          <Reveal preset="slide-left" distance={20} className="max-w-md lg:pt-4">
+          <Reveal preset="slide-left" distance={20} className="lg:max-w-md lg:pt-4">
             <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-medium leading-[1.15] tracking-[-0.8px] mb-6">
               {(() => {
                 let title = waitlist.title;
