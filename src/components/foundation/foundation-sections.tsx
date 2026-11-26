@@ -70,7 +70,7 @@ export function FoundationHero({
           <Reveal immediate preset="slide-up" delay={180} distance={24} className={`${titleMaxWidth} mx-auto`}>
             <h1 className="text-[28px] xs:text-[34px] sm:text-[42px] md:text-[48px] lg:text-[54px] leading-[1.12] font-medium tracking-[-0.8px] text-white mb-4 sm:mb-5">
               {title}{" "} {breakLine ? <br className="hidden lg:inline" /> : null}
-              <span className="block sm:inline text-brand-green">
+              <span className="sm:inline text-brand-green">
                 {highlight}
               </span>
             </h1>
