@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { SiteFooterContent } from "@/lib/wordpress/site-chrome";
 import { Container } from "@/components/ui/container";
 import { FooterLink } from "@/components/footer/FooterLink";
+import { CopyrightLine } from "@/components/footer/copyright-line";
 
 /** Shared site footer (server component). Links are rendered via the client <FooterLink />. */
 export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
@@ -96,7 +97,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
       <div className="border-t border-white/10 py-5 sm:py-6">
         <Container>
           <p className="text-center text-xs sm:text-[13px] font-light text-white/60">
-            {footer.legal}
+            <CopyrightLine text={footer.legal} />
           </p>
         </Container>
       </div>
