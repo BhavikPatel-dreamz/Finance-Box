@@ -6,301 +6,42 @@ schema {
   mutation: RootMutation
 }
 
-type RootQuery {
-  allSettings: Settings
-  caseStudies(first: Int, last: Int, after: String, before: String, where: RootQueryToCaseStudyConnectionWhereArgs): RootQueryToCaseStudyConnection
-  caseStudy(id: ID!, idType: CaseStudyIdType): CaseStudy
-  caseStudyBy(id: ID, caseStudyId: Int, uri: String, slug: String): CaseStudy @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
-  categories(first: Int, last: Int, after: String, before: String, where: RootQueryToCategoryConnectionWhereArgs): RootQueryToCategoryConnection
-  category(id: ID!, idType: CategoryIdType): Category
-  comment(id: ID!, idType: CommentNodeIdTypeEnum): Comment
-  comments(first: Int, last: Int, after: String, before: String, where: RootQueryToCommentConnectionWhereArgs): RootQueryToCommentConnection
-  contentNode(id: ID!, idType: ContentNodeIdTypeEnum, contentType: ContentTypeEnum): ContentNode
-  contentNodes(first: Int, last: Int, after: String, before: String, where: RootQueryToContentNodeConnectionWhereArgs): RootQueryToContentNodeConnection
-  contentType(id: ID!, idType: ContentTypeIdTypeEnum): ContentType
-  contentTypes(first: Int, last: Int, after: String, before: String): RootQueryToContentTypeConnection
-  discussionSettings: DiscussionSettings
-  generalSettings: GeneralSettings
-  mediaItem(id: ID!, idType: MediaItemIdType): MediaItem
-  mediaItemBy(id: ID, mediaItemId: Int, uri: String, slug: String): MediaItem @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
-  mediaItems(first: Int, last: Int, after: String, before: String, where: RootQueryToMediaItemConnectionWhereArgs): RootQueryToMediaItemConnection
-  menu(id: ID!, idType: MenuNodeIdTypeEnum): Menu
-  menuItem(id: ID!, idType: MenuItemNodeIdTypeEnum): MenuItem
-  menuItems(first: Int, last: Int, after: String, before: String, where: RootQueryToMenuItemConnectionWhereArgs): RootQueryToMenuItemConnection
-  menus(first: Int, last: Int, after: String, before: String, where: RootQueryToMenuConnectionWhereArgs): RootQueryToMenuConnection
-  node(id: ID): Node
-  nodeByUri(uri: String!): UniformResourceIdentifiable
-  page(id: ID!, idType: PageIdType): Page
-  pageBy(id: ID, pageId: Int, uri: String): Page @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
-  pages(first: Int, last: Int, after: String, before: String, where: RootQueryToPageConnectionWhereArgs): RootQueryToPageConnection
-  permalinkSettings: PermalinkSettings
-  plugin(id: ID!): Plugin
-  plugins(first: Int, last: Int, after: String, before: String, where: RootQueryToPluginConnectionWhereArgs): RootQueryToPluginConnection
-  post(id: ID!, idType: PostIdType): Post
-  postBy(id: ID, postId: Int, uri: String, slug: String): Post @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
-  postFormat(id: ID!, idType: PostFormatIdType): PostFormat
-  postFormats(first: Int, last: Int, after: String, before: String, where: RootQueryToPostFormatConnectionWhereArgs): RootQueryToPostFormatConnection
-  posts(first: Int, last: Int, after: String, before: String, where: RootQueryToPostConnectionWhereArgs): RootQueryToPostConnection
-  readingSettings: ReadingSettings
-  registeredScripts(first: Int, last: Int, after: String, before: String, where: RootQueryToEnqueuedScriptConnectionWhereArgs): RootQueryToEnqueuedScriptConnection
-  registeredStylesheets(first: Int, last: Int, after: String, before: String, where: RootQueryToEnqueuedStylesheetConnectionWhereArgs): RootQueryToEnqueuedStylesheetConnection
-  revisions(first: Int, last: Int, after: String, before: String, where: RootQueryToRevisionsConnectionWhereArgs): RootQueryToRevisionsConnection
-  tag(id: ID!, idType: TagIdType): Tag
-  tags(first: Int, last: Int, after: String, before: String, where: RootQueryToTagConnectionWhereArgs): RootQueryToTagConnection
-  taxonomies(first: Int, last: Int, after: String, before: String): RootQueryToTaxonomyConnection
-  taxonomy(id: ID!, idType: TaxonomyIdTypeEnum): Taxonomy
-  team(id: ID!, idType: TeamIdType): Team
-  teamBy(id: ID, teamId: Int, uri: String, slug: String): Team @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
-  teams(first: Int, last: Int, after: String, before: String, where: RootQueryToTeamConnectionWhereArgs): RootQueryToTeamConnection
-  termNode(id: ID!, idType: TermNodeIdTypeEnum, taxonomy: TaxonomyEnum): TermNode
-  terms(first: Int, last: Int, after: String, before: String, where: RootQueryToTermNodeConnectionWhereArgs): RootQueryToTermNodeConnection
-  theme(id: ID!): Theme
-  themes(first: Int, last: Int, after: String, before: String): RootQueryToThemeConnection
-  user(id: ID!, idType: UserNodeIdTypeEnum): User
-  userRole(id: ID!): UserRole
-  userRoles(first: Int, last: Int, after: String, before: String): RootQueryToUserRoleConnection
-  users(first: Int, last: Int, after: String, before: String, where: RootQueryToUserConnectionWhereArgs): RootQueryToUserConnection
-  viewer: User
-  writingSettings: WritingSettings
+interface WithAcfOptionsPageThemeSettings {
+  themeSettings: ThemeSettings
 }
 
-type Settings {
-  discussionSettingsDefaultCommentStatus: String
-  discussionSettingsDefaultPingStatus: String
-  generalSettingsDateFormat: String
-  generalSettingsDescription: String
-  generalSettingsEmail: String
-  generalSettingsHomeUrl: String
-  generalSettingsLanguage: String
-  generalSettingsStartOfWeek: Int
-  generalSettingsTimeFormat: String
-  generalSettingsTimezone: String
-  generalSettingsTitle: String
-  generalSettingsUrl: String
-  permalinkSettingsCategoryBase: String
-  permalinkSettingsStructure: String
-  permalinkSettingsTagBase: String
-  readingSettingsPageForPosts: Int
-  readingSettingsPageOnFront: Int
-  readingSettingsPostsPerPage: Int
-  readingSettingsShowOnFront: String
-  writingSettingsDefaultCategory: Int
-  writingSettingsDefaultPostFormat: String
-  writingSettingsUseSmilies: Boolean
+type ThemeSettings implements AcfOptionsPage & Node & WithAcfThemeOptions {
+  id: ID!
+  menuTitle: String
+  pageTitle: String
+  parentId: String
+  themeOptions: ThemeOptions
 }
 
-input RootQueryToCaseStudyConnectionWhereArgs {
-  dateQuery: DateQueryInput
-  hasPassword: Boolean
-  id: Int
-  in: [ID]
-  isSticky: Boolean
-  mimeType: MimeTypeEnum
-  name: String
-  nameIn: [String]
-  notIn: [ID]
-  orderby: [PostObjectsConnectionOrderbyInput]
-  parent: ID
-  parentIn: [ID]
-  parentNotIn: [ID]
-  password: String
-  search: String
-  stati: [PostStatusEnum]
-  status: PostStatusEnum
-  template: ContentTemplateEnum
-  title: String
+interface AcfOptionsPage implements Node {
+  id: ID!
+  menuTitle: String
+  pageTitle: String
+  parentId: String
 }
 
-input DateQueryInput {
-  after: DateInput
-  before: DateInput
-  column: PostObjectsConnectionDateColumnEnum
-  compare: String
-  day: Int
-  hour: Int
-  inclusive: Boolean
-  minute: Int
-  month: Int
-  relation: RelationEnum
-  second: Int
-  week: Int
-  year: Int
+type ThemeOptions implements ThemeOptions_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  footerCopyright: String
+  footerDescription: String
+  footerEmail: String
+  footerLinkdin: String
+  footerLogo: AcfMediaItemConnectionEdge
 }
 
-input DateInput {
-  day: Int
-  hour: Int
-  minute: Int
-  month: Int
-  second: Int
-  year: Int
+type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
+  cursor: String
+  node: MediaItem!
 }
 
-enum PostObjectsConnectionDateColumnEnum {
-  DATE
-  MODIFIED
-}
-
-enum RelationEnum {
-  AND
-  OR
-}
-
-enum MimeTypeEnum {
-  APPLICATION_JAVA
-  APPLICATION_MSWORD
-  APPLICATION_OCTET_STREAM
-  APPLICATION_ONENOTE
-  APPLICATION_OXPS
-  APPLICATION_PDF
-  APPLICATION_RAR
-  APPLICATION_RTF
-  APPLICATION_TTAF_XML
-  APPLICATION_VND_APPLE_KEYNOTE
-  APPLICATION_VND_APPLE_NUMBERS
-  APPLICATION_VND_APPLE_PAGES
-  APPLICATION_VND_MS_ACCESS
-  APPLICATION_VND_MS_EXCEL
-  APPLICATION_VND_MS_EXCEL_ADDIN_MACROENABLED_12
-  APPLICATION_VND_MS_EXCEL_SHEET_BINARY_MACROENABLED_12
-  APPLICATION_VND_MS_EXCEL_SHEET_MACROENABLED_12
-  APPLICATION_VND_MS_EXCEL_TEMPLATE_MACROENABLED_12
-  APPLICATION_VND_MS_POWERPOINT
-  APPLICATION_VND_MS_POWERPOINT_ADDIN_MACROENABLED_12
-  APPLICATION_VND_MS_POWERPOINT_PRESENTATION_MACROENABLED_12
-  APPLICATION_VND_MS_POWERPOINT_SLIDESHOW_MACROENABLED_12
-  APPLICATION_VND_MS_POWERPOINT_SLIDE_MACROENABLED_12
-  APPLICATION_VND_MS_POWERPOINT_TEMPLATE_MACROENABLED_12
-  APPLICATION_VND_MS_PROJECT
-  APPLICATION_VND_MS_WORD_DOCUMENT_MACROENABLED_12
-  APPLICATION_VND_MS_WORD_TEMPLATE_MACROENABLED_12
-  APPLICATION_VND_MS_WRITE
-  APPLICATION_VND_MS_XPSDOCUMENT
-  APPLICATION_VND_OASIS_OPENDOCUMENT_CHART
-  APPLICATION_VND_OASIS_OPENDOCUMENT_DATABASE
-  APPLICATION_VND_OASIS_OPENDOCUMENT_FORMULA
-  APPLICATION_VND_OASIS_OPENDOCUMENT_GRAPHICS
-  APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION
-  APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET
-  APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT
-  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION
-  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDE
-  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDESHOW
-  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_TEMPLATE
-  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET
-  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_TEMPLATE
-  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT
-  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE
-  APPLICATION_WORDPERFECT
-  APPLICATION_X_7Z_COMPRESSED
-  APPLICATION_X_GZIP
-  APPLICATION_X_TAR
-  APPLICATION_ZIP
-  AUDIO_AAC
-  AUDIO_FLAC
-  AUDIO_MIDI
-  AUDIO_MPEG
-  AUDIO_OGG
-  AUDIO_WAV
-  AUDIO_X_MATROSKA
-  AUDIO_X_MS_WAX
-  AUDIO_X_MS_WMA
-  AUDIO_X_REALAUDIO
-  IMAGE_AVIF
-  IMAGE_BMP
-  IMAGE_GIF
-  IMAGE_HEIC
-  IMAGE_HEIC_SEQUENCE
-  IMAGE_HEIF
-  IMAGE_HEIF_SEQUENCE
-  IMAGE_JPEG
-  IMAGE_PNG
-  IMAGE_TIFF
-  IMAGE_WEBP
-  IMAGE_X_ICON
-  TEXT_CALENDAR
-  TEXT_CSS
-  TEXT_CSV
-  TEXT_PLAIN
-  TEXT_RICHTEXT
-  TEXT_TAB_SEPARATED_VALUES
-  TEXT_VTT
-  VIDEO_3GPP
-  VIDEO_3GPP2
-  VIDEO_AVI
-  VIDEO_DIVX
-  VIDEO_MP4
-  VIDEO_MPEG
-  VIDEO_OGG
-  VIDEO_QUICKTIME
-  VIDEO_WEBM
-  VIDEO_X_FLV
-  VIDEO_X_MATROSKA
-  VIDEO_X_MS_ASF
-  VIDEO_X_MS_WM
-  VIDEO_X_MS_WMV
-  VIDEO_X_MS_WMX
-}
-
-input PostObjectsConnectionOrderbyInput {
-  field: PostObjectsConnectionOrderbyEnum!
-  order: OrderEnum!
-}
-
-enum PostObjectsConnectionOrderbyEnum {
-  AUTHOR
-  COMMENT_COUNT
-  DATE
-  IN
-  MENU_ORDER
-  MODIFIED
-  NAME_IN
-  PARENT
-  SLUG
-  TITLE
-}
-
-enum OrderEnum {
-  ASC
-  DESC
-}
-
-enum PostStatusEnum {
-  ACF_DISABLED
-  AUTO_DRAFT
-  DRAFT
-  FUTURE
-  INHERIT
-  PENDING
-  PRIVATE
-  PUBLISH
-  REQUEST_COMPLETED
-  REQUEST_CONFIRMED
-  REQUEST_FAILED
-  REQUEST_PENDING
-  TRASH
-}
-
-enum ContentTemplateEnum {
-  DEFAULT_TEMPLATE
-}
-
-type RootQueryToCaseStudyConnection implements CaseStudyConnection & Connection {
-  edges: [RootQueryToCaseStudyConnectionEdge!]!
-  nodes: [CaseStudy!]!
-  pageInfo: RootQueryToCaseStudyConnectionPageInfo!
-}
-
-interface CaseStudyConnection implements Connection {
-  edges: [CaseStudyConnectionEdge!]!
-  nodes: [CaseStudy!]!
-  pageInfo: CaseStudyConnectionPageInfo!
-}
-
-interface Connection {
-  edges: [Edge!]!
-  nodes: [Node!]!
-  pageInfo: PageInfo!
+interface OneToOneConnection implements Edge {
+  cursor: String
+  node: Node!
 }
 
 interface Edge {
@@ -308,37 +49,36 @@ interface Edge {
   node: Node!
 }
 
-interface PageInfo {
-  endCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String
-}
-
-interface CaseStudyConnectionEdge implements Edge {
+interface MediaItemConnectionEdge implements Edge {
   cursor: String
-  node: CaseStudy!
+  node: MediaItem!
 }
 
-type CaseStudy implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithExcerpt & MenuItemLinkable & WithAcfCaseStudiesOptions {
-  ancestors(first: Int, last: Int, after: String, before: String): CaseStudyToCaseStudyConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
-  caseStudiesOptions: CaseStudiesOptions
-  caseStudyId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
-  content(format: PostObjectFieldFormatEnum): String
+type MediaItem implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & NodeWithTitle & NodeWithAuthor & NodeWithComments & HierarchicalContentNode & HierarchicalNode {
+  altText: String
+  ancestors(first: Int, last: Int, after: String, before: String, where: HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs): HierarchicalContentNodeToContentNodeAncestorsConnection
+  author: NodeWithAuthorToUserConnectionEdge
+  authorDatabaseId: Int
+  authorId: ID
+  caption(format: PostObjectFieldFormatEnum): String
+  children(first: Int, last: Int, after: String, before: String, where: HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs): HierarchicalContentNodeToContentNodeChildrenConnection
+  commentCount: Int
+  commentStatus: String
+  comments(first: Int, last: Int, after: String, before: String, where: MediaItemToCommentConnectionWhereArgs): MediaItemToCommentConnection
   contentType: ContentNodeToContentTypeConnectionEdge
   contentTypeName: String!
   databaseId: Int!
   date: String
   dateGmt: String
+  description(format: PostObjectFieldFormatEnum): String
   desiredSlug: String
   editingLockedBy: ContentNodeToEditLockConnectionEdge
   enclosure: String
   enqueuedScripts(first: Int, last: Int, after: String, before: String, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
   enqueuedStylesheets(first: Int, last: Int, after: String, before: String, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
-  excerpt(format: PostObjectFieldFormatEnum): String
-  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
-  featuredImageDatabaseId: Int
-  featuredImageId: ID
+  file(size: MediaItemSizeEnum): String
+  filePath(size: MediaItemSizeEnum): String
+  fileSize(size: MediaItemSizeEnum): Int
   guid: String
   hasPassword: Boolean
   id: ID!
@@ -351,14 +91,23 @@ type CaseStudy implements Node & ContentNode & UniformResourceIdentifiable & Dat
   isTermNode: Boolean!
   lastEditedBy: ContentNodeToEditLastConnectionEdge
   link: String
+  mediaDetails: MediaDetails
+  mediaItemId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
+  mediaItemUrl: String
+  mediaType: String
+  mimeType: String
   modified: String
   modifiedGmt: String
-  parent: CaseStudyToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+  parent: HierarchicalContentNodeToParentContentNodeConnectionEdge
+  parentDatabaseId: Int
+  parentId: ID
   password: String
-  preview: CaseStudyToPreviewConnectionEdge
   previewRevisionDatabaseId: Int
   previewRevisionId: ID
+  sizes(size: MediaItemSizeEnum): String
   slug: String
+  sourceUrl(size: MediaItemSizeEnum): String
+  srcSet(size: MediaItemSizeEnum): String
   status: String
   template: ContentTemplate
   title(format: PostObjectFieldFormatEnum): String
@@ -412,11 +161,6 @@ type ContentNodeToContentTypeConnectionEdge implements OneToOneConnection & Edge
   node: ContentType!
 }
 
-interface OneToOneConnection implements Edge {
-  cursor: String
-  node: Node!
-}
-
 interface ContentTypeConnectionEdge implements Edge {
   cursor: String
   node: ContentType!
@@ -468,6 +212,19 @@ interface TaxonomyConnection implements Connection {
   edges: [TaxonomyConnectionEdge!]!
   nodes: [Taxonomy!]!
   pageInfo: TaxonomyConnectionPageInfo!
+}
+
+interface Connection {
+  edges: [Edge!]!
+  nodes: [Node!]!
+  pageInfo: PageInfo!
+}
+
+interface PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
 }
 
 interface TaxonomyConnectionEdge implements Edge {
@@ -785,6 +542,180 @@ enum ContentTypeEnum {
   PAGE
   POST
   TEAM
+}
+
+input DateQueryInput {
+  after: DateInput
+  before: DateInput
+  column: PostObjectsConnectionDateColumnEnum
+  compare: String
+  day: Int
+  hour: Int
+  inclusive: Boolean
+  minute: Int
+  month: Int
+  relation: RelationEnum
+  second: Int
+  week: Int
+  year: Int
+}
+
+input DateInput {
+  day: Int
+  hour: Int
+  minute: Int
+  month: Int
+  second: Int
+  year: Int
+}
+
+enum PostObjectsConnectionDateColumnEnum {
+  DATE
+  MODIFIED
+}
+
+enum RelationEnum {
+  AND
+  OR
+}
+
+enum MimeTypeEnum {
+  APPLICATION_JAVA
+  APPLICATION_MSWORD
+  APPLICATION_OCTET_STREAM
+  APPLICATION_ONENOTE
+  APPLICATION_OXPS
+  APPLICATION_PDF
+  APPLICATION_RAR
+  APPLICATION_RTF
+  APPLICATION_TTAF_XML
+  APPLICATION_VND_APPLE_KEYNOTE
+  APPLICATION_VND_APPLE_NUMBERS
+  APPLICATION_VND_APPLE_PAGES
+  APPLICATION_VND_MS_ACCESS
+  APPLICATION_VND_MS_EXCEL
+  APPLICATION_VND_MS_EXCEL_ADDIN_MACROENABLED_12
+  APPLICATION_VND_MS_EXCEL_SHEET_BINARY_MACROENABLED_12
+  APPLICATION_VND_MS_EXCEL_SHEET_MACROENABLED_12
+  APPLICATION_VND_MS_EXCEL_TEMPLATE_MACROENABLED_12
+  APPLICATION_VND_MS_POWERPOINT
+  APPLICATION_VND_MS_POWERPOINT_ADDIN_MACROENABLED_12
+  APPLICATION_VND_MS_POWERPOINT_PRESENTATION_MACROENABLED_12
+  APPLICATION_VND_MS_POWERPOINT_SLIDESHOW_MACROENABLED_12
+  APPLICATION_VND_MS_POWERPOINT_SLIDE_MACROENABLED_12
+  APPLICATION_VND_MS_POWERPOINT_TEMPLATE_MACROENABLED_12
+  APPLICATION_VND_MS_PROJECT
+  APPLICATION_VND_MS_WORD_DOCUMENT_MACROENABLED_12
+  APPLICATION_VND_MS_WORD_TEMPLATE_MACROENABLED_12
+  APPLICATION_VND_MS_WRITE
+  APPLICATION_VND_MS_XPSDOCUMENT
+  APPLICATION_VND_OASIS_OPENDOCUMENT_CHART
+  APPLICATION_VND_OASIS_OPENDOCUMENT_DATABASE
+  APPLICATION_VND_OASIS_OPENDOCUMENT_FORMULA
+  APPLICATION_VND_OASIS_OPENDOCUMENT_GRAPHICS
+  APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION
+  APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET
+  APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDE
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDESHOW
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_TEMPLATE
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_TEMPLATE
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT
+  APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE
+  APPLICATION_WORDPERFECT
+  APPLICATION_X_7Z_COMPRESSED
+  APPLICATION_X_GZIP
+  APPLICATION_X_TAR
+  APPLICATION_ZIP
+  AUDIO_AAC
+  AUDIO_FLAC
+  AUDIO_MIDI
+  AUDIO_MPEG
+  AUDIO_OGG
+  AUDIO_WAV
+  AUDIO_X_MATROSKA
+  AUDIO_X_MS_WAX
+  AUDIO_X_MS_WMA
+  AUDIO_X_REALAUDIO
+  IMAGE_AVIF
+  IMAGE_BMP
+  IMAGE_GIF
+  IMAGE_HEIC
+  IMAGE_HEIC_SEQUENCE
+  IMAGE_HEIF
+  IMAGE_HEIF_SEQUENCE
+  IMAGE_JPEG
+  IMAGE_PNG
+  IMAGE_TIFF
+  IMAGE_WEBP
+  IMAGE_X_ICON
+  TEXT_CALENDAR
+  TEXT_CSS
+  TEXT_CSV
+  TEXT_PLAIN
+  TEXT_RICHTEXT
+  TEXT_TAB_SEPARATED_VALUES
+  TEXT_VTT
+  VIDEO_3GPP
+  VIDEO_3GPP2
+  VIDEO_AVI
+  VIDEO_DIVX
+  VIDEO_MP4
+  VIDEO_MPEG
+  VIDEO_OGG
+  VIDEO_QUICKTIME
+  VIDEO_WEBM
+  VIDEO_X_FLV
+  VIDEO_X_MATROSKA
+  VIDEO_X_MS_ASF
+  VIDEO_X_MS_WM
+  VIDEO_X_MS_WMV
+  VIDEO_X_MS_WMX
+}
+
+input PostObjectsConnectionOrderbyInput {
+  field: PostObjectsConnectionOrderbyEnum!
+  order: OrderEnum!
+}
+
+enum PostObjectsConnectionOrderbyEnum {
+  AUTHOR
+  COMMENT_COUNT
+  DATE
+  IN
+  MENU_ORDER
+  MODIFIED
+  NAME_IN
+  PARENT
+  SLUG
+  TITLE
+}
+
+enum OrderEnum {
+  ASC
+  DESC
+}
+
+enum PostStatusEnum {
+  ACF_DISABLED
+  AUTO_DRAFT
+  DRAFT
+  FUTURE
+  INHERIT
+  PENDING
+  PRIVATE
+  PUBLISH
+  REQUEST_COMPLETED
+  REQUEST_CONFIRMED
+  REQUEST_FAILED
+  REQUEST_PENDING
+  TRASH
+}
+
+enum ContentTemplateEnum {
+  DEFAULT_TEMPLATE
 }
 
 type ContentTypeToContentNodeConnection implements ContentNodeConnection & Connection {
@@ -1241,36 +1172,91 @@ interface MediaItemConnection implements Connection {
   pageInfo: MediaItemConnectionPageInfo!
 }
 
-interface MediaItemConnectionEdge implements Edge {
+interface MediaItemConnectionPageInfo implements WPPageInfo & PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type UserToMediaItemConnectionEdge implements MediaItemConnectionEdge & Edge {
   cursor: String
   node: MediaItem!
 }
 
-type MediaItem implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & NodeWithTitle & NodeWithAuthor & NodeWithComments & HierarchicalContentNode & HierarchicalNode {
-  altText: String
+type UserToMediaItemConnectionPageInfo implements MediaItemConnectionPageInfo & WPPageInfo & PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+input UserToPageConnectionWhereArgs {
+  author: Int
+  authorIn: [ID]
+  authorName: String
+  authorNotIn: [ID]
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type UserToPageConnection implements PageConnection & Connection {
+  edges: [UserToPageConnectionEdge!]!
+  nodes: [Page!]!
+  pageInfo: UserToPageConnectionPageInfo!
+}
+
+interface PageConnection implements Connection {
+  edges: [PageConnectionEdge!]!
+  nodes: [Page!]!
+  pageInfo: PageConnectionPageInfo!
+}
+
+interface PageConnectionEdge implements Edge {
+  cursor: String
+  node: Page!
+}
+
+type Page implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithComments & NodeWithRevisions & NodeWithPageAttributes & HierarchicalContentNode & HierarchicalNode & MenuItemLinkable & WithAcfPageBuilder {
   ancestors(first: Int, last: Int, after: String, before: String, where: HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs): HierarchicalContentNodeToContentNodeAncestorsConnection
   author: NodeWithAuthorToUserConnectionEdge
   authorDatabaseId: Int
   authorId: ID
-  caption(format: PostObjectFieldFormatEnum): String
   children(first: Int, last: Int, after: String, before: String, where: HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs): HierarchicalContentNodeToContentNodeChildrenConnection
   commentCount: Int
   commentStatus: String
-  comments(first: Int, last: Int, after: String, before: String, where: MediaItemToCommentConnectionWhereArgs): MediaItemToCommentConnection
+  comments(first: Int, last: Int, after: String, before: String, where: PageToCommentConnectionWhereArgs): PageToCommentConnection
+  content(format: PostObjectFieldFormatEnum): String
   contentType: ContentNodeToContentTypeConnectionEdge
   contentTypeName: String!
   databaseId: Int!
   date: String
   dateGmt: String
-  description(format: PostObjectFieldFormatEnum): String
   desiredSlug: String
   editingLockedBy: ContentNodeToEditLockConnectionEdge
   enclosure: String
   enqueuedScripts(first: Int, last: Int, after: String, before: String, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
   enqueuedStylesheets(first: Int, last: Int, after: String, before: String, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
-  file(size: MediaItemSizeEnum): String
-  filePath(size: MediaItemSizeEnum): String
-  fileSize(size: MediaItemSizeEnum): Int
+  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
+  featuredImageDatabaseId: Int
+  featuredImageId: ID
   guid: String
   hasPassword: Boolean
   id: ID!
@@ -1279,27 +1265,27 @@ type MediaItem implements Node & ContentNode & UniformResourceIdentifiable & Dat
   isFrontPage: Boolean!
   isPostsPage: Boolean!
   isPreview: Boolean
+  isPrivacyPage: Boolean!
   isRestricted: Boolean
+  isRevision: Boolean
   isTermNode: Boolean!
   lastEditedBy: ContentNodeToEditLastConnectionEdge
   link: String
-  mediaDetails: MediaDetails
-  mediaItemId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
-  mediaItemUrl: String
-  mediaType: String
-  mimeType: String
+  menuOrder: Int
   modified: String
   modifiedGmt: String
+  pageBuilder: PageBuilder
+  pageId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
   parent: HierarchicalContentNodeToParentContentNodeConnectionEdge
   parentDatabaseId: Int
   parentId: ID
   password: String
+  preview: PageToPreviewConnectionEdge
   previewRevisionDatabaseId: Int
   previewRevisionId: ID
-  sizes(size: MediaItemSizeEnum): String
+  revisionOf: NodeWithRevisionsToContentNodeConnectionEdge
+  revisions(first: Int, last: Int, after: String, before: String, where: PageToRevisionConnectionWhereArgs): PageToRevisionConnection
   slug: String
-  sourceUrl(size: MediaItemSizeEnum): String
-  srcSet(size: MediaItemSizeEnum): String
   status: String
   template: ContentTemplate
   title(format: PostObjectFieldFormatEnum): String
@@ -1311,9 +1297,20 @@ interface NodeWithTemplate implements Node {
   template: ContentTemplate
 }
 
+interface Previewable {
+  isPreview: Boolean
+  previewRevisionDatabaseId: Int
+  previewRevisionId: ID
+}
+
 interface NodeWithTitle implements Node {
   id: ID!
   title(format: PostObjectFieldFormatEnum): String
+}
+
+interface NodeWithContentEditor implements Node {
+  content(format: PostObjectFieldFormatEnum): String
+  id: ID!
 }
 
 interface NodeWithAuthor implements Node {
@@ -1328,10 +1325,38 @@ type NodeWithAuthorToUserConnectionEdge implements OneToOneConnection & Edge & U
   node: User!
 }
 
+interface NodeWithFeaturedImage implements Node {
+  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
+  featuredImageDatabaseId: Int
+  featuredImageId: ID
+  id: ID!
+}
+
+type NodeWithFeaturedImageToMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
+  cursor: String
+  node: MediaItem!
+}
+
 interface NodeWithComments implements Node {
   commentCount: Int
   commentStatus: String
   id: ID!
+}
+
+interface NodeWithRevisions implements Node {
+  id: ID!
+  isRevision: Boolean
+  revisionOf: NodeWithRevisionsToContentNodeConnectionEdge
+}
+
+type NodeWithRevisionsToContentNodeConnectionEdge implements OneToOneConnection & Edge & ContentNodeConnectionEdge {
+  cursor: String
+  node: ContentNode!
+}
+
+interface NodeWithPageAttributes implements Node {
+  id: ID!
+  menuOrder: Int
 }
 
 interface HierarchicalContentNode implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & HierarchicalNode {
@@ -1512,259 +1537,6 @@ type ContentNodeToEditLastConnectionEdge implements OneToOneConnection & Edge & 
 type HierarchicalContentNodeToParentContentNodeConnectionEdge implements OneToOneConnection & Edge & ContentNodeConnectionEdge {
   cursor: String
   node: ContentNode!
-}
-
-input MediaItemToCommentConnectionWhereArgs {
-  authorEmail: String
-  authorIn: [ID]
-  authorNotIn: [ID]
-  authorUrl: String
-  commentIn: [ID]
-  commentNotIn: [ID]
-  commentType: String
-  commentTypeIn: [String]
-  commentTypeNotIn: String
-  contentAuthor: [ID]
-  contentAuthorIn: [ID]
-  contentAuthorNotIn: [ID]
-  contentId: ID
-  contentIdIn: [ID]
-  contentIdNotIn: [ID]
-  contentName: String
-  contentParent: Int
-  contentStatus: [PostStatusEnum]
-  contentType: [ContentTypeEnum]
-  includeUnapproved: [ID]
-  karma: Int
-  order: OrderEnum
-  orderby: CommentsConnectionOrderbyEnum
-  parent: Int
-  parentIn: [ID]
-  parentNotIn: [ID]
-  search: String
-  statusIn: [CommentStatusEnum]
-  userId: ID
-}
-
-type MediaItemToCommentConnection implements CommentConnection & Connection {
-  edges: [MediaItemToCommentConnectionEdge!]!
-  nodes: [Comment!]!
-  pageInfo: MediaItemToCommentConnectionPageInfo!
-}
-
-type MediaItemToCommentConnectionEdge implements CommentConnectionEdge & Edge {
-  cursor: String
-  node: Comment!
-}
-
-type MediaItemToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPageInfo & PageInfo {
-  endCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String
-}
-
-enum MediaItemSizeEnum {
-  LARGE
-  MEDIUM
-  MEDIUM_LARGE
-  THUMBNAIL
-  _1536X1536
-  _2048X2048
-}
-
-type MediaDetails {
-  file: String
-  filePath: String
-  height: Int
-  meta: MediaItemMeta
-  sizes(exclude: [MediaItemSizeEnum], include: [MediaItemSizeEnum]): [MediaSize]
-  width: Int
-}
-
-type MediaItemMeta {
-  aperture: Float
-  camera: String
-  caption: String
-  copyright: String
-  createdTimestamp: Int
-  credit: String
-  focalLength: Float
-  iso: Int
-  keywords: [String]
-  orientation: String
-  shutterSpeed: Float
-  title: String
-}
-
-type MediaSize {
-  file: String
-  filePath: String
-  fileSize: Int
-  height: String
-  mimeType: String
-  name: String
-  sourceUrl: String
-  width: String
-}
-
-interface MediaItemConnectionPageInfo implements WPPageInfo & PageInfo {
-  endCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String
-}
-
-type UserToMediaItemConnectionEdge implements MediaItemConnectionEdge & Edge {
-  cursor: String
-  node: MediaItem!
-}
-
-type UserToMediaItemConnectionPageInfo implements MediaItemConnectionPageInfo & WPPageInfo & PageInfo {
-  endCursor: String
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String
-}
-
-input UserToPageConnectionWhereArgs {
-  author: Int
-  authorIn: [ID]
-  authorName: String
-  authorNotIn: [ID]
-  dateQuery: DateQueryInput
-  hasPassword: Boolean
-  id: Int
-  in: [ID]
-  isSticky: Boolean
-  mimeType: MimeTypeEnum
-  name: String
-  nameIn: [String]
-  notIn: [ID]
-  orderby: [PostObjectsConnectionOrderbyInput]
-  parent: ID
-  parentIn: [ID]
-  parentNotIn: [ID]
-  password: String
-  search: String
-  stati: [PostStatusEnum]
-  status: PostStatusEnum
-  template: ContentTemplateEnum
-  title: String
-}
-
-type UserToPageConnection implements PageConnection & Connection {
-  edges: [UserToPageConnectionEdge!]!
-  nodes: [Page!]!
-  pageInfo: UserToPageConnectionPageInfo!
-}
-
-interface PageConnection implements Connection {
-  edges: [PageConnectionEdge!]!
-  nodes: [Page!]!
-  pageInfo: PageConnectionPageInfo!
-}
-
-interface PageConnectionEdge implements Edge {
-  cursor: String
-  node: Page!
-}
-
-type Page implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithAuthor & NodeWithFeaturedImage & NodeWithComments & NodeWithRevisions & NodeWithPageAttributes & HierarchicalContentNode & HierarchicalNode & MenuItemLinkable & WithAcfPageBuilder {
-  ancestors(first: Int, last: Int, after: String, before: String, where: HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs): HierarchicalContentNodeToContentNodeAncestorsConnection
-  author: NodeWithAuthorToUserConnectionEdge
-  authorDatabaseId: Int
-  authorId: ID
-  children(first: Int, last: Int, after: String, before: String, where: HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs): HierarchicalContentNodeToContentNodeChildrenConnection
-  commentCount: Int
-  commentStatus: String
-  comments(first: Int, last: Int, after: String, before: String, where: PageToCommentConnectionWhereArgs): PageToCommentConnection
-  content(format: PostObjectFieldFormatEnum): String
-  contentType: ContentNodeToContentTypeConnectionEdge
-  contentTypeName: String!
-  databaseId: Int!
-  date: String
-  dateGmt: String
-  desiredSlug: String
-  editingLockedBy: ContentNodeToEditLockConnectionEdge
-  enclosure: String
-  enqueuedScripts(first: Int, last: Int, after: String, before: String, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
-  enqueuedStylesheets(first: Int, last: Int, after: String, before: String, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
-  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
-  featuredImageDatabaseId: Int
-  featuredImageId: ID
-  guid: String
-  hasPassword: Boolean
-  id: ID!
-  isComment: Boolean!
-  isContentNode: Boolean!
-  isFrontPage: Boolean!
-  isPostsPage: Boolean!
-  isPreview: Boolean
-  isPrivacyPage: Boolean!
-  isRestricted: Boolean
-  isRevision: Boolean
-  isTermNode: Boolean!
-  lastEditedBy: ContentNodeToEditLastConnectionEdge
-  link: String
-  menuOrder: Int
-  modified: String
-  modifiedGmt: String
-  pageBuilder: PageBuilder
-  pageId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
-  parent: HierarchicalContentNodeToParentContentNodeConnectionEdge
-  parentDatabaseId: Int
-  parentId: ID
-  password: String
-  preview: PageToPreviewConnectionEdge
-  previewRevisionDatabaseId: Int
-  previewRevisionId: ID
-  revisionOf: NodeWithRevisionsToContentNodeConnectionEdge
-  revisions(first: Int, last: Int, after: String, before: String, where: PageToRevisionConnectionWhereArgs): PageToRevisionConnection
-  slug: String
-  status: String
-  template: ContentTemplate
-  title(format: PostObjectFieldFormatEnum): String
-  uri: String
-}
-
-interface Previewable {
-  isPreview: Boolean
-  previewRevisionDatabaseId: Int
-  previewRevisionId: ID
-}
-
-interface NodeWithContentEditor implements Node {
-  content(format: PostObjectFieldFormatEnum): String
-  id: ID!
-}
-
-interface NodeWithFeaturedImage implements Node {
-  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
-  featuredImageDatabaseId: Int
-  featuredImageId: ID
-  id: ID!
-}
-
-type NodeWithFeaturedImageToMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
-  cursor: String
-  node: MediaItem!
-}
-
-interface NodeWithRevisions implements Node {
-  id: ID!
-  isRevision: Boolean
-  revisionOf: NodeWithRevisionsToContentNodeConnectionEdge
-}
-
-type NodeWithRevisionsToContentNodeConnectionEdge implements OneToOneConnection & Edge & ContentNodeConnectionEdge {
-  cursor: String
-  node: ContentNode!
-}
-
-interface NodeWithPageAttributes implements Node {
-  id: ID!
-  menuOrder: Int
 }
 
 interface MenuItemLinkable implements Node & UniformResourceIdentifiable & DatabaseIdentifier {
@@ -2981,6 +2753,268 @@ type UserToUserRoleConnectionPageInfo implements UserRoleConnectionPageInfo & WP
   startCursor: String
 }
 
+input MediaItemToCommentConnectionWhereArgs {
+  authorEmail: String
+  authorIn: [ID]
+  authorNotIn: [ID]
+  authorUrl: String
+  commentIn: [ID]
+  commentNotIn: [ID]
+  commentType: String
+  commentTypeIn: [String]
+  commentTypeNotIn: String
+  contentAuthor: [ID]
+  contentAuthorIn: [ID]
+  contentAuthorNotIn: [ID]
+  contentId: ID
+  contentIdIn: [ID]
+  contentIdNotIn: [ID]
+  contentName: String
+  contentParent: Int
+  contentStatus: [PostStatusEnum]
+  contentType: [ContentTypeEnum]
+  includeUnapproved: [ID]
+  karma: Int
+  order: OrderEnum
+  orderby: CommentsConnectionOrderbyEnum
+  parent: Int
+  parentIn: [ID]
+  parentNotIn: [ID]
+  search: String
+  statusIn: [CommentStatusEnum]
+  userId: ID
+}
+
+type MediaItemToCommentConnection implements CommentConnection & Connection {
+  edges: [MediaItemToCommentConnectionEdge!]!
+  nodes: [Comment!]!
+  pageInfo: MediaItemToCommentConnectionPageInfo!
+}
+
+type MediaItemToCommentConnectionEdge implements CommentConnectionEdge & Edge {
+  cursor: String
+  node: Comment!
+}
+
+type MediaItemToCommentConnectionPageInfo implements CommentConnectionPageInfo & WPPageInfo & PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+enum MediaItemSizeEnum {
+  LARGE
+  MEDIUM
+  MEDIUM_LARGE
+  THUMBNAIL
+  _1536X1536
+  _2048X2048
+}
+
+type MediaDetails {
+  file: String
+  filePath: String
+  height: Int
+  meta: MediaItemMeta
+  sizes(exclude: [MediaItemSizeEnum], include: [MediaItemSizeEnum]): [MediaSize]
+  width: Int
+}
+
+type MediaItemMeta {
+  aperture: Float
+  camera: String
+  caption: String
+  copyright: String
+  createdTimestamp: Int
+  credit: String
+  focalLength: Float
+  iso: Int
+  keywords: [String]
+  orientation: String
+  shutterSpeed: Float
+  title: String
+}
+
+type MediaSize {
+  file: String
+  filePath: String
+  fileSize: Int
+  height: String
+  mimeType: String
+  name: String
+  sourceUrl: String
+  width: String
+}
+
+type RootQuery implements WithAcfOptionsPageThemeSettings {
+  allSettings: Settings
+  caseStudies(first: Int, last: Int, after: String, before: String, where: RootQueryToCaseStudyConnectionWhereArgs): RootQueryToCaseStudyConnection
+  caseStudy(id: ID!, idType: CaseStudyIdType): CaseStudy
+  caseStudyBy(id: ID, caseStudyId: Int, uri: String, slug: String): CaseStudy @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
+  categories(first: Int, last: Int, after: String, before: String, where: RootQueryToCategoryConnectionWhereArgs): RootQueryToCategoryConnection
+  category(id: ID!, idType: CategoryIdType): Category
+  comment(id: ID!, idType: CommentNodeIdTypeEnum): Comment
+  comments(first: Int, last: Int, after: String, before: String, where: RootQueryToCommentConnectionWhereArgs): RootQueryToCommentConnection
+  contentNode(id: ID!, idType: ContentNodeIdTypeEnum, contentType: ContentTypeEnum): ContentNode
+  contentNodes(first: Int, last: Int, after: String, before: String, where: RootQueryToContentNodeConnectionWhereArgs): RootQueryToContentNodeConnection
+  contentType(id: ID!, idType: ContentTypeIdTypeEnum): ContentType
+  contentTypes(first: Int, last: Int, after: String, before: String): RootQueryToContentTypeConnection
+  discussionSettings: DiscussionSettings
+  generalSettings: GeneralSettings
+  mediaItem(id: ID!, idType: MediaItemIdType): MediaItem
+  mediaItemBy(id: ID, mediaItemId: Int, uri: String, slug: String): MediaItem @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
+  mediaItems(first: Int, last: Int, after: String, before: String, where: RootQueryToMediaItemConnectionWhereArgs): RootQueryToMediaItemConnection
+  menu(id: ID!, idType: MenuNodeIdTypeEnum): Menu
+  menuItem(id: ID!, idType: MenuItemNodeIdTypeEnum): MenuItem
+  menuItems(first: Int, last: Int, after: String, before: String, where: RootQueryToMenuItemConnectionWhereArgs): RootQueryToMenuItemConnection
+  menus(first: Int, last: Int, after: String, before: String, where: RootQueryToMenuConnectionWhereArgs): RootQueryToMenuConnection
+  node(id: ID): Node
+  nodeByUri(uri: String!): UniformResourceIdentifiable
+  page(id: ID!, idType: PageIdType): Page
+  pageBy(id: ID, pageId: Int, uri: String): Page @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
+  pages(first: Int, last: Int, after: String, before: String, where: RootQueryToPageConnectionWhereArgs): RootQueryToPageConnection
+  permalinkSettings: PermalinkSettings
+  plugin(id: ID!): Plugin
+  plugins(first: Int, last: Int, after: String, before: String, where: RootQueryToPluginConnectionWhereArgs): RootQueryToPluginConnection
+  post(id: ID!, idType: PostIdType): Post
+  postBy(id: ID, postId: Int, uri: String, slug: String): Post @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
+  postFormat(id: ID!, idType: PostFormatIdType): PostFormat
+  postFormats(first: Int, last: Int, after: String, before: String, where: RootQueryToPostFormatConnectionWhereArgs): RootQueryToPostFormatConnection
+  posts(first: Int, last: Int, after: String, before: String, where: RootQueryToPostConnectionWhereArgs): RootQueryToPostConnection
+  readingSettings: ReadingSettings
+  registeredScripts(first: Int, last: Int, after: String, before: String, where: RootQueryToEnqueuedScriptConnectionWhereArgs): RootQueryToEnqueuedScriptConnection
+  registeredStylesheets(first: Int, last: Int, after: String, before: String, where: RootQueryToEnqueuedStylesheetConnectionWhereArgs): RootQueryToEnqueuedStylesheetConnection
+  revisions(first: Int, last: Int, after: String, before: String, where: RootQueryToRevisionsConnectionWhereArgs): RootQueryToRevisionsConnection
+  tag(id: ID!, idType: TagIdType): Tag
+  tags(first: Int, last: Int, after: String, before: String, where: RootQueryToTagConnectionWhereArgs): RootQueryToTagConnection
+  taxonomies(first: Int, last: Int, after: String, before: String): RootQueryToTaxonomyConnection
+  taxonomy(id: ID!, idType: TaxonomyIdTypeEnum): Taxonomy
+  team(id: ID!, idType: TeamIdType): Team
+  teamBy(id: ID, teamId: Int, uri: String, slug: String): Team @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
+  teams(first: Int, last: Int, after: String, before: String, where: RootQueryToTeamConnectionWhereArgs): RootQueryToTeamConnection
+  termNode(id: ID!, idType: TermNodeIdTypeEnum, taxonomy: TaxonomyEnum): TermNode
+  terms(first: Int, last: Int, after: String, before: String, where: RootQueryToTermNodeConnectionWhereArgs): RootQueryToTermNodeConnection
+  theme(id: ID!): Theme
+  themeSettings: ThemeSettings
+  themes(first: Int, last: Int, after: String, before: String): RootQueryToThemeConnection
+  user(id: ID!, idType: UserNodeIdTypeEnum): User
+  userRole(id: ID!): UserRole
+  userRoles(first: Int, last: Int, after: String, before: String): RootQueryToUserRoleConnection
+  users(first: Int, last: Int, after: String, before: String, where: RootQueryToUserConnectionWhereArgs): RootQueryToUserConnection
+  viewer: User
+  writingSettings: WritingSettings
+}
+
+type Settings {
+  discussionSettingsDefaultCommentStatus: String
+  discussionSettingsDefaultPingStatus: String
+  generalSettingsDateFormat: String
+  generalSettingsDescription: String
+  generalSettingsEmail: String
+  generalSettingsHomeUrl: String
+  generalSettingsLanguage: String
+  generalSettingsStartOfWeek: Int
+  generalSettingsTimeFormat: String
+  generalSettingsTimezone: String
+  generalSettingsTitle: String
+  generalSettingsUrl: String
+  permalinkSettingsCategoryBase: String
+  permalinkSettingsStructure: String
+  permalinkSettingsTagBase: String
+  readingSettingsPageForPosts: Int
+  readingSettingsPageOnFront: Int
+  readingSettingsPostsPerPage: Int
+  readingSettingsShowOnFront: String
+  writingSettingsDefaultCategory: Int
+  writingSettingsDefaultPostFormat: String
+  writingSettingsUseSmilies: Boolean
+}
+
+input RootQueryToCaseStudyConnectionWhereArgs {
+  dateQuery: DateQueryInput
+  hasPassword: Boolean
+  id: Int
+  in: [ID]
+  isSticky: Boolean
+  mimeType: MimeTypeEnum
+  name: String
+  nameIn: [String]
+  notIn: [ID]
+  orderby: [PostObjectsConnectionOrderbyInput]
+  parent: ID
+  parentIn: [ID]
+  parentNotIn: [ID]
+  password: String
+  search: String
+  stati: [PostStatusEnum]
+  status: PostStatusEnum
+  template: ContentTemplateEnum
+  title: String
+}
+
+type RootQueryToCaseStudyConnection implements CaseStudyConnection & Connection {
+  edges: [RootQueryToCaseStudyConnectionEdge!]!
+  nodes: [CaseStudy!]!
+  pageInfo: RootQueryToCaseStudyConnectionPageInfo!
+}
+
+interface CaseStudyConnection implements Connection {
+  edges: [CaseStudyConnectionEdge!]!
+  nodes: [CaseStudy!]!
+  pageInfo: CaseStudyConnectionPageInfo!
+}
+
+interface CaseStudyConnectionEdge implements Edge {
+  cursor: String
+  node: CaseStudy!
+}
+
+type CaseStudy implements Node & ContentNode & UniformResourceIdentifiable & DatabaseIdentifier & NodeWithTemplate & Previewable & NodeWithTitle & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithExcerpt & MenuItemLinkable & WithAcfCaseStudiesOptions {
+  ancestors(first: Int, last: Int, after: String, before: String): CaseStudyToCaseStudyConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+  caseStudiesOptions: CaseStudiesOptions
+  caseStudyId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
+  content(format: PostObjectFieldFormatEnum): String
+  contentType: ContentNodeToContentTypeConnectionEdge
+  contentTypeName: String!
+  databaseId: Int!
+  date: String
+  dateGmt: String
+  desiredSlug: String
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+  enclosure: String
+  enqueuedScripts(first: Int, last: Int, after: String, before: String, where: ContentNodeToEnqueuedScriptConnectionWhereArgs): ContentNodeToEnqueuedScriptConnection
+  enqueuedStylesheets(first: Int, last: Int, after: String, before: String, where: ContentNodeToEnqueuedStylesheetConnectionWhereArgs): ContentNodeToEnqueuedStylesheetConnection
+  excerpt(format: PostObjectFieldFormatEnum): String
+  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
+  featuredImageDatabaseId: Int
+  featuredImageId: ID
+  guid: String
+  hasPassword: Boolean
+  id: ID!
+  isComment: Boolean!
+  isContentNode: Boolean!
+  isFrontPage: Boolean!
+  isPostsPage: Boolean!
+  isPreview: Boolean
+  isRestricted: Boolean
+  isTermNode: Boolean!
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+  link: String
+  modified: String
+  modifiedGmt: String
+  parent: CaseStudyToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+  password: String
+  preview: CaseStudyToPreviewConnectionEdge
+  previewRevisionDatabaseId: Int
+  previewRevisionId: ID
+  slug: String
+  status: String
+  template: ContentTemplate
+  title(format: PostObjectFieldFormatEnum): String
+  uri: String
+}
+
 type CaseStudiesOptions implements CaseStudiesOptions_Fields & AcfFieldGroup & AcfFieldGroupFields {
   caseStudyInformation: String
   conclusion: String
@@ -2988,11 +3022,6 @@ type CaseStudiesOptions implements CaseStudiesOptions_Fields & AcfFieldGroup & A
   fieldGroupName: String
   frontFeatureImage: AcfMediaItemConnectionEdge
   tagLine: String
-}
-
-type AcfMediaItemConnectionEdge implements OneToOneConnection & Edge & MediaItemConnectionEdge {
-  cursor: String
-  node: MediaItem!
 }
 
 type CaseStudyToCaseStudyConnection implements CaseStudyConnection & Connection {
@@ -6571,16 +6600,11 @@ interface TeamMemberOptions_Fields implements AcfFieldGroup & AcfFieldGroupField
   twitterLink: String
 }
 
-interface ThemeOptions_Fields implements AcfFieldGroup & AcfFieldGroupFields {
-  fieldGroupName: String
-  footerCopyright: String
-  footerDescription: String
-  footerEmail: String
-  footerLinkdin: String
-  footerLogo: AcfMediaItemConnectionEdge
+interface WithAcfThemeOptions {
+  themeOptions: ThemeOptions
 }
 
-type ThemeOptions implements ThemeOptions_Fields & AcfFieldGroup & AcfFieldGroupFields {
+interface ThemeOptions_Fields implements AcfFieldGroup & AcfFieldGroupFields {
   fieldGroupName: String
   footerCopyright: String
   footerDescription: String

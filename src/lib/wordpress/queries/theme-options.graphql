@@ -1,0 +1,17 @@
+# ACF options page "Theme Options" (GraphQL type ThemeSettings): footer content.
+query ThemeOptions {
+  themeSettings {
+    themeOptions {
+      footerLogo {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+      footerDescription
+      footerEmail
+      footerCopyright
+      footerLinkdin
+    }
+  }
+}

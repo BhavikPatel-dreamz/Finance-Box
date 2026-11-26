@@ -20,12 +20,14 @@ import {
   PublishedPagesDocument,
   SchemaCapabilitiesDocument,
   SiteSettingsDocument,
+  ThemeOptionsDocument,
   type MenuLocationEnum,
   type MenuByLocationQuery,
   type PageCoreFragment,
   type PublishedPagesQuery,
   type SchemaCapabilitiesQuery,
   type SiteSettingsQuery,
+  type ThemeOptionsQuery,
 } from "@/lib/wordpress/generated/graphql";
 import type { SectionData } from "@/lib/page-builder/types";
 import { canonicalUrl, plainText, siteOrigin } from "@/lib/wordpress/text";
@@ -423,6 +425,56 @@ async function cachedSettings() {
 
 export const getSettings = cache(async (): Promise<SiteSettings> => {
   return publicReadsAreCached() ? cachedSettings() : readSettings();
+});
+
+/** Footer content from the ACF "Theme Options" options page. Empty strings when unset or unavailable. */
+export type ThemeOptions = {
+  footerLogo: { url: string; alt: string } | null;
+  footerDescription: string;
+  footerEmail: string;
+  footerCopyright: string;
+  footerLinkedin: string;
+};
+
+const emptyThemeOptions: ThemeOptions = {
+  footerLogo: null,
+  footerDescription: "",
+  footerEmail: "",
+  footerCopyright: "",
+  footerLinkedin: "",
+};
+
+async function readThemeOptions(): Promise<ThemeOptions> {
+  if (!graphqlEndpoint()) return emptyThemeOptions;
+
+  try {
+    const data = await graphqlRequest<ThemeOptionsQuery>(ThemeOptionsDocument);
+    const options = data.themeSettings?.themeOptions;
+    if (!options) return emptyThemeOptions;
+    const logo = options.footerLogo?.node;
+    return {
+      footerLogo: logo?.sourceUrl ? { url: logo.sourceUrl, alt: (logo.altText ?? "").trim() } : null,
+      footerDescription: plainText(options.footerDescription),
+      footerEmail: (options.footerEmail ?? "").trim(),
+      footerCopyright: plainText(options.footerCopyright),
+      footerLinkedin: (options.footerLinkdin ?? "").trim(),
+    };
+  } catch (error) {
+    console.warn(`[wordpress] theme options query failed: ${errorMessage(error)}`);
+    return emptyThemeOptions;
+  }
+}
+
+async function cachedThemeOptions() {
+  "use cache";
+  cacheLife({ stale: 30, revalidate: 30, expire: 3600 });
+  // Saving the options page sends a "settings"/"options" revalidation event.
+  cacheTag(settingsTag);
+  return readThemeOptions();
+}
+
+export const getThemeOptions = cache(async (): Promise<ThemeOptions> => {
+  return publicReadsAreCached() ? cachedThemeOptions() : readThemeOptions();
 });
 
 async function readMenu(location: MenuLocation): Promise<NavigationItem[]> {

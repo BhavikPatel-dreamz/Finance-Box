@@ -2,13 +2,15 @@ import { cacheLife } from "next/cache";
 
 /**
  * Puts the current year into a copyright line:
- * - `{year}` anywhere in the text is replaced with the year,
+ * - `{year}` / `[year]` / `[current_year]` anywhere in the text is replaced with the year,
  * - otherwise a year written after "©" ("© 2025 …") is updated,
  * - otherwise, if there is no "©" at all, "© <year> " is prepended.
  */
 export function withCurrentYear(text: string, year: string): string {
   const value = text.trim();
-  if (/\{\s*year\s*\}/i.test(value)) return value.replace(/\{\s*year\s*\}/gi, year);
+  // Placeholders: {year}, [year], {current_year}, [current_year]
+  const placeholder = /[{[]\s*(?:current_)?year\s*[}\]]/gi;
+  if (placeholder.test(value)) return value.replace(placeholder, year);
   if (/©\s*\d{4}/.test(value)) return value.replace(/(©\s*)\d{4}/, `$1${year}`);
   if (!value.includes("©")) return `© ${year} ${value}`.trim();
   return value;

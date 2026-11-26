@@ -20,15 +20,15 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
                 width={182}
                 height={48}
                 sizes="182px"
-                className="max-w-[182px] w-full object-contain"
+                className="h-12 w-[182px] max-w-full object-contain object-left"
               />
             </Link>
-            <p className="mt-4 sm:mt-5 lg:mt-6 lg:max-w-[17rem] text-[13px] sm:text-[14px] xl:text-[15px] font-light leading-[155%] text-white/75">
+            <p className="mt-4 sm:mt-5 lg:mt-6 w-full lg:max-w-[17rem] [overflow-wrap:anywhere] text-[13px] sm:text-[14px] xl:text-[15px] font-light leading-[155%] text-white/75">
               {footer.text}
             </p>
             <Link
               href={`mailto:${footer.email}`}
-              className="mt-6 sm:mt-8 lg:mt-7 xl:mt-8 inline-flex items-center gap-2.5 sm:gap-3 text-[14px] sm:text-[15px] xl:text-base font-medium text-white hover:text-brand-green transition-colors duration-300 group"
+              className="mt-6 sm:mt-8 lg:mt-7 xl:mt-8 inline-flex max-w-full min-w-0 items-start gap-2.5 sm:gap-3 text-[14px] sm:text-[15px] xl:text-base font-medium text-white hover:text-brand-green transition-colors duration-300 group"
             >
               <svg
                 width="14"
@@ -36,7 +36,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
                 viewBox="0 0 15 12"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="transition duration-300 shrink-0"
+                className="mt-[0.4em] transition duration-300 shrink-0"
                 aria-hidden="true"
               >
                 <path
@@ -45,7 +45,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
                   className="group-hover:fill-brand-green transition duration-300"
                 />
               </svg>
-              <span className="truncate">{footer.email}</span>
+              <span className="min-w-0 [overflow-wrap:anywhere]">{footer.email}</span>
             </Link>
           </div>
 
@@ -61,7 +61,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
                   <h2 className="text-xs sm:text-sm font-medium tracking-[1.4px] xl:tracking-[1.5px] text-white/70 uppercase font-mono truncate">
                     {column.title}
                   </h2>
-                  <ul className="mt-4 sm:mt-5 lg:mt-4 xl:mt-6 space-y-3 sm:space-y-3.5 xl:space-y-4 text-[13px] sm:text-[14px] font-normal text-white">
+                  <ul className="mt-4 sm:mt-5 lg:mt-4 xl:mt-6 [overflow-wrap:anywhere] space-y-3 sm:space-y-3.5 xl:space-y-4 text-[13px] sm:text-[14px] font-normal text-white">
                     {column.links.map((item) => {
                       const isSocial =
                         isSocialColumn ||
@@ -96,7 +96,7 @@ export function SiteFooter({ footer }: { footer: SiteFooterContent }) {
       </Container>
       <div className="border-t border-white/10 py-5 sm:py-6">
         <Container>
-          <p className="text-center text-xs sm:text-[13px] font-light text-white/60">
+          <p className="text-center [overflow-wrap:anywhere] text-xs sm:text-[13px] font-light text-white/60">
             <CopyrightLine text={footer.legal} />
           </p>
         </Container>

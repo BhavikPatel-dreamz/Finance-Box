@@ -1,7 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { homeContent, type HomeContent } from "@/content/home";
-import { getMenu, getSettings, type NavigationItem } from "@/lib/wordpress/content";
+import { getMenu, getSettings, getThemeOptions, type NavigationItem, type ThemeOptions } from "@/lib/wordpress/content";
 import { siteHref } from "@/lib/wordpress/links";
 
 export type SiteHeaderContent = HomeContent["header"];
@@ -150,6 +150,35 @@ function footerFromMenus(menus: FooterMenus, fallback: SiteFooterContent): SiteF
   return { ...fallback, columns };
 }
 
+const LINKEDIN_PATTERN = /linkedin/i;
+
+/**
+ * Applies the "Theme Options" page: logo, description, email, copyright and the
+ * LinkedIn URL. Each field falls back to the built-in footer when left empty.
+ */
+function footerWithThemeOptions(footer: SiteFooterContent, options: ThemeOptions): SiteFooterContent {
+  const linkedin = options.footerLinkedin;
+  const columns = linkedin
+    ? footer.columns.map((column) => ({
+        ...column,
+        links: column.links.map((link) =>
+          LINKEDIN_PATTERN.test(link.label) || LINKEDIN_PATTERN.test(link.url) ? { ...link, url: linkedin } : link,
+        ),
+      }))
+    : footer.columns;
+
+  return {
+    ...footer,
+    logo: options.footerLogo
+      ? { url: options.footerLogo.url, alt: options.footerLogo.alt || footer.logo.alt }
+      : footer.logo,
+    text: options.footerDescription || footer.text,
+    email: options.footerEmail || footer.email,
+    legal: options.footerCopyright || footer.legal,
+    columns,
+  };
+}
+
 /**
  * Shared header and footer content, loaded once per request.
  *
@@ -159,12 +188,13 @@ function footerFromMenus(menus: FooterMenus, fallback: SiteFooterContent): SiteF
  * - explore-footer (EXPLORE_FOOTER)
  * - support-footer (SUPPORT_FOOTER)
  *
- * Logo, footer text, email and legal line have no WordPress source yet (no ACF options page exists),
- * so they come from `src/content/home.ts`.
+ * Logo, footer text, email, copyright and the LinkedIn URL come from the ACF "Theme Options"
+ * options page, field by field falling back to `src/content/home.ts`.
  */
 export const getSiteChrome = cache(async (): Promise<SiteChrome> => {
-  const [settings, primary, company, services, explore, support] = await Promise.all([
+  const [settings, themeOptions, primary, company, services, explore, support] = await Promise.all([
     getSettings(),
+    getThemeOptions(),
     getMenu("PRIMARY"),
     getMenu("COMPANY_FOOTER"),
     getMenu("SERVICES_FOOTER"),
@@ -174,7 +204,7 @@ export const getSiteChrome = cache(async (): Promise<SiteChrome> => {
 
   return {
     header: primary.length > 0 ? headerFromMenu(primary, homeContent.header) : homeContent.header,
-    footer: footerFromMenus({ company, services, explore, support }, homeContent.footer),
+    footer: footerWithThemeOptions(footerFromMenus({ company, services, explore, support }, homeContent.footer), themeOptions),
     siteName: settings.name,
   };
 });
