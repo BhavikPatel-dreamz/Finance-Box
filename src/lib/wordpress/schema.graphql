@@ -6570,3 +6570,21 @@ interface TeamMemberOptions_Fields implements AcfFieldGroup & AcfFieldGroupField
   linkedinLink: String
   twitterLink: String
 }
+
+interface ThemeOptions_Fields implements AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  footerCopyright: String
+  footerDescription: String
+  footerEmail: String
+  footerLinkdin: String
+  footerLogo: AcfMediaItemConnectionEdge
+}
+
+type ThemeOptions implements ThemeOptions_Fields & AcfFieldGroup & AcfFieldGroupFields {
+  fieldGroupName: String
+  footerCopyright: String
+  footerDescription: String
+  footerEmail: String
+  footerLinkdin: String
+  footerLogo: AcfMediaItemConnectionEdge
+}

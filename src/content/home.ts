@@ -398,6 +398,6 @@ export const homeContent: HomeContent = {
         links: [{ label: "LinkedIn", url: "https://www.linkedin.com/" }],
       },
     ],
-    legal: "© 2026 Finance in a Box. All rights reserved.",
+    legal: "© {year} Finance in a Box. All rights reserved.",
   },
 };
