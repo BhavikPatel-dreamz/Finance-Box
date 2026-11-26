@@ -225,9 +225,9 @@ export function FooterHero({
                     const part2 = displayTitle.slice(commaIdx + 1).trim();
                     renderedTitle = (
                       <>
-                        <span className="block sm:inline">{part1}</span>
-                        <br className="hidden sm:inline" />
-                        <span className="block sm:inline">{part2}</span>
+                        <span className="sm:inline">{part1}</span>
+                        <br className="hidden sm:inline" /> &nbsp;
+                        <span className="sm:inline">{part2}</span>
                       </>
                     );
                   } else if (!displayHighlight && displayTitle.includes(" without ")) {
@@ -236,9 +236,9 @@ export function FooterHero({
                     const part2 = displayTitle.slice(withoutIdx).trim();
                     renderedTitle = (
                       <>
-                        <span className="block sm:inline">{part1}</span>
-                        <br className="hidden sm:inline" />
-                        <span className="block sm:inline">{part2}</span>
+                        <span className="sm:inline">{part1}</span>
+                        <br className="hidden sm:inline" />&nbsp;
+                        <span className="sm:inline">{part2}</span>
                       </>
                     );
                   }
