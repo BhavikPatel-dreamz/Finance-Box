@@ -9,7 +9,7 @@ export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsConten
   return (
     <Section theme="light" spacing="both">
       <Container>
-        <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 lg:gap-12 xl:gap-20">
+        <div className="flex flex-col min-[990px]:flex-row items-center gap-8 sm:gap-10 lg:gap-12 xl:gap-20">
           <Reveal
             preset="slide-left"
             distance={20}
@@ -23,7 +23,7 @@ export function PeopleOperationsIntro({ intro }: { intro: PeopleOperationsConten
               sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 45vw, 554px"
             />}
           </Reveal>
-          <Reveal preset="slide-right" distance={20} className="w-full min-w-0 lg:flex-1">
+          <Reveal preset="slide-right" distance={20} className="w-full min-w-0 lg:flex-1 min-[990px]:text-left text-center">
             <h2 className="text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] font-medium leading-[1.25] lg:leading-[1.3] tracking-[-0.8px] mb-4 sm:mb-6 lg:max-w-[590px]">
               {(() => {
                 let title = intro.title;
