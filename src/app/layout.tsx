@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { dmSans, dmMono } from "@/app/fonts";
 import "./globals.css";
 import { getSiteChrome } from "@/lib/wordpress/site-chrome";
@@ -18,6 +18,16 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
+};
+
+/**
+ * maximum-scale=1 stops mobile browsers from zooming in when a form field is
+ * focused (iOS Safari does this for text under 16px).
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

@@ -56,14 +56,15 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
           <div className="w-full backdrop-blur-md flex flex-col lg:flex-row">
             {/* Left Proof Column */}
             {config.clientProofItems && (
-              <div className="flex-1 px-5 py-6 sm:py-6 lg:py-8 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center sm:items-center sm:text-center lg:items-stretch lg:text-left">
+              <div className="flex-1 px-5 py-6 sm:py-6 lg:py-8 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center items-center text-center lg:items-stretch lg:text-left">
                 {config.clientProofTitle && (
-                  <Eyebrow variant="green-no-dash" className="mb-4 sm:mb-3 lg:mb-8">
+                  <Eyebrow variant="green-no-dash" className="mb-3 lg:mb-8">
                     {config.clientProofTitle}
                   </Eyebrow>
                 )}
-                {/* Tablet (sm–lg): items sit on one centered line with green markers. */}
-                <ul className="sm:flex sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-1 lg:block">
+                {/* Phones: a centered block with left-aligned items so the markers line up.
+                    Tablet (sm–lg): one centered line. Desktop: plain stacked list. */}
+                <ul className="inline-flex flex-col items-start gap-y-1.5 text-left sm:flex sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-1 lg:block">
                   {(() => {
                     let items = config.clientProofItems;
                     if (
@@ -87,9 +88,9 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
                     return items.map((item, idx) => (
                       <li
                         key={idx}
-                        className="text-[16px] sm:flex sm:items-center sm:gap-2.5 lg:block lg:text-[20px] font-semibold leading-[130%] text-white"
+                        className="flex items-center gap-2.5 lg:block text-[15px] sm:text-[16px] lg:text-[20px] font-semibold leading-[130%] text-white"
                       >
-                        <span aria-hidden="true" className="hidden sm:inline-block lg:hidden h-[6px] w-[6px] shrink-0 bg-brand-green" />
+                        <span aria-hidden="true" className="inline-block lg:hidden h-[6px] w-[6px] shrink-0 bg-brand-green" />
                         {item}
                       </li>
                     ));
@@ -100,16 +101,16 @@ export function ClientsHeroVariant({ config }: { config: HeroConfig }) {
 
             {/* Right 3 Stats Columns */}
             {config.stats && (
-              <div className="flex-[2] grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+              <div className="flex-[2] grid grid-cols-3 divide-x divide-white/10">
                 {config.stats.map((stat, idx) => (
                   <div
                     key={idx}
-                    className="flex flex-col justify-between p-6 sm:p-6 lg:p-8 text-left sm:text-center lg:text-left"
+                    className="flex flex-col justify-between px-2 py-5 sm:p-6 lg:p-8 text-center lg:text-left"
                   >
-                    <p className="text-4xl sm:text-4xl lg:text-[52px] font-semibold leading-[100%] tracking-[-0.8px]">
+                    <p className="text-[28px] sm:text-4xl lg:text-[52px] font-semibold leading-[100%] tracking-[-0.8px]">
                       {stat.value}
                     </p>
-                    <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] lg:text-[16px] font-light leading-[160%] text-white/60">
+                    <p className="mt-2 sm:mt-4 text-[12px] sm:text-[15px] lg:text-[16px] font-light leading-[140%] sm:leading-[160%] text-white/60">
                       {stat.label}
                     </p>
                   </div>
