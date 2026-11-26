@@ -133,7 +133,7 @@ export function FoundationIntro({
     <section className="bg-white text-brand-dark py-10 sm:py-14 md:py-16 lg:py-20 overflow-hidden">
       <Container>
         {/* Top Row: Heading and Description/CTA */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 sm:gap-12 lg:gap-16 items-start mb-8 lg:mb-12.5">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-3 md:gap-12 lg:gap-16 items-start mb-8 lg:mb-12.5">
           {/* Left Column: Eyebrow + Title */}
           <Reveal preset="slide-up" delay={60} distance={20} className="min-w-[992px]:max-w-[580px]">
             <Eyebrow variant="black-dash" className="mb-4 sm:mb-6 text-brand-blue/70 font-mono tracking-[1.5px] text-[12px] sm:text-[14px] uppercase">
@@ -194,7 +194,7 @@ export function FoundationIntro({
                       <div className="w-5 h-5 rounded-full bg-slate-300" />
                     )}
                   </div>
-                  <span className="text-[16px] sm:text-[18px] font-semibold text-brand-blue leading-snug max-w-[118px]">
+                  <span className="text-[16px] sm:text-[18px] font-semibold text-brand-blue leading-snug md:max-w-[118px]">
                     {card.title}
                   </span>
                 </div>
@@ -357,7 +357,7 @@ export function FoundationProcess({
     <section className="bg-brand-blue text-white py-10 sm:py-14 md:py-16 lg:py-20 overflow-hidden relative">
       <Container>
         {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-16">
           <Reveal preset="slide-up" delay={60} distance={20}>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white leading-[1.18]">
               {title}
