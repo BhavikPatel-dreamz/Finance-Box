@@ -439,11 +439,8 @@ export function ServicesDetails({ details }: { details: ServicesContent["details
   );
 }
 
-const CFO_FALLBACK_IMAGES = [
-  "/services/cfo-dilivers-1.png",
-  "/services/cfo-dilivers-2.png",
-  "/services/cfo-dilivers-3.png",
-];
+/** Shown when a deliverable has no image, or its image fails to load. */
+const CFO_PLACEHOLDER_IMAGE = "/media/placeholder.svg";
 
 // --- Component: Fractional CFO ---
 export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
@@ -496,8 +493,8 @@ export function ServicesCfo({ cfo }: { cfo: ServicesContent["cfo"] }) {
                 className={`group card-hover relative w-full h-[340px] sm:h-[400px] lg:h-[430px] xl:h-[490px] ${idx === 2 ? "md:col-span-2 md:h-[340px] lg:col-span-1 lg:h-[430px] xl:h-[490px]" : ""} rounded-[14px] sm:rounded-[16px] overflow-hidden bg-[#F5F3F2]`}
               >
                 <SafeImage
-                  src={card.image?.url || CFO_FALLBACK_IMAGES[idx] || "/media/placeholder.svg"}
-                  fallbackSrc={CFO_FALLBACK_IMAGES[idx] || "/media/placeholder.svg"}
+                  src={card.image?.url || CFO_PLACEHOLDER_IMAGE}
+                  fallbackSrc={CFO_PLACEHOLDER_IMAGE}
                   alt={card.title}
                   fill
                   className="object-cover image-hover-zoom"
